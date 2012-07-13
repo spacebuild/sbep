@@ -1,0 +1,35 @@
+"SpawnMenu"
+{
+	"Information"
+	{
+		"version"		"2"
+		"name"		"[SBEP][SmallBridge]Hulls, DW"
+	}
+	"Entries"
+	{
+		"1"		"models/SmallBridge/Hulls,DW/sbhulldwe05.mdl"
+		"2"		"models/SmallBridge/Hulls,DW/sbhulldwe1.mdl"
+		"3"		"models/SmallBridge/Hulls,DW/sbhulldwe2.mdl"
+		"4"		"models/SmallBridge/Hulls,DW/sbhulldwe3.mdl"
+		"5"		"models/SmallBridge/Hulls,DW/sbhulldwe4.mdl"
+		"6"		"models/SmallBridge/Hulls,DW/sbhulldwedh.mdl"
+		"7"		"models/SmallBridge/Hulls,DW/sbhulldwedh05.mdl"
+		"8"		"models/SmallBridge/Hulls,DW/sbhulldwedh2.mdl"
+		"9"		"models/SmallBridge/Hulls,DW/sbhulldwedh3.mdl"
+		"10"		"models/SmallBridge/Hulls,DW/sbhulldwedh4.mdl"
+		"11"		"models/SmallBridge/Hulls,DW/sbhulldweflip.mdl"
+		"12"		"models/SmallBridge/Hulls,DW/sbhulldwend.mdl"
+		"13"		"models/SmallBridge/Hulls,DW/sbhulldwend2.mdl"
+		"14"		"models/SmallBridge/Hulls,DW/sbhulldwenddh.mdl"
+		"15"		"models/SmallBridge/Hulls,DW/sbhulldwenddh2.mdl"
+		"16"		"models/SmallBridge/Hulls,DW/sbhulldwr.mdl"
+		"17"		"models/SmallBridge/Hulls,DW/sbhulldwrdh.mdl"
+		"18"		"models/SmallBridge/Hulls,DW/sbhulldwt.mdl"
+		"19"		"models/SmallBridge/Hulls,DW/sbhulldwtdh.mdl"
+		"20"		"models/SmallBridge/Hulls,DW/sbhulldwtdl.mdl"
+		"21"		"models/SmallBridge/Hulls,DW/sbhulldwtsl.mdl"
+		"22"		"models/SmallBridge/Hulls,DW/sbhulldwx.mdl"
+		"23"		"models/SmallBridge/Hulls,DW/sbhulldwxdh.mdl"
+		"24"		"models/SmallBridge/Hulls,DW/sbhulldwxdl.mdl"
+	}
+}

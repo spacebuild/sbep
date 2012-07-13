@@ -1,0 +1,6 @@
+/**WEAPONS**/
+
+/*There are a range of SBEP weapons. Most require effects from GCombat to work.*/
+
+/*To spawn a weapon, open the Q menu, go to the Entities tab, and click on one of
+the icons in the "SBEP - Weapons" category.*/

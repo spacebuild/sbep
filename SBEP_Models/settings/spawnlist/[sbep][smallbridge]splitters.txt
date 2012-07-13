@@ -1,0 +1,29 @@
+"SpawnMenu"
+{
+	"Information"
+	{
+		"version"		"2"
+		"name"		"[SBEP][SmallBridge]Splitters"
+	}
+	"Entries"
+	{
+		"1"		"models/SmallBridge/Splitters/sbconvmb.mdl"
+		"2"		"models/SmallBridge/Splitters/sbconvmbdh.mdl"
+		"3"		"models/SmallBridge/Splitters/sbconvmbdw.mdl"
+		"4"		"models/SmallBridge/Splitters/sbconvmbdwdh.mdl"
+		"5"		"models/SmallBridge/Splitters/sbsplit2s-2sw.mdl"
+		"6"		"models/SmallBridge/Splitters/sbsplit2s-dw.mdl"
+		"7"		"models/SmallBridge/Splitters/sbsplitdws-dhd.mdl"
+		"8"		"models/SmallBridge/Splitters/sbsplitdws-dhm.mdl"
+		"9"		"models/SmallBridge/Splitters/sbsplitdws-dhu.mdl"
+		"10"		"models/SmallBridge/Splitters/sbsplits-dhd.mdl"
+		"11"		"models/SmallBridge/Splitters/sbsplits-dhm.mdl"
+		"12"		"models/SmallBridge/Splitters/sbsplits-dhu.mdl"
+		"13"		"models/SmallBridge/Splitters/sbsplits-dw.mdl"
+		"14"		"models/SmallBridge/Splitters/sbsplits-dwa.mdl"
+		"15"		"models/SmallBridge/Splitters/sbsplits-dwdh.mdl"
+		"16"		"models/SmallBridge/Splitters/sbsplitv.mdl"
+		"17"		"models/SmallBridge/Splitters/sbsplitvdh.mdl"
+		"18"		"models/SmallBridge/Splitters/sbsplitvw.mdl"
+	}
+}

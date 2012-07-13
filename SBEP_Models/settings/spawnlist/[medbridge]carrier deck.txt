@@ -1,0 +1,18 @@
+"SpawnMenu"
+{
+	"Information"
+	{
+		"version"		"2"
+		"name"		"[medbridge]Carrier Deck"
+	}
+	"Entries"
+	{
+		"1"		"models/Slyfo/cdeck_bow.mdl"
+		"2"		"models/Slyfo/cdeck_back.mdl"
+		"3"		"models/Slyfo/cdeck_single.mdl"
+		"4"		"models/Slyfo/cdeck_tjoint.mdl"
+		"5"		"models/Slyfo/cdeck_double.mdl"
+		"6"		"models/Slyfo/cdeck_doublewide.mdl"
+		"7"		"models/Slyfo/cdeck_doublewideconv.mdl"
+	}
+}

@@ -1,0 +1,26 @@
+<t>MobilePlatform MobilePlatformController mobile platform controller mpc </t>
+
+/**MPCs - Mobile Platform Controllers**/
+
+/*Mobile Platform Controllers, or MPCs, are a way of creating mechanisms which would otherwise require 
+lots of complicated, laggy, unreliable wired hydraulics, sliders, or similar. They can also be used to 
+create movements that would be near impossible to achieve with wire.*/
+
+/*To spawn an MPC, open the Q-menu, and under the SBEP category, click on the MPC tool. Choose a model 
+from the panel, or right-click a prop to copy its model. Left-click somewhere to spawn your MPC.*/
+
+/*If you've positioned a prop in just the right place already, you can spawn an MPC in its place by 
+holding shift whilst right-clicking.*/
+
+/*MPCs need wire to be of any use. If you look at one with the wire tool, you will find a multitude of 
+inputs. The important ones are X,Y,Z and Pitch,Yaw,Roll. These are the target offset values that the MPC 
+will try to achieve, relative to its controller. Using buttons or toggle gates, with smoothers, for example, 
+you can make the MPC move smoothly between two positions (and rotations). By using more complicated wire 
+setups or expressions, you can create extremely complex movements, at very little performance cost.*/
+
+/*One of the other very useful input sets is FulX,FulY,FulZ. This is the position of the "fulcrum" used 
+by the MPC during movement and rotation. You can change this easily by pressing Reload with the MPC tool 
+whilst looking at the place on the MPC you want this position to be. This is also an easy way to see how 
+it affects the behaviour of the MPC. This feature essentially allows you to move the "centre" of the prop; 
+for example, it enables the MPC to hinge along one edge rather than simply turning around its normal centre 
+position, should you want to make a door or ramp of some kind.*/

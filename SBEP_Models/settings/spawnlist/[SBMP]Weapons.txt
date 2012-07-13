@@ -1,0 +1,36 @@
+"SpawnMenu"
+{
+	"Information"
+	{
+		"version"		"2"
+		"name"		"[SBMP]Weapons"
+	}
+	"Entries"
+	{
+		"1"		"models/Spacebuild/Nova/med-mac2.mdl"
+		"2"		"models/Spacebuild/Nova/med-mac2_1.mdl"
+		"3"		"models/Spacebuild/Nova/machuge.mdl"
+		"4"		"models/Spacebuild/Nova/macbig.mdl"
+		"5"		"models/Slyfo/swordgatleft.mdl"
+		"6"		"models/Slyfo/swordgatmid.mdl"
+		"7"		"models/Slyfo/swordgatright.mdl"
+		"8"		"models/Spacebuild/medbridge2_gatling_cannon.mdl"
+		"9"		"models/Spacebuild/Nova/flak1.mdl"
+		"10"		"models/Slyfo/swordgrenade.mdl"
+		"11"		"models/Spacebuild/medbridge2_missile_launcher.mdl"
+		"12"		"models/Slyfo/artycannon.mdl"
+		"13"		"models/Slyfo/mcpcannon.mdl"
+		"14"		"models/Slyfo/subrocket.mdl"
+		"15"		"models/Spacebuild/cannon1_gen.mdl"
+		"16"		"models/Slyfo/powercrystal.mdl"
+		"17"		"models/Slyfo/finfunnel.mdl"
+		"18"		"models/Slyfo/smlmissilepod.mdl"
+		"19"		"models/Slyfo/smlturrettop.mdl"
+		"20"		"models/Slyfo/smlturretbase.mdl"
+		"21"		"models/Slyfo/goldfish.mdl"
+		"22"		"models/Slyfo/spacemine.mdl"
+		"23"		"models/Slyfo/torpedo.mdl"
+		"24"		"models/Slyfo/torpedo2.mdl"
+		"25"		"models/Slyfo/warhead.mdl"
+	}
+}

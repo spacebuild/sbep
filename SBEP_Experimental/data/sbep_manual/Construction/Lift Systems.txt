@@ -1,0 +1,34 @@
+<t>sbep_elev_housing housing sbep_elev_system lift elev elevator system designer design</t>
+
+<icon>sbep_manual/LD_icon</icon>
+
+/**LIFT SYSTEM DESIGNER**/
+
+/*To use the Lift Designer, open the Q menu, and click on  the Lift Designer tool in the SBEP Category.*/ 
+
+/*First, choose your desired options. The skin, (optional) doors and size of the system can be changed. 
+"Enable Use Key on Housings", if ticked, means that when you press E on the wall of a floor, it will 
+call the lift to that floor. (Useful if you don't want to have to add lots of wire buttons.)*/
+
+/*Left click somewhere to open the Designer. Or if you have a specific start point in mind, you can 
+right-click a suitable lift housing prop to start from there.[IMG][size=4]sbep_manual/LD_des[/IMG]*/
+
+/*The design wizard allows you to create your lift system. The Model buttons across the top change the 
+model of the currently selected part. (Some models cannot be used in certain positions in the system.) 
+Below them, the Rotate and Invert buttons allow orientation of the parts.[IMG][size=4]sbep_manual/LD_models[/IMG]*/
+
+/*Further down, you find the construction buttons. Construct will add a part with the current model and 
+orientation. The position buttons allow you to move up and down the system, which you can use to change 
+existing parts or rotate them as required. The Delete button removes the currently selected part. Note 
+that the Construct button can only be used at the top of the system - any further down, and the other 
+buttons all edit the existing parts.[IMG][size=4]sbep_manual/LD_construct[/IMG]*/
+
+/*On the right are the camera controls, enabling you to move the camera, should you find yourself in a 
+position where you can't see what you're doing.[IMG][size=3]sbep_manual/LD_cam[/IMG]*/
+
+/*At the top-right corner of the panel is the Cancel button, which simply removes all current parts and 
+exits the Designer. The Finish button at the base of the panel will complete the lift system, adding 
+doors and finalising the setup.*/
+
+/*The lift is then ready to use! Wire up some buttons to the lift itself, and sail between different 
+floors effortlessly, and without any pesky sliders!*/

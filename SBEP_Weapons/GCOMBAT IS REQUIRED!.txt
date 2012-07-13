@@ -1,0 +1,1 @@
+Some of our weapons use effects from GCombat. If you don't have GCombat installed, you will receive errors when you try to use these weapons.

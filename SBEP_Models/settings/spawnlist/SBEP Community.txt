@@ -1,0 +1,34 @@
+"SpawnMenu"
+{
+	"Information"
+	{
+		"Version"	"2"
+		"Name"	"SBEP Community"
+	}
+	"Entries"
+	{
+	"1"	"models\SBEP_community\d12airscrubber.mdl"
+	"2"	"models\SBEP_community\d12console.mdl"
+	"3"	"models\SBEP_community\d12consolert.mdl"
+	"4"	"models\SBEP_community\d12consolescreen.mdl"
+	"5"	"models\SBEP_community\d12flakcannon.mdl"
+	"6"	"models\SBEP_community\d12fusionbomb.mdl"
+	"7"	"models\SBEP_community\d12guidedbomb.mdl"
+	"8"	"models\SBEP_community\d12mbdstairs.mdl"
+	"9"	"models\SBEP_community\d12medflak.mdl"
+	"10"	"models\SBEP_community\d12proxmine.mdl"
+	"11"	"models\SBEP_community\d12shieldemitter.mdl"
+	"12"	"models\SBEP_community\d12siesmiccharge.mdl"
+	"13"	"models\SBEP_community\d12singengine.mdl"
+	"14"	"models\SBEP_community\xwingbl.mdl"
+	"15"	"models\SBEP_community\xwingbody.mdl"
+	"16"	"models\SBEP_community\xwingbr.mdl"
+	"17"	"models\SBEP_community\xwinggunbl.mdl"
+	"18"	"models\SBEP_community\xwinggunbr.mdl"
+	"19"	"models\SBEP_community\xwingguntl.mdl"
+	"20"	"models\SBEP_community\xwingguntr.mdl"
+	"21"	"models\SBEP_community\xwingtl.mdl"
+	"22"	"models\SBEP_community\xwingtr.mdl"
+	"23"	"models\SBEP_community\ywing.mdl"
+	}
+}

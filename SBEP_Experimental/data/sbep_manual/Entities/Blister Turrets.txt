@@ -1,0 +1,23 @@
+<t>BlisterMount Blister_Turret Blister Turret Hardpoint Hardpoints</t>
+
+<icon>VGUI/entities/BlisterMount</icon>
+
+/** BLISTER TURRET **/
+
+/*Blister turrets are the currently the smallest type of turret available. Built to reduce lag, they rely on parenting to keep the weapon they hold in place.*/
+
+/*Compatible hardpoints:
+“Small”, “Tiny”*/
+
+/*Inputs:
+"Active", "Fire", "X", "Y", "Z", "Vector", "Pitch", "Yaw", "Mode"*/
+
+/*Active toggles the turret on and off. Input of 1 switches on, 0 switches off. When the Active input is off, the turret will not respond to any aiming or fire commands.*/
+
+/*Fire will trigger the weapon (No, really?).*/
+
+/*X,Y,Z, and Vector set where the turret aims in Mode 0. Setting the Vector is the same as setting X,Y, and Z. You only need to do one or the other.*/
+
+/*Pitch and Yaw will adjust the angle of fire when the turret is in Mode 1.*/
+
+/*Mode toggles between angle fire and vector fire. If set to 0, the mode will be Vector. If set to 1, the mode will be angular. In Vector mode, the turret takes a vector and calculates the angle automatically. In Angle mode, the aiming is entirely in the hands of the player controlling it.*/

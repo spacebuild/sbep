@@ -1,0 +1,11 @@
+"AddonInfo"
+{
+	"name"				"Dynamic Gibs by Levybreak"
+	"version"			"Beta"
+	"up_date"			"12/04/09"
+	"author_name"			"Levybreak"
+	"author_email"		"Look at FP"
+	"author_url"			""
+	"info"				"Makes Dynamic gibs for all props not on the blacklist! Woo! Dynamic gibs!"
+	"override"			"0"
+}

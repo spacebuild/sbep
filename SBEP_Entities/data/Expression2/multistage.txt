@@ -1,0 +1,47 @@
+@name MultiStage
+@inputs Run Stages V1T V2T V3T V4T V5T V1M V2M V3M V4M V5M
+@outputs Val1 Val2 Val3 Val4 Val5
+@persist A B C D E
+@trigger all
+
+interval(10)
+
+if (Run == 1){
+    A = clamp(A + V1T,0,100)
+    if (A >= 100 & Stages >= 2){
+        B = clamp(B + V2T,0,100)
+        if (B >= 100 & Stages >= 3){
+            C = clamp(C + V3T,0,100)
+            if (C >= 100 & Stages >= 4){
+                D = clamp(D + V4T,0,100)
+                if (D >= 100 & Stages >= 5){
+                    E = clamp(E + V5T,0,100)
+                }
+            }
+        }
+    }
+}else{
+    E = clamp(E - V5T,0,100)
+    if (E <= 0){
+        D = clamp(D - V4T,0,100)
+        if (D <= 0){
+            C = clamp(C - V3T,0,100)
+            if (C <= 0){
+                B = clamp(B - V2T,0,100)
+                if (B <= 0){
+                    A = clamp(A - V1T,0,100)
+                }
+            }
+        }
+    }
+}
+
+Val1 = A * 0.01 * V1M
+
+Val2 = B * 0.01 * V2M
+
+Val3 = C * 0.01 * V3M
+
+Val4 = D * 0.01 * V4M
+
+Val5 = E * 0.01 * V5M

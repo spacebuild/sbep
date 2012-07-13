@@ -1,0 +1,15 @@
+<t>gyropod2 gyro pod gyropod </t>
+
+/**GYRO-POD**/
+
+/*A Gyro is a quick, efficient method of getting a ship in the air.*/
+
+/*To spawn a Gyro, open the Q-menu, go to the SBEP category, and click on the Gyro-Pod tool. 
+Right-click to spawn a gyro. Left-click all the props you want to link to the Gyro (usually 
+every prop in the ship), then left-click the gyro to link them. Linking a vehicle pod to the 
+Gyro will make that vehicle the controller for the Gyro.*/
+
+/*Once the Gyro is linked to the ship, get in your chair or pod. Pressing spacebar will turn 
+on the Gyro. Shift and Alt increase and decrease speed, while W,A,S and D are used to steer. 
+Alternatively, you can press R (or your reload key) to switch to mouse control, where A and D 
+control roll, and the mouse controls yaw and pitch.*/

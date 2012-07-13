@@ -1,0 +1,27 @@
+"SpawnMenu"
+{
+	"Information"
+	{
+		"version"		"2"
+		"name"		"[medbridge]Entry"
+	}
+	"Entries"
+	{
+		"1"		"models/Slyfo/doublehatch.mdl"
+		"2"		"models/Slyfo/doublehatch_hatch.mdl"
+		"3"		"models/Slyfo/bottomless.mdl"
+		"4"		"models/Slyfo/topless.mdl"
+		"5"		"models/Slyfo/topless_top.mdl"
+		"6"		"models/Slyfo/foldcargobaseplate.mdl"
+		"7"		"models/Slyfo/foldcargohatch.mdl"
+		"8"		"models/Slyfo/inversebay.mdl"
+		"9"		"models/Slyfo/inversebayhatch.mdl"
+		"10"		"models/Slyfo/mcpdropbay.mdl"
+		"11"		"models/Slyfo/mcpdropbayhatch.mdl"
+		"12"		"models/Slyfo/mcpdropglass.mdl"
+		"13"		"models/Spacebuild/Nova/hull_lift1.mdl"
+		"14"		"models/Spacebuild/Nova/hull_lift1lift.mdl"
+		"15"		"models/Spacebuild/Nova/hull_lift_double.mdl"
+		"16"		"models/Spacebuild/Nova/hull_lift_doublelift.mdl"
+	}
+}

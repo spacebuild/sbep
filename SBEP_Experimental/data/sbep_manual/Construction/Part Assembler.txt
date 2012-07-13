@@ -1,0 +1,11 @@
+<t>sbep_part_assembler part prop assembler assembly </t>
+
+/**PART ASSEMBLER**/
+
+/*The Part Assembler is a very simple way of putting parts together.*/
+
+/*To snap two parts together, point the tool at a part, and the connection 
+points will appear. Click one, then a second, to move the first prop 
+to the second.*/
+
+/*At the moment, only the SmallBridge parts work with the tool.*/

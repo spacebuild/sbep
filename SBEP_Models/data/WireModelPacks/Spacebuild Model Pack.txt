@@ -1,0 +1,48 @@
+"ModelPack"
+{
+
+	"Power Crystal"
+	{
+		"categories"	"button"
+		"model"			"models/Slyfo/powercrystal.mdl"
+		"files"
+		{
+			"0"     "models/Slyfo/powercrystal.dx80.vtx"
+			"1"     "models/Slyfo/powercrystal.dx90.vtx"
+			"2"     "models/Slyfo/powercrystal.phy"
+			"3"     "models/Slyfo/powercrystal.sw.vtx"
+			"4"     "models/Slyfo/powercrystal.vvd"
+		}
+	}
+
+	"Console"
+	{
+		"categories"	"button"
+		"model"			"models/SmallBridge/Other/SBconsolelow.mdl"
+		"files"
+		{
+			"0"     "models/SmallBridge/Other/SBconsolelow.dx80.vtx"
+			"1"     "models/SmallBridge/Other/SBconsolelow.dx90.vtx"
+			"2"     "models/SmallBridge/Other/SBconsolelow.phy"
+			"3"     "models/SmallBridge/Other/SBconsolelow.sw.vtx"
+			"4"     "models/SmallBridge/Other/SBconsolelow.vvd"
+			"5"     "models/SmallBridge/Other/SBconsolelow.xbox.vtf"
+		}
+	}
+
+	"Low Console"
+	{
+		"categories"	"button"
+		"model"			"models/SmallBridge/Other/SBconsole.mdl"
+		"files"
+		{
+			"0"     "models/SmallBridge/Other/SBconsole.dx80.vtx"
+			"1"     "models/SmallBridge/Other/SBconsole.dx90.vtx"
+			"2"     "models/SmallBridge/Other/SBconsole.phy"
+			"3"     "models/SmallBridge/Other/SBconsole.sw.vtx"
+			"4"     "models/SmallBridge/Other/SBconsole.vvd"
+			"5"     "models/SmallBridge/Other/SBconsole.xbox.vtf"
+		}
+	}
+
+}

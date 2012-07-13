@@ -1,0 +1,16 @@
+"SpawnMenu" 
+{  
+	"Information"  
+	{  
+		"version"	"2"  
+		"name"		"[SBEP][ModBridge]Accessories"   
+	}   
+	"Entries"   
+	{   
+		"1"		"models/Cerus/Modbridge/Misc/Accessories/acc_ant2_red.mdl" 
+		"2"		"models/Cerus/Modbridge/Misc/Accessories/acc_ant_red.mdl" 
+		"3"		"models/Cerus/Modbridge/Misc/Accessories/acc_furnace1.mdl" 
+		"4"		"models/Cerus/Modbridge/Misc/Accessories/acc_radar1.mdl" 
+		"5"		"models/Cerus/Modbridge/Misc/Engines/eng_sq11b.mdl"
+	} 
+} 

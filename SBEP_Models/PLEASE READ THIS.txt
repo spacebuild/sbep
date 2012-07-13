@@ -1,0 +1,4 @@
+We used to have a script (courtesy of 1/4Life) to automatically refresh our spawnlists. However, a certain Garrysmod 
+update stopped that from being possible. So, whenever you update SBEP, I would recommend you update your spawnlists 
+by going into the garrysmod/settings/spawnlist folder and deleting the contents. They will then be recached next 
+time you start a game.

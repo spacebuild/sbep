@@ -1,0 +1,33 @@
+"SpawnMenu" 
+{  
+	"Information"  
+	{  
+		"version"	"2"  
+		"name"		"[ModBr]Elevators"   
+	}   
+	"Entries"   
+	{   
+		"1"		"models/Cerus/Modbridge/Misc/Elevator/eb111.mdl" 
+		"2"		"models/Cerus/Modbridge/Misc/Elevator/eb332.mdl" 
+		"3"		"models/Cerus/Modbridge/Misc/Elevator/ecb111.mdl" 
+		"4"		"models/Cerus/Modbridge/Misc/Elevator/ecm111.mdl" 
+		"5"		"models/Cerus/Modbridge/Misc/Elevator/ect111.mdl" 
+		"6"		"models/Cerus/Modbridge/Misc/Elevator/elev_111.mdl" 
+		"7"		"models/Cerus/Modbridge/Misc/Elevator/elev_332.mdl" 
+		"8"		"models/Cerus/Modbridge/Misc/Elevator/elev_332b.mdl" 
+		"9"		"models/Cerus/Modbridge/Misc/Elevator/em111.mdl" 
+		"10"		"models/Cerus/Modbridge/Misc/Elevator/em332.mdl" 
+		"11"		"models/Cerus/Modbridge/Misc/Elevator/et111.mdl" 
+		"12"		"models/Cerus/Modbridge/Misc/Elevator/et332.mdl" 
+		"13"		"models/Cerus/Modbridge/Misc/Elevator/etm111.mdl" 
+		"14"		"models/Cerus/Modbridge/Misc/Elevator/etm111g.mdl" 
+		"15"		"models/Cerus/Modbridge/Misc/Elevator/etm112.mdl" 
+		"16"		"models/Cerus/Modbridge/Misc/Elevator/etm113.mdl" 
+		"17"		"models/Cerus/Modbridge/Misc/Elevator/etm113g.mdl" 
+		"18"		"models/Cerus/Modbridge/Misc/Elevator/se11f.mdl" 
+		"19"		"models/cerus/modbridge/core/s-331eb.mdl" 
+		"20"		"models/cerus/modbridge/core/s-331em.mdl" 
+		"21"		"models/cerus/modbridge/core/s-331et.mdl"
+		"22"		"models/cerus/modbridge/core/s-332ep.mdl" 
+	} 
+} 

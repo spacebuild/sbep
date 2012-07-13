@@ -1,0 +1,9 @@
+<t>part spawner</t>
+
+/**PART SPAWNER**/
+
+/*The Part Spawner can be used to easily find and spawn SBEP props.*/
+
+/*If SB3 is active, you can use the tool to spawn Habitable Modules.*/
+
+/*At the moment, only the SmallBridge parts have been added to the tool.*/

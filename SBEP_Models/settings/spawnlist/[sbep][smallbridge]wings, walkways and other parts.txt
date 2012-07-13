@@ -1,0 +1,29 @@
+"SpawnMenu"
+{
+	"Information"
+	{
+		"version"		"2"
+		"name"		"[SBEP][SmallBridge]Wings, Walkways and Other Parts"
+	}
+	"Entries"
+	{
+		"1"		"models/SmallBridge/Wings/sbwingc1l.mdl"
+		"2"		"models/SmallBridge/Wings/sbwingc1r.mdl"
+		"3"		"models/SmallBridge/Wings/sbwingls1l.mdl"
+		"4"		"models/SmallBridge/Wings/sbwingls1r.mdl"
+		"5"		"models/SmallBridge/Wings/sbwingm1l.mdl"
+		"6"		"models/SmallBridge/Wings/sbwingm1le.mdl"
+		"7"		"models/SmallBridge/Wings/sbwingm1r.mdl"
+		"8"		"models/SmallBridge/Wings/sbwingm1re.mdl"
+		"9"		"models/SmallBridge/Wings/sbwings1l.mdl"
+		"10"		"models/SmallBridge/Wings/sbwings1r.mdl"
+		"11"		"models/SmallBridge/Walkways/sbwalkwaye.mdl"
+		"12"		"models/SmallBridge/Walkways/sbwalkwaye2.mdl"
+		"13"		"models/SmallBridge/Walkways/sbwalkwayr.mdl"
+		"14"		"models/SmallBridge/Walkways/sbwalkwayt.mdl"
+		"15"		"models/SmallBridge/Walkways/sbwalkwayx.mdl"
+		"16"		"models/SmallBridge/Other/sbconsole.mdl"
+		"17"		"models/SmallBridge/Other/sbconsolelow.mdl"
+		"18"		"models/SmallBridge/Other/sbconsoletop.mdl"
+	}
+}

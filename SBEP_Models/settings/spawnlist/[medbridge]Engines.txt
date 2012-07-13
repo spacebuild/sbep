@@ -1,0 +1,30 @@
+"SpawnMenu"
+{
+	"Information"
+	{
+		"version"		"2"
+		"name"		"[medbridge]Engines"
+	}
+	"Entries"
+	{
+		"1"		"models/Spacebuild/medbridge2_enginehull2.mdl"
+		"2"		"models/Spacebuild/medbridge2_enginehull.mdl"
+		"3"		"models/Spacebuild/medbridge2_enginehull4.mdl"
+		"4"		"models/Slyfo/matthewenginelong.mdl"
+		"5"		"models/Slyfo/matthewengineshort.mdl"
+		"6"		"models/Slyfo/gallant_class_engine3.mdl"
+		"7"		"models/Slyfo/gallant_class_engine4.mdl"
+		"8"		"models/Slyfo/gallant_class_engine6.mdl"
+		"9"		"models/Spacebuild/medbridge2_enginedoublehull_flaps.mdl"
+		"10"		"models/Spacebuild/medbridge2_enginedoublehull2_narrow.mdl"
+		"11"		"models/Spacebuild/medbridge2_enginedoublehull2_wide.mdl"
+		"12"		"models/Slyfo/fishfacemki.mdl"
+		"13"		"models/Slyfo/gallant_class_engine1.mdl"
+		"14"		"models/Slyfo/gallant_class_engine2.mdl"
+		"15"		"models/Slyfo/gallant_class_engine5.mdl"
+		"16"		"models/Spacebuild/Nova/supercarrierbridge.mdl"
+		"17"		"models/Spacebuild/medbridge2_engineaddon1.mdl"
+		"18"		"models/Spacebuild/medbridge2_enginehull3.mdl"
+		"19"		"models/Spacebuild/medbridge2_large_solar_sail.mdl"
+	}
+}

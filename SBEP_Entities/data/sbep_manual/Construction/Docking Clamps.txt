@@ -1,0 +1,14 @@
+<t>sbep_base_docking_clamp dock docking clamp </t>
+
+/**Docking Clamps**/
+
+/*Docking clamps let you join ships or stations on-the-fly easily, quickly, and laglessly.*/
+
+/*To spawn a docking clamp, open the Q-menu, and under the SBEP category, click on the 
+Docking Clamp tool. Choose a model, and left click to spawn it. Right-clicking an existing 
+clamp will spawn the counterpart which can dock with it.*/
+
+/*To activate a clamp, use it with E or use the wire inputs. Two active clamps of matching types, 
+when near each other, will move towards each other and lock together.*/
+
+/*Some clamp models have doors which open and close in sync with the docking sequences.*/

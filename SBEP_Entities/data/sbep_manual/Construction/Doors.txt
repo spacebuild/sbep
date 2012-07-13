@@ -1,0 +1,22 @@
+<t>sbep_base_door sbep_base_door_controller blast door doors hatch</t>
+
+<icon>sbep_manual/Dr_icon</icon>
+
+/**DOORS**/
+
+/*SBEP doors are an easy, more efficient alternative to making doors with hydraulics, 
+forcers, or other setups involving copious amounts of wire. All the models are animated, 
+and are also fully wire-compatible.*/
+
+/*To spawn an SBEP door, open the Q menu, and click on the Door tool in the SBEP Category.*/
+
+/*Several settings can be changed. "Enable Use Key" means that pressing E on the doorframe 
+will open and close the door (if selected, a wire input is also created to allow this 
+to be disabled freely. "Create Wire Inputs" decides whether or not wire inputs will be 
+created. You must have at least one of these two settings enabled. (Otherwise the door 
+would be unopenable!)*/
+
+/*Below the options, is the model panel. A wide range of models is available for different 
+purposes, split into categories to make finding the right one easier. All models have all 
+possible doors added to them - if any of them are unwanted, simply remove them with the 
+Remover tool.[IMG][size=4]sbep_manual/Dr_menu[/IMG]*/

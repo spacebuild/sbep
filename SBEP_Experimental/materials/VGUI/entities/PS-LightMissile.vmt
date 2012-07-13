@@ -1,0 +1,7 @@
+"UnlitGeneric"
+{
+	"$basetexture"	"vgui/entities/PS-LightMissile"
+	"$vertexcolor"	1
+	"$vertexalpha"	0
+	"$nolod"	1
+}

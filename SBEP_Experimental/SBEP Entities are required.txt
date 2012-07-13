@@ -1,0 +1,1 @@
+This pack is an expansion of the Core SBEP Entities section. You will find errors if you don't have the entities pack.

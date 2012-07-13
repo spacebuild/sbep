@@ -1,0 +1,28 @@
+"SpawnMenu"
+{
+	"Information"
+	{
+		"version"		"2"
+		"name"		"[SBEP][SmallBridge]Panels"
+	}
+	"Entries"
+	{
+		"1"		"models/SmallBridge/Panels/sbdoor.mdl"
+		"2"		"models/SmallBridge/Panels/sbdooriris.mdl"
+		"3"		"models/SmallBridge/Panels/sbdoorsquare.mdl"
+		"4"		"models/SmallBridge/Panels/sbdoorwide.mdl"
+		"5"		"models/SmallBridge/Panels/sbpaneldh.mdl"
+		"6"		"models/SmallBridge/Panels/sbpaneldhdw.mdl"
+		"7"		"models/SmallBridge/Panels/sbpaneldockin.mdl"
+		"8"		"models/SmallBridge/Panels/sbpaneldockout.mdl"
+		"9"		"models/SmallBridge/Panels/sbpaneldoor.mdl"
+		"10"		"models/SmallBridge/Panels/sbpaneldoordw.mdl"
+		"11"		"models/SmallBridge/Panels/sbpaneldoordw2.mdl"
+		"12"		"models/SmallBridge/Panels/sbpaneldooriris.mdl"
+		"13"		"models/SmallBridge/Panels/sbpaneldoorsquare.mdl"
+		"14"		"models/SmallBridge/Panels/sbpaneldoorsquaredw.mdl"
+		"15"		"models/SmallBridge/Panels/sbpaneldoorwide.mdl"
+		"16"		"models/SmallBridge/Panels/sbpanelsolid.mdl"
+		"17"		"models/SmallBridge/Panels/sbpanelsoliddw.mdl"
+	}
+}

@@ -1,0 +1,35 @@
+"SpawnMenu"
+{
+	"Information"
+	{
+		"version"		"2"
+		"name"		"[medbridge]Doubles"
+	}
+	"Entries"
+	{
+		"1"		"models/Spacebuild/medbridge2_emptydoublehull.mdl"
+		"2"		"models/Spacebuild/medbridge2_emptydoublehull_decktodeckramp.mdl"
+		"3"		"models/Spacebuild/medbridge2_singletodoublehull.mdl"
+		"4"		"models/Spacebuild/medbridge2_compflatdoublehull.mdl"
+		"5"		"models/Spacebuild/medbridge2_compflatdoublehull_centralcolumnelevator.mdl"
+		"6"		"models/Spacebuild/medbridge2_compflatdoublehull_elevatorshaft.mdl"
+		"7"		"models/Spacebuild/medbridge2_stackdoublehull.mdl"
+		"8"		"models/Spacebuild/medbridge2_stackdoublehull_ramp.mdl"
+		"9"		"models/Slyfo/vert_transfer.mdl"
+		"10"		"models/Slyfo/fdeck_short.mdl"
+		"11"		"models/Slyfo/fdeck_long.mdl"
+		"12"		"models/Slyfo/fdeck_short_invert.mdl"
+		"13"		"models/Slyfo/fdeck_shortramp_invert.mdl"
+		"14"		"models/Slyfo/fdeck_long_invert.mdl"
+		"15"		"models/Slyfo/doubletrilong.mdl"
+		"16"		"models/Slyfo/doubletrishort.mdl"
+		"17"		"models/Slyfo/doublehull.mdl"
+		"18"		"models/Slyfo/doublehullramp.mdl"
+		"19"		"models/Slyfo/sideconv.mdl"
+		"20"		"models/Slyfo/sideconv_ramp.mdl"
+		"21"		"models/Slyfo/tjointdouble.mdl"
+		"22"		"models/Slyfo/xjointdouble.mdl"
+		"23"		"models/Slyfo/trampdouble.mdl"
+		"24"		"models/Slyfo/xrampdouble.mdl"
+	}
+}

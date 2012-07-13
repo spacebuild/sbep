@@ -1,0 +1,11 @@
+"AddonInfo"
+{
+	"name"		"SpaceBuild Enhancement Project - Experimental"
+	"version"	"4.0"
+	"up_date"	"12th July 2009"
+	"author_name"	"Firgof Umbra, Hysteria, Slyfo, Paradukes, Fishface, Cerus"
+	"author_email"	""
+	"author_url"	""
+	"info"		"SBEP - Experimental"
+	"override"	"0"
+}

@@ -1,0 +1,22 @@
+"SpawnMenu"
+{
+	"Information"
+	{
+		"version"		"2"
+		"name"		"[SBMP]Freighters"
+	}
+	"Entries"
+	{
+		"1"		"models/Slyfo/cargoship.mdl"
+		"2"		"models/Slyfo/cargoshiphatch.mdl"
+		"3"		"models/Slyfo/frigate1.mdl"
+		"4"		"models/Slyfo/frigate1ramp.mdl"
+		"5"		"models/Spacebuild/medbridge.mdl"
+		"6"		"models/Slyfo/ccockpit.mdl"
+		"7"		"models/Slyfo/carrierbay.mdl"
+		"8"		"models/Slyfo/doublecarrier.mdl"
+		"9"		"models/Slyfo/carriersplit.mdl"
+		"10"		"models/Slyfo/cengine.mdl"
+		"11"		"models/Slyfo/fhatch.mdl"
+	}
+}

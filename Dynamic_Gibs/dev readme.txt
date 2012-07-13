@@ -1,0 +1,1 @@
+Since the functions in use here are now in vanilla GMod, it's dyamic effect may be wanted to be included with SBEP (as was propsed in original release). This updated version now had GCombat support in addition to a large suite of options and more control of the serverside blacklist. So, any votes on the script?

@@ -1,0 +1,29 @@
+"SpawnMenu"
+{
+	"Information"
+	{
+		"version"		"2"
+		"name"		"[SBEP][SmallBridge]Height Transfer"
+	}
+	"Entries"
+	{
+		"1"		"models/SmallBridge/Height Transfer/sbhtcramp.mdl"
+		"2"		"models/SmallBridge/Height Transfer/sbhtcramp2d.mdl"
+		"3"		"models/SmallBridge/Height Transfer/sbhtcramp2u.mdl"
+		"4"		"models/SmallBridge/Height Transfer/sbhtcrampdl.mdl"
+		"5"		"models/SmallBridge/Height Transfer/sbhtramp.mdl"
+		"6"		"models/SmallBridge/Height Transfer/sbhtramp05.mdl"
+		"7"		"models/SmallBridge/Height Transfer/sbhtrampdw.mdl"
+		"8"		"models/SmallBridge/Height Transfer/sbhtrampdw05.mdl"
+		"9"		"models/SmallBridge/Height Transfer/sbhtsdwrampd.mdl"
+		"10"		"models/SmallBridge/Height Transfer/sbhtsdwrampm.mdl"
+		"11"		"models/SmallBridge/Height Transfer/sbhtsdwrampu.mdl"
+		"12"		"models/SmallBridge/Height Transfer/sbhtsrampd.mdl"
+		"13"		"models/SmallBridge/Height Transfer/sbhtsrampm.mdl"
+		"14"		"models/SmallBridge/Height Transfer/sbhtsrampu.mdl"
+		"15"		"models/SmallBridge/Height Transfer/sbhtsrampz.mdl"
+		"16"		"models/SmallBridge/Height Transfer/sbhtsrampzdh.mdl"
+		"17"		"models/SmallBridge/Height Transfer/sbhtsrampzdw.mdl"
+		"18"		"models/SmallBridge/Height Transfer/sbhtsrampzdwdh.mdl"
+	}
+}

@@ -1,0 +1,19 @@
+"SpawnMenu"
+{
+	"Information"
+	{
+		"version"		"2"
+		"name"		"[SBEP][SmallBridge]Ships"
+	}
+	"Entries"
+	{
+		"1"		"models/SmallBridge/Ships/sbshuttlec1e1.mdl"
+		"2"		"models/SmallBridge/Ships/sbshuttlec1e2.mdl"
+		"3"		"models/SmallBridge/Ships/sbshuttlec2e2.mdl"
+		"4"		"models/SmallBridge/Ships/sbfrigate1.mdl"
+		"5"		"models/SmallBridge/Ships/hysteria_galapagos.mdl"
+		"6"		"models/SmallBridge/Ships/wilkie1020.mdl"
+		"7"		"models/SmallBridge/Ships/steakknife.mdl"
+		"8"		"models/SmallBridge/Ships/matthew0623_hydra.mdl"
+	}
+}
