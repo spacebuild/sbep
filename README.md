@@ -1,4 +1,6 @@
-sbep
-====
+spacebuild
+==========
 
-Spacebuild Enhancement Pack
+Garry'smod spacebuild project
+
+test readme
