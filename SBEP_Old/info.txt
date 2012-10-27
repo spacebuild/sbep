@@ -1,0 +1,11 @@
+"AddonInfo"
+{
+	"name"		"SpaceBuild Enhancement Project - Old Lua"
+	"version"	"5.0"
+	"up_date"	"16/10/2012"
+	"author_name"	"Firgof Umbra, Hysteria, Slyfo, Paradukes, Fishface, Cerus"
+	"author_email"	""
+	"author_url"	""
+	"info"		"SBEP old lua stuff that will be recoded in Gm13"
+	"override"	"0"
+}

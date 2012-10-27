@@ -1,0 +1,29 @@
+"SpawnMenu"
+{
+	"Information"
+	{
+		"Version"	"2"
+		"Name"	"[SBEP][Fortifications] Quonset"
+	}
+	"Entries"
+	{
+	"1"	"models\Slyfo\qstbigroom.mdl"
+	"2"	"models\Slyfo\qstbigroomallglass.mdl"
+	"3"	"models\Slyfo\qstbigroomglass.mdl"
+	"4"	"models\Slyfo\qstcorner.mdl"
+	"5"	"models\Slyfo\qstcornerhall1.mdl"
+	"6"	"models\Slyfo\qstcornerhall2.mdl"
+	"7"	"models\Slyfo\qstdogbone.mdl"
+	"8"	"models\Slyfo\qstdonut.mdl"
+	"9"	"models\Slyfo\qstlong.mdl"
+	"10"	"models\Slyfo\qstmed.mdl"
+	"11"	"models\Slyfo\qsts.mdl"
+	"12"	"models\Slyfo\qstshort.mdl"
+	"13"	"models\Slyfo\qstsoftcorner.mdl"
+	"14"	"models\Slyfo\qstx.mdl"
+	"15"	"models\Slyfo\quonset.mdl"
+	"16"	"models\Slyfo\quonsetallglass.mdl"
+	"17"	"models\Slyfo\quonsetglass.mdl"
+	"18"	"models\Slyfo\quonsetmid.mdl"
+	}
+}

@@ -1,6 +1,4 @@
-spacebuild
-==========
+Spacebuild Enhancement Project
+==============================
 
-Garry'smod spacebuild project
-
-test readme
+The Spacebuld Enhancement Project github.
