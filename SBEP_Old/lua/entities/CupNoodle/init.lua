@@ -12,13 +12,13 @@ end
 	
 function ENT:Initialize()
 
-	self.Entity:SetModel( "models/slyfo/cup_noodle.mdl" )
-	self.Entity:PhysicsInit( SOLID_VPHYSICS )
-	self.Entity:SetMoveType( MOVETYPE_VPHYSICS )
-	self.Entity:SetSolid( SOLID_VPHYSICS )
-	self.Entity:SetUseType( SIMPLE_USE )
+	self:SetModel( "models/slyfo/cup_noodle.mdl" )
+	self:PhysicsInit( SOLID_VPHYSICS )
+	self:SetMoveType( MOVETYPE_VPHYSICS )
+	self:SetSolid( SOLID_VPHYSICS )
+	self:SetUseType( SIMPLE_USE )
 
-	local phys = self.Entity:GetPhysicsObject()
+	local phys = self:GetPhysicsObject()
 	if (phys:IsValid()) then
 		phys:Wake()
 	end
@@ -34,5 +34,5 @@ function ENT:Use( activator, caller )
 			activator:SetHealth( 125 )
 		end
 	end
-	self.Entity:Remove()
+	self:Remove()
 end

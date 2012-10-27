@@ -1,7 +1,7 @@
 include('shared.lua')
 
 function ENT:Draw()	
-   self.Entity:DrawModel() 					
+   self:DrawModel() 					
 end
    
 local function OpenMenu( um )

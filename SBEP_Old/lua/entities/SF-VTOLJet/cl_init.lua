@@ -35,7 +35,7 @@ function ENT:Draw()
 	local ESA1 = math.sin(math.rad(self.ESin)) * 70
 	local ESA2 = math.sin(math.rad(self.ESin2)) * 60
 	
-	self.Entity:DrawModel()
+	self:DrawModel()
 	
 	render.SetMaterial( self.Matt )	
 	local color = Color( 255, 200, 100, 255 )
@@ -50,8 +50,8 @@ function ENT:Draw()
 		render.DrawSprite( v, 100 * Flare, (400 + ESA1) * Flare, color )
 		render.DrawSprite( v, (400 - ESA1) * Flare, 100 * Flare, color )
 		render.DrawSprite( v, (200 + ESA2) * Flare, (200 + ESA2) * Flare, color )
-		--render.DrawSprite( self.Entity:GetPos() + self.Entity:GetRight() * 100 + self.Entity:GetForward() * 40, 500, 500, color )
-		--render.DrawSprite( self.Entity:GetPos() + self.Entity:GetRight() * 100 + self.Entity:GetForward() * -40, 500, 500, color )
+		--render.DrawSprite( self:GetPos() + self:GetRight() * 100 + self:GetForward() * 40, 500, 500, color )
+		--render.DrawSprite( self:GetPos() + self:GetRight() * 100 + self:GetForward() * -40, 500, 500, color )
 		
 		local FS1 = self.FSize * 0.3
 		local FS2 = self.FSize * 0.2

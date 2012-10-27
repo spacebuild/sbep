@@ -7,25 +7,25 @@ util.PrecacheSound( "WeaponDissolve.Dissolve" )
 
 function ENT:Initialize()
 
-	self.Entity:SetModel( "models/Slyfo_2/mini_turret_pulselaser.mdl" ) 
-	self.Entity:SetName("TinyPulseCannon")
-	self.Entity:PhysicsInit( SOLID_VPHYSICS )
-	self.Entity:SetMoveType( MOVETYPE_VPHYSICS )
-	self.Entity:SetSolid( SOLID_VPHYSICS )
-	self.Inputs = Wire_CreateInputs( self.Entity, { "Fire" } )
+	self:SetModel( "models/Slyfo_2/mini_turret_pulselaser.mdl" ) 
+	self:SetName("TinyPulseCannon")
+	self:PhysicsInit( SOLID_VPHYSICS )
+	self:SetMoveType( MOVETYPE_VPHYSICS )
+	self:SetSolid( SOLID_VPHYSICS )
+	self.Inputs = Wire_CreateInputs( self, { "Fire" } )
 	
-	local phys = self.Entity:GetPhysicsObject()
+	local phys = self:GetPhysicsObject()
 	if (phys:IsValid()) then
 		phys:Wake()
 		phys:EnableGravity(true)
 		phys:EnableDrag(true)
 		phys:EnableCollisions(true)
 	end
-	self.Entity:SetKeyValue("rendercolor", "255 255 255")
-	self.PhysObj = self.Entity:GetPhysicsObject()
+	self:SetKeyValue("rendercolor", "255 255 255")
+	self.PhysObj = self:GetPhysicsObject()
 	
 	--self.val1 = 0
-	--RD_AddResource(self.Entity, "Munitions", 0)
+	--RD_AddResource(self, "Munitions", 0)
 	
 	self.FTime = 0
 	self.NFTime = 0
@@ -71,21 +71,21 @@ function ENT:Think()
 	
 		local NewShell = ents.Create( "SF-TinyPulseShot" )
 		if ( !NewShell:IsValid() ) then return end
-		NewShell:SetPos( self.Entity:GetPos() + (self.Entity:GetForward() * 60 ) )
-		NewShell:SetAngles( self.Entity:GetForward():Angle() )
+		NewShell:SetPos( self:GetPos() + (self:GetForward() * 60 ) )
+		NewShell:SetAngles( self:GetForward():Angle() )
 		NewShell.SPL = self.SPL
 		NewShell:Spawn()
 		NewShell:Initialize()
 		NewShell:Activate()
-		NewShell.PhysObj:SetVelocity(self.Entity:GetForward() * 7000)
+		NewShell.PhysObj:SetVelocity(self:GetForward() * 7000)
 		NewShell:Fire("kill", "", 1)
-		NewShell.ParL = self.Entity
+		NewShell.ParL = self
 				
-		self.Entity:EmitSound("NPC_Ministrider.FireMinigun")
+		self:EmitSound("NPC_Ministrider.FireMinigun")
 		
 		self.NFTime = CurTime() + 0.15
 	end
-	self.Entity:NextThink( CurTime() + 0.01 )
+	self:NextThink( CurTime() + 0.01 )
 	return true
 end
 
@@ -103,7 +103,7 @@ end
 
 function ENT:Touch( ent )
 	if ent.HasHardpoints then
-		if ent.Cont and ent.Cont:IsValid() then HPLink( ent.Cont, ent.Entity, self.Entity ) end
+		if ent.Cont and ent.Cont:IsValid() then HPLink( ent.Cont, ent.Entity, self ) end
 	end
 end
 

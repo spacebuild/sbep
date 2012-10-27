@@ -8,24 +8,24 @@ util.PrecacheSound( "ambient/machines/thumper_startup1.wav" )
 
 function ENT:Initialize()
 
-	self.Entity:SetModel( "models/props_combine/headcrabcannister01a.mdl" ) 
-	self.Entity:SetName("GenericAircraft")
-	self.Entity:PhysicsInit( SOLID_VPHYSICS )
-	self.Entity:SetMoveType( MOVETYPE_VPHYSICS )
-	self.Entity:SetSolid( SOLID_VPHYSICS )
-	self.Entity:SetMaterial("models/props_combine/combinethumper002");
-	self.Inputs = Wire_CreateInputs( self.Entity, { "PitchMultiplyer", "YawMultiplyer", "RollMultiplyer" } ) -- "ShipWidth", "ShipLength", "ShipHeight" } )
+	self:SetModel( "models/props_combine/headcrabcannister01a.mdl" ) 
+	self:SetName("GenericAircraft")
+	self:PhysicsInit( SOLID_VPHYSICS )
+	self:SetMoveType( MOVETYPE_VPHYSICS )
+	self:SetSolid( SOLID_VPHYSICS )
+	self:SetMaterial("models/props_combine/combinethumper002");
+	self.Inputs = Wire_CreateInputs( self, { "PitchMultiplyer", "YawMultiplyer", "RollMultiplyer" } ) -- "ShipWidth", "ShipLength", "ShipHeight" } )
 
-	local phys = self.Entity:GetPhysicsObject()
+	local phys = self:GetPhysicsObject()
 	if (phys:IsValid()) then
 		phys:Wake()
 		phys:EnableGravity(true)
 		phys:EnableDrag(true)
 		phys:EnableCollisions(true)
 	end
-	self.Entity:StartMotionController()
-    self.Entity:SetKeyValue("rendercolor", "255 255 255")
-	self.PhysObj = self.Entity:GetPhysicsObject()
+	self:StartMotionController()
+    self:SetKeyValue("rendercolor", "255 255 255")
+	self.PhysObj = self:GetPhysicsObject()
 	self.LTab = {}
 	
 	self.TSpeed = 25
@@ -213,11 +213,11 @@ function ENT:Think()
 				if !self.LTog then
 					if self.Launchy then
 						self.Launchy = false
-						self.Entity:StopSound( "k_lab.ambient_powergenerators" )
+						self:StopSound( "k_lab.ambient_powergenerators" )
 					else
 						self.Launchy = true
-						self.Entity:EmitSound( "k_lab.ambient_powergenerators" )
-						self.Entity:EmitSound( "ambient/machines/thumper_startup1.wav" )
+						self:EmitSound( "k_lab.ambient_powergenerators" )
+						self:EmitSound( "ambient/machines/thumper_startup1.wav" )
 					end
 				end
 				self.LTog = true
@@ -337,14 +337,14 @@ function ENT:Think()
 				for x, c in pairs(self.LTab) do
 					if (c:IsValid()) then
 						local physi = c:GetPhysicsObject()
-						physi:SetVelocity( (physi:GetVelocity() * 0.75) + ((self.Entity:GetForward() * self.Speed) + (self.Entity:GetUp() * self.VSpeed)) + (self.Entity:GetRight() * self.HSpeed) )
+						physi:SetVelocity( (physi:GetVelocity() * 0.75) + ((self:GetForward() * self.Speed) + (self:GetUp() * self.VSpeed)) + (self:GetRight() * self.HSpeed) )
 						physi:AddAngleVelocity(physi:GetAngleVelocity() * -0.5)
-						physi:ApplyForceOffset( self.Entity:GetForward() * ((self.Pitch * self.PMult * 0.005) * physi:GetMass()), self.Entity:GetPos() + self.Entity:GetUp() * 5000 )
-						physi:ApplyForceOffset( self.Entity:GetForward() * ((-self.Pitch * self.PMult * 0.005) * physi:GetMass()), self.Entity:GetPos() + self.Entity:GetUp() * -5000 )
-						physi:ApplyForceOffset( self.Entity:GetForward() * ((self.Yaw * self.YMult * 0.01) * physi:GetMass()), self.Entity:GetPos() + self.Entity:GetRight() * 5000 )
-						physi:ApplyForceOffset( self.Entity:GetForward() * ((-self.Yaw * self.YMult * 0.01) * physi:GetMass()), self.Entity:GetPos() + self.Entity:GetRight() * -5000 )
-						physi:ApplyForceOffset( self.Entity:GetUp() * ((-self.Roll * self.RMult * 0.01) * physi:GetMass()), self.Entity:GetPos() + self.Entity:GetRight() * 5000 )
-						physi:ApplyForceOffset( self.Entity:GetUp() * ((self.Roll * self.RMult * 0.01) * physi:GetMass()), self.Entity:GetPos() + self.Entity:GetRight() * -5000 )
+						physi:ApplyForceOffset( self:GetForward() * ((self.Pitch * self.PMult * 0.005) * physi:GetMass()), self:GetPos() + self:GetUp() * 5000 )
+						physi:ApplyForceOffset( self:GetForward() * ((-self.Pitch * self.PMult * 0.005) * physi:GetMass()), self:GetPos() + self:GetUp() * -5000 )
+						physi:ApplyForceOffset( self:GetForward() * ((self.Yaw * self.YMult * 0.01) * physi:GetMass()), self:GetPos() + self:GetRight() * 5000 )
+						physi:ApplyForceOffset( self:GetForward() * ((-self.Yaw * self.YMult * 0.01) * physi:GetMass()), self:GetPos() + self:GetRight() * -5000 )
+						physi:ApplyForceOffset( self:GetUp() * ((-self.Roll * self.RMult * 0.01) * physi:GetMass()), self:GetPos() + self:GetRight() * 5000 )
+						physi:ApplyForceOffset( self:GetUp() * ((self.Roll * self.RMult * 0.01) * physi:GetMass()), self:GetPos() + self:GetRight() * -5000 )
 						physi:EnableGravity(false)
 					end
 				end
@@ -362,20 +362,20 @@ function ENT:Think()
 			end
 			
 			if (self.Launchy) then
-				self.Entity:GetPhysicsObject():EnableGravity(false)
+				self:GetPhysicsObject():EnableGravity(false)
 			else
-				self.Entity:GetPhysicsObject():EnableGravity(true)
+				self:GetPhysicsObject():EnableGravity(true)
 			end
 		else
 			self.Speed = 0
 			self.Yaw = 0
 			self.Roll = 0
 			self.Pitch = 0
-			self.Entity:GetPhysicsObject():EnableGravity(false)
+			self:GetPhysicsObject():EnableGravity(false)
 		end
 	end
 
-	self.Entity:NextThink( CurTime() + 0.01 ) 
+	self:NextThink( CurTime() + 0.01 ) 
 	return true
 end
 
@@ -408,7 +408,7 @@ function ENT:Link( hitEnt )
 end
 
 function ENT:OnRemove()
-	self.Entity:StopSound( "k_lab.ambient_powergenerators" )
+	self:StopSound( "k_lab.ambient_powergenerators" )
 end
 
 function ENT:Use()
@@ -425,7 +425,7 @@ function ENT:PreEntityCopy()
 	DI.Pod = self.Pod:EntIndex()
 	
 	if WireAddon then
-		DI.WireData = WireLib.BuildDupeInfo( self.Entity )
+		DI.WireData = WireLib.BuildDupeInfo( self )
 	end
 	
 	duplicator.StoreEntityModifier(self, "SBEPGyro2", DI)

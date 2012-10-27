@@ -41,11 +41,11 @@ function ENT:Initialize()
 	self.LType = self.LType or "4X Launcher"
 	local LauncherData = list.Get( "SBEP_LauncherData" )
 	local Data = LauncherData[self.LType]
-	self.Entity:SetModel( Data.Model ) 
-	self.Entity:SetName(self.Type)
-	self.Entity:PhysicsInit( SOLID_VPHYSICS )
-	self.Entity:SetMoveType( MOVETYPE_VPHYSICS )
-	self.Entity:SetSolid( SOLID_VPHYSICS )
+	self:SetModel( Data.Model ) 
+	self:SetName(self.Type)
+	self:PhysicsInit( SOLID_VPHYSICS )
+	self:SetMoveType( MOVETYPE_VPHYSICS )
+	self:SetSolid( SOLID_VPHYSICS )
 
 	if WireAddon then
 		local V,N,A,E = "VECTOR","NORMAL","ANGLE","ENTITY"
@@ -58,19 +58,19 @@ function ENT:Initialize()
 			{N,N,N,V,A,V,E})
 	end
 
-	local phys = self.Entity:GetPhysicsObject()
+	local phys = self:GetPhysicsObject()
 	if (phys:IsValid()) then
 		phys:Wake()
 		phys:EnableGravity(true)
 		phys:EnableDrag(true)
 		phys:EnableCollisions(true)
 	end
-	self.Entity:SetKeyValue("rendercolor", "255 255 255")
-	self.Entity:SetNetworkedInt( "Shots", 4 )
-	self.PhysObj = self.Entity:GetPhysicsObject()
+	self:SetKeyValue("rendercolor", "255 255 255")
+	self:SetNetworkedInt( "Shots", 4 )
+	self.PhysObj = self:GetPhysicsObject()
 	
 	--self.val1 = 0
-	--RD_AddResource(self.Entity, "Munitions", 0)
+	--RD_AddResource(self, "Munitions", 0)
 	
 	self.CDL = {}
 	self.Shots = Data.Shots
@@ -115,7 +115,7 @@ end
 function ENT:TriggerInput(iname, value)		
 	if (iname == "Fire") then
 		if (value > 0) then
-			self.Entity:HPFire()
+			self:HPFire()
 		end
 		
 	elseif (iname == "GuidanceType") then
@@ -176,18 +176,18 @@ function ENT:Think()
 		if CurTime() >= self.CDL[n] then
 			if self.CDL[n] ~= 0 then
 				self.CDL[n] = 0
-				self.Entity:EmitSound("Buttons.snd26")
+				self:EmitSound("Buttons.snd26")
 			end
 			MCount = MCount + 1
 		end
 	end
 	
-	Wire_TriggerOutput(self.Entity, "ShotsLeft", MCount)
-	self.Entity:SetShots(MCount)
+	Wire_TriggerOutput(self, "ShotsLeft", MCount)
+	self:SetShots(MCount)
 	if MCount > 0 then 
-		Wire_TriggerOutput(self.Entity, "CanFire", 1) 
+		Wire_TriggerOutput(self, "CanFire", 1) 
 	else
-		Wire_TriggerOutput(self.Entity, "CanFire", 0) 
+		Wire_TriggerOutput(self, "CanFire", 0) 
 	end
 	
 	if self.Pod and self.Pod:IsValid() and !self.WireG and self.Pod.Trace then
@@ -198,17 +198,17 @@ function ENT:Think()
 	end
 	
 	if self.Primary and self.Primary:IsValid() then
-		Wire_TriggerOutput(self.Entity, "PrimaryMissileActive", 1)
-		Wire_TriggerOutput(self.Entity, "PrimaryMissilePos", self.Primary:GetPos() )
-		Wire_TriggerOutput(self.Entity, "PrimaryMissileAngle", self.Primary:GetAngles())
-		Wire_TriggerOutput(self.Entity, "PrimaryMissileVelocity", self.Primary:GetPhysicsObject():GetVelocity())
-		Wire_TriggerOutput(self.Entity, "PrimaryMissile", self.Primary)
+		Wire_TriggerOutput(self, "PrimaryMissileActive", 1)
+		Wire_TriggerOutput(self, "PrimaryMissilePos", self.Primary:GetPos() )
+		Wire_TriggerOutput(self, "PrimaryMissileAngle", self.Primary:GetAngles())
+		Wire_TriggerOutput(self, "PrimaryMissileVelocity", self.Primary:GetPhysicsObject():GetVelocity())
+		Wire_TriggerOutput(self, "PrimaryMissile", self.Primary)
 		
 	else
-		Wire_TriggerOutput(self.Entity, "PrimaryMissileActive", 0)
+		Wire_TriggerOutput(self, "PrimaryMissileActive", 0)
 	end
 	
-	self.Entity:NextThink( CurTime() + 0.01 )
+	self:NextThink( CurTime() + 0.01 )
 	return true
 end
 
@@ -226,7 +226,7 @@ end
 
 function ENT:Touch( ent )
 	if ent.HasHardpoints then
-		if ent.Cont and ent.Cont:IsValid() then HPLink( ent.Cont, ent.Entity, self.Entity ) end
+		if ent.Cont and ent.Cont:IsValid() then HPLink( ent.Cont, ent.Entity, self ) end
 	end
 end
 
@@ -234,7 +234,7 @@ function ENT:HPFire()
 	if (CurTime() >= self.MCDown) then
 		for n = 1, self.Shots do
 			if (CurTime() >= self.CDL[n]) then
-				self.Entity:FFire(n)
+				self:FFire(n)
 				return
 			end
 		end
@@ -244,17 +244,17 @@ end
 function ENT:FFire( CCD )
 	local NewShell = ents.Create( "SF-HomingMissile" )
 	if ( !NewShell:IsValid() ) then return end
-	local CVel = self.Entity:GetPhysicsObject():GetVelocity()
+	local CVel = self:GetPhysicsObject():GetVelocity()
 	local Row = table.Random(self.Rows)
 	local Col = table.Random(self.Cols)
-	NewShell:SetPos( self.Entity:GetPos() + (self:GetUp() * Row) + (self:GetRight() * Col) + (self.Entity:GetForward() * self.BLength) + CVel )
-	NewShell:SetAngles( self.Entity:GetAngles() )
+	NewShell:SetPos( self:GetPos() + (self:GetUp() * Row) + (self:GetRight() * Col) + (self:GetForward() * self.BLength) + CVel )
+	NewShell:SetAngles( self:GetAngles() )
 	NewShell.SPL = self.SPL
 	NewShell:Spawn()
 	NewShell:Initialize()
 	NewShell:Activate()
 	NewShell:SetOwner(self)
-	NewShell.PhysObj:SetVelocity(self.Entity:GetForward() * 1000)
+	NewShell.PhysObj:SetVelocity(self:GetForward() * 1000)
 	NewShell:Fire("kill", "", 30)
 	NewShell.TEnt = self.TEnt
 	local Trace = nil
@@ -272,7 +272,7 @@ function ENT:FFire( CCD )
 		NewShell.Pod = self.Pod
 	end
 	
-	NewShell.ParL = self.Entity
+	NewShell.ParL = self
 	NewShell.XCo = self.XCo
 	NewShell.YCo = self.YCo
 	NewShell.ZCo = self.ZCo
@@ -291,14 +291,14 @@ function ENT:FFire( CCD )
 		self.Primary = NewShell
 	end
 	--RD_ConsumeResource(self, "Munitions", 1000)
-	self.Entity:EmitSound("Weapon_RPG.Single")
+	self:EmitSound("Weapon_RPG.Single")
 	self.MCDown = CurTime() + 0.1 + math.Rand(0,0.2)
 	self.CDL[CCD] = CurTime() + 7
 end
 
 function ENT:PreEntityCopy()
 	if WireAddon then
-		duplicator.StoreEntityModifier(self,"WireDupeInfo",WireLib.BuildDupeInfo(self.Entity))
+		duplicator.StoreEntityModifier(self,"WireDupeInfo",WireLib.BuildDupeInfo(self))
 	end
 end
 

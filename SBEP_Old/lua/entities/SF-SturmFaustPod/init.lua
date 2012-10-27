@@ -5,37 +5,37 @@ include( 'shared.lua' )
 
 function ENT:Initialize()
 
-	self.Entity:SetModel( "models/Slyfo/missile_sturmfausttube.mdl" ) 
-	self.Entity:SetName("Sturm Faust Launcher")
-	self.Entity:PhysicsInit( SOLID_VPHYSICS )
-	self.Entity:SetMoveType( MOVETYPE_VPHYSICS )
-	self.Entity:SetSolid( SOLID_VPHYSICS )
+	self:SetModel( "models/Slyfo/missile_sturmfausttube.mdl" ) 
+	self:SetName("Sturm Faust Launcher")
+	self:PhysicsInit( SOLID_VPHYSICS )
+	self:SetMoveType( MOVETYPE_VPHYSICS )
+	self:SetSolid( SOLID_VPHYSICS )
 
 	if WireAddon then
 		self.Inputs = WireLib.CreateInputs( self, { "Fire" } )
 	end
 
-	local phys = self.Entity:GetPhysicsObject()
+	local phys = self:GetPhysicsObject()
 	if (phys:IsValid()) then
 		phys:Wake()
 		phys:EnableGravity(true)
 		phys:EnableDrag(true)
 		phys:EnableCollisions(true)
 	end
-	self.Entity:SetKeyValue("rendercolor", "255 255 255")
-	self.PhysObj = self.Entity:GetPhysicsObject()
+	self:SetKeyValue("rendercolor", "255 255 255")
+	self.PhysObj = self:GetPhysicsObject()
 	
 	self.Faust = ents.Create( "SF-SturmFaust" )
 	if ( !self.Faust:IsValid() ) then return end
-	self.Faust:SetPos( self.Entity:GetPos() + (self.Entity:GetUp() * -1) + (self.Entity:GetForward() * 30) )
-	self.Faust:SetAngles( self.Entity:GetAngles() )
+	self.Faust:SetPos( self:GetPos() + (self:GetUp() * -1) + (self:GetForward() * 30) )
+	self.Faust:SetAngles( self:GetAngles() )
 	self.Faust.SPL = self.SPL
 	self.Faust:Spawn()
 	self.Faust:Initialize()
 	self.Faust:Activate()
 	self.Faust:SetOwner(self)
-	local WD = constraint.Weld( self.Entity, self.Faust )
-	self.Faust:SetParent(self.Entity)
+	local WD = constraint.Weld( self, self.Faust )
+	self.Faust:SetParent(self)
 	
 	
 	self.Fired = false
@@ -60,30 +60,30 @@ end
 function ENT:TriggerInput(iname, value)		
 	if (iname == "Fire") then
 		if (value > 0) then
-			self.Entity:HPFire()
+			self:HPFire()
 		end
 			
 	end
 end
 
 function ENT:Use( activator, caller )
-	self.Entity:HPFire()
+	self:HPFire()
 end
 
 function ENT:Think()
 
 	if !self.Faust then
-		self.Entity:SetParent()
-		constraint.RemoveConstraints( self.Entity, "Weld" )
-		self.Entity:Fire("kill", "", 10)
-		self.Entity:SetColor(50,50,50,255)
+		self:SetParent()
+		constraint.RemoveConstraints( self, "Weld" )
+		self:Fire("kill", "", 10)
+		self:SetColor(Color(50,50,50,255))
 	end
 
 end
 
 function ENT:Touch( ent )
 	if ent.HasHardpoints then
-		if ent.Cont and ent.Cont:IsValid() then HPLink( ent.Cont, ent.Entity, self.Entity ) end
+		if ent.Cont and ent.Cont:IsValid() then HPLink( ent.Cont, ent.Entity, self ) end
 	end
 end
 
@@ -91,7 +91,7 @@ function ENT:HPFire()
 	if (!self.Fired and self.Faust and self.Faust:IsValid()) then
 		self.Faust:SetParent()
 		constraint.RemoveConstraints( self.Faust, "Weld" )
-		self.Faust.PhysObj:SetVelocity(self.Entity:GetForward() * 5000)
+		self.Faust.PhysObj:SetVelocity(self:GetForward() * 5000)
 		self.Faust:Fire("kill", "", 30)
 		
 		
@@ -102,7 +102,7 @@ function ENT:HPFire()
 		RockTrail:Spawn()
 		RockTrail:Activate()
 		--RD_ConsumeResource(self, "Munitions", 1000)
-		self.Entity:EmitSound("Weapon_RPG.Single")
+		self:EmitSound("Weapon_RPG.Single")
 		
 		self.Faust.Armed = true
 		self.Faust = nil
@@ -112,7 +112,7 @@ end
 
 function ENT:PreEntityCopy()
 	if WireAddon then
-		duplicator.StoreEntityModifier(self,"WireDupeInfo",WireLib.BuildDupeInfo(self.Entity))
+		duplicator.StoreEntityModifier(self,"WireDupeInfo",WireLib.BuildDupeInfo(self))
 	end
 end
 

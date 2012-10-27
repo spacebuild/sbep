@@ -5,27 +5,27 @@ util.PrecacheSound( "SB/Gattling2.wav" )
 
 function ENT:Initialize()
 
-	self.Entity:SetModel( "models/Slyfo/smuggler_side.mdl" ) 
-	self.Entity:SetName("SmallMachineGun")
-	self.Entity:PhysicsInit( SOLID_VPHYSICS )
-	self.Entity:SetMoveType( MOVETYPE_VPHYSICS )
-	self.Entity:SetSolid( SOLID_VPHYSICS )
-	self.Inputs = Wire_CreateInputs( self.Entity, { "Open", "OpenMode" } )
+	self:SetModel( "models/Slyfo/smuggler_side.mdl" ) 
+	self:SetName("SmallMachineGun")
+	self:PhysicsInit( SOLID_VPHYSICS )
+	self:SetMoveType( MOVETYPE_VPHYSICS )
+	self:SetSolid( SOLID_VPHYSICS )
+	self.Inputs = Wire_CreateInputs( self, { "Open", "OpenMode" } )
 	
-	local phys = self.Entity:GetPhysicsObject()
+	local phys = self:GetPhysicsObject()
 	if (phys:IsValid()) then
 		phys:Wake()
 		phys:EnableGravity(true)
 		phys:EnableDrag(true)
 		phys:EnableCollisions(true)
 	end
-	self.Entity:SetKeyValue("rendercolor", "255 255 255")
-	self.PhysObj = self.Entity:GetPhysicsObject()
+	self:SetKeyValue("rendercolor", "255 255 255")
+	self.PhysObj = self:GetPhysicsObject()
 	
 	--self.val1 = 0
-	--RD_AddResource(self.Entity, "Munitions", 0)
+	--RD_AddResource(self, "Munitions", 0)
 	
-	self.Cont = self.Entity
+	self.Cont = self
 	self.COp = false
 	self.Mode = 0
 	
@@ -59,11 +59,11 @@ function ENT:TriggerInput(iname, value)
 	if (iname == "Open") then
 		if (value > 0) then
 			if !self.COp and self.Pod and self.Pod:IsValid() then
-				self.Entity:Open(self.Mode)
+				self:Open(self.Mode)
 			end
 		else
 			if self.COp and self.Pod and self.Pod:IsValid() then
-				self.Entity:Close(self.Mode)
+				self:Close(self.Mode)
 			end
 		end
 		
@@ -80,7 +80,7 @@ end
 function ENT:Think()
 	
 	if self.AutoC and CurTime() > self.AutoCT then
-		self.Entity:Close(self.Mode)
+		self:Close(self.Mode)
 		self.AutoC = false
 	end
 	
@@ -96,11 +96,11 @@ function ENT:Think()
 			S = 0
 		end
 		local Alph = Lerp(A,F,S)
-		self.Entity:SetColor(255,255,255,Alph)
+		self:SetColor(Color(255,255,255,Alph))
 		
 		if self.Mode == 2 and self.BTime > CurTime() then
 			if self.Panel and self.Panel:IsValid() then
-				self.Panel:GetPhysicsObject():SetVelocity(self.Entity:GetRight() * 5000)
+				self.Panel:GetPhysicsObject():SetVelocity(self:GetRight() * 5000)
 			end
 		end
 	elseif self.Mode == 3 then
@@ -115,7 +115,7 @@ function ENT:Think()
 		local X = Offset.x
 		local Y = Offset.y
 		local Z = Offset.z - self.CHeight
-		self.Entity:SetLocalPos( Vector(X,Y,Z) )
+		self:SetLocalPos( Vector(X,Y,Z) )
 	elseif self.Mode == 4 then
 		if self.COp and self.CRotate < 360 then
 			self.CRotate = self.CRotate + 4
@@ -149,16 +149,16 @@ function ENT:Think()
 			NAng:RotateAroundAxis( NAng:Forward(), self.CRotate )
 			Y = Y + YOffset
 		end
-		self.Entity:SetLocalPos( Vector(X,Y,Z) )
-		self.Entity:SetLocalAngles( self.Entity:WorldToLocalAngles(NAng) )
+		self:SetLocalPos( Vector(X,Y,Z) )
+		self:SetLocalAngles( self:WorldToLocalAngles(NAng) )
 	end
 	
 	if self.Panel and self.Panel:IsValid() and !self.Panel.Blasted then
-		self.Panel:GetPhysicsObject():SetVelocity(self.Entity:GetRight() * 5000)
+		self.Panel:GetPhysicsObject():SetVelocity(self:GetRight() * 5000)
 		self.Panel.Blasted = true
 	end
 
-	self.Entity:NextThink( CurTime() + 0.01 ) 
+	self:NextThink( CurTime() + 0.01 ) 
 	return true
 end
 
@@ -173,9 +173,9 @@ end
 function ENT:Use( activator, caller )
 	if CurTime() > self.TogC then
 		if self.COp then
-			self.Entity:Close(self.Mode)
+			self:Close(self.Mode)
 		else
-			self.Entity:Open(self.Mode)
+			self:Open(self.Mode)
 			self.AutoCT = CurTime() + 15
 			self.AutoC = true
 		end
@@ -186,66 +186,66 @@ end
 
 function ENT:Touch( ent )
 	if ent.HasHardpoints then
-		if ent.Cont and ent.Cont:IsValid() then HPLink( ent.Cont, ent.Entity, self.Entity ) end
-		self.Entity:GetPhysicsObject():EnableCollisions(true)
+		if ent.Cont and ent.Cont:IsValid() then HPLink( ent.Cont, ent.Entity, self ) end
+		self:GetPhysicsObject():EnableCollisions(true)
 	end
 end
 
 function ENT:HPFire()
 	if !self.COp and self.Pod and self.Pod:IsValid() then
-		self.Entity:Open(self.Mode)
+		self:Open(self.Mode)
 	else
-		self.Entity:Close(self.Mode)
+		self:Close(self.Mode)
 	end
 end
 
 --Modes: 0 = fade, 1 = slow fade, 2 = blast, 3 = slide, 4 = rotate
 function ENT:Open( mode )
 	if mode == 0 then
-		self.Entity:SetColor(255,255,255,50)
-		--self.Entity:SetParent(self.Pod)
-		self.Entity:SetNotSolid( true )
-		self.Entity:SetCollisionGroup(COLLISION_GROUP_DEBRIS)
+		self:SetColor(Color(255,255,255,50))
+		--self:SetParent(self.Pod)
+		self:SetNotSolid( true )
+		self:SetCollisionGroup(COLLISION_GROUP_DEBRIS)
 		self.COp = true
 	elseif mode == 1 then
 		self.OTime = CurTime() + 1	
-		--self.Entity:SetParent(self.Pod)
-		self.Entity:SetNotSolid( true )
-		self.Entity:SetCollisionGroup(COLLISION_GROUP_DEBRIS)
+		--self:SetParent(self.Pod)
+		self:SetNotSolid( true )
+		self:SetCollisionGroup(COLLISION_GROUP_DEBRIS)
 		self.COp = true
 	elseif mode == 2 then
-		self.Entity:SetColor(255,255,255,0)
-		self.Entity:SetNotSolid( true )
-		self.Entity:SetCollisionGroup(COLLISION_GROUP_DEBRIS)
+		self:SetColor(Color(255,255,255,0))
+		self:SetNotSolid( true )
+		self:SetCollisionGroup(COLLISION_GROUP_DEBRIS)
 		self.COp = true
 		
 		local effectdata = EffectData()
-		effectdata:SetOrigin( self.Entity:GetPos() + self.Entity:GetUp() * 95 + self.Entity:GetForward() * 255 )
-		effectdata:SetAngle( self.Entity:GetRight() )
+		effectdata:SetOrigin( self:GetPos() + self:GetUp() * 95 + self:GetForward() * 255 )
+		effectdata:SetAngle( self:GetRight() )
 		effectdata:SetMagnitude( 5 )
 		effectdata:SetScale( 5 )
 		effectdata:SetRadius( 5 )
 		util.Effect( "GlassImpact", effectdata )
 		
 		effectdata = EffectData()
-		effectdata:SetOrigin( self.Entity:GetPos() + self.Entity:GetUp() * 95 + self.Entity:GetForward() * -255 )
-		effectdata:SetAngle( self.Entity:GetRight() )
+		effectdata:SetOrigin( self:GetPos() + self:GetUp() * 95 + self:GetForward() * -255 )
+		effectdata:SetAngle( self:GetRight() )
 		effectdata:SetMagnitude( 5 )
 		effectdata:SetScale( 5 )
 		effectdata:SetRadius( 5 )
 		util.Effect( "GlassImpact", effectdata )
 		
 		effectdata = EffectData()
-		effectdata:SetOrigin( self.Entity:GetPos() + self.Entity:GetUp() * -95 + self.Entity:GetForward() * 255 )
-		effectdata:SetAngle( self.Entity:GetRight() )
+		effectdata:SetOrigin( self:GetPos() + self:GetUp() * -95 + self:GetForward() * 255 )
+		effectdata:SetAngle( self:GetRight() )
 		effectdata:SetMagnitude( 5 )
 		effectdata:SetScale( 5 )
 		effectdata:SetRadius( 5 )
 		util.Effect( "GlassImpact", effectdata )
 		
 		effectdata = EffectData()
-		effectdata:SetOrigin( self.Entity:GetPos() + self.Entity:GetUp() * -95 + self.Entity:GetForward() * -255 )
-		effectdata:SetAngle( self.Entity:GetRight() )
+		effectdata:SetOrigin( self:GetPos() + self:GetUp() * -95 + self:GetForward() * -255 )
+		effectdata:SetAngle( self:GetRight() )
 		effectdata:SetMagnitude( 5 )
 		effectdata:SetScale( 5 )
 		effectdata:SetRadius( 5 )
@@ -258,12 +258,12 @@ function ENT:Open( mode )
 		local Panel = ents.Create( "prop_physics" )
 		
 		Panel:SetModel( "models/Slyfo/smuggler_side.mdl" )
-		Panel:SetPos( self.Entity:GetPos() + self.Entity:GetRight() * 10 ) 
-		Panel:SetAngles( self.Entity:GetAngles() )
+		Panel:SetPos( self:GetPos() + self:GetRight() * 10 ) 
+		Panel:SetAngles( self:GetAngles() )
 		Panel:Spawn()
 		--self.CamC:Initialize()
 		Panel:Activate()
-		Panel:GetPhysicsObject():SetVelocity(self.Entity:GetRight() * 5000)
+		Panel:GetPhysicsObject():SetVelocity(self:GetRight() * 5000)
 		Panel:GetPhysicsObject():EnableDrag(false)
 		Panel:Fire("kill", "", 20)
 		Panel.Blasted = false
@@ -284,21 +284,21 @@ end
 
 function ENT:Close( mode )
 	self.AutoC = false
-	--self.Entity:SetParent(self.Pod)
+	--self:SetParent(self.Pod)
 	if mode == 0 then
-		self.Entity:SetColor(255,255,255,255)
-		self.Entity:SetCollisionGroup(COLLISION_GROUP_INTERACTIVE)
-		self.Entity:SetNotSolid( false )
+		self:SetColor(Color(255,255,255,255))
+		self:SetCollisionGroup(COLLISION_GROUP_INTERACTIVE)
+		self:SetNotSolid( false )
 		self.COp = false
 	elseif mode == 1 then
 		self.OTime = CurTime() + 1	
-		self.Entity:SetCollisionGroup(COLLISION_GROUP_INTERACTIVE)
-		self.Entity:SetNotSolid( false )
+		self:SetCollisionGroup(COLLISION_GROUP_INTERACTIVE)
+		self:SetNotSolid( false )
 		self.COp = false
 	elseif mode == 2 then
 		self.OTime = CurTime() + 1
-		self.Entity:SetCollisionGroup(COLLISION_GROUP_INTERACTIVE)
-		self.Entity:SetNotSolid( false )
+		self:SetCollisionGroup(COLLISION_GROUP_INTERACTIVE)
+		self:SetNotSolid( false )
 		self.COp = false
 	elseif mode == 3 then
 		self.COp = false

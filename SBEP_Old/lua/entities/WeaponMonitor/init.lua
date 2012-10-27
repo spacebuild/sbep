@@ -5,18 +5,18 @@ include( 'shared.lua' )
 
 function ENT:Initialize()
 
-	self.Entity:SetModel( "models/props_combine/combine_emitter01.mdl" ) 
-	self.Entity:SetName("ShipAIWeap")
-	self.Entity:PhysicsInit( SOLID_VPHYSICS )
-	self.Entity:SetMoveType( MOVETYPE_VPHYSICS )
-	self.Entity:SetSolid( SOLID_VPHYSICS )
+	self:SetModel( "models/props_combine/combine_emitter01.mdl" ) 
+	self:SetName("ShipAIWeap")
+	self:PhysicsInit( SOLID_VPHYSICS )
+	self:SetMoveType( MOVETYPE_VPHYSICS )
+	self:SetSolid( SOLID_VPHYSICS )
 	--local inNames = {"MoveVector", "TargetVector", "Angle", "Stance"}
 	--local inTypes = {"VECTOR","VECTOR","ANGLE","NORMAL"}
-	--self.Inputs = WireLib.CreateSpecialInputs( self.Entity,inNames,inTypes)
-	self.Inputs = Wire_CreateInputs( self.Entity, { "Priority", "CanFire", "Range", "PitchArc", "YawArc" } )
-	self.Outputs = WireLib.CreateSpecialOutputs(self.Entity, { "Firing", "TVec", "InRange" }, { "NORMAL", "VECTOR", "NORMAL" })
+	--self.Inputs = WireLib.CreateSpecialInputs( self,inNames,inTypes)
+	self.Inputs = Wire_CreateInputs( self, { "Priority", "CanFire", "Range", "PitchArc", "YawArc" } )
+	self.Outputs = WireLib.CreateSpecialOutputs(self, { "Firing", "TVec", "InRange" }, { "NORMAL", "VECTOR", "NORMAL" })
 		
-	local phys = self.Entity:GetPhysicsObject()
+	local phys = self:GetPhysicsObject()
 	if (phys:IsValid()) then
 		phys:Wake()
 		phys:EnableGravity(true)
@@ -25,10 +25,10 @@ function ENT:Initialize()
 		phys:SetMass( 1 )
 	end
 	
-	self.Entity:StartMotionController()
+	self:StartMotionController()
 	
-	self.Entity:SetKeyValue("rendercolor", "255 255 255")
-	self.PhysObj = self.Entity:GetPhysicsObject()
+	self:SetKeyValue("rendercolor", "255 255 255")
+	self.PhysObj = self:GetPhysicsObject()
 	
 	self.hasdamagecase = true
 	
@@ -87,10 +87,10 @@ function ENT:Think()
 
 	if self.Master and self.Master:IsValid()  then
 		if self.Master.TFound then
-			local RAng = (self.Master.TVec - self.Entity:GetPos()):Angle()
-			local SAng = self.Entity:GetAngles()
-			if math.abs(math.AngleDifference(SAng.p,RAng.p)) < self.PArc and math.abs(math.AngleDifference(SAng.y,RAng.y)) < self.YArc and self.Entity:GetPos():Distance(self.Master.TVec) < self.Range then
-				Wire_TriggerOutput( self.Entity, "TVec", self.Master.TVec )
+			local RAng = (self.Master.TVec - self:GetPos()):Angle()
+			local SAng = self:GetAngles()
+			if math.abs(math.AngleDifference(SAng.p,RAng.p)) < self.PArc and math.abs(math.AngleDifference(SAng.y,RAng.y)) < self.YArc and self:GetPos():Distance(self.Master.TVec) < self.Range then
+				Wire_TriggerOutput( self, "TVec", self.Master.TVec )
 				InRange = 1
 				if self.Master.Stance > 1 and self.FReady then
 					Firing = 1
@@ -100,10 +100,10 @@ function ENT:Think()
 				--print("Cheking Alternates")
 				for i = 1,5 do
 					--print("Alternate "..i)
-					RAng = (self.Master.Alternates[i] - self.Entity:GetPos()):Angle()
-					if math.abs(math.AngleDifference(SAng.p,RAng.p)) < self.PArc and math.abs(math.AngleDifference(SAng.y,RAng.y)) < self.YArc and self.Entity:GetPos():Distance(self.Master.TVec) < self.Range and self.Master.Targets > i then
+					RAng = (self.Master.Alternates[i] - self:GetPos()):Angle()
+					if math.abs(math.AngleDifference(SAng.p,RAng.p)) < self.PArc and math.abs(math.AngleDifference(SAng.y,RAng.y)) < self.YArc and self:GetPos():Distance(self.Master.TVec) < self.Range and self.Master.Targets > i then
 						--print("Found one")
-						Wire_TriggerOutput( self.Entity, "TVec", self.Master.Alternates[i] )
+						Wire_TriggerOutput( self, "TVec", self.Master.Alternates[i] )
 						InRange = 1
 						if self.Master.Stance > 1 and self.FReady then
 							Firing = 1
@@ -114,35 +114,35 @@ function ENT:Think()
 			end
 		end
 		if self.Master.Fade then
-			self.Entity:SetColor(255,255,255,20)
-			self.Entity:SetNotSolid( true )
-			self.Entity:SetCollisionGroup(COLLISION_GROUP_DEBRIS)
+			self:SetColor(Color(255,255,255,20))
+			self:SetNotSolid( true )
+			self:SetCollisionGroup(COLLISION_GROUP_DEBRIS)
 		else
-			self.Entity:SetColor(255,255,255,255)
-			self.Entity:SetCollisionGroup(COLLISION_GROUP_INTERACTIVE)
-			self.Entity:SetNotSolid( false )
+			self:SetColor(Color(255,255,255,255))
+			self:SetCollisionGroup(COLLISION_GROUP_INTERACTIVE)
+			self:SetNotSolid( false )
 		end
 	else
-		self.Entity:SetColor(255,255,255,255)
-		self.Entity:SetCollisionGroup(COLLISION_GROUP_INTERACTIVE)
-		self.Entity:SetNotSolid( false )
+		self:SetColor(Color(255,255,255,255))
+		self:SetCollisionGroup(COLLISION_GROUP_INTERACTIVE)
+		self:SetNotSolid( false )
 	end
 	
 	
 	
-	Wire_TriggerOutput( self.Entity, "Firing", 0 )
-	Wire_TriggerOutput( self.Entity, "Firing", Firing )
-	Wire_TriggerOutput( self.Entity, "InRange", InRange )
+	Wire_TriggerOutput( self, "Firing", 0 )
+	Wire_TriggerOutput( self, "Firing", Firing )
+	Wire_TriggerOutput( self, "InRange", InRange )
 	
 	
-	self.Entity:NextThink( CurTime() + 0.01 ) 
+	self:NextThink( CurTime() + 0.01 ) 
 	return true
 end
 
 function ENT:Touch( ent )
 	--print("Touching")
 	if ent.IsShipController and (!self.Master or !self.Master:IsValid()) then
-		table.insert(ent.Weaponry,self.Entity)
+		table.insert(ent.Weaponry,self)
 		self.Master = ent
 		--print("Linking")
 	end
@@ -158,7 +158,7 @@ function ENT:PreEntityCopy()
 			DI.master = self.Master:EntIndex()
 		end
 	if WireAddon then
-		DI.WireData = WireLib.BuildDupeInfo( self.Entity )
+		DI.WireData = WireLib.BuildDupeInfo( self )
 	end
 	duplicator.StoreEntityModifier(self, "SBEPWepMon", DI)
 end

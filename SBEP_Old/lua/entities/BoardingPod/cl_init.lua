@@ -11,7 +11,7 @@ end
 
 function ENT:Draw()
 	
-	self.Entity:DrawModel()
+	self:DrawModel()
 
 end
 
@@ -22,7 +22,7 @@ function ENT:Think()
 		local Pod = self:GetPod()
 		local dlight = DynamicLight( self:EntIndex() )
 		if ( dlight ) then
-			--local r, g, b, a = self:GetColor()
+			--local c = self:GetColor();  local r,g,b,a = c.r, c.g, c.b, c.a;
 			dlight.Pos = Pod:GetPos()
 			dlight.r = 200
 			dlight.g = 60

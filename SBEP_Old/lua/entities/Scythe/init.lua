@@ -5,11 +5,11 @@ include( 'shared.lua' )
 
 function ENT:Initialize()
 
-	self.Entity:SetModel( "models/props_junk/PopCan01a.mdl" ) 
-	self.Entity:SetName("Scythe")
-	self.Entity:PhysicsInit( SOLID_VPHYSICS )
-	self.Entity:SetMoveType( MOVETYPE_VPHYSICS )
-	self.Entity:SetSolid( 0 )
+	self:SetModel( "models/props_junk/PopCan01a.mdl" ) 
+	self:SetName("Scythe")
+	self:PhysicsInit( SOLID_VPHYSICS )
+	self:SetMoveType( MOVETYPE_VPHYSICS )
+	self:SetSolid( 0 )
 	
 	if WireAddon then
 		local V,N,A,E = "VECTOR","NORMAL","ANGLE","ENTITY"
@@ -18,7 +18,7 @@ function ENT:Initialize()
 			{V,V,V,A})
 	end
 	
-	local phys = self.Entity:GetPhysicsObject()
+	local phys = self:GetPhysicsObject()
 	if (phys:IsValid()) then
 		phys:Wake()
 		phys:EnableGravity(false)
@@ -26,8 +26,8 @@ function ENT:Initialize()
 		phys:EnableCollisions(false)
 		phys:SetMass(1)
 	end
-	self.Entity:SetKeyValue("rendercolor", "255 255 255")
-	self.PhysObj = self.Entity:GetPhysicsObject()
+	self:SetKeyValue("rendercolor", "255 255 255")
+	self.PhysObj = self:GetPhysicsObject()
 	
 	self.DRoll = 0
 	self.Roll = 0
@@ -56,11 +56,11 @@ function ENT:Initialize()
 	self.Strafe = 0
 	self.DStrafe = 0
 	
-	gcombat.registerent( self.Entity, 500, 6 )
+	gcombat.registerent( self, 500, 6 )
 		
 	self.EMount = true
 	self.HasHardpoints = true
-	self.Cont = self.Entity
+	self.Cont = self
 		
 	self.HPC			= 8
 	self.HP				= {}
@@ -246,7 +246,7 @@ end
 
 function ENT:Think()
 	self:SetLocalPos(Vector(0,0,0))
-	self.Entity:SetColor( 0, 0, 0, 0 )
+	self:SetColor(Color( 0, 0, 0, 0 ))
 	
 	local Phys = nil
 	if self.Body and self.Body:IsValid() then
@@ -479,13 +479,13 @@ function ENT:Think()
 	
 	/*
 	local CPos = self:GetPos() + self:GetUp() * 120 + self:GetForward() * -150
-	Wire_TriggerOutput(self.Entity, "CPos", CPos )
-	Wire_TriggerOutput(self.Entity, "Pos", self:GetPos() )
-	Wire_TriggerOutput(self.Entity, "Ang", self:GetAngles())
-	Wire_TriggerOutput(self.Entity, "Vel", self:GetPhysicsObject():GetVelocity())
+	Wire_TriggerOutput(self, "CPos", CPos )
+	Wire_TriggerOutput(self, "Pos", self:GetPos() )
+	Wire_TriggerOutput(self, "Ang", self:GetAngles())
+	Wire_TriggerOutput(self, "Vel", self:GetPhysicsObject():GetVelocity())
 	*/
 	
-	self.Entity:NextThink( CurTime() + 0.01 ) 
+	self:NextThink( CurTime() + 0.01 ) 
 	return true	
 end
 

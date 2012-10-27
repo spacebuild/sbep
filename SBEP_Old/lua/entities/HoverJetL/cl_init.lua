@@ -8,15 +8,15 @@ end
 
 function ENT:Draw()
 	
-	self.Entity:DrawModel()
+	self:DrawModel()
 
 end
 
 
 function ENT:EffectDraw_fire()
 
-	local vOffset = self.Entity:LocalToWorld( self:GetOffset() )
-	local vNormal = (vOffset - self.Entity:GetPos()):GetNormalized()
+	local vOffset = self:LocalToWorld( self:GetOffset() )
+	local vNormal = (vOffset - self:GetPos()):GetNormalized()
 
 	local scroll = self.Seed + (CurTime() * -10)
 	

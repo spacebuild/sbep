@@ -7,29 +7,29 @@ util.PrecacheSound( "SB/Charging.wav" )
 
 function ENT:Initialize()
 
-	self.Entity:SetModel( "models/Spacebuild/Nova/med-mac2.mdl" ) 
-	self.Entity:SetName("Huge MAC")
-	self.Entity:PhysicsInit( SOLID_VPHYSICS )
-	self.Entity:SetMoveType( MOVETYPE_VPHYSICS )
-	self.Entity:SetSolid( SOLID_VPHYSICS )
+	self:SetModel( "models/Spacebuild/Nova/med-mac2.mdl" ) 
+	self:SetName("Huge MAC")
+	self:PhysicsInit( SOLID_VPHYSICS )
+	self:SetMoveType( MOVETYPE_VPHYSICS )
+	self:SetSolid( SOLID_VPHYSICS )
 
 	if WireAddon then
 		self.Inputs = WireLib.CreateInputs( self, {  "ChargeCannon", "Fire" } )
 		self.Outputs = WireLib.CreateOutputs( self, { "ChargeLevel", "CanFire" })
 	end
 
-	local phys = self.Entity:GetPhysicsObject()
+	local phys = self:GetPhysicsObject()
 	if (phys:IsValid()) then
 		phys:Wake()
 		phys:EnableGravity(true)
 		phys:EnableDrag(true)
 		phys:EnableCollisions(true)
 	end
-	self.Entity:SetKeyValue("rendercolor", "255 255 255")
-	self.PhysObj = self.Entity:GetPhysicsObject()
+	self:SetKeyValue("rendercolor", "255 255 255")
+	self.PhysObj = self:GetPhysicsObject()
 	
 	self.val1 = 0
-	--RD_AddResource(self.Entity, "energy", 0)
+	--RD_AddResource(self, "energy", 0)
 
 end
 
@@ -56,28 +56,28 @@ function ENT:TriggerInput(iname, value)
 				--if (self.val1 >= 1000) then
 					local NewShell = ents.Create( "SF-HugeMACShell" )
 					if ( !NewShell:IsValid() ) then return end
-					NewShell:SetPos( self.Entity:GetPos() + (self.Entity:GetRight() * -200) )
-					NewShell:SetAngles( (self.Entity:GetRight()*-1):Angle() )
+					NewShell:SetPos( self:GetPos() + (self:GetRight() * -200) )
+					NewShell:SetAngles( (self:GetRight()*-1):Angle() )
 					NewShell.SPL = self.SPL
 					NewShell:Spawn()
 					NewShell:Initialize()
 					NewShell:Activate()
 					NewShell:SetOwner(self)
-					NewShell.PhysObj:SetVelocity(self.Entity:GetRight() * -10000)
+					NewShell.PhysObj:SetVelocity(self:GetRight() * -10000)
 					NewShell:Fire("kill", "", 30)
-					NewShell.ParL = self.Entity
+					NewShell.ParL = self
 					self.Charge = 0
 					self.CDown = CurTime() + 10
-					local phys = self.Entity:GetPhysicsObject()  	
+					local phys = self:GetPhysicsObject()  	
 					if (phys:IsValid()) then  		
-						phys:ApplyForceCenter( self.Entity:GetRight() * 10000 ) 
+						phys:ApplyForceCenter( self:GetRight() * 10000 ) 
 					end 
 					
 					--local effectdata = EffectData()
-					--effectdata:SetOrigin(self.Entity:GetPos() +  self.Entity:GetUp() * 150)
-					--effectdata:SetStart(self.Entity:GetPos() +  self.Entity:GetUp() * 150)
+					--effectdata:SetOrigin(self:GetPos() +  self:GetUp() * 150)
+					--effectdata:SetStart(self:GetPos() +  self:GetUp() * 150)
 					--util.Effect( "Explosion", effectdata )
-					self.Entity:EmitSound("SB/Railgun.wav", 500)
+					self:EmitSound("SB/Railgun.wav", 500)
 				--end
 			end
 		end
@@ -95,12 +95,12 @@ function ENT:PhysicsUpdate()
 end
 
 function ENT:Think()
-	--self.val1 = RD_GetResourceAmount(self.Entity, "energy")
+	--self.val1 = RD_GetResourceAmount(self, "energy")
 	self.val1 = 10000
 	
 	if self.Charging and self.val1 > 100 and self.Charge <= 5100 and CurTime() >= self.CDown then
-		--self.Entity:EmitSound("SB/Charging.wav", 150 )
-		--RD_ConsumeResource(self.Entity, "energy", 100)
+		--self:EmitSound("SB/Charging.wav", 150 )
+		--RD_ConsumeResource(self, "energy", 100)
 		self.Charge = self.Charge + 50
 	else
 		if self.Charge >= 10 then
@@ -108,12 +108,12 @@ function ENT:Think()
 		end
 	end
 	
-	Wire_TriggerOutput(self.Entity, "ChargeLevel", self.Charge)
+	Wire_TriggerOutput(self, "ChargeLevel", self.Charge)
 	
 	if self.Charge >= 5000 and CurTime() >= self.CDown then
-		Wire_TriggerOutput(self.Entity, "CanFire", 1)
+		Wire_TriggerOutput(self, "CanFire", 1)
 	else
-		Wire_TriggerOutput(self.Entity, "CanFire", 0)
+		Wire_TriggerOutput(self, "CanFire", 0)
 	end
 	
 	if self.Charge > 0 then
@@ -134,7 +134,7 @@ function ENT:Think()
 			Sparky:SetKeyValue("lifetime_max", "0.2")
 			Sparky:SetKeyValue("interval_min", "0.05")
 			Sparky:SetKeyValue("interval_max", "0.08")
-			Sparky:SetPos(self.Entity:GetPos() + (self.Entity:GetRight() * -math.Rand(-1347,120)) + (self.Entity:GetRight() * -math.Rand(-125,100)) + (self.Entity:GetForward() * -math.Rand(-90,90)) )
+			Sparky:SetPos(self:GetPos() + (self:GetRight() * -math.Rand(-1347,120)) + (self:GetRight() * -math.Rand(-125,100)) + (self:GetForward() * -math.Rand(-90,90)) )
 			Sparky:Spawn()
 			Sparky:Fire("DoSpark","",0)
 			Sparky:Fire("kill","", 2)
@@ -146,15 +146,15 @@ function ENT:Think()
 		if CurTime() >= self.SmTime then
 			self.SmTime = CurTime() + math.Rand(0.2,1)
 			local effectdata = EffectData()
-			effectdata:SetOrigin(self.Entity:GetPos() +  self.Entity:GetRight() * -math.Rand(-1347,120))
-			effectdata:SetStart(self.Entity:GetPos() +  self.Entity:GetRight() * -math.Rand(-1347,120))
+			effectdata:SetOrigin(self:GetPos() +  self:GetRight() * -math.Rand(-1347,120))
+			effectdata:SetStart(self:GetPos() +  self:GetRight() * -math.Rand(-1347,120))
 			util.Effect( "MACSmokey", effectdata )
 		end
 	end
 	
-	self.Entity:SetBrightness( self.Charge / 1000 )
+	self:SetBrightness( self.Charge / 1000 )
 	
-	self.Entity:NextThink( CurTime() + 0.1 ) 
+	self:NextThink( CurTime() + 0.1 ) 
 	return true
 end
 
@@ -172,7 +172,7 @@ end
 
 function ENT:PreEntityCopy()
 	if WireAddon then
-		duplicator.StoreEntityModifier(self,"WireDupeInfo",WireLib.BuildDupeInfo(self.Entity))
+		duplicator.StoreEntityModifier(self,"WireDupeInfo",WireLib.BuildDupeInfo(self))
 	end
 end
 

@@ -4,15 +4,15 @@ include( 'shared.lua' )
 
 function ENT:Initialize()
 
-	self.Entity:SetModel( "models/Slyfo/sat_resourcetank.mdl" ) 
-	self.Entity:SetName("Fuel Tank")
-	self.Entity:PhysicsInit( SOLID_VPHYSICS )
-	self.Entity:SetMoveType( MOVETYPE_VPHYSICS )
-	self.Entity:SetSolid( SOLID_VPHYSICS )
-	self.Inputs = Wire_CreateInputs( self.Entity, { "Vent" } )
-	self.Entity:SetUseType( 3 )
+	self:SetModel( "models/Slyfo/sat_resourcetank.mdl" ) 
+	self:SetName("Fuel Tank")
+	self:PhysicsInit( SOLID_VPHYSICS )
+	self:SetMoveType( MOVETYPE_VPHYSICS )
+	self:SetSolid( SOLID_VPHYSICS )
+	self.Inputs = Wire_CreateInputs( self, { "Vent" } )
+	self:SetUseType( 3 )
 
-	local phys = self.Entity:GetPhysicsObject()
+	local phys = self:GetPhysicsObject()
 	if (phys:IsValid()) then
 		phys:Wake()
 		phys:EnableGravity(true)
@@ -20,10 +20,10 @@ function ENT:Initialize()
 		phys:EnableCollisions(true)
 		phys:SetMass(10)
 	end
-	self.Entity:StartMotionController()
-	self.PhysObj = self.Entity:GetPhysicsObject()
+	self:StartMotionController()
+	self.PhysObj = self:GetPhysicsObject()
 
-	--RD_AddResource(self.Entity, "thfuel", 0)
+	--RD_AddResource(self, "thfuel", 0)
 	self.LeakPoints = {}
 	
 	self.Fuel = 600
@@ -65,15 +65,15 @@ end
 function ENT:Think()
 	if self.Venting and self.Fuel > 0 then
 		local Spray = ents.Create( "TFuelSpray" )
-		Spray:SetPos( self.Entity:GetPos() + self.Entity:GetForward() * 40 )
+		Spray:SetPos( self:GetPos() + self:GetForward() * 40 )
 		--Spray:SetAngles( ply:GetAimVector():Angle() + Angle(90, 0, 0))
 		Spray:Spawn()
-		Spray:GetPhysicsObject():SetVelocity(self.Entity:GetForward() * 1000)
+		Spray:GetPhysicsObject():SetVelocity(self:GetForward() * 1000)
 		
 		Spray:GetPhysicsObject():EnableGravity(true)
 		Spray:SetGravity(0.5)
 		
-		local Noc = constraint.NoCollide(self.Entity,Spray,0,0)
+		local Noc = constraint.NoCollide(self,Spray,0,0)
 		
 		Spray.CanPuddle = true
 		
@@ -83,15 +83,15 @@ function ENT:Think()
 	if self.Leaking and self.Fuel > 0 then
 		local Spray = ents.Create( "TFuelSpray" )
 		local LPE = math.random(1,table.getn( self.LeakPoints ))
-		Spray:SetPos( self.LeakPoints[LPE] + self.Entity:GetPos() )
+		Spray:SetPos( self.LeakPoints[LPE] + self:GetPos() )
 		--Spray:SetAngles( ply:GetAimVector():Angle() + Angle(90, 0, 0))
 		Spray:Spawn()
-		Spray:GetPhysicsObject():SetVelocity((Spray:GetPos() - self.Entity:GetPos()) * 100)
+		Spray:GetPhysicsObject():SetVelocity((Spray:GetPos() - self:GetPos()) * 100)
 		
 		--Spray:GetPhysicsObject():EnableGravity(true)
 		--Spray:SetGravity(0.5)
 		
-		local Noc = constraint.NoCollide(self.Entity,Spray,0,0)
+		local Noc = constraint.NoCollide(self,Spray,0,0)
 		
 		--Spray.CanPuddle = true
 		
@@ -102,7 +102,7 @@ function ENT:Think()
 		self:Splode()
 	end
 	
-	self.Entity:NextThink( CurTime() + 0.3 ) 
+	self:NextThink( CurTime() + 0.3 ) 
 	return true
 end
 
@@ -110,7 +110,7 @@ function ENT:OnTakeDamage( dmg )
 	--print(dmg:GetDamage())
 	self.THealth = self.THealth - dmg:GetDamage()
 	if dmg:GetDamage() >= 100 or self.THealth <= 0 then
-		self.Entity:Splode()
+		self:Splode()
 	elseif dmg:GetDamage() >= 12 then
 		self.Leaking = true
 		local x, y, z = dmg:GetDamagePosition()
@@ -129,8 +129,8 @@ end
 function ENT:Splode()
 	if(!self.Exploded) then
 		self.Exploded = true
-		--util.BlastDamage(self.Entity, self.Entity, self.Entity:GetPos(), 400, 400)
-		--cbt_hcgexplode( self.Entity:GetPos(), 400, math.random(400,600), 7)
+		--util.BlastDamage(self, self, self:GetPos(), 400, 400)
+		--cbt_hcgexplode( self:GetPos(), 400, math.random(400,600), 7)
 		FCount = math.floor(self.Fuel / 60)
 		--print(FCount)
 		if FCount >= 1 then
@@ -140,16 +140,16 @@ function ENT:Splode()
 			for i = 1, FCount do
 				NewShell = ents.Create( "TFuelSpray" )
 				if ( !NewShell:IsValid() ) then return end
-				NewShell:SetPos( self.Entity:GetPos() + Vector(math.random(-SPos,SPos),math.random(-SPos,SPos),math.random(-SPos,SPos)) )
+				NewShell:SetPos( self:GetPos() + Vector(math.random(-SPos,SPos),math.random(-SPos,SPos),math.random(-SPos,SPos)) )
 				NewShell.SPL = self.SPL
 				NewShell:Spawn()
 				NewShell:Initialize()
 				NewShell:Activate()
-				NewShell:GetPhysicsObject():SetVelocity((self.Entity:GetPhysicsObject():GetVelocity() * 0.25) + (self.Entity:GetRight() * math.random(-SSpeed,SSpeed)) + (self.Entity:GetUp() * math.random(-SSpeed,SSpeed))  + (self.Entity:GetForward() * math.random(-SSpeed,SSpeed))  )
+				NewShell:GetPhysicsObject():SetVelocity((self:GetPhysicsObject():GetVelocity() * 0.25) + (self:GetRight() * math.random(-SSpeed,SSpeed)) + (self:GetUp() * math.random(-SSpeed,SSpeed))  + (self:GetForward() * math.random(-SSpeed,SSpeed))  )
 			end
 			NewShell:PreIgnite(3)
 					
-			self.Entity:EmitSound("explode_9")
+			self:EmitSound("explode_9")
 		end
 		
 		if FCount >= 10 then
@@ -159,7 +159,7 @@ function ENT:Splode()
 			ShakeIt:SetKeyValue("radius", "600" )
 			ShakeIt:SetKeyValue("duration", "5" )
 			ShakeIt:SetKeyValue("frequency", "255" )
-			ShakeIt:SetPos( self.Entity:GetPos() )
+			ShakeIt:SetPos( self:GetPos() )
 			ShakeIt:Fire("StartShake", "", 0);
 			ShakeIt:Spawn()
 			ShakeIt:Activate()
@@ -168,27 +168,27 @@ function ENT:Splode()
 		end
 		
 		local wreck = ents.Create( "wreckedstuff" )
-		wreck:SetModel( self.Entity:GetModel() )
-		wreck:SetAngles( self.Entity:GetAngles() )
-		wreck:SetPos( self.Entity:GetPos() )
+		wreck:SetModel( self:GetModel() )
+		wreck:SetAngles( self:GetAngles() )
+		wreck:SetPos( self:GetPos() )
 		wreck:Spawn()
 		wreck:Activate()
 		wreck:GetPhysicsObject():EnableGravity(true)
 		local effectdata1 = EffectData()
-		effectdata1:SetOrigin(self.Entity:GetPos())
-		effectdata1:SetStart(self.Entity:GetPos())
+		effectdata1:SetOrigin(self:GetPos())
+		effectdata1:SetStart(self:GetPos())
 		effectdata1:SetScale( 10 )
 		effectdata1:SetRadius( 100 )
 		util.Effect( "Explosion", effectdata1 )
 	end
 	self.Exploded = true
-	self.Entity:Remove()
+	self:Remove()
 end
 
 function ENT:Touch( ent )
 	if ent.HasHardpoints and self.Fuel > 0 then
 		if ent.Cont and ent.Cont:IsValid() then
-			HPLink( ent.Cont, ent.Entity, self.Entity )
+			HPLink( ent.Cont, ent.Entity, self )
 		end
 	end
 end

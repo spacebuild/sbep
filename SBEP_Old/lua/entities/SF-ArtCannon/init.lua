@@ -6,28 +6,28 @@ util.PrecacheSound( "SB/Artillery2.wav" )
 
 function ENT:Initialize()
 
-	self.Entity:SetModel( "models/Slyfo/artycannon.mdl" ) 
-	self.Entity:SetName("ArtilleryCannon")
-	self.Entity:PhysicsInit( SOLID_VPHYSICS )
-	self.Entity:SetMoveType( MOVETYPE_VPHYSICS )
-	self.Entity:SetSolid( SOLID_VPHYSICS )
+	self:SetModel( "models/Slyfo/artycannon.mdl" ) 
+	self:SetName("ArtilleryCannon")
+	self:PhysicsInit( SOLID_VPHYSICS )
+	self:SetMoveType( MOVETYPE_VPHYSICS )
+	self:SetSolid( SOLID_VPHYSICS )
 
 	if WireAddon then
 		self.Inputs = WireLib.CreateInputs( self, { "Fire" } )
 	end
 
-	local phys = self.Entity:GetPhysicsObject()
+	local phys = self:GetPhysicsObject()
 	if (phys:IsValid()) then
 		phys:Wake()
 		phys:EnableGravity(true)
 		phys:EnableDrag(true)
 		phys:EnableCollisions(true)
 	end
-	self.Entity:SetKeyValue("rendercolor", "255 255 255")
-	self.PhysObj = self.Entity:GetPhysicsObject()
+	self:SetKeyValue("rendercolor", "255 255 255")
+	self.PhysObj = self:GetPhysicsObject()
 	
 	--self.val1 = 0
-	--RD_AddResource(self.Entity, "Munitions", 0)
+	--RD_AddResource(self, "Munitions", 0)
 
 
 end
@@ -51,7 +51,7 @@ end
 function ENT:TriggerInput(iname, value)		
 	if (iname == "Fire") then
 		if (value > 0) then
-			self.Entity:HPFire()
+			self:HPFire()
 		end
 	end
 end
@@ -61,7 +61,7 @@ function ENT:PhysicsUpdate()
 end
 
 function ENT:Think()
-	--self.val1 = RD_GetResourceAmount(self.Entity, "Munitions")
+	--self.val1 = RD_GetResourceAmount(self, "Munitions")
 
 end
 
@@ -79,45 +79,45 @@ end
 
 function ENT:Touch( ent )
 	if ent.HasHardpoints then
-		if ent.Cont and ent.Cont:IsValid() then HPLink( ent.Cont, ent.Entity, self.Entity ) end
+		if ent.Cont and ent.Cont:IsValid() then HPLink( ent.Cont, ent.Entity, self ) end
 	end
 end
 
 function ENT:HPFire()
-	local CDown = self.Entity:GetNetworkedFloat("ReloadTime")
+	local CDown = self:GetNetworkedFloat("ReloadTime")
 	if (CurTime() >= CDown) then
 		--if (self.val1 >= 1000) then
 			local NewShell = ents.Create( "SF-ArtShell" )
 			if ( !NewShell:IsValid() ) then return end
-			NewShell:SetPos( self.Entity:GetPos() + (self.Entity:GetUp() * 155) )
-			NewShell:SetAngles( self.Entity:GetUp():Angle() )
+			NewShell:SetPos( self:GetPos() + (self:GetUp() * 155) )
+			NewShell:SetAngles( self:GetUp():Angle() )
 			NewShell.SPL = self.SPL
 			NewShell:Spawn()
 			NewShell:Initialize()
 			NewShell:Activate()
 			NewShell:SetOwner(self)
-			NewShell.PhysObj:SetVelocity(self.Entity:GetUp() * 10000)
+			NewShell.PhysObj:SetVelocity(self:GetUp() * 10000)
 			NewShell:Fire("kill", "", 30)
-			NewShell.ParL = self.Entity
+			NewShell.ParL = self
 			--RD_ConsumeResource(self, "Munitions", 1000)
-			self.Entity:SetNetworkedFloat("ReloadTime",CurTime() + 5)
-			local phys = self.Entity:GetPhysicsObject()  	
+			self:SetNetworkedFloat("ReloadTime",CurTime() + 5)
+			local phys = self:GetPhysicsObject()  	
 			if (phys:IsValid()) then  		
-				phys:ApplyForceCenter( self.Entity:GetUp() * -10000 ) 
+				phys:ApplyForceCenter( self:GetUp() * -10000 ) 
 			end 
 			
 			local effectdata = EffectData()
-			effectdata:SetOrigin(self.Entity:GetPos() +  self.Entity:GetUp() * 150)
-			effectdata:SetStart(self.Entity:GetPos() +  self.Entity:GetUp() * 150)
+			effectdata:SetOrigin(self:GetPos() +  self:GetUp() * 150)
+			effectdata:SetStart(self:GetPos() +  self:GetUp() * 150)
 			util.Effect( "Explosion", effectdata )
-			self.Entity:EmitSound("SB/Artillery2.wav", 500)
+			self:EmitSound("SB/Artillery2.wav", 500)
 		--end
 	end
 end
 
 function ENT:PreEntityCopy()
 	if WireAddon then
-		duplicator.StoreEntityModifier(self,"WireDupeInfo",WireLib.BuildDupeInfo(self.Entity))
+		duplicator.StoreEntityModifier(self,"WireDupeInfo",WireLib.BuildDupeInfo(self))
 	end
 end
 

@@ -5,14 +5,14 @@ include( 'shared.lua' )
 
 function ENT:Initialize()
 
-	self.Entity:SetModel( "models/Slyfo_2/rocketpod_smallrockethalf.mdl" ) 
-	self.Entity:SetName("Rotate")
-	self.Entity:PhysicsInit( SOLID_VPHYSICS )
-	self.Entity:SetMoveType( MOVETYPE_VPHYSICS )
-	self.Entity:SetSolid( SOLID_VPHYSICS )
-	--self.Inputs = Wire_CreateInputs( self.Entity, { "Speed" } )
+	self:SetModel( "models/Slyfo_2/rocketpod_smallrockethalf.mdl" ) 
+	self:SetName("Rotate")
+	self:PhysicsInit( SOLID_VPHYSICS )
+	self:SetMoveType( MOVETYPE_VPHYSICS )
+	self:SetSolid( SOLID_VPHYSICS )
+	--self.Inputs = Wire_CreateInputs( self, { "Speed" } )
 	
-	local phys = self.Entity:GetPhysicsObject()
+	local phys = self:GetPhysicsObject()
 	if (phys:IsValid()) then
 		phys:Wake()
 		phys:EnableGravity(false)
@@ -21,10 +21,10 @@ function ENT:Initialize()
 		phys:SetMass( 1 )
 	end
 	
-	self.Entity:StartMotionController()
+	self:StartMotionController()
 	
-	self.Entity:SetKeyValue("rendercolor", "255 255 255")
-	self.PhysObj = self.Entity:GetPhysicsObject()
+	self:SetKeyValue("rendercolor", "255 255 255")
+	self.PhysObj = self:GetPhysicsObject()
 	
 	self.Speed = 0
 	self.OAng = Angle(0,0,0)
@@ -81,7 +81,7 @@ function ENT:Think()
 		local trace = {}
 		trace.start = self:GetPos() + self:GetUp() * 20
 		trace.endpos = self:GetPos() + self:GetUp() * -20
-		trace.filter = { self.Entity, self.CPL }
+		trace.filter = { self, self.CPL }
 		local tr = util.TraceEntity( trace, self )
 		local OnGround = false
 		if tr.Hit and !tr.HitSky then
@@ -175,7 +175,7 @@ function ENT:Think()
 		--self:Remove()
 	end
 	
-	self.Entity:NextThink( CurTime() + 0.01 ) 
+	self:NextThink( CurTime() + 0.01 ) 
 	return true
 end
 

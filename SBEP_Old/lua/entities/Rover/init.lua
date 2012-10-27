@@ -6,25 +6,25 @@ include( 'shared.lua' )
 
 function ENT:Initialize()
 	
-	self.Entity:SetModel( "models/Spacebuild/medbridge2_doublehull_elevatorclamp.mdl" ) 
-	self.Entity:SetName("Rover")
-	self.Entity:PhysicsInit( 0 )
-	self.Entity:SetMoveType( MOVETYPE_VPHYSICS )
-	self.Entity:SetSolid( 0 )
-	--self.Entity:SetMaterial("models/props_wasteland/tugboat02")
-	--self.Inputs = Wire_CreateInputs( self.Entity, { "Activate" } )
+	self:SetModel( "models/Spacebuild/medbridge2_doublehull_elevatorclamp.mdl" ) 
+	self:SetName("Rover")
+	self:PhysicsInit( 0 )
+	self:SetMoveType( MOVETYPE_VPHYSICS )
+	self:SetSolid( 0 )
+	--self:SetMaterial("models/props_wasteland/tugboat02")
+	--self.Inputs = Wire_CreateInputs( self, { "Activate" } )
 
-	local phys = self.Entity:GetPhysicsObject()
+	local phys = self:GetPhysicsObject()
 	if (phys:IsValid()) then
 		phys:Wake()
 		phys:EnableGravity(false)
 		phys:EnableDrag(false)
 		phys:EnableCollisions(false)
 	end
-	self.Entity:StartMotionController()
-	self.PhysObj = self.Entity:GetPhysicsObject()
+	self:StartMotionController()
+	self.PhysObj = self:GetPhysicsObject()
 	
-	self:SetColor(0,0,0,0)
+	self:SetColor(Color(0,0,0,0))
 
 
 	self.Speed = 0
@@ -223,10 +223,10 @@ function ENT:Think()
 		end
 		
 	else
-		self.Entity:Remove()
+		self:Remove()
 	end
 
-	self.Entity:NextThink( CurTime() + 0.01 ) 
+	self:NextThink( CurTime() + 0.01 ) 
 	return true
 end
 
@@ -296,7 +296,7 @@ function ENT:PreEntityCopy()
 	end
 	
 	if WireAddon then
-		DI.WireData = WireLib.BuildDupeInfo( self.Entity )
+		DI.WireData = WireLib.BuildDupeInfo( self )
 	end
 	
 	duplicator.StoreEntityModifier(self, "SBEPRover", DI)

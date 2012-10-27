@@ -40,11 +40,11 @@ function ENT:MakeWire( bWire , bAdjust )
 	end
 
 	if bAdjust then
-		Wire_AdjustInputs(self.Entity, self.SBEPWireInputs )
-		Wire_AdjustOutputs(self.Entity, self.SBEPWireOutputs)
+		Wire_AdjustInputs(self, self.SBEPWireInputs )
+		Wire_AdjustOutputs(self, self.SBEPWireOutputs)
 	else
-		self.Inputs = Wire_CreateInputs(self.Entity, self.SBEPWireInputs )
-		self.Outputs = Wire_CreateOutputs(self.Entity, self.SBEPWireOutputs)
+		self.Inputs = Wire_CreateInputs(self, self.SBEPWireInputs )
+		self.Outputs = Wire_CreateOutputs(self, self.SBEPWireOutputs)
 	end
 end
 
@@ -61,8 +61,8 @@ function ENT:AddDoors()
 			D:Spawn()
 			D:Initialize()
 			D:SetDoorType( Data.type )
-			D:Attach( self.Entity , Data.V , Data.A )
-		D:SetController( self.Entity , k )
+			D:Attach( self , Data.V , Data.A )
+		D:SetController( self , k )
 		table.insert( self.DT , D )
 	end
 end
@@ -85,7 +85,7 @@ function ENT:Think()
 		self.Skin = skin
 	end
 
-	self.Entity:NextThink( CurTime() + 1 )
+	self:NextThink( CurTime() + 1 )
 	return true
 end
 
@@ -104,10 +104,10 @@ function ENT:TriggerInput(k,v)
 			if v > 0 then
 				n.OpenTrigger = false
 				n.Locked = true
-				WireLib.TriggerOutput(self.Entity,"Locked_"..tostring(m),1)
+				WireLib.TriggerOutput(self,"Locked_"..tostring(m),1)
 			else		
 				n.Locked = false
-				WireLib.TriggerOutput(self.Entity,"Locked_"..tostring(m),0)
+				WireLib.TriggerOutput(self,"Locked_"..tostring(m),0)
 			end
 		end
 		
@@ -134,7 +134,7 @@ function ENT:PreEntityCopy()
 	end
 	
 	if WireAddon then
-		DI.WireData = WireLib.BuildDupeInfo( self.Entity )
+		DI.WireData = WireLib.BuildDupeInfo( self )
 	end
 	
 	duplicator.StoreEntityModifier(self, "SBEPDC", DI)

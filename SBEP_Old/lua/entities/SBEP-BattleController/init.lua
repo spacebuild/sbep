@@ -6,25 +6,25 @@ include( 'shared.lua' )
 
 function ENT:Initialize()
 
-	self.Entity:SetModel( "models/Slyfo/powercrystal.mdl" ) 
-	self.Entity:SetName("BattleComputer")
-	self.Entity:PhysicsInit( SOLID_VPHYSICS )
-	self.Entity:SetMoveType( MOVETYPE_VPHYSICS )
-	self.Entity:SetSolid( SOLID_VPHYSICS )
-	--self.Entity:SetMaterial("models/props_combine/combinethumper002");
+	self:SetModel( "models/Slyfo/powercrystal.mdl" ) 
+	self:SetName("BattleComputer")
+	self:PhysicsInit( SOLID_VPHYSICS )
+	self:SetMoveType( MOVETYPE_VPHYSICS )
+	self:SetSolid( SOLID_VPHYSICS )
+	--self:SetMaterial("models/props_combine/combinethumper002");
 
-	local phys = self.Entity:GetPhysicsObject()
+	local phys = self:GetPhysicsObject()
 	if (phys:IsValid()) then
 		phys:Wake()
 		phys:EnableGravity(true)
 		phys:EnableDrag(true)
 		phys:EnableCollisions(true)
 	end
-	self.Entity:StartMotionController()
-    self.Entity:SetKeyValue("rendercolor", "255 255 255")
-	self.PhysObj = self.Entity:GetPhysicsObject()
+	self:StartMotionController()
+    self:SetKeyValue("rendercolor", "255 255 255")
+	self.PhysObj = self:GetPhysicsObject()
 	self.BMode = false
-	self.FTab = { self.Entity }
+	self.FTab = { self }
 	self.ATog = false
 end
 
@@ -78,12 +78,12 @@ function ENT:Think()
 				if !self.ATog then
 					if self.Active then
 						self.Active = false
-						self.Entity:SetNetworkedBool( "BattleComputerActive", false )
+						self:SetNetworkedBool( "BattleComputerActive", false )
 						self.Pod:EmitSound( "Buttons.snd19" )
 						--self.CPL:Freeze( false )
 					else
 						self.Active = true
-						self.Entity:SetNetworkedBool( "BattleComputerActive", true )
+						self:SetNetworkedBool( "BattleComputerActive", true )
 						self.Pod:EmitSound( "Buttons.snd40" )
 						--self.CPL:Freeze( true )
 					end
@@ -95,7 +95,7 @@ function ENT:Think()
 		end
 	end
 
-	self.Entity:NextThink( CurTime() + 0.01 ) 
+	self:NextThink( CurTime() + 0.01 ) 
 	return true
 end
 
@@ -110,7 +110,7 @@ end
 function ENT:Touch( ent )
 	if (ent:IsVehicle() and ent ~= self.Pod) then
 		self.Pod = ent
-		self.Pod:SetNetworkedEntity( "BattleComputer", self.Entity )
-		self.Entity:SetNetworkedEntity( "BattleComputerPod", self.Pod )
+		self.Pod:SetNetworkedEntity( "BattleComputer", self )
+		self:SetNetworkedEntity( "BattleComputerPod", self.Pod )
 	end
 end

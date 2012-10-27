@@ -10,14 +10,14 @@ include('shared.lua')
 
 function ENT:Initialize()
 
-self.Entity:SetModel( "models/Spacebuild/sbepmanual.mdl" )
-self.Entity:PhysicsInit( SOLID_VPHYSICS )
-self.Entity:SetMoveType( MOVETYPE_VPHYSICS )							
-self.Entity:SetSolid( SOLID_VPHYSICS )
-self.Entity:SetUseType( SIMPLE_USE )
-self.Entity:SetPos( self.Entity:GetPos() + Vector( 0, 0, self.Entity:OBBMins().z ) )
+self:SetModel( "models/Spacebuild/sbepmanual.mdl" )
+self:PhysicsInit( SOLID_VPHYSICS )
+self:SetMoveType( MOVETYPE_VPHYSICS )							
+self:SetSolid( SOLID_VPHYSICS )
+self:SetUseType( SIMPLE_USE )
+self:SetPos( self:GetPos() + Vector( 0, 0, self:OBBMins().z ) )
 
-local phys = self.Entity:GetPhysicsObject()
+local phys = self:GetPhysicsObject()
 	if (phys:IsValid()) then
 		phys:Wake()
 	end

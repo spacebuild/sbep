@@ -5,25 +5,25 @@ include( 'shared.lua' )
 
 function ENT:Initialize()
 
-	self.Entity:SetModel( "models/Stat_Turrets/st_turretswivel.mdl" ) 
-	self.Entity:SetName("MannedTurret")
-	self.Entity:PhysicsInit( SOLID_VPHYSICS )
-	self.Entity:SetMoveType( MOVETYPE_VPHYSICS )
-	self.Entity:SetSolid( SOLID_VPHYSICS )
-	--self.Inputs = Wire_CreateInputs( self.Entity, { "Fire" } )
+	self:SetModel( "models/Stat_Turrets/st_turretswivel.mdl" ) 
+	self:SetName("MannedTurret")
+	self:PhysicsInit( SOLID_VPHYSICS )
+	self:SetMoveType( MOVETYPE_VPHYSICS )
+	self:SetSolid( SOLID_VPHYSICS )
+	--self.Inputs = Wire_CreateInputs( self, { "Fire" } )
 	
-	local phys = self.Entity:GetPhysicsObject()
+	local phys = self:GetPhysicsObject()
 	if (phys:IsValid()) then
 		phys:Wake()
 		phys:EnableGravity(true)
 		phys:EnableDrag(true)
 		phys:EnableCollisions(true)
 	end
-	self.Entity:SetKeyValue("rendercolor", "255 255 255")
-	self.PhysObj = self.Entity:GetPhysicsObject()
+	self:SetKeyValue("rendercolor", "255 255 255")
+	self.PhysObj = self:GetPhysicsObject()
 	
 	--self.val1 = 0
-	--RD_AddResource(self.Entity, "Munitions", 0)
+	--RD_AddResource(self, "Munitions", 0)
 
 	self.DPitch = 0
 	self.Pitch = 0	
@@ -140,7 +140,7 @@ function ENT:OnRemove()
 end
 
 function ENT:Think()
-	--self.Entity:SetColor( 0, 0, 255, 255)
+	--self:SetColor(Color( 0, 0, 255, 255))
 
 	if self.Pod2 and self.Pod2:IsValid() and self.Pod2:IsVehicle() then
 		for i = 1, self.HPC do
@@ -173,7 +173,7 @@ function ENT:Think()
 			
 			
 			local physi1 = self.Pod2:GetPhysicsObject()
-			local physi2 = self.Entity:GetPhysicsObject()
+			local physi2 = self:GetPhysicsObject()
 			physi1:AddAngleVelocity((physi1:GetAngleVelocity() * -1) + Angle(0,CPLA.p * 2,0))
 			physi2:AddAngleVelocity((physi2:GetAngleVelocity() * -1) + Angle(0,0,CPLA.y * 5))
 			
@@ -214,12 +214,12 @@ function ENT:Think()
 			
 		else
 			
-			local PRel = self.Entity:GetPos() + self.Entity:GetForward() * 500
-			local FDist = PRel:Distance( self.Entity:GetPos() + self.Base:GetForward() * 100 )
-			local BDist = PRel:Distance( self.Entity:GetPos() + self.Base:GetForward() * -100 )
+			local PRel = self:GetPos() + self:GetForward() * 500
+			local FDist = PRel:Distance( self:GetPos() + self.Base:GetForward() * 100 )
+			local BDist = PRel:Distance( self:GetPos() + self.Base:GetForward() * -100 )
 			local Yaw = math.Clamp((FDist - BDist) * 7.75, -1250, 1250)
 			
-			local PRel = self.Pod2:GetPos() + self.Entity:GetForward() * 500 + self.Entity:GetUp() * 50
+			local PRel = self.Pod2:GetPos() + self:GetForward() * 500 + self:GetUp() * 50
 			local FDist = PRel:Distance( self.Pod2:GetPos() + self.Pod2:GetUp() * 100 )
 			local BDist = PRel:Distance( self.Pod2:GetPos() + self.Pod2:GetUp() * -100 )
 			local Pitch = math.Clamp((FDist - BDist) * 7.75, -1250, 1250)
@@ -228,7 +228,7 @@ function ENT:Think()
 			
 			physi1:AddAngleVelocity((physi1:GetAngleVelocity() * -1) + Angle(0,Pitch,0))
 			
-			local physi2 = self.Entity:GetPhysicsObject()
+			local physi2 = self:GetPhysicsObject()
 			
 			physi2:AddAngleVelocity((physi2:GetAngleVelocity() * -1) + Angle(0,0,Yaw))
 			
@@ -238,7 +238,7 @@ function ENT:Think()
 	end
 
 	
-	self.Entity:NextThink( CurTime() + 0.01 ) 
+	self:NextThink( CurTime() + 0.01 ) 
 	return true	
 end
 

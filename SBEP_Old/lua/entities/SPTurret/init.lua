@@ -5,27 +5,27 @@ include( 'shared.lua' )
 
 function ENT:Initialize()
 
-	self.Entity:SetModel( "models/Slyfo/smlturretbase.mdl" ) 
-	self.Entity:SetName("MannedTurret")
-	self.Entity:PhysicsInit( SOLID_VPHYSICS )
-	self.Entity:SetMoveType( MOVETYPE_VPHYSICS )
-	self.Entity:SetSolid( SOLID_VPHYSICS )
+	self:SetModel( "models/Slyfo/smlturretbase.mdl" ) 
+	self:SetName("MannedTurret")
+	self:PhysicsInit( SOLID_VPHYSICS )
+	self:SetMoveType( MOVETYPE_VPHYSICS )
+	self:SetSolid( SOLID_VPHYSICS )
 	local inNames = { "Active", "Fire", "X", "Y", "Z", "Vector", "Pitch", "Yaw", "Lateral", "Vertical", "Mode" }
 	local inTypes = { "NORMAL","NORMAL","NORMAL","NORMAL","NORMAL","VECTOR","NORMAL","NORMAL","NORMAL","NORMAL","NORMAL" }
-	self.Inputs = WireLib.CreateSpecialInputs( self.Entity,inNames,inTypes)
+	self.Inputs = WireLib.CreateSpecialInputs( self,inNames,inTypes)
 	
-	local phys = self.Entity:GetPhysicsObject()
+	local phys = self:GetPhysicsObject()
 	if (phys:IsValid()) then
 		phys:Wake()
 		phys:EnableGravity(true)
 		phys:EnableDrag(true)
 		phys:EnableCollisions(true)
 	end
-	self.Entity:SetKeyValue("rendercolor", "255 255 255")
-	self.PhysObj = self.Entity:GetPhysicsObject()
+	self:SetKeyValue("rendercolor", "255 255 255")
+	self.PhysObj = self:GetPhysicsObject()
 	
 	--self.val1 = 0
-	--RD_AddResource(self.Entity, "Munitions", 0)
+	--RD_AddResource(self, "Munitions", 0)
 
 	self.Active = false
 	
@@ -40,7 +40,7 @@ function ENT:Initialize()
 	self.YCo = 0
 	self.ZCo = 0
 	
-	self.Cont 			= self.Entity
+	self.Cont 			= self
 	self.HasHardpoints 	= true
 	self.HPC			= 1
 	self.HP				= {}
@@ -128,9 +128,9 @@ function ENT:Think()
 		local Weap = self.HP[1]["Ent"]
 		if self.Active then
 			if !self.Angular then
-				local Dir = (Vector(self.XCo,self.YCo,self.ZCo) - (self.Entity:GetPos() + self.Entity:GetUp() * 40)):GetNormal()
+				local Dir = (Vector(self.XCo,self.YCo,self.ZCo) - (self:GetPos() + self:GetUp() * 40)):GetNormal()
 				local Ang = Dir:Angle()
-				local RAng = self.Entity:WorldToLocalAngles(Ang)
+				local RAng = self:WorldToLocalAngles(Ang)
 				RAng.r = 0
 				if Weap.APAng then
 					Weap:SetLocalAngles(Weap.APAng + RAng)
@@ -154,8 +154,8 @@ function ENT:Think()
 				Weap:SetLocalAngles(Angle(0,0,0))
 			end
 		end
-		Pos = self.Entity:GetPos() + (self.Entity:GetUp() * 40) + (Weap:GetUp() * Weap.APPos.z) + (Weap:GetForward() * Weap.APPos.x) + (Weap:GetRight() * Weap.APPos.y)
-		Weap:SetLocalPos(self.Entity:WorldToLocal(Pos))
+		Pos = self:GetPos() + (self:GetUp() * 40) + (Weap:GetUp() * Weap.APPos.z) + (Weap:GetForward() * Weap.APPos.x) + (Weap:GetRight() * Weap.APPos.y)
+		Weap:SetLocalPos(self:WorldToLocal(Pos))
 
 		if self.Firing then
 			Weap:HPFire()
@@ -163,7 +163,7 @@ function ENT:Think()
 	end
 		
 	
-	self.Entity:NextThink( CurTime() + 0.01 ) 
+	self:NextThink( CurTime() + 0.01 ) 
 	return true	
 end
 
@@ -188,7 +188,7 @@ function ENT:PreEntityCopy()
 	end
 	
 	if WireAddon then
-		DI.WireData = WireLib.BuildDupeInfo( self.Entity )
+		DI.WireData = WireLib.BuildDupeInfo( self )
 	end
 
 	duplicator.StoreEntityModifier(self, "SPTurret", DI)

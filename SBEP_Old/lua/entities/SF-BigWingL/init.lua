@@ -5,25 +5,25 @@ util.PrecacheSound( "SB/Gattling2.wav" )
 
 function ENT:Initialize()
 
-	self.Entity:SetModel( "models/SmallBridge/Wings/SBwingC1L.mdl" ) 
-	self.Entity:SetName("SmallMachineGun")
-	self.Entity:PhysicsInit( SOLID_VPHYSICS )
-	self.Entity:SetMoveType( MOVETYPE_VPHYSICS )
-	self.Entity:SetSolid( SOLID_VPHYSICS )
-	self.Inputs = Wire_CreateInputs( self.Entity, { "Deploy" } )
+	self:SetModel( "models/SmallBridge/Wings/SBwingC1L.mdl" ) 
+	self:SetName("SmallMachineGun")
+	self:PhysicsInit( SOLID_VPHYSICS )
+	self:SetMoveType( MOVETYPE_VPHYSICS )
+	self:SetSolid( SOLID_VPHYSICS )
+	self.Inputs = Wire_CreateInputs( self, { "Deploy" } )
 	
-	local phys = self.Entity:GetPhysicsObject()
+	local phys = self:GetPhysicsObject()
 	if (phys:IsValid()) then
 		phys:Wake()
 		phys:EnableGravity(true)
 		phys:EnableDrag(true)
 		phys:EnableCollisions(true)
 	end
-	self.Entity:SetKeyValue("rendercolor", "255 255 255")
-	self.PhysObj = self.Entity:GetPhysicsObject()
+	self:SetKeyValue("rendercolor", "255 255 255")
+	self.PhysObj = self:GetPhysicsObject()
 	
 	--self.val1 = 0
-	--RD_AddResource(self.Entity, "Munitions", 0)
+	--RD_AddResource(self, "Munitions", 0)
 
 	self.HPC			= 5
 	self.HP				= {}
@@ -53,19 +53,19 @@ function ENT:Initialize()
 	self.HP[5]["Pos"]	= Vector(-22,223,10)
 	self.HP[5]["Angle"]	= Angle(90,0,180)
 	
-	self.Cont = self.Entity
+	self.Cont = self
 	self.Dpl = false
 	self.WingAngle = 0
 
-	self.Entity:SetFold( false )
+	self:SetFold( false )
 	
 	
 	if fintool and type(fintool) == "table" and 1==0 then
 		local fin = ents.Create( "fin_2" )
 			--fin:SetPos(Entity:LocalToWorld(Data.pos))
-			fin:SetPos(self.Entity:GetPos()) --its pos doesn't matter
-			fin:SetAngles(fin:LocalToWorldAngles(self.Entity:WorldToLocalAngles(self.Entity:GetUp():Angle())))--(self.Entity:GetUp():Angle())--
-			fin.ent			= self.Entity
+			fin:SetPos(self:GetPos()) --its pos doesn't matter
+			fin:SetAngles(fin:LocalToWorldAngles(self:WorldToLocalAngles(self:GetUp():Angle())))--(self:GetUp():Angle())--
+			fin.ent			= self
 			fin.efficiency	= 50
 			fin.lift		= "lift_normal"
 			fin.pln			= 1
@@ -75,8 +75,8 @@ function ENT:Initialize()
 		fin:Activate()
 	
 		fin:SetParent(Entity)
-		self.Entity:DeleteOnRemove(fin)
-		self.Entity.Fin2_Ent = fin
+		self:DeleteOnRemove(fin)
+		self.Fin2_Ent = fin
 	end
 
 end
@@ -113,10 +113,10 @@ function ENT:TriggerInput(iname, value)
 	elseif (iname == "Deploy") then
 		if (value > 0) then
 			self.Dpl = true
-			self.Entity:SetFold( true )
+			self:SetFold( true )
 		else
 			self.Dpl = false
-			self.Entity:SetFold( false )
+			self:SetFold( false )
 		end
 			
 	end
@@ -131,14 +131,14 @@ function ENT:Think()
 	if self.Dpl then
 		if self.WingAngle < 35 then 
 			self.WingAngle = self.WingAngle + 1
-			--self.Entity:SetFold( self.WingAngle )
+			--self:SetFold( self.WingAngle )
 		else
 			self.WingAngle = 35
 		end
 	else
 		if self.WingAngle > 0 then 
 			self.WingAngle = self.WingAngle - 1
-			--self.Entity:SetFold( self.WingAngle )
+			--self:SetFold( self.WingAngle )
 		else
 			self.WingAngle = 0
 		end
@@ -146,33 +146,33 @@ function ENT:Think()
 	
 	if self.HP[1]["Ent"] and self.HP[1]["Ent"]:IsValid() then
 		local SwivPos = ( Vector(-28,223,18) )
-		local NAng = self.Entity:GetAngles()
-		NAng:RotateAroundAxis( self.Entity:GetForward(), -self.WingAngle + 90 )
+		local NAng = self:GetAngles()
+		NAng:RotateAroundAxis( self:GetForward(), -self.WingAngle + 90 )
 		NAng:RotateAroundAxis( NAng:Up(), 180 )
-		RAng = self.Entity:WorldToLocalAngles(NAng)
-		self.HP[1]["Ent"]:SetLocalAngles( self.Entity:WorldToLocalAngles(NAng) )
-		self.HP[1]["Ent"]:SetLocalPos( SwivPos + RAng:Up() * 223 + RAng:Right() * 18 + RAng:Forward() * 28 )--( self.Entity:GetRight() * CoSine ) + ( self.Entity:GetUp() * Sine ) )
+		RAng = self:WorldToLocalAngles(NAng)
+		self.HP[1]["Ent"]:SetLocalAngles( self:WorldToLocalAngles(NAng) )
+		self.HP[1]["Ent"]:SetLocalPos( SwivPos + RAng:Up() * 223 + RAng:Right() * 18 + RAng:Forward() * 28 )--( self:GetRight() * CoSine ) + ( self:GetUp() * Sine ) )
 	end
 	
 	if self.HP[2]["Ent"] and self.HP[2]["Ent"]:IsValid() then
 		local SwivPos = ( Vector(-28,223,18) )
-		local NAng = self.Entity:GetAngles()
-		NAng:RotateAroundAxis( self.Entity:GetForward(), self.WingAngle + 90 )
+		local NAng = self:GetAngles()
+		NAng:RotateAroundAxis( self:GetForward(), self.WingAngle + 90 )
 		NAng:RotateAroundAxis( NAng:Up(), 180 )
-		RAng = self.Entity:WorldToLocalAngles(NAng)
-		self.HP[2]["Ent"]:SetLocalAngles( self.Entity:WorldToLocalAngles(NAng) )
-		self.HP[2]["Ent"]:SetLocalPos( SwivPos + RAng:Up() * 223 + RAng:Right() * -18 + RAng:Forward() * 28 )--( self.Entity:GetRight() * CoSine ) + ( self.Entity:GetUp() * Sine ) )
+		RAng = self:WorldToLocalAngles(NAng)
+		self.HP[2]["Ent"]:SetLocalAngles( self:WorldToLocalAngles(NAng) )
+		self.HP[2]["Ent"]:SetLocalPos( SwivPos + RAng:Up() * 223 + RAng:Right() * -18 + RAng:Forward() * 28 )--( self:GetRight() * CoSine ) + ( self:GetUp() * Sine ) )
 	end
 	
 	if self.HP[5]["Ent"] and self.HP[5]["Ent"]:IsValid() then
-		local NAng = self.Entity:GetAngles()
-		NAng:RotateAroundAxis( self.Entity:GetForward(), self.WingAngle + 90 )
+		local NAng = self:GetAngles()
+		NAng:RotateAroundAxis( self:GetForward(), self.WingAngle + 90 )
 		NAng:RotateAroundAxis( NAng:Up(), 180 )
-		self.HP[5]["Ent"]:SetLocalAngles( self.Entity:WorldToLocalAngles(NAng) )
+		self.HP[5]["Ent"]:SetLocalAngles( self:WorldToLocalAngles(NAng) )
 	end
 	
 
-	self.Entity:NextThink( CurTime() + 0.01 ) 
+	self:NextThink( CurTime() + 0.01 ) 
 	return true
 end
 
@@ -190,7 +190,7 @@ end
 
 function ENT:Touch( ent )
 	if ent.HasHardpoints then
-		if ent.Cont and ent.Cont:IsValid() then HPLink( ent.Cont, ent.Entity, self.Entity ) end
+		if ent.Cont and ent.Cont:IsValid() then HPLink( ent.Cont, ent.Entity, self ) end
 	end
 end
 

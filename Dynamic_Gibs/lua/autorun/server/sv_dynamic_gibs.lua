@@ -231,19 +231,19 @@ hook.Add("InitPostEntity","Dynamic_Gibs_LoadConfig",function()
 				
 					local PlaneNorm = Vector(math.Rand(0,1000),math.Rand(0,1000),math.Rand(0,1000)):Normalize()
 					
-					local pos = self.Entity:GetPos()
+					local pos = self:GetPos()
 					local Force = Vector((pos.x + math.random(-400,400)),(pos.y + math.random(-400,400)),(pos.z + math.random(-400,400))):GetNormalized() * 300
 				
 					math.randomseed(CurTime())
 					self.exploded = false
 					self.fuseleft = CurTime() + 2
 					self.deathtype = 0	
-					self.Entity:PhysicsInit( SOLID_VPHYSICS )
-					self.Entity:SetMoveType( MOVETYPE_VPHYSICS )
-					self.Entity:SetSolid( SOLID_VPHYSICS ) 
-					self.Entity:SetColor(20,20,20,255)
-					self.Entity:SetCollisionGroup( 0 )
-					local phys = self.Entity:GetPhysicsObject()  	
+					self:PhysicsInit( SOLID_VPHYSICS )
+					self:SetMoveType( MOVETYPE_VPHYSICS )
+					self:SetSolid( SOLID_VPHYSICS ) 
+					self:SetColor(Color(20,20,20,255))
+					self:SetCollisionGroup( 0 )
+					local phys = self:GetPhysicsObject()  	
 					if (phys:IsValid()) then  		
 						phys:Wake()
 						phys:EnableGravity(false)
@@ -272,11 +272,11 @@ hook.Add("InitPostEntity","Dynamic_Gibs_LoadConfig",function()
 					self.exploded = false
 					self.fuseleft = CurTime() + 2
 					self.deathtype = 0	
-					self.Entity:PhysicsInit( SOLID_VPHYSICS )
-					self.Entity:SetMoveType( MOVETYPE_VPHYSICS )
-					self.Entity:SetSolid( SOLID_VPHYSICS ) 
-					self.Entity:SetColor(20,20,20,255)
-					self.Entity:SetCollisionGroup( 0 )
+					self:PhysicsInit( SOLID_VPHYSICS )
+					self:SetMoveType( MOVETYPE_VPHYSICS )
+					self:SetSolid( SOLID_VPHYSICS ) 
+					self:SetColor(Color(20,20,20,255))
+					self:SetCollisionGroup( 0 )
 				end
 			end
 			

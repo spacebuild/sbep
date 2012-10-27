@@ -10,37 +10,37 @@ ENT.NVT				= 0
 
 
 function ENT:SetActive( val )
-	self.Entity:SetNetworkedBool("ClActive",val,true)
+	self:SetNetworkedBool("ClActive",val,true)
 end
 
 function ENT:GetActive()
-	return self.Entity:GetNetworkedBool("ClActive")
+	return self:GetNetworkedBool("ClActive")
 end
 
 function ENT:SetSize( val )
 	if CurTime() > self.NVT then
-		local CVal = self.Entity:GetSize() or 0
+		local CVal = self:GetSize() or 0
 		if val ~= CVal then
-			self.Entity:SetNetworkedInt("ClSize",val,true)
+			self:SetNetworkedInt("ClSize",val,true)
 			self.NVT = CurTime() + 1
 		end
 	end
 end
 
 function ENT:GetSize()
-	return self.Entity:GetNetworkedInt("ClSize")
+	return self:GetNetworkedInt("ClSize")
 end
 
 function ENT:SetLength( val )
 	if CurTime() > self.NVT then
-		local CVal = self.Entity:GetLength() or 0
+		local CVal = self:GetLength() or 0
 		if val ~= CVal then
-			self.Entity:SetNetworkedInt("ClLength",val,true)
+			self:SetNetworkedInt("ClLength",val,true)
 			self.NVT = CurTime() + 1
 		end
 	end
 end
 
 function ENT:GetLength()
-	return self.Entity:GetNetworkedInt("ClLength")
+	return self:GetNetworkedInt("ClLength")
 end

@@ -13,26 +13,26 @@ function ENT:Initialize()
 	self.Active = 0
 	self.damaged = 0
 	self:CreateEnvironment(1, 1, 1, 0, 0, 0, 0, 0)
-	self.maxsize = self.Entity:BoundingRadius()
+	self.maxsize = self:BoundingRadius()
 	self.maxO2Level = 100
 	self.disuse = false
 	if not (WireAddon == nil) then
 		self.WireDebugName = self.PrintName
-		self.Inputs = Wire_CreateInputs(self.Entity, { "On", "Gravity", "Max O2 level", "Disable Use"})
-		self.Outputs = Wire_CreateOutputs(self.Entity, { "On", "Oxygen-Level", "Temperature", "Gravity" })
+		self.Inputs = Wire_CreateInputs(self, { "On", "Gravity", "Max O2 level", "Disable Use"})
+		self.Outputs = Wire_CreateOutputs(self, { "On", "Oxygen-Level", "Temperature", "Gravity" })
 	end
 end
 
 function ENT:TurnOn(value, caller)
 	if (self.disuse and caller) then return end
 	if (self.Active == 0) then
-		self.Entity:EmitSound( "apc_engine_start" )
+		self:EmitSound( "apc_engine_start" )
 		self.Active = 1
-		self:UpdateSize(self.Entity.sbenvironment.size, self.maxsize) --We turn the forcefield that contains the environment on
-		if self.environment and not self.environment:IsSpace() then --Fill the environment with air if the surounding environment has o2, replace with CO2
+		self:UpdateSize(self.sbenvironment.size, self.maxsize) //We turn the forcefield that contains the environment on
+		if self.environment and not self.environment:IsSpace() then //Fill the environment with air if the surounding environment has o2, replace with CO2
 			self.sbenvironment.air.o2 = self.sbenvironment.air.o2 + self.environment:Convert(0, -1, math.Round(self.sbenvironment.air.max/18))
 		end
-		if not (WireAddon == nil) then Wire_TriggerOutput(self.Entity, "On", self.Active) end
+		if not (WireAddon == nil) then Wire_TriggerOutput(self, "On", self.Active) end
 		self:SetOOO(1)
 	end
 end
@@ -41,8 +41,8 @@ function ENT:TurnOff(value, caller)
 	if (self.disuse and caller) then return end
 	if (self.Active == 1) then
 
-		self.Entity:StopSound( "apc_engine_start" )
-		self.Entity:EmitSound( "apc_engine_stop" )
+		self:StopSound( "apc_engine_start" )
+		self:EmitSound( "apc_engine_stop" )
 		self.Active = 0
 		if self.environment then --flush all resources into the environment if we are in one (used for the slownes of the SB updating process, we don't want errors do we?)
 			if self.sbenvironment.air.o2 > 0 then
@@ -67,8 +67,8 @@ function ENT:TurnOff(value, caller)
 			end
 		end
 		self.sbenvironment.temperature = 0
-		self:UpdateSize(self.Entity.sbenvironment.size, 0) --We turn the forcefield that contains the environment off!
-		if not (WireAddon == nil) then Wire_TriggerOutput(self.Entity, "On", self.Active) end
+		self:UpdateSize(self.sbenvironment.size, 0) //We turn the forcefield that contains the environment off!
+		if not (WireAddon == nil) then Wire_TriggerOutput(self, "On", self.Active) end
 		self:SetOOO(0)
 	end
 end
@@ -106,19 +106,19 @@ end
 
 function ENT:Repair()
 	self.BaseClass.Repair(self)
-	self.Entity:SetColor(255, 255, 255, 255)
+	self:SetColor(Color(255, 255, 255, 255))
 	self.damaged = 0
 end
 
 function ENT:Destruct()
 	CAF.GetAddon("Spacebuild").RemoveEnvironment(self)
-	CAF.GetAddon("Life Support"):LS_Destruct( self.Entity, true )
+	CAF.GetAddon("Life Support"):LS_Destruct( self, true )
 end
 
 function ENT:OnRemove()
 	CAF.GetAddon("Spacebuild").RemoveEnvironment(self)
 	self.BaseClass.OnRemove(self)
-	self.Entity:StopSound( "apc_engine_start" )
+	self:StopSound( "apc_engine_start" )
 end
 
 function ENT:CreateEnvironment(gravity, atmosphere, pressure, temperature, o2, co2, n, h)
@@ -299,16 +299,16 @@ function ENT:Climate_Control()
 	end
 	--Msg("Temperature: "..tostring(temperature)..", pressure: " ..tostring(pressure).."\n")
 	if self.Active == 1 then --Only do something if the device is on
-		self.energy = RD.GetResourceAmount(self.Entity, "energy")
+		self.energy = RD.GetResourceAmount(self, "energy")
 		if self.energy == 0 or self.energy <  3 * math.ceil(self.maxsize/1024) then --Don't have enough power to keep the controler\'s think process running, shut it all down
 			self:TurnOff()
 			return
 			--Msg("Turning of\n")
 		else
-			self.air = RD.GetResourceAmount(self.Entity, "oxygen")
-			self.coolant = RD.GetResourceAmount(self.Entity, "water")
-			self.coolant2 = RD.GetResourceAmount(self.Entity, "nitrogen")
-			self.energy = RD.GetResourceAmount(self.Entity, "energy")
+			self.air = RD.GetResourceAmount(self, "oxygen")
+			self.coolant = RD.GetResourceAmount(self, "water")
+			self.coolant2 = RD.GetResourceAmount(self, "nitrogen")
+			self.energy = RD.GetResourceAmount(self, "energy")
 			--First let check our air supply and try to stabilize it if we got oxygen left in storage at a rate of 5 oxygen per second
 			if self.sbenvironment.air.o2 < self.sbenvironment.air.max * (self.maxO2Level/100) then
 				--We need some energy to fire the pump!
@@ -360,7 +360,7 @@ function ENT:Climate_Control()
 				--Msg("Heating up?\n")
 				if self.sbenvironment.temperature + 60 <= 303 then
 					RD.ConsumeResource(self, "energy",  24 * math.ceil(self.maxsize/1024))
-					self.energy = RD.GetResourceAmount(self.Entity, "energy")
+					self.energy = RD.GetResourceAmount(self, "energy")
 					if self.energy >  60 * math.ceil(self.maxsize/1024) then
 						--Msg("Enough energy\n")
 						self.sbenvironment.temperature = self.sbenvironment.temperature + 60
@@ -372,7 +372,7 @@ function ENT:Climate_Control()
 					end
 				elseif self.sbenvironment.temperature + 30 <= 303 then
 					RD.ConsumeResource(self, "energy",  12 * math.ceil(self.maxsize/1024))
-					self.energy = RD.GetResourceAmount(self.Entity, "energy")
+					self.energy = RD.GetResourceAmount(self, "energy")
 					if self.energy >  30 * math.ceil(self.maxsize/1024) then
 						--Msg("Enough energy\n")
 						self.sbenvironment.temperature = self.sbenvironment.temperature + 30
@@ -384,7 +384,7 @@ function ENT:Climate_Control()
 					end
 				elseif self.sbenvironment.temperature + 15 <= 303 then
 					RD.ConsumeResource(self, "energy",  6 * math.ceil(self.maxsize/1024))
-					self.energy = RD.GetResourceAmount(self.Entity, "energy")
+					self.energy = RD.GetResourceAmount(self, "energy")
 					if self.energy >  15 * math.ceil(self.maxsize/1024) then
 						--Msg("Enough energy\n")
 						self.sbenvironment.temperature = self.sbenvironment.temperature + 15
@@ -396,7 +396,7 @@ function ENT:Climate_Control()
 					end
 				else
 					RD.ConsumeResource(self, "energy",  2 * math.ceil(self.maxsize/1024))
-					self.energy = RD.GetResourceAmount(self.Entity, "energy")
+					self.energy = RD.GetResourceAmount(self, "energy")
 					if self.energy >  5 * math.ceil(self.maxsize/1024) then
 						--Msg("Enough energy\n")
 						self.sbenvironment.temperature = self.sbenvironment.temperature + 5
@@ -481,16 +481,16 @@ function ENT:Climate_Control()
 		end
 	end
 	if not (WireAddon == nil) then
-		Wire_TriggerOutput(self.Entity, "Oxygen-Level", tonumber(self:GetO2Percentage()))
-		Wire_TriggerOutput(self.Entity, "Temperature", tonumber(self.sbenvironment.temperature))
-		Wire_TriggerOutput(self.Entity, "Gravity", tonumber(self.sbenvironment.gravity))
+		Wire_TriggerOutput(self, "Oxygen-Level", tonumber(self:GetO2Percentage()))
+		Wire_TriggerOutput(self, "Temperature", tonumber(self.sbenvironment.temperature))
+		Wire_TriggerOutput(self, "Gravity", tonumber(self.sbenvironment.gravity))
 	end
 end
 
 function ENT:Think()
 	self.BaseClass.Think(self)
 	self:Climate_Control()
-	self.Entity:NextThink(CurTime() + 1)
+	self:NextThink(CurTime() + 1)
 	return true
 end
 
@@ -534,7 +534,7 @@ function ENT:PreEntityCopy()
 	local DI = {}
 
 	if WireAddon then
-		DI.WireData = WireLib.BuildDupeInfo( self.Entity )
+		DI.WireData = WireLib.BuildDupeInfo( self )
 	end
 
 	duplicator.StoreEntityModifier(self, "SBEPHabModule", DI)

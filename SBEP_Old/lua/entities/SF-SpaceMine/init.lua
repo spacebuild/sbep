@@ -9,17 +9,17 @@ util.PrecacheSound( "explode_5" )
 
 function ENT:Initialize()
 
-	self.Entity:SetModel( "models/Slyfo/spacemine.mdl" )
-	self.Entity:SetName("Mine")
-	self.Entity:PhysicsInit( SOLID_VPHYSICS )
-	self.Entity:SetMoveType( MOVETYPE_VPHYSICS )
-	self.Entity:SetSolid( SOLID_VPHYSICS )
+	self:SetModel( "models/Slyfo/spacemine.mdl" )
+	self:SetName("Mine")
+	self:PhysicsInit( SOLID_VPHYSICS )
+	self:SetMoveType( MOVETYPE_VPHYSICS )
+	self:SetSolid( SOLID_VPHYSICS )
 
 	if WireAddon then
 		self.Inputs = WireLib.CreateInputs( self, { "Arm" } )
 	end
 
-	local phys = self.Entity:GetPhysicsObject()
+	local phys = self:GetPhysicsObject()
 	if (phys:IsValid()) then
 		phys:Wake()
 		phys:EnableGravity(true)
@@ -32,9 +32,9 @@ function ENT:Initialize()
 	self.cbt.armor = 22
 	self.cbt.maxhealth = 5000
 	
-    --self.Entity:SetKeyValue("rendercolor", "0 0 0")
-	self.PhysObj = self.Entity:GetPhysicsObject()
-	self.CAng = self.Entity:GetAngles()
+    --self:SetKeyValue("rendercolor", "0 0 0")
+	self.PhysObj = self:GetPhysicsObject()
+	self.CAng = self:GetAngles()
 	
 
 end
@@ -43,12 +43,12 @@ function ENT:TriggerInput(iname, value)
 	
 	if (iname == "Arm") then
 		if (value > 0) then
-			self.Entity:Arm()
+			self:Arm()
 		end
 		
 	elseif (iname == "Detonate") then	
 		if (value > 0) then
-			self.Entity:Splode()
+			self:Splode()
 		end
 	end
 	
@@ -72,16 +72,16 @@ function ENT:SpawnFunction( ply, tr )
 end
 
 function ENT:Think()
-	local phy = self.Entity:GetPhysicsObject()
+	local phy = self:GetPhysicsObject()
 	if self.Armed then
 		if self.Homer then
 			if self.Target and self.Target:IsValid() then
 				--if self.Target and self.Target:IsValid() then
 					local IMass = self.Target:GetPhysicsObject():GetMass()
-					local IDist = (self.Entity:GetPos() - self.Target:GetPos()):Length()
+					local IDist = (self:GetPos() - self.Target:GetPos()):Length()
 					local TVal = (IMass * 3) - IDist				
-					if !self.Entity:GetTracking() then self.Entity:SetTracking( true ) end
-					local DVec = self.Target:GetPos() - self.Entity:GetPos()
+					if !self:GetTracking() then self:SetTracking( true ) end
+					local DVec = self.Target:GetPos() - self:GetPos()
 					phy:SetVelocity( (DVec:Normalize() * ((self.Target:GetPhysicsObject():GetVelocity():Length() * 0.1) + (TVal * 0.01) )) + phy:GetVelocity() )
 					--phy:ApplyForceCenter( DVec:Normalize() * ((self.Target:GetPhysicsObject():GetVelocity():Length() * 100) + (TVal * 2000 ) )
 					if TVal <= 0 then
@@ -89,8 +89,8 @@ function ENT:Think()
 					end
 				--end
 			else
-				if self.Entity:GetTracking() then self.Entity:SetTracking( false ) end
-				local targets = ents.FindInSphere( self.Entity:GetPos(), 5000)
+				if self:GetTracking() then self:SetTracking( false ) end
+				local targets = ents.FindInSphere( self:GetPos(), 5000)
 		
 				local CMass = 0
 				local CT = nil
@@ -98,7 +98,7 @@ function ENT:Think()
 				for _,i in pairs(targets) do
 					if i:GetPhysicsObject() and i:GetPhysicsObject():IsValid() and !i.MineProof and !i:IsPlayer() then
 						local IMass = i:GetPhysicsObject():GetMass()
-						local IDist = (self.Entity:GetPos() - i:GetPos()):Length()
+						local IDist = (self:GetPos() - i:GetPos()):Length()
 						local TVal = (IMass * 3) - IDist
 						if TVal > CMass then
 							CT = i
@@ -112,7 +112,7 @@ function ENT:Think()
 			phy:SetVelocity( phy:GetVelocity() * 0.9 )
 		end
 	end
-	self.Entity:NextThink( CurTime() + 0.1 )
+	self:NextThink( CurTime() + 0.1 )
 	return true
 end
 
@@ -130,29 +130,29 @@ function ENT:OnTakeDamage( dmginfo )
 end
 
 function ENT:Use( activator, caller )
-	self.Entity:Arm()
+	self:Arm()
 	self.Homer = true
 end
 
 function ENT:Arm()
 	self.Armed = true
-	--util.SpriteTrail( self.Entity, 0,  Color(255,255,80,150), false, 50, 0, 3, 1, "trails/smoke.vmt" )
-	self.Entity:SetArmed( true )
+	--util.SpriteTrail( self, 0,  Color(255,255,80,150), false, 50, 0, 3, 1, "trails/smoke.vmt" )
+	self:SetArmed( true )
 	self.PhysObj:EnableGravity(false)
 end
 
 function ENT:Splode()
 	if(!self.Exploded) then
 		--self.Exploded = true
-		util.BlastDamage(self.Entity, self.Entity, self.Entity:GetPos(), 750, 750)
-		local targets = ents.FindInSphere( self.Entity:GetPos(), 500)
-		local tooclose = ents.FindInSphere( self.Entity:GetPos(), 5)
+		util.BlastDamage(self, self, self:GetPos(), 750, 750)
+		local targets = ents.FindInSphere( self:GetPos(), 500)
+		local tooclose = ents.FindInSphere( self:GetPos(), 5)
 		local Mines = ents.FindByClass("SF-SpaceMine")
 		
 		for _,i in pairs(targets) do
 						
 			local tracedata = {}
-			tracedata.start = self.Entity:GetPos()
+			tracedata.start = self:GetPos()
 			tracedata.endpos = i:LocalToWorld( i:OBBCenter( ) )
 			tracedata.filter = tooclose, Mines
 			tracedata.mask = MASK_SOLID
@@ -164,19 +164,19 @@ function ENT:Splode()
 			end
 		end
 		
-		targets = ents.FindInSphere( self.Entity:GetPos(), 2000)
+		targets = ents.FindInSphere( self:GetPos(), 2000)
 	
 		for _,i in pairs(targets) do
 			if i:GetPhysicsObject() and i:GetPhysicsObject():IsValid() and !i.MineProof and !i:IsPlayer() then
-				i:GetPhysicsObject():ApplyForceOffset( (i.Entity:NearestPoint(self.Entity:GetPos()) - self.Entity:GetPos()):Normalize() * 500000, self.Entity:GetPos() )
+				i:GetPhysicsObject():ApplyForceOffset( (i.Entity:NearestPoint(self:GetPos()) - self:GetPos()):Normalize() * 500000, self:GetPos() )
 			end
 		end
 		
-		self.Entity:EmitSound("explode_9")
+		self:EmitSound("explode_9")
 		
 		local effectdata = EffectData()
-		effectdata:SetOrigin(self.Entity:GetPos())
-		effectdata:SetStart(self.Entity:GetPos())
+		effectdata:SetOrigin(self:GetPos())
+		effectdata:SetStart(self:GetPos())
 		util.Effect( "BigTorpSplode", effectdata )
 		self.Exploded = true
 		
@@ -186,7 +186,7 @@ function ENT:Splode()
 		ShakeIt:SetKeyValue("radius", "200" )
 		ShakeIt:SetKeyValue("duration", "5" )
 		ShakeIt:SetKeyValue("frequency", "255" )
-		ShakeIt:SetPos( self.Entity:GetPos() )
+		ShakeIt:SetPos( self:GetPos() )
 		ShakeIt:Fire("StartShake", "", 0);
 		ShakeIt:Spawn()
 		ShakeIt:Activate()
@@ -194,26 +194,26 @@ function ENT:Splode()
 		ShakeIt:Fire("kill", "", 6)
 	end
 	self.Exploded = true
-	self.Entity:Remove()
+	self:Remove()
 end
 
 function ENT:Touch( ent )
 	if ent.HasHardpoints and !self.Armed then
-		--if ent.Cont and ent.Cont:IsValid() then HPLink( ent.Cont, ent.Entity, self.Entity ) end
+		--if ent.Cont and ent.Cont:IsValid() then HPLink( ent.Cont, ent.Entity, self ) end
 	end
 end
 
 function ENT:HPFire()
-	self.Entity:SetParent()
+	self:SetParent()
 	if self.HPWeld and self.HPWeld:IsValid() then self.HPWeld:Remove() end
-	self.Entity:Arm()
+	self:Arm()
 	self.PhysObj:EnableCollisions(true)
 	self.PhysObj:EnableGravity(false)
 end
 
 function ENT:PreEntityCopy()
 	if WireAddon then
-		duplicator.StoreEntityModifier(self,"WireDupeInfo",WireLib.BuildDupeInfo(self.Entity))
+		duplicator.StoreEntityModifier(self,"WireDupeInfo",WireLib.BuildDupeInfo(self))
 	end
 end
 

@@ -5,16 +5,16 @@ include( 'shared.lua' )
 
 function ENT:Initialize()
 
-	self.Entity:SetModel( "models/Slyfo_2/mini_turret_base.mdl" ) 
-	self.Entity:SetName("BlisterMount")
-	self.Entity:PhysicsInit( SOLID_VPHYSICS )
-	self.Entity:SetMoveType( MOVETYPE_VPHYSICS )
-	self.Entity:SetSolid( SOLID_VPHYSICS )
+	self:SetModel( "models/Slyfo_2/mini_turret_base.mdl" ) 
+	self:SetName("BlisterMount")
+	self:PhysicsInit( SOLID_VPHYSICS )
+	self:SetMoveType( MOVETYPE_VPHYSICS )
+	self:SetSolid( SOLID_VPHYSICS )
 	local inNames = { "Active", "Fire", "X", "Y", "Z", "Vector", "Pitch", "Yaw", "Mode" }
 	local inTypes = { "NORMAL","NORMAL","NORMAL","NORMAL","NORMAL","VECTOR","NORMAL","NORMAL","NORMAL" }
-	self.Inputs = WireLib.CreateSpecialInputs( self.Entity,inNames,inTypes)
+	self.Inputs = WireLib.CreateSpecialInputs( self,inNames,inTypes)
 	
-	local phys = self.Entity:GetPhysicsObject()
+	local phys = self:GetPhysicsObject()
 	if (phys:IsValid()) then
 		phys:Wake()
 		phys:EnableGravity(true)
@@ -22,11 +22,11 @@ function ENT:Initialize()
 		phys:EnableCollisions(true)
 		phys:SetMass(10)
 	end
-	self.Entity:SetKeyValue("rendercolor", "255 255 255")
-	self.PhysObj = self.Entity:GetPhysicsObject()
+	self:SetKeyValue("rendercolor", "255 255 255")
+	self.PhysObj = self:GetPhysicsObject()
 	
 	--self.val1 = 0
-	--RD_AddResource(self.Entity, "Munitions", 0)
+	--RD_AddResource(self, "Munitions", 0)
 
 	self.Active = false
 	
@@ -41,7 +41,7 @@ function ENT:Initialize()
 	self.YCo = 0
 	self.ZCo = 0
 	
-	self.Cont 			= self.Entity
+	self.Cont 			= self
 	self.HasHardpoints 	= true
 	self.HPC			= 2
 	self.HP				= {}
@@ -156,23 +156,23 @@ end
 function ENT:Think()
 	if self.Active then
 		if !self.Angular then
-			local Dir = (Vector(self.XCo,self.YCo,self.ZCo) - (self.Entity:GetPos() + self.Entity:GetUp() * 15)):GetNormal()
+			local Dir = (Vector(self.XCo,self.YCo,self.ZCo) - (self:GetPos() + self:GetUp() * 15)):GetNormal()
 			local Ang = Dir:Angle()
-			local RAng = self.Entity:WorldToLocalAngles(Ang)
+			local RAng = self:WorldToLocalAngles(Ang)
 			RAng.r = 0
 			self.Base1:SetLocalAngles(Angle(0,RAng.y,0))
 			
 			self.Base2:SetLocalAngles(RAng)
 			
 			Pos = self:GetPos() + (self.Base2:GetUp() * 16) + (self.Base2:GetForward() * -6)
-			self.Base2:SetLocalPos(self.Entity:WorldToLocal(Pos))
+			self.Base2:SetLocalPos(self:WorldToLocal(Pos))
 		else			
 			self.Base1:SetLocalAngles(Angle(0,self.Yaw,0))
 			
 			self.Base2:SetLocalAngles(Angle(self.Pitch,self.Yaw,0))
 			
 			Pos = self:GetPos() + (self.Base2:GetUp() * 16) + (self.Base2:GetForward() * -6)
-			self.Base2:SetLocalPos(self.Entity:WorldToLocal(Pos))
+			self.Base2:SetLocalPos(self:WorldToLocal(Pos))
 		end
 	else
 		self.Base1:SetLocalAngles(Angle(0,0,0))
@@ -180,7 +180,7 @@ function ENT:Think()
 		self.Base2:SetLocalAngles(Angle(0,0,0))
 		
 		Pos = self:GetPos() + (self.Base2:GetUp() * 16) + (self.Base2:GetForward() * -6)
-		self.Base2:SetLocalPos(self.Entity:WorldToLocal(Pos))
+		self.Base2:SetLocalPos(self:WorldToLocal(Pos))
 	end
 
 	for i = 1,self.HPC do
@@ -196,7 +196,7 @@ function ENT:Think()
 			
 			local APos = self.HP[i]["Pos"]
 			Pos = self.Base2:GetPos() + (self.Base2:GetUp() * APos.z) + (self.Base2:GetForward() * APos.y) + (self.Base2:GetRight() * APos.x) + (Weap:GetUp() * Weap.APPos.z) + (Weap:GetForward() * Weap.APPos.x) + (Weap:GetRight() * Weap.APPos.y)
-			Weap:SetLocalPos(self.Entity:WorldToLocal(Pos))
+			Weap:SetLocalPos(self:WorldToLocal(Pos))
 			
 			if self.Firing then
 				Weap:HPFire()
@@ -204,7 +204,7 @@ function ENT:Think()
 		end
 	end
 		
-	self.Entity:NextThink( CurTime() + 0.01 ) 
+	self:NextThink( CurTime() + 0.01 ) 
 	return true	
 end
 
@@ -227,7 +227,7 @@ function ENT:PreEntityCopy()
 			DI.gun = ent:EntIndex()
 		end
 	if WireAddon then
-		DI.WireData = WireLib.BuildDupeInfo( self.Entity )
+		DI.WireData = WireLib.BuildDupeInfo( self )
 	end
 	duplicator.StoreEntityModifier(self, "SBEPBlister", DI)
 end

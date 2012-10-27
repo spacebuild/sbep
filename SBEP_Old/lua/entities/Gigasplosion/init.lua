@@ -5,13 +5,13 @@ include( 'shared.lua' )
 
 function ENT:Initialize()
 
-	self.Entity:SetModel( "models/props_junk/watermelon01.mdl" )
-	self.Entity:SetName("Gigafish")
-	self.Entity:PhysicsInit( SOLID_VPHYSICS )
-	self.Entity:SetMoveType( 0 )
-	self.Entity:SetSolid( 0 )
+	self:SetModel( "models/props_junk/watermelon01.mdl" )
+	self:SetName("Gigafish")
+	self:PhysicsInit( SOLID_VPHYSICS )
+	self:SetMoveType( 0 )
+	self:SetSolid( 0 )
 	
-	local phys = self.Entity:GetPhysicsObject()
+	local phys = self:GetPhysicsObject()
 	if (phys:IsValid()) then
 		phys:Wake()
 		phys:EnableGravity(false)
@@ -19,10 +19,10 @@ function ENT:Initialize()
 		phys:EnableCollisions(false)
 	end
 	
-	self:SetColor(0,0,0,0)
+	self:SetColor(Color(0,0,0,0))
 	
-    --self.Entity:SetKeyValue("rendercolor", "0 0 0")
-	self.PhysObj = self.Entity:GetPhysicsObject()
+    --self:SetKeyValue("rendercolor", "0 0 0")
+	self.PhysObj = self:GetPhysicsObject()
 	
 	self.Time = 12
  	self.PreSplode = 5
@@ -30,11 +30,11 @@ function ENT:Initialize()
  	self.LifeTime = CurTime() + self.Time
 	
 	local effectdata = EffectData()
-	effectdata:SetOrigin(self.Entity:GetPos())
-	effectdata:SetNormal(self.Entity:GetForward())
-	effectdata:SetStart(self.Entity:GetPos())
-	effectdata:SetAngle(self.Entity:GetAngles())
-	effectdata:SetEntity( self.Entity )
+	effectdata:SetOrigin(self:GetPos())
+	effectdata:SetNormal(self:GetForward())
+	effectdata:SetStart(self:GetPos())
+	effectdata:SetAngle(self:GetAngles())
+	effectdata:SetEntity( self )
 	util.Effect( "Gigafish", effectdata )
 	
 	self.hasdamagecase = true

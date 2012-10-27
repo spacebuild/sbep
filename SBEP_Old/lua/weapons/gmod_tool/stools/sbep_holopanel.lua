@@ -27,7 +27,7 @@ if CLIENT then
 			local r,g,b, cldel = um:ReadFloat(),um:ReadFloat(),um:ReadFloat(), um:ReadFloat()
 			local cry, per, perma = um:ReadBool(), um:ReadBool(), um:ReadBool()
 			timer.Simple( 0.1, function()
-									HK:SetColors( r,g,b )
+									HK:SetColors(Color( r,g,b, 255) )
 									HK.Encrypt = cry
 									HK.Persist = per
 									HK.CLDelay = cldel

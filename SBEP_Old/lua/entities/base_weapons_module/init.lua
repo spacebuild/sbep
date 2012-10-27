@@ -13,7 +13,7 @@ function ENT:Initialize()
 	self.delay = 0.5
 	if not (WireAddon == nil) then
 		self.WireDebugName = self.PrintName
-		self.Outputs = Wire_CreateOutputs(self.Entity, { "Air", "Energy", "Coolant", "Max Air", "Max Energy", "Max Coolant" })
+		self.Outputs = Wire_CreateOutputs(self, { "Air", "Energy", "Coolant", "Max Air", "Max Energy", "Max Coolant" })
 	end
 end
 
@@ -24,23 +24,23 @@ function ENT:Damage()
 end
 
 function ENT:Repair()
-	self.Entity:SetColor(255, 255, 255, 255)
+	self:SetColor(Color(255, 255, 255, 255))
 	self.health = self.maxhealth
 	self.damaged = 0
 end
 
 function ENT:Destruct()
-	LS_Destruct( self.Entity, true )
+	LS_Destruct( self, true )
 end
 
 function ENT:Use( pl)
 	if(CurTime() > self.lastfire + self.delay) then
 		local ent = ents.Create( "plasma" )
-			ent:SetPos( self.Entity:GetPos() + (self.Entity:GetForward() * -80))
-			ent:SetAngles( self.Entity:GetAngles( ) )
+			ent:SetPos( self:GetPos() + (self:GetForward() * -80))
+			ent:SetAngles( self:GetAngles( ) )
 			ent:SetOwner( ply )
 		ent:Spawn( )
-		constraint.NoCollide(self.Entity, ent, 0, 0)
+		constraint.NoCollide(self, ent, 0, 0)
 		self.lastfire = CurTime()
 	end
 end
@@ -55,7 +55,7 @@ function ENT:Think()
 		self:UpdateWireOutput()
 	end
 	
-	self.Entity:NextThink(CurTime() + 1)
+	self:NextThink(CurTime() + 1)
 	return true
 end
 
@@ -67,10 +67,10 @@ function ENT:UpdateWireOutput()
 	local maxcoolant = RD_GetNetworkCapacity(self, "coolant")
 	local maxenergy = RD_GetNetworkCapacity(self, "energy")
 	
-	Wire_TriggerOutput(self.Entity, "Air", air)
-	Wire_TriggerOutput(self.Entity, "Energy", energy)
-	Wire_TriggerOutput(self.Entity, "Coolant", coolant)
-	Wire_TriggerOutput(self.Entity, "Max Air", maxair)
-	Wire_TriggerOutput(self.Entity, "Max Energy", maxenergy)
-	Wire_TriggerOutput(self.Entity, "Max Coolant", maxcoolant)
+	Wire_TriggerOutput(self, "Air", air)
+	Wire_TriggerOutput(self, "Energy", energy)
+	Wire_TriggerOutput(self, "Coolant", coolant)
+	Wire_TriggerOutput(self, "Max Air", maxair)
+	Wire_TriggerOutput(self, "Max Energy", maxenergy)
+	Wire_TriggerOutput(self, "Max Coolant", maxcoolant)
 end

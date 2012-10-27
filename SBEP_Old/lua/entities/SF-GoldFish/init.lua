@@ -9,17 +9,17 @@ util.PrecacheSound( "explode_5" )
 
 function ENT:Initialize()
 
-	self.Entity:SetModel( "models/Slyfo/Goldfish.mdl" )
-	self.Entity:SetName("GoldfishNuke")
-	self.Entity:PhysicsInit( SOLID_VPHYSICS )
-	self.Entity:SetMoveType( MOVETYPE_VPHYSICS )
-	self.Entity:SetSolid( SOLID_VPHYSICS )
+	self:SetModel( "models/Slyfo/Goldfish.mdl" )
+	self:SetName("GoldfishNuke")
+	self:PhysicsInit( SOLID_VPHYSICS )
+	self:SetMoveType( MOVETYPE_VPHYSICS )
+	self:SetSolid( SOLID_VPHYSICS )
 
 	if WireAddon then
-		self.Inputs = Wire_CreateInputs( self.Entity, { "Arm", "Detonate" } )
+		self.Inputs = Wire_CreateInputs( self, { "Arm", "Detonate" } )
 	end
 
-	local phys = self.Entity:GetPhysicsObject()
+	local phys = self:GetPhysicsObject()
 	if (phys:IsValid()) then
 		phys:Wake()
 		phys:EnableGravity(true)
@@ -27,9 +27,9 @@ function ENT:Initialize()
 		phys:EnableCollisions(true)
 	end
 
-    --self.Entity:SetKeyValue("rendercolor", "0 0 0")
-	self.PhysObj = self.Entity:GetPhysicsObject()
-	self.CAng = self.Entity:GetAngles()
+    --self:SetKeyValue("rendercolor", "0 0 0")
+	self.PhysObj = self:GetPhysicsObject()
+	self.CAng = self:GetAngles()
 	
 
 end
@@ -38,12 +38,12 @@ function ENT:TriggerInput(iname, value)
 	
 	if (iname == "Arm") then
 		if (value > 0) then
-			self.Entity:Arm()
+			self:Arm()
 		end
 		
 	elseif (iname == "Detonate") then	
 		if (value > 0) then
-			self.Entity:Splode()
+			self:Splode()
 		end
 	end
 	
@@ -89,20 +89,20 @@ end
 
 function ENT:Arm()
 	self.Armed = true
-	--util.SpriteTrail( self.Entity, 0,  Color(255,255,80,150), false, 50, 0, 3, 1, "trails/smoke.vmt" )
-	self.Entity:SetArmed( true )
+	--util.SpriteTrail( self, 0,  Color(255,255,80,150), false, 50, 0, 3, 1, "trails/smoke.vmt" )
+	self:SetArmed( true )
 end
 
 function ENT:Splode()
 	if(!self.Exploded) then
 		--self.Exploded = true
-		--util.BlastDamage(self.Entity, self.Entity, self.Entity:GetPos(), 1500, 1500)
-		cbt_hcgexplode( self.Entity:GetPos(), 9000, math.random(10000,25000), 8)
+		--util.BlastDamage(self, self, self:GetPos(), 1500, 1500)
+		cbt_hcgexplode( self:GetPos(), 9000, math.random(10000,25000), 8)
 		
 		local nuke = ents.Create("sent_nuke")
 		if nuke then
-			nuke:SetPos( self.Entity:GetPos() )
-			nuke:SetOwner( self.Entity:GetOwner() )
+			nuke:SetPos( self:GetPos() )
+			nuke:SetOwner( self:GetOwner() )
 			nuke:Spawn()
 			nuke:Activate()
 		end
@@ -113,7 +113,7 @@ function ENT:Splode()
 		ShakeIt:SetKeyValue("radius", "200" )
 		ShakeIt:SetKeyValue("duration", "5" )
 		ShakeIt:SetKeyValue("frequency", "255" )
-		ShakeIt:SetPos( self.Entity:GetPos() )
+		ShakeIt:SetPos( self:GetPos() )
 		ShakeIt:Fire("StartShake", "", 0);
 		ShakeIt:Spawn()
 		ShakeIt:Activate()
@@ -121,20 +121,20 @@ function ENT:Splode()
 		ShakeIt:Fire("kill", "", 6)
 	end
 	self.Exploded = true
-	self.Entity:Remove()
+	self:Remove()
 end
 
 function ENT:Touch( ent )
 	if ent.HasHardpoints then
-		if ent.Cont and ent.Cont:IsValid() then HPLink( ent.Cont, ent.Entity, self.Entity ) end
+		if ent.Cont and ent.Cont:IsValid() then HPLink( ent.Cont, ent.Entity, self ) end
 	end
 end
 
 function ENT:HPFire()
-	self.Entity:SetParent()
+	self:SetParent()
 	if self.HPWeld and self.HPWeld:IsValid() then self.HPWeld:Remove() end
-	--self.PhysObj:SetVelocity(self.Entity:GetForward()*10000)
-	self.Entity:Arm()
+	--self.PhysObj:SetVelocity(self:GetForward()*10000)
+	self:Arm()
 	--self.PFire = true
 	self.PhysObj:EnableCollisions(true)
 	self.PhysObj:EnableGravity(true)
@@ -142,7 +142,7 @@ end
 
 function ENT:PreEntityCopy()
 	if WireAddon then
-		duplicator.StoreEntityModifier(self,"WireDupeInfo",WireLib.BuildDupeInfo(self.Entity))
+		duplicator.StoreEntityModifier(self,"WireDupeInfo",WireLib.BuildDupeInfo(self))
 	end
 end
 

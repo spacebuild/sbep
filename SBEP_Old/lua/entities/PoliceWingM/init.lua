@@ -5,15 +5,15 @@ include( 'shared.lua' )
 
 function ENT:Initialize()
 
-	self.Entity:SetModel( "models/Slyfo/spbarmed.mdl" )
-	self.Entity:SetName("Mine")
-	self.Entity:PhysicsInit( SOLID_VPHYSICS )
-	self.Entity:SetMoveType( MOVETYPE_VPHYSICS )
-	self.Entity:SetSolid( SOLID_VPHYSICS )
-	--self.Entity:SetMaterial("models/props_combine/combinethumper002")
-	self.Inputs = Wire_CreateInputs( self.Entity, { "On" } )
+	self:SetModel( "models/Slyfo/spbarmed.mdl" )
+	self:SetName("Mine")
+	self:PhysicsInit( SOLID_VPHYSICS )
+	self:SetMoveType( MOVETYPE_VPHYSICS )
+	self:SetSolid( SOLID_VPHYSICS )
+	--self:SetMaterial("models/props_combine/combinethumper002")
+	self.Inputs = Wire_CreateInputs( self, { "On" } )
 	
-	local phys = self.Entity:GetPhysicsObject()
+	local phys = self:GetPhysicsObject()
 	if (phys:IsValid()) then
 		phys:Wake()
 		phys:EnableGravity(true)
@@ -21,9 +21,9 @@ function ENT:Initialize()
 		phys:EnableCollisions(true)
 	end
 	
-    --self.Entity:SetKeyValue("rendercolor", "0 0 0")
-	self.PhysObj = self.Entity:GetPhysicsObject()
-	self.CAng = self.Entity:GetAngles()
+    --self:SetKeyValue("rendercolor", "0 0 0")
+	self.PhysObj = self:GetPhysicsObject()
+	self.CAng = self:GetAngles()
 	
 
 end
@@ -32,9 +32,9 @@ function ENT:TriggerInput(iname, value)
 	
 	if (iname == "On") then
 		if (value > 0) then
-			self.Entity:SetActive( true )
+			self:SetActive( true )
 		else
-			self.Entity:SetActive( false )
+			self:SetActive( false )
 		end
 	end
 	
@@ -63,8 +63,8 @@ end
 
 function ENT:Use( activator, caller )
 	if self:GetActive() then
-		self.Entity:SetActive( false )
+		self:SetActive( false )
 	else
-		self.Entity:SetActive( true )
+		self:SetActive( true )
 	end
 end

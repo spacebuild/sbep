@@ -9,13 +9,13 @@ util.PrecacheSound( "explode_5" )
 
 function ENT:Initialize()
 
-	self.Entity:SetModel( "models/Slyfo/missile_smallmissile.mdl" )
-	self.Entity:SetName("SmallBomb")
-	self.Entity:PhysicsInit( SOLID_VPHYSICS )
-	self.Entity:SetMoveType( MOVETYPE_VPHYSICS )
-	self.Entity:SetSolid( SOLID_VPHYSICS )
+	self:SetModel( "models/Slyfo/missile_smallmissile.mdl" )
+	self:SetName("SmallBomb")
+	self:PhysicsInit( SOLID_VPHYSICS )
+	self:SetMoveType( MOVETYPE_VPHYSICS )
+	self:SetSolid( SOLID_VPHYSICS )
 	
-	local phys = self.Entity:GetPhysicsObject()
+	local phys = self:GetPhysicsObject()
 	if (phys:IsValid()) then
 		phys:Wake()
 		phys:EnableGravity(true)
@@ -23,9 +23,9 @@ function ENT:Initialize()
 		phys:EnableCollisions(true)
 	end
 
-    --self.Entity:SetKeyValue("rendercolor", "0 0 0")
-	self.PhysObj = self.Entity:GetPhysicsObject()
-	self.CAng = self.Entity:GetAngles()
+    --self:SetKeyValue("rendercolor", "0 0 0")
+	self.PhysObj = self:GetPhysicsObject()
+	self.CAng = self:GetAngles()
 	
 
 end
@@ -42,28 +42,28 @@ end
 
 function ENT:PhysicsUpdate( phys )
 	local Vel = phys:GetVelocity()
-	self.Entity:SetAngles( Vel:Angle() )
+	self:SetAngles( Vel:Angle() )
 	phys:SetVelocity(Vel)
 end
 
 function ENT:Splode()
 	if(!self.Exploded) then
 		--self.Exploded = true
-		util.BlastDamage(self.Entity, self.Entity, self.Entity:GetPos(), 300, 300)
-		cbt_hcgexplode( self.Entity:GetPos(), 300, math.random(200,300), 6)
-		local targets = ents.FindInSphere( self.Entity:GetPos(), 1000)
+		util.BlastDamage(self, self, self:GetPos(), 300, 300)
+		cbt_hcgexplode( self:GetPos(), 300, math.random(200,300), 6)
+		local targets = ents.FindInSphere( self:GetPos(), 1000)
 	
 		for _,i in pairs(targets) do
 			if i:GetClass() == "prop_physics" then
-				i:GetPhysicsObject():ApplyForceOffset( (i.Entity:NearestPoint(self.Entity:GetPos()) - self.Entity:GetPos()):Normalize() * (i:GetPhysicsObject():GetMass() * 500), self.Entity:GetPos() )
+				i:GetPhysicsObject():ApplyForceOffset( (i.Entity:NearestPoint(self:GetPos()) - self:GetPos()):Normalize() * (i:GetPhysicsObject():GetMass() * 500), self:GetPos() )
 			end
 		end
 		
-		self.Entity:EmitSound("explode_9")
+		self:EmitSound("explode_9")
 		
 		local effectdata = EffectData()
-		effectdata:SetOrigin(self.Entity:GetPos())
-		effectdata:SetStart(self.Entity:GetPos())
+		effectdata:SetOrigin(self:GetPos())
+		effectdata:SetStart(self:GetPos())
 		effectdata:SetMagnitude(3)
 		util.Effect( "WhomphSplode", effectdata )
 		self.Exploded = true
@@ -74,7 +74,7 @@ function ENT:Splode()
 		ShakeIt:SetKeyValue("radius", "500" )
 		ShakeIt:SetKeyValue("duration", "5" )
 		ShakeIt:SetKeyValue("frequency", "255" )
-		ShakeIt:SetPos( self.Entity:GetPos() )
+		ShakeIt:SetPos( self:GetPos() )
 		ShakeIt:Fire("StartShake", "", 0);
 		ShakeIt:Spawn()
 		ShakeIt:Activate()
@@ -82,5 +82,5 @@ function ENT:Splode()
 		ShakeIt:Fire("kill", "", 6)
 	end
 	self.Exploded = true
-	self.Entity:Remove()
+	self:Remove()
 end

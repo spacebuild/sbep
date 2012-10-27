@@ -54,7 +54,7 @@ end
     Returning false makes the entity die 
  ---------------------------------------------------------]]
 function EFFECT:Think( )
-	self.Entity:SetColor(100,100,200,100)
+	self.Entity:SetColor(Color(100,100,200,100))
 	self.CScale = self.CScale + (self.Magn * 0.1)
 	self.Entity:NextThink( CurTime() + 0.01 )
 	return ( self.LifeTime > CurTime() )  	 

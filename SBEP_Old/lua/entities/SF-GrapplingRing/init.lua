@@ -6,16 +6,16 @@ include('entities/base_wire_entity/init.lua') --Thanks to DuneD for this bit.
 
 function ENT:Initialize()
 
-	self.Entity:SetModel( "models/props_borealis/door_wheel001a.mdl" ) 
-	self.Entity:SetName("Winch")
-	self.Entity:PhysicsInit( SOLID_VPHYSICS )
-	self.Entity:SetMoveType( MOVETYPE_VPHYSICS )
-	self.Entity:SetSolid( SOLID_VPHYSICS )
+	self:SetModel( "models/props_borealis/door_wheel001a.mdl" ) 
+	self:SetName("Winch")
+	self:PhysicsInit( SOLID_VPHYSICS )
+	self:SetMoveType( MOVETYPE_VPHYSICS )
+	self:SetSolid( SOLID_VPHYSICS )
 	self:SetUseType(3)
-	self.Inputs = Wire_CreateInputs( self.Entity, { "Length", "Unhook", "Speed", "Disconnect" } )
-	self.Outputs = Wire_CreateOutputs( self.Entity, { "CurrentLength" })
+	self.Inputs = Wire_CreateInputs( self, { "Length", "Unhook", "Speed", "Disconnect" } )
+	self.Outputs = Wire_CreateOutputs( self, { "CurrentLength" })
 		
-	local phys = self.Entity:GetPhysicsObject()
+	local phys = self:GetPhysicsObject()
 	if (phys:IsValid()) then
 		phys:Wake()
 		phys:EnableGravity(true)
@@ -23,11 +23,11 @@ function ENT:Initialize()
 		phys:EnableCollisions(true)
 		phys:SetMass(10)
 	end
-	self.Entity:SetKeyValue("rendercolor", "255 255 255")
-	self.PhysObj = self.Entity:GetPhysicsObject()
+	self:SetKeyValue("rendercolor", "255 255 255")
+	self.PhysObj = self:GetPhysicsObject()
 	
 	--self.val1 = 0
-	--RD_AddResource(self.Entity, "Munitions", 0)
+	--RD_AddResource(self, "Munitions", 0)
 	
 	self.DLength = 0
 	self.LChange = 0
@@ -68,14 +68,14 @@ end
 
 function ENT:Think()
 	if self.Hook and self.Hook:IsValid() then
-		Wire_TriggerOutput(self.Entity, "CurrentLength", self.Hook.CLength)
+		Wire_TriggerOutput(self, "CurrentLength", self.Hook.CLength)
 		if self.Hook.CLength <= 15 and self.Coupling and !self.Hook.Impact and !self.Hook.Active then
 			if self.Hook.ICD < CurTime() then
-				self.Hook:SetPos(self.Entity:GetPos() + self.Entity:GetForward() * 6)
-				local NAng = self.Entity:GetAngles()
+				self.Hook:SetPos(self:GetPos() + self:GetForward() * 6)
+				local NAng = self:GetAngles()
 				NAng:RotateAroundAxis(NAng:Right(),-90)
 				self.Hook:SetAngles(NAng)
-				self.Hook.HWeld = constraint.Weld(self.Entity, self.Hook, 0, 0, 0, true)
+				self.Hook.HWeld = constraint.Weld(self, self.Hook, 0, 0, 0, true)
 				if self.Hook.Rope then
 					self.Hook.Elastic:Fire("SetSpringLength",150,0)
 					self.Hook.Rope:Fire("SetLength",150,0)
@@ -87,25 +87,25 @@ function ENT:Think()
 		self.NHTime = CurTime() + 10
 	else
 		local ent = ents.Create( "SF-GrappleH" )
-		ent:SetPos( self.Entity:GetPos() + self.Entity:GetUp() * 20 )
+		ent:SetPos( self:GetPos() + self:GetUp() * 20 )
 		ent:Spawn()
 		ent:Activate()
 		ent.SPL = ply
 				
-		local minMass = math.min( ent:GetPhysicsObject():GetMass(), self.Entity:GetPhysicsObject():GetMass() )
+		local minMass = math.min( ent:GetPhysicsObject():GetMass(), self:GetPhysicsObject():GetMass() )
 		local const = minMass * 100
 		local damp = const * 0.2
 		
-		ent.Elastic, ent.Rope = constraint.Elastic( ent, self.Entity, 0, 0, Vector(-12,0,0), Vector(-3,0,0), const, damp, 0, "cable/rope", 2, true)
+		ent.Elastic, ent.Rope = constraint.Elastic( ent, self, 0, 0, Vector(-12,0,0), Vector(-3,0,0), const, damp, 0, "cable/rope", 2, true)
 		ent.Elastic:Fire("SetSpringLength",150,0)
 		ent.Rope:Fire("SetLength",150,0)
 		
-		ent.ParL = self.Entity
+		ent.ParL = self
 		ent.Standalone = true
 		self.Hook = ent
 	end
 	
-	self.Entity:NextThink( CurTime() + 0.01 ) 
+	self:NextThink( CurTime() + 0.01 ) 
 	return true
 end
 
@@ -125,15 +125,15 @@ end
 
 function ENT:Touch( ent )
 	if ent.HasHardpoints then
-		if ent.Cont and ent.Cont:IsValid() then HPLink( ent.Cont, ent.Entity, self.Entity ) end
+		if ent.Cont and ent.Cont:IsValid() then HPLink( ent.Cont, ent.Entity, self ) end
 	end
 	if ent == self.Hook then
 		if self.Hook.ICD < CurTime() then
-			self.Hook:SetPos(self.Entity:GetPos() + self.Entity:GetForward() * 6)
-			local NAng = self.Entity:GetAngles()
+			self.Hook:SetPos(self:GetPos() + self:GetForward() * 6)
+			local NAng = self:GetAngles()
 			NAng:RotateAroundAxis(NAng:Right(),-90)
 			self.Hook:SetAngles(NAng)
-			self.Hook.HWeld = constraint.Weld(self.Entity, self.Hook, 0, 0, 0, true)
+			self.Hook.HWeld = constraint.Weld(self, self.Hook, 0, 0, 0, true)
 			if self.Hook.Rope then
 				self.Hook.Elastic:Fire("SetSpringLength",150,0)
 				self.Hook.Rope:Fire("SetLength",150,0)
@@ -145,16 +145,16 @@ function ENT:Touch( ent )
 end
 
 function ENT:Latch( Hook, Vec, Ent )
-	--Hook.Rope = constraint.Rope( self.Entity, Hook, 0, 0, Vector(33,0,0), Vector(0,0,0), self.Entity:GetPos():Distance(Hook:GetPos()), 0, 0, 2, "cable/rope", false)
+	--Hook.Rope = constraint.Rope( self, Hook, 0, 0, Vector(33,0,0), Vector(0,0,0), self:GetPos():Distance(Hook:GetPos()), 0, 0, 2, "cable/rope", false)
 	
 	--This next bit mostly comes from the Wired Winches. Credit goes to whoever made them.
-	--local minMass = math.min( self.Entity:GetPhysicsObject():GetMass(), Ent:GetPhysicsObject():GetMass() )
+	--local minMass = math.min( self:GetPhysicsObject():GetMass(), Ent:GetPhysicsObject():GetMass() )
 	--local const = minMass * 100
 	--local damp = const * 0.2
 	
-	--Hook.Elastic, Hook.Rope = constraint.Elastic( self.Entity, Ent, 0, 0, Vector(0,0,0), Vec, const, damp, 0, "cable/rope", 2, true)
+	--Hook.Elastic, Hook.Rope = constraint.Elastic( self, Ent, 0, 0, Vector(0,0,0), Vec, const, damp, 0, "cable/rope", 2, true)
 	
-	--Hook.CLength = self.Entity:GetPos():Distance(Hook:GetPos())
+	--Hook.CLength = self:GetPos():Distance(Hook:GetPos())
 end
 
 function ENT:OnRemove()

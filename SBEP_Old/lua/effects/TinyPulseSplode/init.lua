@@ -43,7 +43,7 @@ function EFFECT:Init( data )
 		end
 		
 	self.emitter:Finish()
-	self.Entity:SetColor(255,100,100,100)
+	self.Entity:SetColor(Color(255,100,100,100))
  	self.Entity:SetModel( "models/Combine_Helicopter/helicopter_bomb01.mdl" )
  	self.Entity:SetMaterial("models/alyx/emptool_glow")
  	self.Entity:SetPos( self.vOffset )  
@@ -55,7 +55,7 @@ end
     Returning false makes the entity die 
  ---------------------------------------------------------*/ 
 function EFFECT:Think( )
-	--self.Entity:SetColor(255,100,100,100)
+	--self.Entity:SetColor(Color(255,100,100,100))
 	--self.CScale = (self.CScale + (self.Magn * 0.1)) * (CurTime() - self.SpawnTime)
 	--print(CurTime() - self.SpawnTime)
 	--self.Entity:NextThink( CurTime() + 0.01 )

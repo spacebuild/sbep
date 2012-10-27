@@ -8,25 +8,25 @@ include( 'shared.lua' )
 
 function ENT:Initialize()
 
-	self.Entity:SetModel( "models/Slyfo_2/mini_turret_rocketpod.mdl" ) 
-	self.Entity:SetName("ArtilleryCannon")
-	self.Entity:PhysicsInit( SOLID_VPHYSICS )
-	self.Entity:SetMoveType( MOVETYPE_VPHYSICS )
-	self.Entity:SetSolid( SOLID_VPHYSICS )
-	self.Inputs = Wire_CreateInputs( self.Entity, { "Fire","Distance" } )
+	self:SetModel( "models/Slyfo_2/mini_turret_rocketpod.mdl" ) 
+	self:SetName("ArtilleryCannon")
+	self:PhysicsInit( SOLID_VPHYSICS )
+	self:SetMoveType( MOVETYPE_VPHYSICS )
+	self:SetSolid( SOLID_VPHYSICS )
+	self.Inputs = Wire_CreateInputs( self, { "Fire","Distance" } )
 	
-	local phys = self.Entity:GetPhysicsObject()
+	local phys = self:GetPhysicsObject()
 	if (phys:IsValid()) then
 		phys:Wake()
 		phys:EnableGravity(true)
 		phys:EnableDrag(true)
 		phys:EnableCollisions(true)
 	end
-	self.Entity:SetKeyValue("rendercolor", "255 255 255")
-	self.PhysObj = self.Entity:GetPhysicsObject()
+	self:SetKeyValue("rendercolor", "255 255 255")
+	self.PhysObj = self:GetPhysicsObject()
 	
 	--self.val1 = 0
-	--RD_AddResource(self.Entity, "Munitions", 0)
+	--RD_AddResource(self, "Munitions", 0)
 	
 	self.CDL = {}
 	self.CDL[1] = 0
@@ -49,7 +49,7 @@ function ENT:Initialize()
 	self.CDL["8r"] = true
 	self.CDL["9r"] = true
 	self.CDL["10r"] = true
-	self.Entity:SetNetworkedInt("Shots",5)
+	self:SetNetworkedInt("Shots",5)
 	
 	self.LastThink = CurTime()
 	self.Recoil = 0
@@ -74,7 +74,7 @@ end
 function ENT:TriggerInput(iname, value)		
 	if (iname == "Fire") then
 		if (value > 0) then
-			self.Entity:HPFire()
+			self:HPFire()
 		end
 	elseif (iname == "Distance") then
 		self.Distance = math.Clamp(value,1000,10000)
@@ -91,12 +91,12 @@ function ENT:Think()
 		if (CurTime() >= self.CDL[n]) then
 			if self.CDL[n.."r"] == false then
 				self.CDL[n.."r"] = true
-				self.Entity:EmitSound("Buttons.snd26")
+				self:EmitSound("Buttons.snd26")
 			end
 			MCount = MCount + 1
 		end
 	end
-	self.Entity:SetShots(MCount)
+	self:SetShots(MCount)
 	
 	local Delta = CurTime() - self.LastThink
 	self.Recoil = math.Approach(self.Recoil, 10, Delta * 10)	
@@ -117,7 +117,7 @@ end
 
 function ENT:Touch( ent )
 	if ent.HasHardpoints then
-		if ent.Cont and ent.Cont:IsValid() then HPLink( ent.Cont, ent.Entity, self.Entity ) end
+		if ent.Cont and ent.Cont:IsValid() then HPLink( ent.Cont, ent.Entity, self ) end
 	end
 end
 
@@ -125,7 +125,7 @@ function ENT:HPFire()
 	if (CurTime() >= self.MCDown) then
 		for n = 1, 5 do
 			if (CurTime() >= self.CDL[n]) then
-				self.Entity:FFire(n)
+				self:FFire(n)
 				return
 			end
 		end
@@ -135,21 +135,21 @@ end
 function ENT:FFire( CCD )
 	local NewShell = ents.Create( "SF-MicroRocket" )
 	if ( !NewShell:IsValid() ) then return end
-	NewShell:SetPos( self.Entity:GetPos() + (self.Entity:GetUp() * math.random(-5,5)) + (self.Entity:GetRight() * math.random(-5,5)) + (self.Entity:GetForward() * (20 + math.random(0,30))) )
-	NewShell:SetAngles( self.Entity:GetAngles() + Angle(math.random(-self.Recoil * 0.1,self.Recoil * 0.1),math.random(-self.Recoil * 0.1,self.Recoil * 0.1),0) )
+	NewShell:SetPos( self:GetPos() + (self:GetUp() * math.random(-5,5)) + (self:GetRight() * math.random(-5,5)) + (self:GetForward() * (20 + math.random(0,30))) )
+	NewShell:SetAngles( self:GetAngles() + Angle(math.random(-self.Recoil * 0.1,self.Recoil * 0.1),math.random(-self.Recoil * 0.1,self.Recoil * 0.1),0) )
 	NewShell.SPL = self.SPL
 	NewShell:Spawn()
 	NewShell.Drunk = self.Recoil
 	NewShell:Initialize()
 	NewShell:SetModel( "models/Items/AR2_Grenade.mdl" )
 	NewShell:Activate()
-	--local NC = constraint.NoCollide(self.Entity, NewShell, 0, 0)
-	NewShell.PhysObj:SetVelocity(self.Entity:GetForward() * 1000)
+	--local NC = constraint.NoCollide(self, NewShell, 0, 0)
+	NewShell.PhysObj:SetVelocity(self:GetForward() * 1000)
 	NewShell:Fire("kill", "", 30)
-	NewShell.ParL = self.Entity
+	NewShell.ParL = self
 	NewShell.Distance = self.Distance
 	--RD_ConsumeResource(self, "Munitions", 1000)
-	self.Entity:EmitSound("Weapon_GrenadeLauncher.Single")
+	self:EmitSound("Weapon_GrenadeLauncher.Single")
 	self.MCDown = CurTime() + 0.05 + math.Rand(0,0.05)
 	self.CDL[CCD] = CurTime() + 6
 	self.CDL[CCD.."r"] = false

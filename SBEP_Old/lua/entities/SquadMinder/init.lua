@@ -6,18 +6,18 @@ include( 'shared.lua' )
 
 function ENT:Initialize()
 
-	self.Entity:SetModel( "models/Slyfo/util_tracker.mdl" ) 
-	self.Entity:SetName("Squad")
-	self.Entity:PhysicsInit( SOLID_VPHYSICS )
-	self.Entity:SetMoveType( MOVETYPE_VPHYSICS )
-	self.Entity:SetSolid( SOLID_VPHYSICS )
+	self:SetModel( "models/Slyfo/util_tracker.mdl" ) 
+	self:SetName("Squad")
+	self:PhysicsInit( SOLID_VPHYSICS )
+	self:SetMoveType( MOVETYPE_VPHYSICS )
+	self:SetSolid( SOLID_VPHYSICS )
 	local inNames = {"MaxSquadSize","ObjectiveType","ObjectiveVector","ObjectiveEnt"}
 	local inTypes = {"NORMAL","NORMAL","VECTOR","NORMAL"}
-	self.Inputs = WireLib.CreateSpecialInputs( self.Entity,inNames,inTypes)
-	--self.Outputs = Wire_CreateOutputs( self.Entity, { "ShotsLeft", "CanFire" })
-	self.Entity:SetKeyValue("rendercolor", "255 255 255")
+	self.Inputs = WireLib.CreateSpecialInputs( self,inNames,inTypes)
+	--self.Outputs = Wire_CreateOutputs( self, { "ShotsLeft", "CanFire" })
+	self:SetKeyValue("rendercolor", "255 255 255")
 		
-	local phys = self.Entity:GetPhysicsObject()
+	local phys = self:GetPhysicsObject()
 	if (phys:IsValid()) then
 		phys:Wake()
 		phys:EnableGravity(false)
@@ -25,8 +25,8 @@ function ENT:Initialize()
 		phys:EnableCollisions(false)
 		phys:SetMass( 0.001 )
 	end
-	self.PhysObj = self.Entity:GetPhysicsObject()
-	self.Entity:SetNetworkedInt("Size", 50)
+	self.PhysObj = self:GetPhysicsObject()
+	self:SetNetworkedInt("Size", 50)
 	
 	self.ObjectiveType = 1
 	self.ObjectiveVec = Vector(0,0,0)

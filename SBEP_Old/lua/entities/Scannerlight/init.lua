@@ -6,20 +6,20 @@ local ZeroVector = Vector(0,0,0)
 
 function ENT:Initialize()
 
-	self.Entity:SetModel( "models/Slyfo/rover1_spotlight.mdl" )
-	self.Entity:SetName("Scanner-Light")
-	self.Entity:PhysicsInit( SOLID_VPHYSICS )
-	self.Entity:SetMoveType( MOVETYPE_VPHYSICS )
-	self.Entity:SetSolid( SOLID_VPHYSICS )
-	self.Entity:SetUseType(3)
-	--self.Entity:SetMaterial("models/props_combine/combinethumper002")
-	self.Inputs = Wire_CreateInputs( self.Entity, { "Active" } )
+	self:SetModel( "models/Slyfo/rover1_spotlight.mdl" )
+	self:SetName("Scanner-Light")
+	self:PhysicsInit( SOLID_VPHYSICS )
+	self:SetMoveType( MOVETYPE_VPHYSICS )
+	self:SetSolid( SOLID_VPHYSICS )
+	self:SetUseType(3)
+	--self:SetMaterial("models/props_combine/combinethumper002")
+	self.Inputs = Wire_CreateInputs( self, { "Active" } )
 	local outNames = {"TargetFound","Target","X","Y","Z","Vector"}
 	local outTypes = {"NORMAL","ENTITY","NORMAL","NORMAL","NORMAL","VECTOR"}
 	local outDescs = {}
-	self.Outputs = WireLib.CreateSpecialOutputs( self.Entity,outNames,outTypes,outDescs)
+	self.Outputs = WireLib.CreateSpecialOutputs( self,outNames,outTypes,outDescs)
 	
-	local phys = self.Entity:GetPhysicsObject()
+	local phys = self:GetPhysicsObject()
 	if (phys:IsValid()) then
 		phys:Wake()
 		phys:EnableGravity(true)
@@ -27,9 +27,9 @@ function ENT:Initialize()
 		phys:EnableCollisions(true)
 	end
 	
-    --self.Entity:SetKeyValue("rendercolor", "0 0 0")
-	self.PhysObj = self.Entity:GetPhysicsObject()
-	self.CAng = self.Entity:GetAngles()
+    --self:SetKeyValue("rendercolor", "0 0 0")
+	self.PhysObj = self:GetPhysicsObject()
+	self.CAng = self:GetAngles()
 	
 	self.Searching = false
 	
@@ -62,9 +62,9 @@ function ENT:Think()
 	local Delta = CurTime() - self.LTT
 	-- THE FOLLOWING CODE WAS NICKED FROM THE LS3 LAMP. I TAKE NO CREDIT FOR IT! --
 	if self.Active and !self.flashlight then
-		--local angForward = self.Entity:GetAngles() + Angle( 90, 0, 0 )
+		--local angForward = self:GetAngles() + Angle( 90, 0, 0 )
 		self.flashlight = ents.Create( "env_projectedtexture" )
-		self.flashlight:SetParent( self.Entity )
+		self.flashlight:SetParent( self )
 
 		-- The local positions are the offsets from parent..
 		self.flashlight:SetLocalPos( Vector(8,0,0) )
@@ -96,36 +96,36 @@ function ENT:Think()
 			if !self.Target or !self.Target:IsValid() then
 				local T = ents.FindInCrappyCone(self:GetPos(),Vector(2000,.8,.8),self:GetAngles())
 				for k,e in pairs(T) do
-					--e:SetColor(math.Rand(0,255),math.Rand(0,255),math.Rand(0,255),255)
+					--e:SetColor(Color(math.Rand(0,255),math.Rand(0,255),math.Rand(0,255),255))
 					if (e:IsPlayer() and e:Team() ~= self.SPL:Team()) or e:IsNPC() or e.IsInfestor then
 						self.Target = e
 						local Pos = self.Target:GetPos()
-						Wire_TriggerOutput(self.Entity, "TargetFound", 1)
-						Wire_TriggerOutput(self.Entity, "Target", self.Target)
-						Wire_TriggerOutput(self.Entity, "X", Pos.x)
-						Wire_TriggerOutput(self.Entity, "Y", Pos.y)
-						Wire_TriggerOutput(self.Entity, "Z", Pos.z)
-						Wire_TriggerOutput(self.Entity, "Vector",Pos)
+						Wire_TriggerOutput(self, "TargetFound", 1)
+						Wire_TriggerOutput(self, "Target", self.Target)
+						Wire_TriggerOutput(self, "X", Pos.x)
+						Wire_TriggerOutput(self, "Y", Pos.y)
+						Wire_TriggerOutput(self, "Z", Pos.z)
+						Wire_TriggerOutput(self, "Vector",Pos)
 					end
 				end
 				if !self.Target or !self.Target:IsValid() then
-					Wire_TriggerOutput(self.Entity, "TargetFound", 0)
-					Wire_TriggerOutput(self.Entity, "Target", WireLib.DT.ENTITY.Zero)
+					Wire_TriggerOutput(self, "TargetFound", 0)
+					Wire_TriggerOutput(self, "Target", WireLib.DT.ENTITY.Zero)
 				end
 			else
 				local T = ents.FindInCrappyCone(self:GetPos(),Vector(2000,.5,.5),self:GetAngles())
 				if table.HasValue( T, self.Target ) then
 					local Pos = self.Target:GetPos()
-					Wire_TriggerOutput(self.Entity, "TargetFound", 1)
-					Wire_TriggerOutput(self.Entity, "Target", self.Target)
-					Wire_TriggerOutput(self.Entity, "X", Pos.x)
-					Wire_TriggerOutput(self.Entity, "Y", Pos.y)
-					Wire_TriggerOutput(self.Entity, "Z", Pos.z)
-					Wire_TriggerOutput(self.Entity, "Vector",Pos)
+					Wire_TriggerOutput(self, "TargetFound", 1)
+					Wire_TriggerOutput(self, "Target", self.Target)
+					Wire_TriggerOutput(self, "X", Pos.x)
+					Wire_TriggerOutput(self, "Y", Pos.y)
+					Wire_TriggerOutput(self, "Z", Pos.z)
+					Wire_TriggerOutput(self, "Vector",Pos)
 				else
 					self.Target = nil
-					Wire_TriggerOutput(self.Entity, "TargetFound", 0)
-					Wire_TriggerOutput(self.Entity, "Target", WireLib.DT.ENTITY.Zero)
+					Wire_TriggerOutput(self, "TargetFound", 0)
+					Wire_TriggerOutput(self, "Target", WireLib.DT.ENTITY.Zero)
 				end
 			end
 			
@@ -142,12 +142,12 @@ function ENT:Think()
 				self.Pod.YCo = Pos.y
 				self.Pod.ZCo = Pos.z				
 			end
-			Wire_TriggerOutput(self.Entity, "TargetFound", 1)
-			Wire_TriggerOutput(self.Entity, "Target", self.Target)
-			Wire_TriggerOutput(self.Entity, "X", Pos.x)
-			Wire_TriggerOutput(self.Entity, "Y", Pos.y)
-			Wire_TriggerOutput(self.Entity, "Z", Pos.z)
-			Wire_TriggerOutput(self.Entity, "Vector",Pos)
+			Wire_TriggerOutput(self, "TargetFound", 1)
+			Wire_TriggerOutput(self, "Target", self.Target)
+			Wire_TriggerOutput(self, "X", Pos.x)
+			Wire_TriggerOutput(self, "Y", Pos.y)
+			Wire_TriggerOutput(self, "Z", Pos.z)
+			Wire_TriggerOutput(self, "Vector",Pos)
 		else
 			if self.Pod and self.Pod:IsValid() then
 				self.Pod.Active = true
@@ -168,12 +168,12 @@ function ENT:Think()
 				--local EPL = WorldToLocal( self.Pod:GetPos(), self.Pod:GetAngles(), Vec, Ang)
 				--print(Vec)
 				
-				Wire_TriggerOutput(self.Entity, "TargetFound", 0)
-				Wire_TriggerOutput(self.Entity, "Target", WireLib.DT.ENTITY.Zero)
-				Wire_TriggerOutput(self.Entity, "X", 0)
-				Wire_TriggerOutput(self.Entity, "Y", 0)
-				Wire_TriggerOutput(self.Entity, "Z", 0)
-				Wire_TriggerOutput(self.Entity, "Vector",ZeroVector)
+				Wire_TriggerOutput(self, "TargetFound", 0)
+				Wire_TriggerOutput(self, "Target", WireLib.DT.ENTITY.Zero)
+				Wire_TriggerOutput(self, "X", 0)
+				Wire_TriggerOutput(self, "Y", 0)
+				Wire_TriggerOutput(self, "Z", 0)
+				Wire_TriggerOutput(self, "Vector",ZeroVector)
 			end
 		end
 	
@@ -184,65 +184,65 @@ function ENT:Think()
 	/*
 		if self.Target and self.Target:IsValid() then
 			local trace = {}
-			trace.start = self.Entity:GetPos() + self.Entity:GetForward() * 10
-			trace.endpos = self.Entity:GetPos() + self.Entity:GetForward() * 5000
+			trace.start = self:GetPos() + self:GetForward() * 10
+			trace.endpos = self:GetPos() + self:GetForward() * 5000
 			if self.Pod and self.Pod:IsValid() then
-				trace.filter = { self.Entity, self.Pod }
+				trace.filter = { self, self.Pod }
 			else
-				trace.filter = self.Entity
+				trace.filter = self
 			end
 			trace.mask = -1
 			local tr = util.TraceLine( trace )
-			local LWidth = self.Entity:GetPos():Distance(tr.HitPos) * math.tan(75) -- Once again, Hysteria comes to my rescue :)
+			local LWidth = self:GetPos():Distance(tr.HitPos) * math.tan(75) -- Once again, Hysteria comes to my rescue :)
 			--print(LWidth)
 			local targets = ents.FindInSphere( tr.HitPos, LWidth )
-			--local targets = ents.FindInCone( self.Entity:GetPos(), self.Entity:GetForward(), 4000, 360)
+			--local targets = ents.FindInCone( self:GetPos(), self:GetForward(), 4000, 360)
 			if table.HasValue( targets, self.Target ) then
 				local trace = {}
-				trace.start = self.Entity:GetPos() + self.Entity:GetForward() * 10
+				trace.start = self:GetPos() + self:GetForward() * 10
 				trace.endpos = self.Target:GetPos()
-				trace.filter = self.Entity
+				trace.filter = self
 				trace.mask = -1
 				local tr = util.TraceLine( trace )
 				local Dist = tr.HitPos:Distance(self.Target:GetPos())
 				if Dist < 50 then
 					local Pos = self.Target:GetPos()
-					Wire_TriggerOutput(self.Entity, "TargetFound", 1)
-					Wire_TriggerOutput(self.Entity, "Target", self.Target)
-					Wire_TriggerOutput(self.Entity, "X", Pos.x)
-					Wire_TriggerOutput(self.Entity, "Y", Pos.y)
-					Wire_TriggerOutput(self.Entity, "Z", Pos.z)
-					Wire_TriggerOutput(self.Entity, "Vector",Pos)
+					Wire_TriggerOutput(self, "TargetFound", 1)
+					Wire_TriggerOutput(self, "Target", self.Target)
+					Wire_TriggerOutput(self, "X", Pos.x)
+					Wire_TriggerOutput(self, "Y", Pos.y)
+					Wire_TriggerOutput(self, "Z", Pos.z)
+					Wire_TriggerOutput(self, "Vector",Pos)
 				end
 			else
 				self.Target = nil
 			end
 		else
-			Wire_TriggerOutput(self.Entity, "TargetFound", 0)
-			Wire_TriggerOutput(self.Entity, "Target", WireLib.DT.ENTITY.Zero)
-			Wire_TriggerOutput(self.Entity, "X", 0)
-			Wire_TriggerOutput(self.Entity, "Y", 0)
-			Wire_TriggerOutput(self.Entity, "Z", 0)
-			Wire_TriggerOutput(self.Entity, "Vector",ZeroVector)
+			Wire_TriggerOutput(self, "TargetFound", 0)
+			Wire_TriggerOutput(self, "Target", WireLib.DT.ENTITY.Zero)
+			Wire_TriggerOutput(self, "X", 0)
+			Wire_TriggerOutput(self, "Y", 0)
+			Wire_TriggerOutput(self, "Z", 0)
+			Wire_TriggerOutput(self, "Vector",ZeroVector)
 			
 			--I really wish ents.FindInCone was working properly...
 			local trace = {}
-			trace.start = self.Entity:GetPos() + self.Entity:GetForward() * 10
-			trace.endpos = self.Entity:GetPos() + self.Entity:GetForward() * 5000
-			trace.filter = self.Entity
+			trace.start = self:GetPos() + self:GetForward() * 10
+			trace.endpos = self:GetPos() + self:GetForward() * 5000
+			trace.filter = self
 			trace.mask = -1
 			local tr = util.TraceLine( trace )
-			local LWidth = self.Entity:GetPos():Distance(tr.HitPos) * math.tan(70)
+			local LWidth = self:GetPos():Distance(tr.HitPos) * math.tan(70)
 			--print(LWidth)
 			local targets = ents.FindInSphere( tr.HitPos, LWidth )
-			--local targets = ents.FindInCone( self.Entity:GetPos(), self.Entity:GetForward(), 4000, 360)
+			--local targets = ents.FindInCone( self:GetPos(), self:GetForward(), 4000, 360)
 					
 			for _,i in pairs(targets) do
 				if i:IsPlayer() or i:IsNPC() then
 					local trace = {}
-					trace.start = self.Entity:GetPos() + self.Entity:GetForward() * 10
+					trace.start = self:GetPos() + self:GetForward() * 10
 					trace.endpos = i:GetPos()
-					trace.filter = self.Entity
+					trace.filter = self
 					trace.mask = -1
 					local tr = util.TraceLine( trace )
 					local Dist = tr.HitPos:Distance(i:GetPos())
@@ -256,17 +256,17 @@ function ENT:Think()
 		
 		*/
 	else
-		Wire_TriggerOutput(self.Entity, "TargetFound", 0)
-		Wire_TriggerOutput(self.Entity, "Target", WireLib.DT.ENTITY.Zero)
-		Wire_TriggerOutput(self.Entity, "X", 0)
-		Wire_TriggerOutput(self.Entity, "Y", 0)
-		Wire_TriggerOutput(self.Entity, "Z", 0)
-		Wire_TriggerOutput(self.Entity, "Vector",ZeroVector)
+		Wire_TriggerOutput(self, "TargetFound", 0)
+		Wire_TriggerOutput(self, "Target", WireLib.DT.ENTITY.Zero)
+		Wire_TriggerOutput(self, "X", 0)
+		Wire_TriggerOutput(self, "Y", 0)
+		Wire_TriggerOutput(self, "Z", 0)
+		Wire_TriggerOutput(self, "Vector",ZeroVector)
 	end
 	
 	self.LTT = CurTime()
 	
-	self.Entity:NextThink( CurTime() + 0.01 ) 
+	self:NextThink( CurTime() + 0.01 ) 
 	return true
 end
 
@@ -312,7 +312,7 @@ end
 function ENT:Touch( ent )
 	if ent.HasHardpoints then
 		if ent.Cont and ent.Cont:IsValid() then
-			HPLink( ent.Cont, ent.Entity, self.Entity )
+			HPLink( ent.Cont, ent.Entity, self )
 			self.Active = true
 			self.dt.Active = true
 		end

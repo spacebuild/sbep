@@ -26,17 +26,17 @@
      
     function ENT:Initialize()
            
-            --self.Entity:SetModel( "models/Weapons/w_bugbait.mdl" )
-            --self.Entity:SetModel( "models/Items/combine_rifle_ammo01.mdl" )
-            self.Entity:SetModel( "models/props_junk/watermelon01.mdl" )
-            self.Entity:SetName("Infestor")
-            self.Entity:PhysicsInit( SOLID_VPHYSICS )
-            self.Entity:SetMoveType( MOVETYPE_VPHYSICS )
-            self.Entity:SetSolid( SOLID_VPHYSICS )
-            self.Entity:SetUseType( 3 )
+            --self:SetModel( "models/Weapons/w_bugbait.mdl" )
+            --self:SetModel( "models/Items/combine_rifle_ammo01.mdl" )
+            self:SetModel( "models/props_junk/watermelon01.mdl" )
+            self:SetName("Infestor")
+            self:PhysicsInit( SOLID_VPHYSICS )
+            self:SetMoveType( MOVETYPE_VPHYSICS )
+            self:SetSolid( SOLID_VPHYSICS )
+            self:SetUseType( 3 )
             self:DrawShadow( false )
      
-            local phys = self.Entity:GetPhysicsObject()
+            local phys = self:GetPhysicsObject()
             if (phys:IsValid()) then
                     phys:Wake()
                     phys:EnableGravity(false)
@@ -45,7 +45,7 @@
                     phys:SetMass(1)
             end
      
-            self.PhysObj = self.Entity:GetPhysicsObject()
+            self.PhysObj = self:GetPhysicsObject()
            
             self.Mutation = 0
             self.dt.Energy = 0
@@ -103,8 +103,8 @@
      
     function ENT:PhysicsUpdate( phys )
             --local Size = self.dt.Energys
-            --self.Entity:PhysicsInitSphere(Size)
-            --self.Entity:SetCollisionBounds(Vector(-Size,-Size,-Size),Vector(Size,Size,Size))
+            --self:PhysicsInitSphere(Size)
+            --self:SetCollisionBounds(Vector(-Size,-Size,-Size),Vector(Size,Size,Size))
             --phys:Wake()
            
             --local Delta = CurTime() - self.LTT
@@ -202,7 +202,7 @@
             --print(self.dt.Energy,Delta)
                    
             if CurTime() >= self.NextMainThink then
-                    self.Entity:EmitSound("Weapon_Bugbait.Splat")
+                    self:EmitSound("Weapon_Bugbait.Splat")
                     local n = math.Clamp(1 - self:EnergyPercent(),0.2,1)
                     local NThink = math.Rand(8,16) * n
                     self.ChildCount = self:CCount() or 0

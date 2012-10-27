@@ -8,28 +8,28 @@ util.PrecacheSound( "ambient/machines/thumper_startup1.wav" )
 
 function ENT:Initialize()
 
-	self.Entity:SetModel( "models/Slyfo/powercrystal.mdl" ) 
-	self.Entity:SetName("GenericAircraft")
-	self.Entity:PhysicsInit( SOLID_VPHYSICS )
-	self.Entity:SetMoveType( MOVETYPE_VPHYSICS )
-	self.Entity:SetSolid( SOLID_VPHYSICS )
-	--self.Entity:SetMaterial("models/props_combine/combinethumper002");
-	self.Inputs = Wire_CreateInputs( self.Entity, { "Hardpoints" } )
-	self.Outputs = Wire_CreateOutputs( self.Entity, { "X", "Y", "Z", "HP1", "HP2", "HP3", "HP4", "HP5", "HP6", "HP7", "HP8", "HP9" })
+	self:SetModel( "models/Slyfo/powercrystal.mdl" ) 
+	self:SetName("GenericAircraft")
+	self:PhysicsInit( SOLID_VPHYSICS )
+	self:SetMoveType( MOVETYPE_VPHYSICS )
+	self:SetSolid( SOLID_VPHYSICS )
+	--self:SetMaterial("models/props_combine/combinethumper002");
+	self.Inputs = Wire_CreateInputs( self, { "Hardpoints" } )
+	self.Outputs = Wire_CreateOutputs( self, { "X", "Y", "Z", "HP1", "HP2", "HP3", "HP4", "HP5", "HP6", "HP7", "HP8", "HP9" })
 
-	local phys = self.Entity:GetPhysicsObject()
+	local phys = self:GetPhysicsObject()
 	if (phys:IsValid()) then
 		phys:Wake()
 		phys:EnableGravity(true)
 		phys:EnableDrag(true)
 		phys:EnableCollisions(true)
 	end
-	self.Entity:StartMotionController()
-    self.Entity:SetKeyValue("rendercolor", "255 255 255")
-	self.PhysObj = self.Entity:GetPhysicsObject()
+	self:StartMotionController()
+    self:SetKeyValue("rendercolor", "255 255 255")
+	self.PhysObj = self:GetPhysicsObject()
 	self.BMode = false
 	self.HPC = 0
-	self.FTab = { self.Entity }
+	self.FTab = { self }
 end
 
 
@@ -85,19 +85,19 @@ function ENT:Think()
 			trace.endpos = self.CPL:GetShootPos() + self.CPL:GetAimVector() * 65535
 			trace.filter = self.FTab
 			local tr = util.TraceLine( trace )
-			Wire_TriggerOutput(self.Entity, "X", tr.HitPos.x)
-			Wire_TriggerOutput(self.Entity, "Y", tr.HitPos.y)
-			Wire_TriggerOutput(self.Entity, "Z", tr.HitPos.z)
+			Wire_TriggerOutput(self, "X", tr.HitPos.x)
+			Wire_TriggerOutput(self, "Y", tr.HitPos.y)
+			Wire_TriggerOutput(self, "Z", tr.HitPos.z)
 						
 			for i = 1, self.HPC do
 				local HPCP = self.CPL:GetInfo( "SBHP_"..i )
 				local HPCA = self.CPL:GetInfo( "SBHP_"..i.."a" )
 				if string.byte(HPCP) == 49 and self.CPL:KeyDown( IN_ATTACK ) then
-					Wire_TriggerOutput(self.Entity, "HP"..i, 1)
+					Wire_TriggerOutput(self, "HP"..i, 1)
 				elseif string.byte(HPCA) == 49 and self.CPL:KeyDown( IN_ATTACK2 ) then
-					Wire_TriggerOutput(self.Entity, "HP"..i, 1)
+					Wire_TriggerOutput(self, "HP"..i, 1)
 				else
-					Wire_TriggerOutput(self.Entity, "HP"..i, 0)
+					Wire_TriggerOutput(self, "HP"..i, 0)
 				end
 			end
 			
@@ -111,7 +111,7 @@ function ENT:Think()
 		end
 	end
 
-	self.Entity:NextThink( CurTime() + 0.01 ) 
+	self:NextThink( CurTime() + 0.01 ) 
 	return true
 end
 
@@ -137,15 +137,15 @@ function ENT:Touch( ent )
 end
 
 function ENT:Use( activator, caller )
-	local CEnts = constraint.GetAllConstrainedEntities( self.Entity )
-	self.FTab = { self.Entity }
+	local CEnts = constraint.GetAllConstrainedEntities( self )
+	self.FTab = { self }
 	for _, constr in pairs( CEnts ) do
 		table.insert( self.FTab, constr.Entity )
 	end
 end
 
 function ENT:OnRemove()
-	self.Entity:StopSound( "k_lab.ambient_powergenerators" )
+	self:StopSound( "k_lab.ambient_powergenerators" )
 end
 
 function ENT:PreEntityCopy()
@@ -158,7 +158,7 @@ function ENT:PreEntityCopy()
 	DI.Pod = self.Pod:EntIndex()
 	
 	if WireAddon then
-		DI.WireData = WireLib.BuildDupeInfo( self.Entity )
+		DI.WireData = WireLib.BuildDupeInfo( self )
 	end
 	
 	duplicator.StoreEntityModifier(self, "SBEPHPCont", DI)

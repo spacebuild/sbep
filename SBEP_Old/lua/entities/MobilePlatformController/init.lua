@@ -4,18 +4,18 @@ include( 'shared.lua' )
 
 function ENT:Initialize()
 
-	self.Entity:SetModel( "models/props_c17/consolebox01a.mdl" ) 
-	self.Entity:SetName("MPC")
-	self.Entity:PhysicsInit( SOLID_VPHYSICS )
-	self.Entity:SetMoveType( MOVETYPE_VPHYSICS )
-	self.Entity:SetSolid( SOLID_VPHYSICS )
+	self:SetModel( "models/props_c17/consolebox01a.mdl" ) 
+	self:SetName("MPC")
+	self:PhysicsInit( SOLID_VPHYSICS )
+	self:SetMoveType( MOVETYPE_VPHYSICS )
+	self:SetSolid( SOLID_VPHYSICS )
 	local N = "NORMAL"
 	local inNames = {"X", "Y", "Z", "Vector", "Pitch", "Yaw", "Roll", "Angle","Reciprocate", "Duration", "Speed", "Teleport", "AbsVec", "AbsAng", "Disable", "FulcrumX", "FulcrumY", "FulcrumZ", "FulcrumVec" }
 	local inTypes = {N,N,N,"VECTOR",N,N,N,"ANGLE",N,N,N,N,N,N,N,N,N,N,"VECTOR"}
-	self.Inputs = WireLib.CreateSpecialInputs( self.Entity,inNames,inTypes)
-	self.Entity:SetUseType( 3 )
+	self.Inputs = WireLib.CreateSpecialInputs( self,inNames,inTypes)
+	self:SetUseType( 3 )
 
-	local phys = self.Entity:GetPhysicsObject()
+	local phys = self:GetPhysicsObject()
 	if (phys:IsValid()) then
 		phys:Wake()
 		phys:EnableGravity(false)
@@ -24,7 +24,7 @@ function ENT:Initialize()
 		phys:SetMass(20)
 	end
 
-	self.PhysObj = self.Entity:GetPhysicsObject()
+	self.PhysObj = self:GetPhysicsObject()
 	
 	self.Plat = nil	
 	self.PlModel = nil
@@ -155,16 +155,16 @@ function ENT:PhysicsSimulate( phys, deltatime )
 
 	if self.Recip then
 		local OVel = phys:GetVelocity()
-		--local Phys = self.Entity:GetPhysicsObject()
+		--local Phys = self:GetPhysicsObject()
 		--Phys:AddAngleVelocity((Phys:GetAngleVelocity() * -1) + self.Plat:LocalToWorldAngles(Ang * -1))
-		local RPos = self.Plat:GetPos() + (self.Entity:GetUp() * self.ZCo * -1) + (self.Entity:GetForward() * self.YCo * -1) + (self.Entity:GetRight() * self.XCo * -1)
-		--Phys:SetVelocity(RPos - self.Entity:GetPos())
+		local RPos = self.Plat:GetPos() + (self:GetUp() * self.ZCo * -1) + (self:GetForward() * self.YCo * -1) + (self:GetRight() * self.XCo * -1)
+		--Phys:SetVelocity(RPos - self:GetPos())
 		phys:Wake()
 				
 		self.ShadowParams.secondstoarrive = self.Duration
 		self.ShadowParams.pos = RPos
 		--if self.AbsAng then
-		self.ShadowParams.angle = self.Entity:GetAngles()
+		self.ShadowParams.angle = self:GetAngles()
 		--else
 		--	self.ShadowParams.angle = self.Controller:LocalToWorldAngles(Ang)
 		--end
@@ -191,9 +191,9 @@ end
 function ENT:PhysicsUpdate( phys )
 	if self.Recip then
 		local OVel = phys:GetVelocity()
-		local RPos = self.Plat:GetPos() + (self.Entity:GetUp() * self.ZCo * -1) + (self.Entity:GetForward() * self.YCo * -1) + (self.Entity:GetRight() * self.XCo * -1)
+		local RPos = self.Plat:GetPos() + (self:GetUp() * self.ZCo * -1) + (self:GetForward() * self.YCo * -1) + (self:GetRight() * self.XCo * -1)
 		
-		NVel = ((OVel / self.Vel) - ((RPos - self.Entity:GetPos()) * self.Vel)) + ((RPos - self.Entity:GetPos()) * self.Vel)
+		NVel = ((OVel / self.Vel) - ((RPos - self:GetPos()) * self.Vel)) + ((RPos - self:GetPos()) * self.Vel)
 		phys:SetVelocity(NVel)
 	end
 end
@@ -207,26 +207,26 @@ function ENT:Think()
 	if (!self.Plat or !self.Plat:IsValid()) and self.PlModel then
 		self.Plat = ents.Create( "MobilePlatform" )
 		self.Plat:SetModel( self.PlModel )
-		self.Plat:SetPos( self.Entity:GetPos() )
-		self.Plat:SetAngles( self.Entity:GetAngles() )
-		self.Plat.Controller = self.Entity
+		self.Plat:SetPos( self:GetPos() )
+		self.Plat:SetAngles( self:GetAngles() )
+		self.Plat.Controller = self
 		self.Plat:Spawn()
 		self.Plat:Initialize()
 		self.Plat:Activate()
-		self.PNoc = constraint.NoCollide(self.Entity,self.Plat,0,0)
+		self.PNoc = constraint.NoCollide(self,self.Plat,0,0)
 		if self.Skin then
 			self.Plat:SetSkin( self.Skin )
 		end
 		self.Plat.PasteDelay = false
-		--self.MWeld = constraint.Weld(self.Entity,self.Plat,0,0,0,true)
-		--self.Plat:SetParent(self.Entity)
+		--self.MWeld = constraint.Weld(self,self.Plat,0,0,0,true)
+		--self.Plat:SetParent(self)
 	end
 	--self.Plat:SetLocalPos(Vector(self.XCo, self.YCo, self.ZCo))
 	--self.Plat:SetLocalAngles(Vector(self.Pitch, self.Yaw, self.Roll))
 	--print(self.PlModel)
 	/*
 	if !self.AbsAng then
-		local RAng = self.Entity:GetAngles()
+		local RAng = self:GetAngles()
 		
 		RAng.y = math.fmod(RAng.y + self.Yaw,360)
 		RAng.r = math.fmod(RAng.r + self.Roll,360)
@@ -272,9 +272,9 @@ function ENT:Think()
 			end]]
 		end
 		
-		--local RPos = self.Entity:GetPos() + (self.Entity:GetUp() * (self.ZCo + RollZ + PitchZ)) + (self.Entity:GetForward() * (self.YCo + YawY + PitchY)) + (self.Entity:GetRight() * (self.XCo + YawX + RollX))
-		--local Pos = self.Entity:GetPos() + (self.Entity:GetUp() * RPos.z) + (self.Entity:GetForward() * RPos.y) + (self.Entity:GetRight() * RPos.x)
-		local Pos = self.Entity:LocalToWorld( RPos )
+		--local RPos = self:GetPos() + (self:GetUp() * (self.ZCo + RollZ + PitchZ)) + (self:GetForward() * (self.YCo + YawY + PitchY)) + (self:GetRight() * (self.XCo + YawX + RollX))
+		--local Pos = self:GetPos() + (self:GetUp() * RPos.z) + (self:GetForward() * RPos.y) + (self:GetRight() * RPos.x)
+		local Pos = self:LocalToWorld( RPos )
 
 		
 		self.Plat.XCo = Pos.x
@@ -295,7 +295,7 @@ function ENT:Think()
 	
 	self.Plat.Speed = self.Speed
 	
-	local phys = self.Entity:GetPhysicsObject()
+	local phys = self:GetPhysicsObject()
 	
 	if self.Recip then
 		local NVel = self:GetPhysicsObject():GetVelocity()
@@ -304,7 +304,7 @@ function ENT:Think()
 		phys:SetVelocity(NVel)
 	end
 		
-	self.Entity:NextThink( CurTime() + 0.01 ) 
+	self:NextThink( CurTime() + 0.01 ) 
 	return true
 end
 
@@ -328,7 +328,7 @@ function ENT:Use( activator, caller )
 		end
 		
 		local Pos = self.Plat:LocalToWorld( RPos * -1 )
-		self.Entity:SetPos(Pos)
+		self:SetPos(Pos)
 	end
 end
 
@@ -340,7 +340,7 @@ function ENT:PreEntityCopy()
 	end
 	
 	if WireAddon then
-		DI.WireData = WireLib.BuildDupeInfo( self.Entity )
+		DI.WireData = WireLib.BuildDupeInfo( self )
 	end
 	
 	duplicator.StoreEntityModifier(self, "SBEPMobPlatCont", DI)

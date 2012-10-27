@@ -10,16 +10,16 @@ util.PrecacheSound( "explode_5" )
 
 function ENT:Initialize()
 
-	self.Entity:SetModel( "models/props_phx/torpedo.mdl" )
-	self.Entity:SetName("SmallBomb")
-	self.Entity:PhysicsInit( SOLID_VPHYSICS )
-	self.Entity:SetMoveType( MOVETYPE_VPHYSICS )
-	self.Entity:SetSolid( SOLID_VPHYSICS )
+	self:SetModel( "models/props_phx/torpedo.mdl" )
+	self:SetName("SmallBomb")
+	self:PhysicsInit( SOLID_VPHYSICS )
+	self:SetMoveType( MOVETYPE_VPHYSICS )
+	self:SetSolid( SOLID_VPHYSICS )
 	if !self.Armed then
-		self.Inputs = Wire_CreateInputs( self.Entity, { "Arm", "Detonate" } )
+		self.Inputs = Wire_CreateInputs( self, { "Arm", "Detonate" } )
 	end
 	
-	local phys = self.Entity:GetPhysicsObject()
+	local phys = self:GetPhysicsObject()
 	if (phys:IsValid()) then
 		phys:Wake()
 		phys:EnableGravity(true)
@@ -27,9 +27,9 @@ function ENT:Initialize()
 		phys:EnableCollisions(true)
 	end
 
-    --self.Entity:SetKeyValue("rendercolor", "0 0 0")
-	self.PhysObj = self.Entity:GetPhysicsObject()
-	self.CAng = self.Entity:GetAngles()
+    --self:SetKeyValue("rendercolor", "0 0 0")
+	self.PhysObj = self:GetPhysicsObject()
+	self.CAng = self:GetAngles()
 	
 
 end
@@ -63,7 +63,7 @@ end
 function ENT:PhysicsUpdate( phys )
 	if self.Armed then
 		local Vel = phys:GetVelocity()
-		self.Entity:SetAngles( Vel:Angle() )
+		self:SetAngles( Vel:Angle() )
 		phys:SetVelocity(Vel)
 	end
 end
@@ -71,32 +71,32 @@ end
 function ENT:Splode()
 	if(!self.Exploded) then
 		--self.Exploded = true
-		--util.BlastDamage(self.Entity, self.Entity, self.Entity:GetPos(), 400, 400)
-		--cbt_hcgexplode( self.Entity:GetPos(), 400, math.random(400,600), 7)
+		--util.BlastDamage(self, self, self:GetPos(), 400, 400)
+		--cbt_hcgexplode( self:GetPos(), 400, math.random(400,600), 7)
 		
 		local SSpeed = 10
 		local NewShell = nil
 		for i = 0, 10 do
 			NewShell = ents.Create( "TFuelSpray" )
 			if ( !NewShell:IsValid() ) then return end
-			NewShell:SetPos( self.Entity:GetPos() + Vector(math.random(-SSpeed,SSpeed),math.random(-SSpeed,SSpeed),math.random(-SSpeed,SSpeed)) )
+			NewShell:SetPos( self:GetPos() + Vector(math.random(-SSpeed,SSpeed),math.random(-SSpeed,SSpeed),math.random(-SSpeed,SSpeed)) )
 			NewShell.SPL = self.SPL
 			NewShell:Spawn()
 			NewShell:Initialize()
 			NewShell:Activate()
-			NewShell:GetPhysicsObject():SetVelocity((self.Entity:GetPhysicsObject():GetVelocity() * 0.25) + (self.Entity:GetRight() * math.random(-100,100)) + (self.Entity:GetUp() * math.random(-100,100)) )
+			NewShell:GetPhysicsObject():SetVelocity((self:GetPhysicsObject():GetVelocity() * 0.25) + (self:GetRight() * math.random(-100,100)) + (self:GetUp() * math.random(-100,100)) )
 		end
 		NewShell:PreIgnite(3)
-		local targets = ents.FindInSphere( self.Entity:GetPos(), 1000)
+		local targets = ents.FindInSphere( self:GetPos(), 1000)
 	
 		for _,i in pairs(targets) do
 			if i:GetClass() == "prop_physics" then
-				i:GetPhysicsObject():ApplyForceOffset( (i.Entity:NearestPoint(self.Entity:GetPos()) - self.Entity:GetPos()):Normalize() * (i:GetPhysicsObject():GetMass() * 500), self.Entity:GetPos() )
+				i:GetPhysicsObject():ApplyForceOffset( (i.Entity:NearestPoint(self:GetPos()) - self:GetPos()):Normalize() * (i:GetPhysicsObject():GetMass() * 500), self:GetPos() )
 			end
 		end
 		
 		
-		self.Entity:EmitSound("explode_9")
+		self:EmitSound("explode_9")
 		
 		local ShakeIt = ents.Create( "env_shake" )
 		ShakeIt:SetName("Shaker")
@@ -104,7 +104,7 @@ function ENT:Splode()
 		ShakeIt:SetKeyValue("radius", "600" )
 		ShakeIt:SetKeyValue("duration", "5" )
 		ShakeIt:SetKeyValue("frequency", "255" )
-		ShakeIt:SetPos( self.Entity:GetPos() )
+		ShakeIt:SetPos( self:GetPos() )
 		ShakeIt:Fire("StartShake", "", 0);
 		ShakeIt:Spawn()
 		ShakeIt:Activate()
@@ -112,5 +112,5 @@ function ENT:Splode()
 		ShakeIt:Fire("kill", "", 6)
 	end
 	self.Exploded = true
-	self.Entity:Remove()
+	self:Remove()
 end

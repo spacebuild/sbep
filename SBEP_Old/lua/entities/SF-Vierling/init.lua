@@ -7,27 +7,27 @@ util.PrecacheSound( "SB/Gattling2.wav" )
 
 function ENT:Initialize()
 
-	--self.Entity:SetModel( "models/Slyfo/smlturrettop.mdl" ) 
-	self.Entity:SetName("SmallMachineGun")
-	self.Entity:PhysicsInit( SOLID_VPHYSICS )
-	self.Entity:SetMoveType( MOVETYPE_VPHYSICS )
-	self.Entity:SetSolid( SOLID_VPHYSICS )
+	--self:SetModel( "models/Slyfo/smlturrettop.mdl" ) 
+	self:SetName("SmallMachineGun")
+	self:PhysicsInit( SOLID_VPHYSICS )
+	self:SetMoveType( MOVETYPE_VPHYSICS )
+	self:SetSolid( SOLID_VPHYSICS )
 	local inNames = {"Active", "Fire", "X", "Y", "Z","Vector", "Mode", "Pitch", "Yaw", "Lateral", "Vertical"}
 	local inTypes = {"NORMAL","NORMAL","NORMAL","NORMAL","NORMAL","VECTOR","NORMAL","NORMAL","NORMAL","NORMAL","NORMAL"}
-	self.Inputs = WireLib.CreateSpecialInputs( self.Entity,inNames,inTypes)
+	self.Inputs = WireLib.CreateSpecialInputs( self,inNames,inTypes)
 	
-	local phys = self.Entity:GetPhysicsObject()
+	local phys = self:GetPhysicsObject()
 	if (phys:IsValid()) then
 		phys:Wake()
 		phys:EnableGravity(false)
 		phys:EnableDrag(true)
 		phys:EnableCollisions(true)
 	end
-	self.Entity:SetKeyValue("rendercolor", "255 255 255")
-	self.PhysObj = self.Entity:GetPhysicsObject()
+	self:SetKeyValue("rendercolor", "255 255 255")
+	self.PhysObj = self:GetPhysicsObject()
 	
 	--self.val1 = 0
-	--RD_AddResource(self.Entity, "Munitions", 0)
+	--RD_AddResource(self, "Munitions", 0)
 	
 	self.HPC			= 4
 	self.HP				= {}
@@ -49,7 +49,7 @@ function ENT:Initialize()
 	self.HP[4]["Pos"]	= Vector(20,20,23)
 	
 	self.Mode = 0
-	self.Cont = self.Entity
+	self.Cont = self
 	self.Firing = false
 	self.Active = false
 	
@@ -183,7 +183,7 @@ function ENT:Think() -- Note to self: Redo this bit. It could do with a little r
 		if (self.CPL and self.CPL:IsValid()) then
 						
 			if (self.CPL:KeyDown( IN_ATTACK )) then
-				self.Entity:HPFire()
+				self:HPFire()
 			end
 			
 			self.CPL:CrosshairEnable()
@@ -207,19 +207,19 @@ function ENT:Think() -- Note to self: Redo this bit. It could do with a little r
 			TAngle.p = math.fmod(self.Base2:GetAngles().p + self.Pitch,360)
 			TAngle.y = math.fmod(self.Base2:GetAngles().y + self.Yaw,360)
 			
-			TargPos = self.Entity:GetPos() + TAngle:Forward() * 1000
+			TargPos = self:GetPos() + TAngle:Forward() * 1000
 		end
 	end
 	if TargPos then
-		local FDist = TargPos:Distance( self.Entity:GetPos() + self.Entity:GetUp() * 120 ) --100 with compensation
-		local BDist = TargPos:Distance( self.Entity:GetPos() + self.Entity:GetUp() * -80 )
+		local FDist = TargPos:Distance( self:GetPos() + self:GetUp() * 120 ) --100 with compensation
+		local BDist = TargPos:Distance( self:GetPos() + self:GetUp() * -80 )
 		local Pitch = math.Clamp((FDist - BDist) * 7.75, -1050, 1050)
-		FDist = TargPos:Distance( self.Entity:GetPos() + self.Entity:GetRight() * 100 )
-		BDist = TargPos:Distance( self.Entity:GetPos() + self.Entity:GetRight() * -100 )
+		FDist = TargPos:Distance( self:GetPos() + self:GetRight() * 100 )
+		BDist = TargPos:Distance( self:GetPos() + self:GetRight() * -100 )
 		local Yaw = math.Clamp((BDist - FDist) * 7.75, -1050, 1050)
 		
 		local physi = self.Base:GetPhysicsObject()
-		local physi2 = self.Entity:GetPhysicsObject()
+		local physi2 = self:GetPhysicsObject()
 		
 		physi:AddAngleVelocity((physi:GetAngleVelocity() * -1) + Angle(0,0,-Yaw))
 		physi2:AddAngleVelocity((physi2:GetAngleVelocity() * -1) + Angle(0,Pitch,0))
@@ -234,10 +234,10 @@ function ENT:Think() -- Note to self: Redo this bit. It could do with a little r
 	end
 	
 	if self.Firing then
-		self.Entity:HPFire()
+		self:HPFire()
 	end
 
-	self.Entity:NextThink( CurTime() + 0.01 ) 
+	self:NextThink( CurTime() + 0.01 ) 
 	return true	
 end
 
@@ -301,7 +301,7 @@ function ENT:PreEntityCopy()
 	end
 	
 	if WireAddon then
-		DI.WireData = WireLib.BuildDupeInfo( self.Entity )
+		DI.WireData = WireLib.BuildDupeInfo( self )
 	end
 	
 	duplicator.StoreEntityModifier(self, "SBEPVierling", DI)
@@ -320,7 +320,7 @@ function ENT:PostEntityPaste(pl, Ent, CreatedEntities)
 	if (DI.Base2) then
 		self.Base2 = CreatedEntities[ DI.Base2 ]
 	end
-	self.TraceMask = {self.Entity,self.Base,self.Base2,self.CPod}
+	self.TraceMask = {self,self.Base,self.Base2,self.CPod}
 	self.TraceData = {filter = self.TraceMask}
 	if (DI.guns) then
 		for k,v in pairs(DI.guns) do

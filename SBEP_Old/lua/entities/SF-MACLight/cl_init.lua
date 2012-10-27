@@ -6,7 +6,7 @@ end
 
 function ENT:Draw()
 	
-	self.Entity:DrawModel()
+	self:DrawModel()
 
 end
 
@@ -14,8 +14,8 @@ function ENT:Think()
 	if LocalPlayer():GetInfoNum( "SBEPLighting" ) > 0 then
 		local dlight = DynamicLight( 0 )
 		if ( dlight ) then
-			--local r, g, b, a = self:GetColor()
-			dlight.Pos = self:GetPos() + (self.Entity:GetForward() * 160) + (self.Entity:GetUp() * 30) 
+			--local c = self:GetColor();  local r,g,b,a = c.r, c.g, c.b, c.a;
+			dlight.Pos = self:GetPos() + (self:GetForward() * 160) + (self:GetUp() * 30) 
 			dlight.r = 50
 			dlight.g = 50
 			dlight.b = 200
@@ -27,8 +27,8 @@ function ENT:Think()
 		
 		local dlight = DynamicLight( 0 )
 		if ( dlight ) then
-			--local r, g, b, a = self:GetColor()
-			dlight.Pos = self:GetPos() + (self.Entity:GetForward() * 175) + (self.Entity:GetUp() * -20) 
+			--local c = self:GetColor();  local r,g,b,a = c.r, c.g, c.b, c.a;
+			dlight.Pos = self:GetPos() + (self:GetForward() * 175) + (self:GetUp() * -20) 
 			dlight.r = 50
 			dlight.g = 50
 			dlight.b = 200
@@ -38,9 +38,9 @@ function ENT:Think()
 			dlight.DieTime = CurTime() + 0.2
 		end
 	end
-	local Charging = self.Entity:GetNetworkedBool( "Charging" ) or false
-	local Charge = self.Entity:GetNetworkedInt("Charge") or 0
+	local Charging = self:GetNetworkedBool( "Charging" ) or false
+	local Charge = self:GetNetworkedInt("Charge") or 0
 	self.WInfo = "Light MAC - "..(Charging and "" or "Not ").."Charging, Charge:"..Charge
-	self.Entity:NextThink( CurTime() + 0.1 ) 
+	self:NextThink( CurTime() + 0.1 ) 
 	return true
 end

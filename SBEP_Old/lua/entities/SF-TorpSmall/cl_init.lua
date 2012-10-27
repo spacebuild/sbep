@@ -7,14 +7,14 @@ end
 
 function ENT:Draw()
 	
-	self.Entity:DrawModel()
+	self:DrawModel()
 	
 	render.SetMaterial( self.Matt )	
 	local color = Color( 200, 200, 60, 200 )
 	if self:GetArmed() then
-		render.DrawSprite( self.Entity:GetPos() + (LocalPlayer():GetPos() - self.Entity:GetPos()):GetNormal() * 30, 400, 400, color )
-		--render.DrawSprite( self.Entity:GetPos() + self.Entity:GetRight() * 100 + self.Entity:GetForward() * 40, 500, 500, color )
-		--render.DrawSprite( self.Entity:GetPos() + self.Entity:GetRight() * 100 + self.Entity:GetForward() * -40, 500, 500, color )
+		render.DrawSprite( self:GetPos() + (LocalPlayer():GetPos() - self:GetPos()):GetNormal() * 30, 400, 400, color )
+		--render.DrawSprite( self:GetPos() + self:GetRight() * 100 + self:GetForward() * 40, 500, 500, color )
+		--render.DrawSprite( self:GetPos() + self:GetRight() * 100 + self:GetForward() * -40, 500, 500, color )
 	end
 
 end
@@ -25,7 +25,7 @@ function ENT:Think()
 		
 			local dlight = DynamicLight( self:EntIndex() )
 			if ( dlight ) then
-				--local r, g, b, a = self:GetColor()
+				--local c = self:GetColor();  local r,g,b,a = c.r, c.g, c.b, c.a;
 				dlight.Pos = self:GetPos() + self:GetRight() * 50
 				dlight.r = 200
 				dlight.g = 200

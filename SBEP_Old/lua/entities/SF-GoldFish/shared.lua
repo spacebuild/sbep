@@ -13,9 +13,9 @@ ENT.APPos			= Vector(0,0,-30)
 ENT.APAng			= Angle(0,0,180)
 
 function ENT:SetArmed( val )
-	self.Entity:SetNetworkedBool("ClArmed",val,true)
+	self:SetNetworkedBool("ClArmed",val,true)
 end
 
 function ENT:GetArmed()
-	return self.Entity:GetNetworkedBool("ClArmed")
+	return self:GetNetworkedBool("ClArmed")
 end

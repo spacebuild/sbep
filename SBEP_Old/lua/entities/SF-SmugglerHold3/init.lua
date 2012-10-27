@@ -5,25 +5,25 @@ util.PrecacheSound( "SB/Gattling2.wav" )
 
 function ENT:Initialize()
 
-	self.Entity:SetModel( "models/Slyfo/smuggler_single3.mdl" ) 
-	self.Entity:SetName("SmallMachineGun")
-	self.Entity:PhysicsInit( SOLID_VPHYSICS )
-	self.Entity:SetMoveType( MOVETYPE_VPHYSICS )
-	self.Entity:SetSolid( SOLID_VPHYSICS )
-	--self.Inputs = Wire_CreateInputs( self.Entity, { "Fire" } )
+	self:SetModel( "models/Slyfo/smuggler_single3.mdl" ) 
+	self:SetName("SmallMachineGun")
+	self:PhysicsInit( SOLID_VPHYSICS )
+	self:SetMoveType( MOVETYPE_VPHYSICS )
+	self:SetSolid( SOLID_VPHYSICS )
+	--self.Inputs = Wire_CreateInputs( self, { "Fire" } )
 	
-	local phys = self.Entity:GetPhysicsObject()
+	local phys = self:GetPhysicsObject()
 	if (phys:IsValid()) then
 		phys:Wake()
 		phys:EnableGravity(true)
 		phys:EnableDrag(true)
 		phys:EnableCollisions(true)
 	end
-	self.Entity:SetKeyValue("rendercolor", "255 255 255")
-	self.PhysObj = self.Entity:GetPhysicsObject()
+	self:SetKeyValue("rendercolor", "255 255 255")
+	self.PhysObj = self:GetPhysicsObject()
 	
 	--self.val1 = 0
-	--RD_AddResource(self.Entity, "Munitions", 0)
+	--RD_AddResource(self, "Munitions", 0)
 
 	self.HPC			= 2
 	self.HP				= {}
@@ -39,7 +39,7 @@ function ENT:Initialize()
 	self.HP[2]["Angle"]	= Angle(0,0,0)
 	
 	
-	self.Cont = self.Entity
+	self.Cont = self
 end
 
 function ENT:SpawnFunction( ply, tr )
@@ -92,9 +92,9 @@ end
 /*
 function ENT:Touch( ent )
 	if ent.HasHardpoints then
-		if ent.Cont and ent.Cont:IsValid() then HPLink( ent.Cont, ent.Entity, self.Entity ) end
-		self.Entity:GetPhysicsObject():EnableCollisions(true)
-		self.Entity:SetParent()
+		if ent.Cont and ent.Cont:IsValid() then HPLink( ent.Cont, ent.Entity, self ) end
+		self:GetPhysicsObject():EnableCollisions(true)
+		self:SetParent()
 	end
 end
 
@@ -116,7 +116,7 @@ function ENT:PreEntityCopy()
 	end
 	
 	if WireAddon then
-		DI.WireData = WireLib.BuildDupeInfo( self.Entity )
+		DI.WireData = WireLib.BuildDupeInfo( self )
 	end
 	
 	duplicator.StoreEntityModifier(self, "SBEPSmuggler3", DI)

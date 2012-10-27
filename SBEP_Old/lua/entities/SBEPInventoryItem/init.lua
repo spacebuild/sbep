@@ -8,17 +8,17 @@ local SWEPData = list.Get( "SBEP_SWeaponry" )
 function ENT:Initialize()
 	local Data = SWEPData[ self.ItemType ]
 	if Data then
-		self.Entity:SetModel(Data.Model)
+		self:SetModel(Data.Model)
 	else
-		self.Entity:SetModel( "models/props_phx/misc/smallcannonball.mdl" )
+		self:SetModel( "models/props_phx/misc/smallcannonball.mdl" )
 	end
-	self.Entity:SetName("Handle")
-	self.Entity:PhysicsInit( SOLID_VPHYSICS )
-	self.Entity:SetMoveType( MOVETYPE_VPHYSICS )
-	self.Entity:SetSolid( SOLID_VPHYSICS )
-	self.Entity:SetUseType(3)
+	self:SetName("Handle")
+	self:PhysicsInit( SOLID_VPHYSICS )
+	self:SetMoveType( MOVETYPE_VPHYSICS )
+	self:SetSolid( SOLID_VPHYSICS )
+	self:SetUseType(3)
 	
-	local phys = self.Entity:GetPhysicsObject()
+	local phys = self:GetPhysicsObject()
 	if (phys:IsValid()) then
 		phys:Wake()
 		phys:EnableGravity(true)
@@ -26,8 +26,8 @@ function ENT:Initialize()
 		phys:EnableCollisions(true)
 		phys:SetMass(10)
 	end
-	self.Entity:SetKeyValue("rendercolor", "255 255 255")
-	self.PhysObj = self.Entity:GetPhysicsObject()
+	self:SetKeyValue("rendercolor", "255 255 255")
+	self.PhysObj = self:GetPhysicsObject()
 	
 	--self.Ammo = 0
 end
@@ -58,7 +58,7 @@ function ENT:Think()
 		print("No data. Removing.")
 		self:Remove()
 	end
-	--self.Entity:NextThink( CurTime() + 0.01 ) 
+	--self:NextThink( CurTime() + 0.01 ) 
 	--return true	
 end
 
@@ -82,5 +82,5 @@ function ENT:Use( ply, caller )
 	--print("Server Inventory:")
 	--PrintTable(ply.Inventory)
 	
-	self.Entity:Remove()
+	self:Remove()
 end

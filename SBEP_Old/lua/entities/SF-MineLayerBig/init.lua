@@ -5,28 +5,28 @@ include( 'shared.lua' )
 
 function ENT:Initialize()
 
-	self.Entity:SetModel( "models/Slyfo/minelayer.mdl" ) 
-	self.Entity:SetName("Big Minelayer")
-	self.Entity:PhysicsInit( SOLID_VPHYSICS )
-	self.Entity:SetMoveType( MOVETYPE_VPHYSICS )
-	self.Entity:SetSolid( SOLID_VPHYSICS )
+	self:SetModel( "models/Slyfo/minelayer.mdl" ) 
+	self:SetName("Big Minelayer")
+	self:PhysicsInit( SOLID_VPHYSICS )
+	self:SetMoveType( MOVETYPE_VPHYSICS )
+	self:SetSolid( SOLID_VPHYSICS )
 
 	if WireAddon then
 		self.Inputs = WireLib.CreateInputs( self, { "Fire", "Force", "Homing" } )
 	end
 	
-	local phys = self.Entity:GetPhysicsObject()
+	local phys = self:GetPhysicsObject()
 	if (phys:IsValid()) then
 		phys:Wake()
 		phys:EnableGravity(true)
 		phys:EnableDrag(true)
 		phys:EnableCollisions(true)
 	end
-	self.Entity:SetKeyValue("rendercolor", "255 255 255")
-	self.PhysObj = self.Entity:GetPhysicsObject()
+	self:SetKeyValue("rendercolor", "255 255 255")
+	self.PhysObj = self:GetPhysicsObject()
 	
 	--self.val1 = 0
-	--RD_AddResource(self.Entity, "Munitions", 0)
+	--RD_AddResource(self, "Munitions", 0)
 	
 	self.MineProof = true
 	self.LForce = 0
@@ -61,7 +61,7 @@ end
 function ENT:TriggerInput(iname, value)		
 	if (iname == "Fire") then
 		if (value > 0) then
-			self.Entity:HPFire()
+			self:HPFire()
 		end
 	
 	elseif (iname == "Force") then
@@ -88,7 +88,7 @@ function ENT:Think()
 		if (CurTime() >= self.CDL[n]) then
 			if self.CDL[n.."r"] == false then
 				self.CDL[n.."r"] = true
-				self.Entity:EmitSound("Buttons.snd26")
+				self:EmitSound("Buttons.snd26")
 			end
 		end
 	end
@@ -109,7 +109,7 @@ end
 function ENT:Touch( ent )
 	if ent.HasHardpoints then
 		if ent.Cont and ent.Cont:IsValid() then
-			HPLink( ent.Cont, ent.Entity, self.Entity ) 
+			HPLink( ent.Cont, ent.Entity, self ) 
 			ent.Cont.MineProof = true
 			ent.MineProof = true
 		end
@@ -120,7 +120,7 @@ function ENT:HPFire()
 	if (CurTime() >= self.MCDown) then
 		for n = 1, 6 do
 			if (CurTime() >= self.CDL[n]) then
-				self.Entity:FFire(n)
+				self:FFire(n)
 				return
 			end
 		end
@@ -130,41 +130,41 @@ end
 function ENT:LaunchMine( CCD, Offset )
 	local NewShell = ents.Create( "SF-SpaceMine" )
 	if ( !NewShell:IsValid() ) then return end
-	NewShell:SetPos( self.Entity:LocalToWorld(Offset) )
-	--NewShell:SetAngles( self.Entity:GetForward():Angle() )
+	NewShell:SetPos( self:LocalToWorld(Offset) )
+	--NewShell:SetAngles( self:GetForward():Angle() )
 	NewShell.SPL = self.SPL
 	NewShell:Spawn()
 	NewShell:Initialize()
 	NewShell:Activate()
 	NewShell:SetOwner(self)
-	NewShell.PhysObj:SetVelocity(self.Entity:GetUp() * -self.LForce)
+	NewShell.PhysObj:SetVelocity(self:GetUp() * -self.LForce)
 	--NewShell:Fire("kill", "", 30)
-	NewShell.ParL = self.Entity
+	NewShell.ParL = self
 	--RD_ConsumeResource(self, "Munitions", 1000)
 	self.CDL[CCD] = CurTime() + 6
 	self.MCDown = CurTime() + 0.4
-	self.Entity:EmitSound("Buttons.snd24")
+	self:EmitSound("Buttons.snd24")
 	NewShell:GetPhysicsObject():EnableGravity(false)
 	if self.Homer then NewShell.Homer = true end
 	
 	timer.Simple(5,function() NewShell:Arm() 
 	end)	
 	--local effectdata = EffectData()
-	--effectdata:SetOrigin(self.Entity:GetPos() +  self.Entity:GetUp() * 14)
-	--effectdata:SetStart(self.Entity:GetPos() +  self.Entity:GetUp() * 14)
+	--effectdata:SetOrigin(self:GetPos() +  self:GetUp() * 14)
+	--effectdata:SetStart(self:GetPos() +  self:GetUp() * 14)
 	--util.Effect( "Explosion", effectdata )
 end
 
 function ENT:FFire( CCD )
-	self.Entity:LaunchMine( CCD, Vector(100, 100, -100) )
-	self.Entity:LaunchMine( CCD, Vector(100, -100, -100) )
-	self.Entity:LaunchMine( CCD, Vector(-100, 100, -100) )
-	self.Entity:LaunchMine( CCD, Vector(-100, -100, -100) )
+	self:LaunchMine( CCD, Vector(100, 100, -100) )
+	self:LaunchMine( CCD, Vector(100, -100, -100) )
+	self:LaunchMine( CCD, Vector(-100, 100, -100) )
+	self:LaunchMine( CCD, Vector(-100, -100, -100) )
 end
 
 function ENT:PreEntityCopy()
 	if WireAddon then
-		duplicator.StoreEntityModifier(self,"WireDupeInfo",WireLib.BuildDupeInfo(self.Entity))
+		duplicator.StoreEntityModifier(self,"WireDupeInfo",WireLib.BuildDupeInfo(self))
 	end
 end
 

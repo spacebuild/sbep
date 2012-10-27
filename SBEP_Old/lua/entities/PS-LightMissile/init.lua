@@ -9,17 +9,17 @@ util.PrecacheSound( "explode_5" )
 
 function ENT:Initialize()
 
-	self.Entity:SetModel( "models/Punisher239/punisher239_missile_light.mdl" )
-	self.Entity:SetName("LightMissile")
-	self.Entity:PhysicsInit( SOLID_VPHYSICS )
-	self.Entity:SetMoveType( MOVETYPE_VPHYSICS )
-	self.Entity:SetSolid( SOLID_VPHYSICS )
+	self:SetModel( "models/Punisher239/punisher239_missile_light.mdl" )
+	self:SetName("LightMissile")
+	self:PhysicsInit( SOLID_VPHYSICS )
+	self:SetMoveType( MOVETYPE_VPHYSICS )
+	self:SetSolid( SOLID_VPHYSICS )
 
 	if WireAddon then
 		self.Inputs = WireLib.CreateInputs( self, { "Launch", "Arm", "Detonate" } )
 	end
 
-	local phys = self.Entity:GetPhysicsObject()
+	local phys = self:GetPhysicsObject()
 	if (phys:IsValid()) then
 		phys:Wake()
 		phys:EnableGravity(true)
@@ -27,9 +27,9 @@ function ENT:Initialize()
 		phys:EnableCollisions(true)
 	end
 
-    --self.Entity:SetKeyValue("rendercolor", "0 0 0")
-	self.PhysObj = self.Entity:GetPhysicsObject()
-	self.CAng = self.Entity:GetAngles()
+    --self:SetKeyValue("rendercolor", "0 0 0")
+	self.PhysObj = self:GetPhysicsObject()
+	self.CAng = self:GetAngles()
 	
 	self.MCd = 2
 	self.CCd = 0
@@ -53,17 +53,17 @@ function ENT:TriggerInput(iname, value)
 	
 	if (iname == "Arm") then
 		if (value > 0) then
-			self.Entity:Arm()
+			self:Arm()
 		end
 		
 	elseif (iname == "Launch") then	
 		if (value > 0) then
-			self.Entity:HPFire()
+			self:HPFire()
 		end
 		
 	elseif (iname == "Detonate") then	
 		if (value > 0) then
-			self.Entity:Splode()
+			self:Splode()
 		end
 	end
 	
@@ -91,7 +91,7 @@ function ENT:Think()
 		self.Armed = true
 		self.Accel = math.Approach(self.Accel, 60, 2)
 		local Phys = self:GetPhysicsObject()
-		Phys:ApplyForceCenter(self.Entity:GetForward() * self.Accel * Phys:GetMass())
+		Phys:ApplyForceCenter(self:GetForward() * self.Accel * Phys:GetMass())
 		Phys:AddAngleVelocity(Phys:GetAngleVelocity() * -0.9)
 		
 		if CurTime() >= self.ATime then
@@ -120,7 +120,7 @@ function ENT:Think()
 			
 			--print(TVec, Pitch, Yaw)
 			
-			local physi = self.Entity:GetPhysicsObject()
+			local physi = self:GetPhysicsObject()
 			physi:AddAngleVelocity(Angle(0,Pitch,Yaw))
 			
 			if SBEP_S.SqrDist( self:GetPos(), TVec ) < self.ProxDist ^ 2 then
@@ -130,7 +130,7 @@ function ENT:Think()
 	end
 	
 	if CurTime() >= self.CCd then
-		self:SetColor(255,255,255,255)
+		self:SetColor(Color(255,255,255,255))
 	end
 	
 	if self.Exploded and self.Armed then self:Remove() end
@@ -159,29 +159,29 @@ end
 
 function ENT:Arm()
 	self.Armed = true
-	--util.SpriteTrail( self.Entity, 0,  Color(255,255,80,150), false, 50, 0, 3, 1, "trails/smoke.vmt" )
-	self.Entity:SetArmed( true )
+	--util.SpriteTrail( self, 0,  Color(255,255,80,150), false, 50, 0, 3, 1, "trails/smoke.vmt" )
+	self:SetArmed( true )
 	--util.SpriteTrail( self, 0, Color( 190, 210, 255, 255 ), false, 5, 0, 1, 1, "trails/smoke.vmt" )
 end
 
 function ENT:Splode()
 	if (!self.Exploded) then
 		--self.Exploded = true
-		util.BlastDamage(self.Entity, self.Entity, self.Entity:GetPos(), 400, 100)
-		cbt_hcgexplode( self.Entity:GetPos(), 400, math.random(300,600), 8)
-		local targets = ents.FindInSphere( self.Entity:GetPos(), 300)
+		util.BlastDamage(self, self, self:GetPos(), 400, 100)
+		cbt_hcgexplode( self:GetPos(), 400, math.random(300,600), 8)
+		local targets = ents.FindInSphere( self:GetPos(), 300)
 	
 		for _,i in pairs(targets) do
 			if i:GetClass() == "prop_physics" then
-				i:GetPhysicsObject():ApplyForceOffset( (i.Entity:NearestPoint(self.Entity:GetPos()) - self.Entity:GetPos()):Normalize() * 500000, self.Entity:GetPos() )
+				i:GetPhysicsObject():ApplyForceOffset( (i.Entity:NearestPoint(self:GetPos()) - self:GetPos()):Normalize() * 500000, self:GetPos() )
 			end
 		end
 		
-		self.Entity:EmitSound("explode_9")
+		self:EmitSound("explode_9")
 		
 		local effectdata = EffectData()
-		effectdata:SetOrigin(self.Entity:GetPos())
-		effectdata:SetAngle(self.Entity:GetAngles())
+		effectdata:SetOrigin(self:GetPos())
+		effectdata:SetAngle(self:GetAngles())
 		effectdata:SetScale(30)
 		effectdata:SetMagnitude(1)
 		util.Effect( "Minnow", effectdata )
@@ -193,7 +193,7 @@ function ENT:Splode()
 		ShakeIt:SetKeyValue("radius", "200" )
 		ShakeIt:SetKeyValue("duration", "5" )
 		ShakeIt:SetKeyValue("frequency", "255" )
-		ShakeIt:SetPos( self.Entity:GetPos() )
+		ShakeIt:SetPos( self:GetPos() )
 		ShakeIt:Fire("StartShake", "", 0);
 		ShakeIt:Spawn()
 		ShakeIt:Activate()
@@ -201,27 +201,27 @@ function ENT:Splode()
 		ShakeIt:Fire("kill", "", 6)
 	end
 	self.Exploded = true
-	self.Entity:Remove()
+	self:Remove()
 end
 
 function ENT:Touch( ent )
 	if ent.HasHardpoints then
-		if ent.Cont and ent.Cont:IsValid() then HPLink( ent.Cont, ent.Entity, self.Entity ) end
+		if ent.Cont and ent.Cont:IsValid() then HPLink( ent.Cont, ent.Entity, self ) end
 	end
 end
 
 function ENT:HPFire()
 	/*
-	self.Entity:SetParent()
-	constraint.RemoveConstraints( self.Entity, "Weld" )
-	constraint.RemoveConstraints( self.Entity, "Ballsocket" )
-	self.PhysObj:SetVelocity(self.Entity:GetVelocity())
+	self:SetParent()
+	constraint.RemoveConstraints( self, "Weld" )
+	constraint.RemoveConstraints( self, "Ballsocket" )
+	self.PhysObj:SetVelocity(self:GetVelocity())
 	self.PFire = true
-	self.Entity:GetPhysicsObject():EnableGravity(false)
+	self:GetPhysicsObject():EnableGravity(false)
 	timer.Simple(1.5,function()
-		if self.Entity:IsValid() then
-		self.Entity:GetPhysicsObject():EnableCollisions(true)
-		self.Entity:Arm()
+		if self:IsValid() then
+		self:GetPhysicsObject():EnableCollisions(true)
+		self:Arm()
 		end
 	 end)
 	 */
@@ -247,13 +247,13 @@ function ENT:HPFire()
 		
 		self.CCd = CurTime() + self.MCd
 		
-		self:SetColor(255,255,255,0)
+		self:SetColor(Color(255,255,255,0))
 	end
 end
 
 function ENT:PreEntityCopy()
 	if WireAddon then
-		duplicator.StoreEntityModifier(self,"WireDupeInfo",WireLib.BuildDupeInfo(self.Entity))
+		duplicator.StoreEntityModifier(self,"WireDupeInfo",WireLib.BuildDupeInfo(self))
 	end
 end
 

@@ -18,8 +18,8 @@ ENT.APPos			= Vector(5,0,10)
 ENT.WInfo			= "Stinger Mortar"
 
 function ENT:SetShots( val )
-	local CVal = self.Entity:GetNetworkedInt( "Shots" )
+	local CVal = self:GetNetworkedInt( "Shots" )
 	if CVal ~= val then
-		self.Entity:SetNetworkedInt( "Shots", val )
+		self:SetNetworkedInt( "Shots", val )
 	end
 end

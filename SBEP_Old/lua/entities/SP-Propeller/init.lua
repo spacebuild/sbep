@@ -4,13 +4,13 @@ include( 'shared.lua' )
 
 function ENT:Initialize()
 
-	self.Entity:SetModel( "models/props_phx/misc/propeller3x_small.mdl" ) 
-	self.Entity:SetName("Propeller")
-	self.Entity:PhysicsInit( SOLID_VPHYSICS )
-	self.Entity:SetMoveType( MOVETYPE_VPHYSICS )
-	self.Entity:SetSolid( SOLID_VPHYSICS )
+	self:SetModel( "models/props_phx/misc/propeller3x_small.mdl" ) 
+	self:SetName("Propeller")
+	self:PhysicsInit( SOLID_VPHYSICS )
+	self:SetMoveType( MOVETYPE_VPHYSICS )
+	self:SetSolid( SOLID_VPHYSICS )
 
-	local phys = self.Entity:GetPhysicsObject()
+	local phys = self:GetPhysicsObject()
 	if (phys:IsValid()) then
 		phys:Wake()
 		phys:EnableGravity(true)
@@ -18,8 +18,8 @@ function ENT:Initialize()
 		phys:EnableCollisions(true)
 		phys:SetMass( 500 )
 	end
-	self.Entity:StartMotionController()
-	self.PhysObj = self.Entity:GetPhysicsObject()
+	self:StartMotionController()
+	self.PhysObj = self:GetPhysicsObject()
 
 end
 
@@ -50,7 +50,7 @@ end
 
 function ENT:PhysicsUpdate()
 	local CSAng = self.PhysObj:GetAngleVelocity()
-	self.PhysObj:SetVelocity(self.Entity:GetVelocity() + self.Entity:GetUp() * (CSAng.z * 0.05) )
+	self.PhysObj:SetVelocity(self:GetVelocity() + self:GetUp() * (CSAng.z * 0.05) )
 end
 
 function ENT:OnTakeDamage( dmginfo )

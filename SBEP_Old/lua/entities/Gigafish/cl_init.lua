@@ -7,13 +7,13 @@ end
 
 function ENT:Draw()
 	
-	self.Entity:DrawModel()
+	self:DrawModel()
 
 	render.SetMaterial( self.Matt )	
 	local color = Color( 180, 180, 220, 200 )
 	if self:GetArmed() then
-		render.DrawSprite( self.Entity:GetPos() + self.Entity:GetRight() * 50, 300, 300, color )
-		render.DrawSprite( self.Entity:GetPos() + self.Entity:GetRight() * -30, 300, 300, color )
+		render.DrawSprite( self:GetPos() + self:GetRight() * 50, 300, 300, color )
+		render.DrawSprite( self:GetPos() + self:GetRight() * -30, 300, 300, color )
 	end
 end
 
@@ -23,7 +23,7 @@ function ENT:Think()
 		
 			local dlight = DynamicLight( self:EntIndex() )
 			if ( dlight ) then
-				--local r, g, b, a = self:GetColor()
+				--local c = self:GetColor();  local r,g,b,a = c.r, c.g, c.b, c.a;
 				dlight.Pos = self:GetPos() + self:GetForward() * 50
 				dlight.r = 180
 				dlight.g = 180

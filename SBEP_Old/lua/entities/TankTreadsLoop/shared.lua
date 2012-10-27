@@ -46,9 +46,9 @@ function ENT:GetCSModel()
 end
 
 function ENT:SetCont( val )
-	self.Entity:SetNetworkedEntity("ClCont",val,true)
+	self:SetNetworkedEntity("ClCont",val,true)
 end
 
 function ENT:GetCont()
-	return self.Entity:GetNetworkedEntity("ClCont")
+	return self:GetNetworkedEntity("ClCont")
 end

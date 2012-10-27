@@ -12,11 +12,11 @@ function ENT:Draw()
 	
 	render.SetMaterial( Matt )	
 	local color = Color( 255, 180, 180, 150 )
-	render.DrawSprite( self.Entity:GetPos(), 150, 150, color )
+	render.DrawSprite( self:GetPos(), 150, 150, color )
 	
 	render.SetMaterial( Matt2 )	
 	local color = Color( 255, 255, 255, 255 )
-	render.DrawSprite( self.Entity:GetPos(), 15, 15, color )
+	render.DrawSprite( self:GetPos(), 15, 15, color )
 	
 	/*
 	if !self.DModel then

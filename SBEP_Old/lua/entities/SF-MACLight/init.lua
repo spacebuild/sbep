@@ -7,29 +7,29 @@ util.PrecacheSound( "SB/Charging.wav" )
 
 function ENT:Initialize()
 
-	self.Entity:SetModel( "models/Spacebuild/Nova/macbig.mdl" ) 
-	self.Entity:SetName("Light MAC")
-	self.Entity:PhysicsInit( SOLID_VPHYSICS )
-	self.Entity:SetMoveType( MOVETYPE_VPHYSICS )
-	self.Entity:SetSolid( SOLID_VPHYSICS )
+	self:SetModel( "models/Spacebuild/Nova/macbig.mdl" ) 
+	self:SetName("Light MAC")
+	self:PhysicsInit( SOLID_VPHYSICS )
+	self:SetMoveType( MOVETYPE_VPHYSICS )
+	self:SetSolid( SOLID_VPHYSICS )
 
 	if WireAddon then
 		self.Inputs = WireLib.CreateInputs( self, {  "ChargeCannon", "Fire" } )
 		self.Outputs = WireLib.CreateOutputs( self, { "ChargeLevel", "CanFire" })
 	end
 	
-	local phys = self.Entity:GetPhysicsObject()
+	local phys = self:GetPhysicsObject()
 	if (phys:IsValid()) then
 		phys:Wake()
 		phys:EnableGravity(true)
 		phys:EnableDrag(true)
 		phys:EnableCollisions(true)
 	end
-	self.Entity:SetKeyValue("rendercolor", "255 255 255")
-	self.PhysObj = self.Entity:GetPhysicsObject()
+	self:SetKeyValue("rendercolor", "255 255 255")
+	self.PhysObj = self:GetPhysicsObject()
 	
 	self.val1 = 0
-	--RD_AddResource(self.Entity, "energy", 0)
+	--RD_AddResource(self, "energy", 0)
 end
 
 function ENT:SpawnFunction( ply, tr )
@@ -51,15 +51,15 @@ end
 function ENT:TriggerInput(iname, value)		
 	if (iname == "Fire") then
 		if (value > 0) then
-			if (CurTime() >= self.CDown and self.Entity:GetNetworkedInt("Charge") >= 5000) then
-				self.Entity:MACFire()
+			if (CurTime() >= self.CDown and self:GetNetworkedInt("Charge") >= 5000) then
+				self:MACFire()
 			end
 		end
 	elseif (iname == "ChargeCannon") then
 		if ( value > 0 and CurTime() >= self.CDown ) then
-			self.Entity:SetNetworkedBool("Charging",true)
+			self:SetNetworkedBool("Charging",true)
 		else
-			self.Entity:SetNetworkedBool("Charging",false)
+			self:SetNetworkedBool("Charging",false)
 		end
 	end
 end
@@ -69,29 +69,29 @@ function ENT:PhysicsUpdate()
 end
 
 function ENT:Think()
-	local Charging = self.Entity:GetNetworkedBool("Charging")
-	local Charge = self.Entity:GetNetworkedInt("Charge")
-	--self.val1 = RD_GetResourceAmount(self.Entity, "energy")
+	local Charging = self:GetNetworkedBool("Charging")
+	local Charge = self:GetNetworkedInt("Charge")
+	--self.val1 = RD_GetResourceAmount(self, "energy")
 	self.val1 = 10000
 	
 	if Charging and self.val1 > 100 and Charge <= 5100 and CurTime() >= self.CDown then
-		--self.Entity:EmitSound("SB/Charging.wav", 150 )
-		--RD_ConsumeResource(self.Entity, "energy", 100)
+		--self:EmitSound("SB/Charging.wav", 150 )
+		--RD_ConsumeResource(self, "energy", 100)
 		Charge = Charge + 100
-		self.Entity:SetNetworkedInt("Charge",Charge)
+		self:SetNetworkedInt("Charge",Charge)
 	else
 		if Charge >= 10 then
 			Charge = Charge - 10
-			self.Entity:SetNetworkedInt("Charge",Charge)
+			self:SetNetworkedInt("Charge",Charge)
 		end
 	end
 	
-	Wire_TriggerOutput(self.Entity, "ChargeLevel", Charge)
+	Wire_TriggerOutput(self, "ChargeLevel", Charge)
 	
 	if Charge >= 5000 and CurTime() >= self.CDown then
-		Wire_TriggerOutput(self.Entity, "CanFire", 1)
+		Wire_TriggerOutput(self, "CanFire", 1)
 	else
-		Wire_TriggerOutput(self.Entity, "CanFire", 0)
+		Wire_TriggerOutput(self, "CanFire", 0)
 	end
 	
 	if Charge > 0 then
@@ -112,7 +112,7 @@ function ENT:Think()
 			Sparky:SetKeyValue("lifetime_max", "0.2")
 			Sparky:SetKeyValue("interval_min", "0.05")
 			Sparky:SetKeyValue("interval_max", "0.08")
-			Sparky:SetPos(self.Entity:GetPos() + (self.Entity:GetForward() * math.Rand(-566,160)) + (self.Entity:GetUp() * math.Rand(-65,55)) + (self.Entity:GetRight() * math.Rand(-55,55)) )
+			Sparky:SetPos(self:GetPos() + (self:GetForward() * math.Rand(-566,160)) + (self:GetUp() * math.Rand(-65,55)) + (self:GetRight() * math.Rand(-55,55)) )
 			Sparky:Spawn()
 			Sparky:Fire("DoSpark","",0)
 			Sparky:Fire("kill","", 1)
@@ -124,15 +124,15 @@ function ENT:Think()
 		if CurTime() >= self.SmTime then
 			self.SmTime = CurTime() + math.Rand(0.2,1)
 			local effectdata = EffectData()
-			effectdata:SetOrigin(self.Entity:GetPos() +  self.Entity:GetForward() * math.Rand(-566,160))
-			effectdata:SetStart(self.Entity:GetPos() +  self.Entity:GetForward() * math.Rand(-566,160))
+			effectdata:SetOrigin(self:GetPos() +  self:GetForward() * math.Rand(-566,160))
+			effectdata:SetStart(self:GetPos() +  self:GetForward() * math.Rand(-566,160))
 			util.Effect( "MACSmokey", effectdata )
 		end
 	end
 	
-	self.Entity:SetBrightness( Charge / 1000 )
+	self:SetBrightness( Charge / 1000 )
 	
-	self.Entity:NextThink( CurTime() + 0.1 ) 
+	self:NextThink( CurTime() + 0.1 ) 
 	return true
 end
 
@@ -150,21 +150,21 @@ end
 
 function ENT:Touch( ent )
 	if ent.HasHardpoints then
-		if ent.Cont and ent.Cont:IsValid() then HPLink( ent.Cont, ent.Entity, self.Entity ) end
+		if ent.Cont and ent.Cont:IsValid() then HPLink( ent.Cont, ent.Entity, self ) end
 	end
 end
 
 function ENT:HPFire()
-	local Charging = self.Entity:GetNetworkedBool("Charging")
-	local Charge = self.Entity:GetNetworkedInt("Charge")
+	local Charging = self:GetNetworkedBool("Charging")
+	local Charge = self:GetNetworkedInt("Charge")
 	if CurTime() >= self.CDown then
 		if not Charging then
-			self.Entity:SetNetworkedBool("Charging",true)
+			self:SetNetworkedBool("Charging",true)
 		else
-			self.Entity:SetNetworkedBool("Charging",false)
+			self:SetNetworkedBool("Charging",false)
 		end
 		if Charge >= 5000 then
-			self.Entity:MACFire()
+			self:MACFire()
 		end
 		self.CDown = CurTime() + 10
 	end
@@ -174,34 +174,34 @@ function ENT:MACFire()
 --if (self.val1 >= 1000) then
 	local NewShell = ents.Create( "SF-MACLightShell" )
 	if ( !NewShell:IsValid() ) then return end
-	NewShell:SetPos( self.Entity:GetPos() + (self.Entity:GetForward() * 165) )
-	NewShell:SetAngles( self.Entity:GetAngles() )
+	NewShell:SetPos( self:GetPos() + (self:GetForward() * 165) )
+	NewShell:SetAngles( self:GetAngles() )
 	NewShell.SPL = self.SPL
 	NewShell:Spawn()
 	NewShell:Initialize()
 	NewShell:Activate()
 	NewShell:SetOwner(self)
-	NewShell.PhysObj:SetVelocity(self.Entity:GetForward() * 10000)
+	NewShell.PhysObj:SetVelocity(self:GetForward() * 10000)
 	NewShell:Fire("kill", "", 30)
-	NewShell.ParL = self.Entity
-	self.Entity:SetNetworkedInt("Charge",0)
+	NewShell.ParL = self
+	self:SetNetworkedInt("Charge",0)
 	self.CDown = CurTime() + 10
-	local phys = self.Entity:GetPhysicsObject()  	
+	local phys = self:GetPhysicsObject()  	
 	if (phys:IsValid()) then  		
-		phys:ApplyForceCenter( self.Entity:GetForward() * -10000 ) 
+		phys:ApplyForceCenter( self:GetForward() * -10000 ) 
 	end 
 	
 	--local effectdata = EffectData()
-	--effectdata:SetOrigin(self.Entity:GetPos() +  self.Entity:GetUp() * 150)
-	--effectdata:SetStart(self.Entity:GetPos() +  self.Entity:GetUp() * 150)
+	--effectdata:SetOrigin(self:GetPos() +  self:GetUp() * 150)
+	--effectdata:SetStart(self:GetPos() +  self:GetUp() * 150)
 	--util.Effect( "Explosion", effectdata )
-	self.Entity:EmitSound("SB/RailgunLight.wav", 500)
+	self:EmitSound("SB/RailgunLight.wav", 500)
 --end
 end
 
 function ENT:PreEntityCopy()
 	if WireAddon then
-		duplicator.StoreEntityModifier(self,"WireDupeInfo",WireLib.BuildDupeInfo(self.Entity))
+		duplicator.StoreEntityModifier(self,"WireDupeInfo",WireLib.BuildDupeInfo(self))
 	end
 end
 

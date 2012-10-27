@@ -6,11 +6,11 @@ end
 
 function ENT:Draw()
 	
-	self.Entity:DrawModel()
+	self:DrawModel()
 
 end
 
 function ENT:Think()
-	local Shots = self.Entity:GetNetworkedInt("Shots")
+	local Shots = self:GetNetworkedInt("Shots")
 	self.WInfo = "Minelayer - Mines: "..Shots
 end

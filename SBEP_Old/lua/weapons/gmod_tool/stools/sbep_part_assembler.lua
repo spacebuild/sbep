@@ -19,7 +19,6 @@ local SPD = {
 	ELRG = "ELRG" ,
 
 	INSR = "INSR" ,
-	HNGR = "HNGR" ,
 	
 	LRC1 = "LRC2" ,
 	LRC2 = "LRC1" ,
@@ -57,7 +56,7 @@ function TOOL:LeftClick( trace )
 	local ply = self:GetOwner()
 
 	if self:GetStage() == 2 then
-		self.E1.SEO:SetColor( 255,255,255,255 )
+		self.E1.SEO:SetColor(Color( 255,255,255,255 ))
 		local weld = constraint.Weld( self.E1.SEO , self.E2.SEO , 0 , 0 , 0 , self:ShouldNoCollide() )	
 		undo.Create( "SBEP Part Assembly Weld" )
 			undo.AddEntity( weld )
@@ -104,7 +103,7 @@ function TOOL:LeftClick( trace )
 		if E1.RotMode then
 			E1:SetNoDraw( true )
 			E2:SetNoDraw( true )
-			E1.SEO:SetColor( 255,255,255,180 )
+			E1.SEO:SetColor(Color( 255,255,255,180 ))
 			self:SetStage( 2 )
 		else
 			local function MoveUndo( Undo, Entity, pos , ang )

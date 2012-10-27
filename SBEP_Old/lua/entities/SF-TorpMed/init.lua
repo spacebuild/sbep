@@ -9,17 +9,17 @@ util.PrecacheSound( "explode_5" )
 
 function ENT:Initialize()
 
-	self.Entity:SetModel( "models/Slyfo/torpedo2.mdl" )
-	self.Entity:SetName("Medium Torpedo")
-	self.Entity:PhysicsInit( SOLID_VPHYSICS )
-	self.Entity:SetMoveType( MOVETYPE_VPHYSICS )
-	self.Entity:SetSolid( SOLID_VPHYSICS )
+	self:SetModel( "models/Slyfo/torpedo2.mdl" )
+	self:SetName("Medium Torpedo")
+	self:PhysicsInit( SOLID_VPHYSICS )
+	self:SetMoveType( MOVETYPE_VPHYSICS )
+	self:SetSolid( SOLID_VPHYSICS )
 
 	if WireAddon then
 		self.Inputs = WireLib.CreateInputs( self, { "Arm", "Detonate" } )
 	end
 
-	local phys = self.Entity:GetPhysicsObject()
+	local phys = self:GetPhysicsObject()
 	if (phys:IsValid()) then
 		phys:Wake()
 		phys:EnableGravity(true)
@@ -27,9 +27,9 @@ function ENT:Initialize()
 		phys:EnableCollisions(true)
 	end
 
-    --self.Entity:SetKeyValue("rendercolor", "0 0 0")
-	self.PhysObj = self.Entity:GetPhysicsObject()
-	self.CAng = self.Entity:GetAngles()
+    --self:SetKeyValue("rendercolor", "0 0 0")
+	self.PhysObj = self:GetPhysicsObject()
+	self.CAng = self:GetAngles()
 	
 
 end
@@ -38,12 +38,12 @@ function ENT:TriggerInput(iname, value)
 	
 	if (iname == "Arm") then
 		if (value > 0) then
-			self.Entity:Arm()
+			self:Arm()
 		end
 		
 	elseif (iname == "Detonate") then	
 		if (value > 0) then
-			self.Entity:Splode()
+			self:Splode()
 		end
 	end
 	
@@ -68,7 +68,7 @@ end
 
 function ENT:Think()
 	if (self.PFire) then
-		self.PhysObj:SetVelocity(self.Entity:GetForward()*10000)
+		self.PhysObj:SetVelocity(self:GetForward()*10000)
 		self.PFire = false
 	end
 end
@@ -92,28 +92,28 @@ end
 
 function ENT:Arm()
 	self.Armed = true
-	--util.SpriteTrail( self.Entity, 0,  Color(255,255,80,150), false, 50, 0, 3, 1, "trails/smoke.vmt" )
-	self.Entity:SetArmed( true )
+	--util.SpriteTrail( self, 0,  Color(255,255,80,150), false, 50, 0, 3, 1, "trails/smoke.vmt" )
+	self:SetArmed( true )
 end
 
 function ENT:Splode()
 	if(!self.Exploded) then
 		--self.Exploded = true
-		util.BlastDamage(self.Entity, self.Entity, self.Entity:GetPos(), 1500, 1500)
-		cbt_hcgexplode( self.Entity:GetPos(), 800, math.random(3000,7000), 8)
-		local targets = ents.FindInSphere( self.Entity:GetPos(), 1000)
+		util.BlastDamage(self, self, self:GetPos(), 1500, 1500)
+		cbt_hcgexplode( self:GetPos(), 800, math.random(3000,7000), 8)
+		local targets = ents.FindInSphere( self:GetPos(), 1000)
 	
 		for _,i in pairs(targets) do
 			if i:GetClass() == "prop_physics" then
-				i:GetPhysicsObject():ApplyForceOffset( (i.Entity:NearestPoint(self.Entity:GetPos()) - self.Entity:GetPos()):Normalize() * 500000, self.Entity:GetPos() )
+				i:GetPhysicsObject():ApplyForceOffset( (i.Entity:NearestPoint(self:GetPos()) - self:GetPos()):Normalize() * 500000, self:GetPos() )
 			end
 		end
 		
-		self.Entity:EmitSound("explode_9")
+		self:EmitSound("explode_9")
 		
 		local effectdata = EffectData()
-		effectdata:SetOrigin(self.Entity:GetPos())
-		effectdata:SetStart(self.Entity:GetPos())
+		effectdata:SetOrigin(self:GetPos())
+		effectdata:SetStart(self:GetPos())
 		util.Effect( "BigTorpSplode", effectdata )
 		self.Exploded = true
 		
@@ -123,7 +123,7 @@ function ENT:Splode()
 		ShakeIt:SetKeyValue("radius", "200" )
 		ShakeIt:SetKeyValue("duration", "5" )
 		ShakeIt:SetKeyValue("frequency", "255" )
-		ShakeIt:SetPos( self.Entity:GetPos() )
+		ShakeIt:SetPos( self:GetPos() )
 		ShakeIt:Fire("StartShake", "", 0);
 		ShakeIt:Spawn()
 		ShakeIt:Activate()
@@ -131,20 +131,20 @@ function ENT:Splode()
 		ShakeIt:Fire("kill", "", 6)
 	end
 	self.Exploded = true
-	self.Entity:Remove()
+	self:Remove()
 end
 
 function ENT:Touch( ent )
 	if ent.HasHardpoints then
-		if ent.Cont and ent.Cont:IsValid() then HPLink( ent.Cont, ent.Entity, self.Entity ) end
+		if ent.Cont and ent.Cont:IsValid() then HPLink( ent.Cont, ent.Entity, self ) end
 	end
 end
 
 function ENT:HPFire()
-	self.Entity:SetParent()
+	self:SetParent()
 	if self.HPWeld and self.HPWeld:IsValid() then self.HPWeld:Remove() end
-	self.PhysObj:SetVelocity(self.Entity:GetForward()*10000)
-	self.Entity:Arm()
+	self.PhysObj:SetVelocity(self:GetForward()*10000)
+	self:Arm()
 	self.PFire = true
 	self.PhysObj:EnableCollisions(true)
 	self.PhysObj:EnableGravity(false)
@@ -152,7 +152,7 @@ end
 
 function ENT:PreEntityCopy()
 	if WireAddon then
-		duplicator.StoreEntityModifier(self,"WireDupeInfo",WireLib.BuildDupeInfo(self.Entity))
+		duplicator.StoreEntityModifier(self,"WireDupeInfo",WireLib.BuildDupeInfo(self))
 	end
 end
 

@@ -5,22 +5,22 @@ util.PrecacheSound( "SB/Charging.wav" )
 
 function ENT:Initialize()
 
-	self.Entity:SetModel( "models/props_phx/wheels/trucktire.mdl" ) 
-	self.Entity:SetName("Wheel")
-	self.Entity:PhysicsInit( SOLID_VPHYSICS )
-	self.Entity:SetMoveType( MOVETYPE_VPHYSICS )
-	self.Entity:SetSolid( SOLID_VPHYSICS )
-	--self.Inputs = Wire_CreateInputs( self.Entity, { "Fire" } )
+	self:SetModel( "models/props_phx/wheels/trucktire.mdl" ) 
+	self:SetName("Wheel")
+	self:PhysicsInit( SOLID_VPHYSICS )
+	self:SetMoveType( MOVETYPE_VPHYSICS )
+	self:SetSolid( SOLID_VPHYSICS )
+	--self.Inputs = Wire_CreateInputs( self, { "Fire" } )
 	
-	local phys = self.Entity:GetPhysicsObject()
+	local phys = self:GetPhysicsObject()
 	if (phys:IsValid()) then
 		phys:Wake()
 		phys:EnableGravity(true)
 		phys:EnableDrag(true)
 		phys:EnableCollisions(true)
 	end
-	self.Entity:SetKeyValue("rendercolor", "255 255 255")
-	self.PhysObj = self.Entity:GetPhysicsObject()
+	self:SetKeyValue("rendercolor", "255 255 255")
+	self.PhysObj = self:GetPhysicsObject()
 	
 	self.Mounted = false
 
@@ -45,7 +45,7 @@ end
 function ENT:TriggerInput(iname, value)		
 	if (iname == "Fire") then
 		if (value > 0) then
-			self.Entity:HPFire()
+			self:HPFire()
 		end
 
 	end
@@ -82,12 +82,12 @@ function ENT:Think()
 				end
 			end
 			
-			local Phys = self.Entity:GetPhysicsObject()
+			local Phys = self:GetPhysicsObject()
 			
 			if (self.CPL:KeyDown( IN_JUMP )) then
 				FSpeed = 0
 				SSpeed = 0	
-				if self.Entity:IsOnGround() then
+				if self:IsOnGround() then
 					Phys:SetVelocity( (Phys:GetVelocity() * 0.8) )
 				end
 				Phys:AddAngleVelocity((Phys:GetAngleVelocity() * -0.8))
@@ -99,8 +99,8 @@ function ENT:Think()
 				Phys:AddAngleVelocity(Angle(0, 0, (SSpeed + FSpeed) * -1))
 			end
 				
-			if self.Entity:IsOnGround() then
-				self.Entity:GetPhysicsObject():ApplyForceCenter( self.Pod:GetForward() * (SSpeed + FSpeed) )
+			if self:IsOnGround() then
+				self:GetPhysicsObject():ApplyForceCenter( self.Pod:GetForward() * (SSpeed + FSpeed) )
 			end
 		end
 	end
@@ -120,7 +120,7 @@ end
 
 function ENT:Touch( ent )
 	if ent.HasWheels and !self.Mounted then
-		if ent.Cont and ent.Cont:IsValid() then self.Entity:WLink( ent.Cont, ent.Entity ) end
+		if ent.Cont and ent.Cont:IsValid() then self:WLink( ent.Cont, ent.Entity ) end
 	end
 end
 
@@ -136,23 +136,23 @@ function ENT:WLink( Cont, Pod )
 				AOffset = 90
 				local Ang = (PodVec:Angle())
 				Ang:RotateAroundAxis( PodVec, AOffset )
-				self.Entity:SetAngles( Ang )
+				self:SetAngles( Ang )
 			else
 				AOffset = -90
 				local Ang = ((PodVec*-1):Angle())
 				Ang:RotateAroundAxis( PodVec, AOffset )
-				self.Entity:SetAngles( Ang )
+				self:SetAngles( Ang )
 			end
-			self.Entity:SetPos(Pod:GetPos() + Pod:GetForward() * (Cont.Wh[i]["Pos"].x + Offset[1]) + Pod:GetRight() * (Cont.Wh[i]["Pos"].y + Offset[2]) + Pod:GetUp() * (Cont.Wh[i]["Pos"].z + Offset[3]))
+			self:SetPos(Pod:GetPos() + Pod:GetForward() * (Cont.Wh[i]["Pos"].x + Offset[1]) + Pod:GetRight() * (Cont.Wh[i]["Pos"].y + Offset[2]) + Pod:GetUp() * (Cont.Wh[i]["Pos"].z + Offset[3]))
 			local LPos = nil
 			local Cons = nil
 			LPos = Vector(0,0,0)
-			Cons = constraint.Ballsocket( Pod, self.Entity, 0, 0, LPos, 0, 0, 1)
-			LPos = self.Entity:WorldToLocal(self.Entity:GetPos() + self.Entity:GetUp() * 10)
-			Cons = constraint.Ballsocket( Pod, self.Entity, 0, 0, LPos, 0, 0, 1)
+			Cons = constraint.Ballsocket( Pod, self, 0, 0, LPos, 0, 0, 1)
+			LPos = self:WorldToLocal(self:GetPos() + self:GetUp() * 10)
+			Cons = constraint.Ballsocket( Pod, self, 0, 0, LPos, 0, 0, 1)
 			--weap.HPNoc = constraint.NoCollide(pod, weap, 0, 0, 0, true)
 			--weap.HPWeld = constraint.Weld(pod, weap, 0, 0, 0, true)
-			Cont.Wh[i]["Ent"] = self.Entity
+			Cont.Wh[i]["Ent"] = self
 			self.Pod = Pod
 			self.Cont = Cont
 			self.Side = Cont.Wh[i]["Side"]
@@ -179,7 +179,7 @@ function ENT:PreEntityCopy()
 	end
 	
 	if WireAddon then
-		DI.WireData = WireLib.BuildDupeInfo( self.Entity )
+		DI.WireData = WireLib.BuildDupeInfo( self )
 	end
 	
 	duplicator.StoreEntityModifier(self, "SBEPWheel1", DI)

@@ -6,26 +6,26 @@ util.PrecacheSound( "SB/Gattling2.wav" )
 
 function ENT:Initialize()
 
-	self.Entity:SetModel( "models/props_wasteland/tram_lever01.mdl" ) 
-	self.Entity:SetName("Lever")
-	self.Entity:PhysicsInit( SOLID_VPHYSICS )
-	self.Entity:SetMoveType( MOVETYPE_VPHYSICS )
-	self.Entity:SetSolid( SOLID_VPHYSICS )
-	self.Inputs = Wire_CreateInputs( self.Entity, { "Min", "Max" } )
-	self.Outputs = Wire_CreateOutputs( self.Entity, { "Value" })
+	self:SetModel( "models/props_wasteland/tram_lever01.mdl" ) 
+	self:SetName("Lever")
+	self:PhysicsInit( SOLID_VPHYSICS )
+	self:SetMoveType( MOVETYPE_VPHYSICS )
+	self:SetSolid( SOLID_VPHYSICS )
+	self.Inputs = Wire_CreateInputs( self, { "Min", "Max" } )
+	self.Outputs = Wire_CreateOutputs( self, { "Value" })
 	
-	local phys = self.Entity:GetPhysicsObject()
+	local phys = self:GetPhysicsObject()
 	if (phys:IsValid()) then
 		phys:Wake()
 		phys:EnableGravity(true)
 		phys:EnableDrag(true)
 		phys:EnableCollisions(true)
 	end
-	self.Entity:SetKeyValue("rendercolor", "255 255 255")
-	self.PhysObj = self.Entity:GetPhysicsObject()
+	self:SetKeyValue("rendercolor", "255 255 255")
+	self.PhysObj = self:GetPhysicsObject()
 	
 	--self.val1 = 0
-	--RD_AddResource(self.Entity, "Munitions", 0)
+	--RD_AddResource(self, "Munitions", 0)
 	
 	self.MinV = 0
 	self.MaxV = 1
@@ -84,11 +84,11 @@ end
 
 function ENT:Think()
 	if !self.Base or !self.Base:IsValid() then
-		self.Entity:Remove()
+		self:Remove()
 		return
 	end
 	
-	if self.CPL and self.CPL:IsValid() and ( self.CPL:KeyDown( IN_USE ) or self.CPL:KeyDown( IN_ATTACK ) ) and self.CPL:GetShootPos():Distance(self.Entity:GetPos()) < 200 then
+	if self.CPL and self.CPL:IsValid() and ( self.CPL:KeyDown( IN_USE ) || self.CPL:KeyDown( IN_ATTACK ) ) and self.CPL:GetShootPos():Distance(self:GetPos()) < 200 then
 		local Dist = self.CPL:GetShootPos():Distance( self.Base:GetPos() )
 		local TargPos = self.CPL:GetShootPos() + self.CPL:GetAimVector() * Dist
 		local FDist = TargPos:Distance( self.Base:GetPos() + self.Base:GetForward() * 30 )
@@ -104,17 +104,17 @@ function ENT:Think()
 	end
 	
 	local Val = Lerp( ( self.Angle + 45 ) / 90 , self.MinV , self.MaxV )
-	Wire_TriggerOutput( self.Entity, "Value", Val )
+	Wire_TriggerOutput( self, "Value", Val )
 	
 	--print( Angle..", "..FPos..", "..HPos )
 	
 	local NAng = self.Base:GetAngles()
 	NAng:RotateAroundAxis( NAng:Right(), -self.Angle )
 	RAng = self.Base:WorldToLocalAngles(NAng)
-	self.Entity:SetLocalPos( RAng:Up() * 20 )
-	self.Entity:SetLocalAngles( RAng )
+	self:SetLocalPos( RAng:Up() * 20 )
+	self:SetLocalAngles( RAng )
 
-	self.Entity:NextThink( CurTime() + 0.01 ) 
+	self:NextThink( CurTime() + 0.01 ) 
 	return true	
 end
 

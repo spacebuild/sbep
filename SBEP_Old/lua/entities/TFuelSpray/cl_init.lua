@@ -7,7 +7,7 @@ function ENT:Initialize()
 	self.Matt = Material( "effects/splash1" )
 	self.Matt3 = Material( "effects/splash1" )
 	--self.Matt2 = Material( "sprites/light_glow02_add" )
-	self.Emitter = ParticleEmitter( self.Entity:GetPos() )
+	self.Emitter = ParticleEmitter( self:GetPos() )
 	
 	self.NSTime = 0
 	
@@ -17,30 +17,30 @@ end
 
 function ENT:Draw()
 	
-	if self.Entity:IsBurning() then
+	if self:IsBurning() then
 		render.SetMaterial( self.Matt2 )	
 		local color = Color( 255, 255, 255, 255 )
-		render.DrawSprite( self.Entity:GetPos(), 80, 80, color )
-	elseif self.Entity:IsPuddle() then
+		render.DrawSprite( self:GetPos(), 80, 80, color )
+	elseif self:IsPuddle() then
 		render.SetMaterial( self.Matt3 )	
-		render.DrawQuadEasy( self.Entity:GetPos(), self.Entity:GetForward(), 64, 64, Color( 20 , 20 , 20, 150 ))
-		render.DrawQuadEasy( self.Entity:GetPos(), self.Entity:GetPos() - LocalPlayer():GetPos(), 64, 64, Color( 20 , 20 , 20, 150 ), self.Roll )
+		render.DrawQuadEasy( self:GetPos(), self:GetForward(), 64, 64, Color( 20 , 20 , 20, 150 ))
+		render.DrawQuadEasy( self:GetPos(), self:GetPos() - LocalPlayer():GetPos(), 64, 64, Color( 20 , 20 , 20, 150 ), self.Roll )
 		self.Roll = math.fmod(self.Roll + 1,360)
 	else
 		render.SetMaterial( self.Matt )	
 		local color = Color( 20 , 20 , 20, 100 )
-		render.DrawSprite( self.Entity:GetPos(), 50, 50, color )
+		render.DrawSprite( self:GetPos(), 50, 50, color )
 	end
 end
 
 function ENT:Think()
-	if self.Entity:IsBurning() then
+	if self:IsBurning() then
 		local Vec = Vector(math.Rand(-100,100),math.Rand(-100,100),math.Rand(-100,100))
-		local particle = self.Emitter:Add( "particles/flamelet"..math.random(1,5), self.Entity:GetPos() + Vec )
+		local particle = self.Emitter:Add( "particles/flamelet"..math.random(1,5), self:GetPos() + Vec )
 		if (particle) then
 			particle:SetVelocity( ( Vec ) * 0.25 )
 			--particle:SetLifeTime( 0 )
-			local ADT = self.Entity:GetVelocity():Length() * 0.005
+			local ADT = self:GetVelocity():Length() * 0.005
 			particle:SetDieTime( ADT + math.Rand( 0.5, 1.5 ) )
 			particle:SetStartAlpha( math.Rand( 200, 255 ) )
 			particle:SetEndAlpha( 0 )
@@ -54,7 +54,7 @@ function ENT:Think()
 		
 		/*
 		local Vec = Vector(math.Rand(-50,50),math.Rand(-50,50),math.Rand(-50,50))
-		local particle = self.Emitter:Add( "particles/smokey", self.Entity:GetPos() + Vec )
+		local particle = self.Emitter:Add( "particles/smokey", self:GetPos() + Vec )
 		if (particle) then
 			particle:SetVelocity( ( Vec ) * 1 )
 			--particle:SetLifeTime( 0 )
@@ -69,11 +69,11 @@ function ENT:Think()
 			particle:SetCollide( true )
 		end
 		*/
-	elseif !self.Entity:IsPuddle() then
+	elseif !self:IsPuddle() then
 		if self.NSTime < CurTime() then
 			local scount = math.random(1,2)
 			for i = 1, scount do
-				local particle = self.Emitter:Add( "effects/splash1", self.Entity:GetPos() + Vector(math.random(-50,50),math.random(-50,50),math.random(-50,50)) )
+				local particle = self.Emitter:Add( "effects/splash1", self:GetPos() + Vector(math.random(-50,50),math.random(-50,50),math.random(-50,50)) )
 				if (particle) then
 					particle:SetVelocity( Vector(math.random(-10,10),math.random(-10,10),math.random(-10,10)) )
 					--particle:SetLifeTime( 0 )
@@ -94,7 +94,7 @@ function ENT:Think()
 	
 	
 	
-	self.Entity:NextThink( CurTime() + 0.1 ) 
+	self:NextThink( CurTime() + 0.1 ) 
 	return true
 	
 end

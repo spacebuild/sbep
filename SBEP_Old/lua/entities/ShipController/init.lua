@@ -6,18 +6,18 @@ util.PrecacheSound( "SB/Charging.wav" )
 
 function ENT:Initialize()
 
-	self.Entity:SetModel( "models/Spacebuild/Nova/dronebase.mdl" ) 
-	self.Entity:SetName("ShipAI")
-	self.Entity:PhysicsInit( SOLID_VPHYSICS )
-	self.Entity:SetMoveType( MOVETYPE_VPHYSICS )
-	self.Entity:SetSolid( SOLID_VPHYSICS )
-	self.Entity:SetUseType( SIMPLE_USE )
+	self:SetModel( "models/Spacebuild/Nova/dronebase.mdl" ) 
+	self:SetName("ShipAI")
+	self:PhysicsInit( SOLID_VPHYSICS )
+	self:SetMoveType( MOVETYPE_VPHYSICS )
+	self:SetSolid( SOLID_VPHYSICS )
+	self:SetUseType( SIMPLE_USE )
 	local inNames = {"MoveVector", "TargetVector", "Angle", "Stance", "TargetsFound", "Size", "AlternateTargetVector1", "AlternateTargetVector2", "AlternateTargetVector3", "AlternateTargetVector4", "AlternateTargetVector5"}
 	local inTypes = {"VECTOR","VECTOR","ANGLE","NORMAL","NORMAL","NORMAL","VECTOR","VECTOR","VECTOR","VECTOR","VECTOR"}
-	self.Inputs = WireLib.CreateSpecialInputs( self.Entity,inNames,inTypes)
-	self.Outputs = Wire_CreateOutputs( self.Entity, { "Pitch", "Yaw", "Roll", "Forward", "Lateral", "Vertical", "WaypointReached", "Stance" })
+	self.Inputs = WireLib.CreateSpecialInputs( self,inNames,inTypes)
+	self.Outputs = Wire_CreateOutputs( self, { "Pitch", "Yaw", "Roll", "Forward", "Lateral", "Vertical", "WaypointReached", "Stance" })
 	
-	local phys = self.Entity:GetPhysicsObject()
+	local phys = self:GetPhysicsObject()
 	if (phys:IsValid()) then
 		phys:Wake()
 		phys:EnableGravity(true)
@@ -26,10 +26,10 @@ function ENT:Initialize()
 		phys:SetMass( 10 )
 	end
 	
-	self.Entity:StartMotionController()
+	self:StartMotionController()
 	
-	self.Entity:SetKeyValue("rendercolor", "255 255 255")
-	self.PhysObj = self.Entity:GetPhysicsObject()
+	self:SetKeyValue("rendercolor", "255 255 255")
+	self.PhysObj = self:GetPhysicsObject()
 	
 	self.Stance = 0
 	self.AVec = Vector(0,0,0)
@@ -43,7 +43,7 @@ function ENT:Initialize()
 	self.Reversible = false
 	self.Targets = 0
 	self.WPRad = 500
-	self.Entity:SetNetworkedInt("Size", 500)
+	self:SetNetworkedInt("Size", 500)
 	self.Fade = false
 	
 	self.IsShipController = true
@@ -97,7 +97,7 @@ function ENT:TriggerInput(iname, value)
 		
 	elseif (iname == "Size") then
 		self.WPRad = math.abs(value)
-		self.Entity:SetNetworkedInt("Size", self.WPRad)
+		self:SetNetworkedInt("Size", self.WPRad)
 		
 	elseif (iname == "TargetsFound") then
 		if value > 0 then
@@ -141,30 +141,30 @@ function ENT:Think()
 	if self.Stance > 0 then --Dear god, this is a mess... I must remember to organize this function better.
 		if (self.Stance < 3) or (self.Stance == 3 and !self.TFound) then
 			if self.MVec ~= Vector(0,0,0) then
-				local MDist = self.Entity:GetPos():Distance(self.MVec)
+				local MDist = self:GetPos():Distance(self.MVec)
 				if MDist < self.WPRad then
 					self.WaypointReached = 1
 					if self.Angling then--self.MAngle ~= Angle(0,0,0) then
-						self.Pitch = math.AngleDifference(self.Entity:GetAngles().p,self.MAngle.p) * -0.01
-						self.Roll = math.AngleDifference(self.Entity:GetAngles().r,self.MAngle.r) * -0.01
-						self.Yaw = math.AngleDifference(self.Entity:GetAngles().y,self.MAngle.y) * -0.01
+						self.Pitch = math.AngleDifference(self:GetAngles().p,self.MAngle.p) * -0.01
+						self.Roll = math.AngleDifference(self:GetAngles().r,self.MAngle.r) * -0.01
+						self.Yaw = math.AngleDifference(self:GetAngles().y,self.MAngle.y) * -0.01
 					end
 					if MDist > self.WPRad * 0.1 then
-						self.Entity:StrafeFinder( self.MVec, self.Entity:GetPos(), self.Entity:GetUp(), self.Entity:GetRight(), self.Entity:GetForward() )
+						self:StrafeFinder( self.MVec, self:GetPos(), self:GetUp(), self:GetRight(), self:GetForward() )
 					end
 				else
-					self.Entity:Orient( self.MVec, self.Entity:GetPos(), self.Entity:GetUp(), self.Entity:GetRight() )
+					self:Orient( self.MVec, self:GetPos(), self:GetUp(), self:GetRight() )
 					
-					self.Roll = self.Entity:GetAngles().r * -0.005
+					self.Roll = self:GetAngles().r * -0.005
 					
-					self.Entity:SpeedFinder( self.MVec, self.Entity:GetPos(), self.Entity:GetForward() )
+					self:SpeedFinder( self.MVec, self:GetPos(), self:GetForward() )
 				end
 			end
 		elseif self.Stance == 3 and self.TFound then
-			local MDist = self.Entity:GetPos():Distance(self.TVec)
+			local MDist = self:GetPos():Distance(self.TVec)
 			if MDist > 1000 then
-				self.Entity:Orient( self.TVec, self.Entity:GetPos(), self.Entity:GetUp(), self.Entity:GetRight() )
-				self.Entity:SpeedFinder( self.TVec, self.Entity:GetPos(), self.Entity:GetForward() )
+				self:Orient( self.TVec, self:GetPos(), self:GetUp(), self:GetRight() )
+				self:SpeedFinder( self.TVec, self:GetPos(), self:GetForward() )
 			else
 				local HighP = 0
 				local MainG = 0
@@ -175,33 +175,33 @@ function ENT:Think()
 					end
 				end
 				if MainG > 0 then
-					self.Entity:Orient( self.TVec, self.Weaponry[MainG]:GetPos(), self.Weaponry[MainG]:GetUp(), self.Weaponry[MainG]:GetRight() )
+					self:Orient( self.TVec, self.Weaponry[MainG]:GetPos(), self.Weaponry[MainG]:GetUp(), self.Weaponry[MainG]:GetRight() )
 				else
-					self.Entity:Orient( self.TVec, self.Entity:GetPos(), self.Entity:GetUp(), self.Entity:GetRight() )
+					self:Orient( self.TVec, self:GetPos(), self:GetUp(), self:GetRight() )
 					
-					self.Roll = self.Entity:GetAngles().r * -0.001
+					self.Roll = self:GetAngles().r * -0.001
 					if MDist > 1000 then
-						self.Entity:SpeedFinder( self.TVec, self.Entity:GetPos(), self.Entity:GetForward() )
+						self:SpeedFinder( self.TVec, self:GetPos(), self:GetForward() )
 					end
 				end
 			end
 		end
 	end
 		
-	Wire_TriggerOutput( self.Entity, "WaypointReached", self.WaypointReached )			
+	Wire_TriggerOutput( self, "WaypointReached", self.WaypointReached )			
 	
-	Wire_TriggerOutput( self.Entity, "Forward", self.Forward )
+	Wire_TriggerOutput( self, "Forward", self.Forward )
 	
-	Wire_TriggerOutput( self.Entity, "Lateral", self.Lat )
-	Wire_TriggerOutput( self.Entity, "Vertical", self.Vert )	
+	Wire_TriggerOutput( self, "Lateral", self.Lat )
+	Wire_TriggerOutput( self, "Vertical", self.Vert )	
 				
-	Wire_TriggerOutput( self.Entity, "Pitch", self.Pitch )
-	Wire_TriggerOutput( self.Entity, "Roll", self.Roll )
-	Wire_TriggerOutput( self.Entity, "Yaw", self.Yaw )
+	Wire_TriggerOutput( self, "Pitch", self.Pitch )
+	Wire_TriggerOutput( self, "Roll", self.Roll )
+	Wire_TriggerOutput( self, "Yaw", self.Yaw )
 	
-	Wire_TriggerOutput( self.Entity, "Stance", self.Stance )
+	Wire_TriggerOutput( self, "Stance", self.Stance )
 		
-	self.Entity:NextThink( CurTime() + 0.01 ) 
+	self:NextThink( CurTime() + 0.01 ) 
 	return true
 end
 
@@ -225,25 +225,25 @@ function ENT:Touch( ent )
 	if ent:GetClass() == "gyropod_advanced" and (!self.Gyro or !self.Gyro:IsValid()) then
 		--Speed
 		Wire_Link_Start(self:EntIndex(), ent, ent:GetPos(), "SpeedAbs", "cable/cable2", Color(0,0,0,0), 0)
-		Wire_Link_End(self:EntIndex(), self.Entity, self.Entity:GetPos(), "Forward", self.SPL)
+		Wire_Link_End(self:EntIndex(), self, self:GetPos(), "Forward", self.SPL)
 		--Pitch
 		Wire_Link_Start(self:EntIndex(), ent, ent:GetPos(), "PitchAbs", "cable/cable2", Color(0,0,0,0), 0)
-		Wire_Link_End(self:EntIndex(), self.Entity, self.Entity:GetPos(), "Pitch", self.SPL)
+		Wire_Link_End(self:EntIndex(), self, self:GetPos(), "Pitch", self.SPL)
 		--Yaw
 		Wire_Link_Start(self:EntIndex(), ent, ent:GetPos(), "YawAbs", "cable/cable2", Color(0,0,0,0), 0)
-		Wire_Link_End(self:EntIndex(), self.Entity, self.Entity:GetPos(), "Yaw", self.SPL)
+		Wire_Link_End(self:EntIndex(), self, self:GetPos(), "Yaw", self.SPL)
 		--Roll
 		Wire_Link_Start(self:EntIndex(), ent, ent:GetPos(), "RollAbs", "cable/cable2", Color(0,0,0,0), 0)
-		Wire_Link_End(self:EntIndex(), self.Entity, self.Entity:GetPos(), "Roll", self.SPL)
+		Wire_Link_End(self:EntIndex(), self, self:GetPos(), "Roll", self.SPL)
 		--Active
 		Wire_Link_Start(self:EntIndex(), ent, ent:GetPos(), "Activate", "cable/cable2", Color(0,0,0,0), 0)
-		Wire_Link_End(self:EntIndex(), self.Entity, self.Entity:GetPos(), "Stance", self.SPL)
+		Wire_Link_End(self:EntIndex(), self, self:GetPos(), "Stance", self.SPL)
 		--Lateral
 		Wire_Link_Start(self:EntIndex(), ent, ent:GetPos(), "Lateral", "cable/cable2", Color(0,0,0,0), 0)
-		Wire_Link_End(self:EntIndex(), self.Entity, self.Entity:GetPos(), "Lateral", self.SPL)
+		Wire_Link_End(self:EntIndex(), self, self:GetPos(), "Lateral", self.SPL)
 		--Vertical
 		Wire_Link_Start(self:EntIndex(), ent, ent:GetPos(), "Vertical", "cable/cable2", Color(0,0,0,0), 0)
-		Wire_Link_End(self:EntIndex(), self.Entity, self.Entity:GetPos(), "Vertical", self.SPL)
+		Wire_Link_End(self:EntIndex(), self, self:GetPos(), "Vertical", self.SPL)
 		self.Gyro = ent
 	end
 end

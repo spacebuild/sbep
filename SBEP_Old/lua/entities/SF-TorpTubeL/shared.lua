@@ -18,8 +18,8 @@ ENT.LTime			= 0
 ENT.Loading			= false
 
 function ENT:SetLVar( val )
-	local CVal = self.Entity:GetNetworkedInt( "Loading" )
+	local CVal = self:GetNetworkedInt( "Loading" )
 	if CVal ~= val then
-		self.Entity:SetNetworkedInt( "Loading", val )
+		self:SetNetworkedInt( "Loading", val )
 	end
 end

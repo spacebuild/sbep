@@ -4,13 +4,13 @@ include( 'shared.lua' )
 
 function ENT:Initialize()
 
-	--self.Entity:SetModel( "models/props_c17/consolebox01a.mdl" ) 
-	self.Entity:SetName("MobilePlatform")
-	self.Entity:PhysicsInit( SOLID_VPHYSICS )
-	self.Entity:SetMoveType( MOVETYPE_VPHYSICS )
-	self.Entity:SetSolid( SOLID_VPHYSICS )
+	--self:SetModel( "models/props_c17/consolebox01a.mdl" ) 
+	self:SetName("MobilePlatform")
+	self:PhysicsInit( SOLID_VPHYSICS )
+	self:SetMoveType( MOVETYPE_VPHYSICS )
+	self:SetSolid( SOLID_VPHYSICS )
 
-	local phys = self.Entity:GetPhysicsObject()
+	local phys = self:GetPhysicsObject()
 	if (phys:IsValid()) then
 		phys:Wake()
 		phys:EnableGravity(false)
@@ -19,7 +19,7 @@ function ENT:Initialize()
 		phys:SetMass(200)
 	end
 
-	self.PhysObj = self.Entity:GetPhysicsObject()
+	self.PhysObj = self:GetPhysicsObject()
 	
 	self.Plat = nil	
 	self.PlModel = nil
@@ -75,7 +75,7 @@ function ENT:PhysicsSimulate( phys, deltatime )
 	self.ShadowParams.maxspeed = self.Speed
 	self.ShadowParams.maxspeeddamp = self.Speed * 0.1
 	
-	local RPos = self.Entity:GetPos() + (self.Controller:GetUp() * -self.ZCo) + (self.Controller:GetForward() * -self.YCo) + (self.Controller:GetRight() * -self.XCo) --+ (self.Controller:GetPhysicsObject():GetVelocity() * self.Controller.Vel ) --(phys:GetVelocity() * 0.8)
+	local RPos = self:GetPos() + (self.Controller:GetUp() * -self.ZCo) + (self.Controller:GetForward() * -self.YCo) + (self.Controller:GetRight() * -self.XCo) --+ (self.Controller:GetPhysicsObject():GetVelocity() * self.Controller.Vel ) --(phys:GetVelocity() * 0.8)
 	
 	return phys:ComputeShadowControl(self.ShadowParams)
 	
@@ -86,24 +86,24 @@ function ENT:Think()
 	if self.PasteDelay or self.Controller.Disabled then return end
 	
 	if !self.Controller or !self.Controller:IsValid() then
-		self.Entity:Remove()
+		self:Remove()
 		return
 	end
 			
 	if self.TPD == 1 then
-		self.Entity:SetPos(Vector(self.XCo,self.YCo,self.ZCo))
+		self:SetPos(Vector(self.XCo,self.YCo,self.ZCo))
 		local Ang = Angle(0,0,0)
 		Ang.y = self.Yaw
 		Ang.r = self.Roll
 		Ang.p = self.Pitch
 		if self.AbsAng then
-			self.Entity:SetAngles(Ang)
+			self:SetAngles(Ang)
 		else
-			self.Entity:SetAngles(self.Controller:LocalToWorldAngles(Ang))
+			self:SetAngles(self.Controller:LocalToWorldAngles(Ang))
 		end
 	end
 	
-	self.Entity:NextThink( CurTime() + 0.01 )
+	self:NextThink( CurTime() + 0.01 )
 	return true
 end
 
@@ -127,7 +127,7 @@ function ENT:PreEntityCopy()
 	end
 	
 	if WireAddon then
-		DI.WireData = WireLib.BuildDupeInfo( self.Entity )
+		DI.WireData = WireLib.BuildDupeInfo( self )
 	end
 	
 	duplicator.StoreEntityModifier(self, "SBEPMobPlat", DI)

@@ -15,12 +15,12 @@ function ENT:Initialize()
  	--self:SetRenderBoundsWS( self.Vec1, self.Vec2 )
  	self:SetRenderBounds( Vector(10000,10000,10000), Vector(-10000,-10000,-10000) )--I need to fix this.
  	
- 	--self.Entity:SetModel( "models/props_combine/portalball.mdl" )
- 	--self.Entity:SetColor(250,160,255,255)
- 	--self.Entity:SetMaterial("Models/effects/comball_sphere")
+ 	--self:SetModel( "models/props_combine/portalball.mdl" )
+ 	--self:SetColor(Color(250,160,255,255))
+ 	--self:SetMaterial("Models/effects/comball_sphere")
  	self.Heat = Material( "sprites/heatwave" )
  	
- 	self.OPos = self.Entity:GetPos()
+ 	self.OPos = self:GetPos()
  	self.Spin = 0
  	
  	self.DSPeed = 0
@@ -28,17 +28,17 @@ function ENT:Initialize()
 end
 
 function ENT:Draw()
-	local Pos = self.Entity:GetPos()
-	local Ang = self.Entity:GetAngles() + Angle( 0.01, 0.01, 0.01 )
-	if self.Entity:GetActive() then
+	local Pos = self:GetPos()
+	local Ang = self:GetAngles() + Angle( 0.01, 0.01, 0.01 )
+	if self:GetActive() then
 	
 		if self.ExTime <= 0 then
 			self.ExTime = CurTime()
 			self.CSpeed = 0
 		end
 		
-		local Size = self.Entity:GetSize() or 1
-		local Length = self.Entity:GetLength() or 1
+		local Size = self:GetSize() or 1
+		local Length = self:GetLength() or 1
 		local Col = Color( 150, 150, 240, 255 )
 		local Time = CurTime() - self.ExTime
 		local Width = (math.Clamp(Time,0,2) * 0.5) * 8 * Size
@@ -58,61 +58,61 @@ function ENT:Draw()
 		if !self.Vort then self.Vort = ClientsideModel("models/props_combine/stasisvortex.mdl", RENDERGROUP_OPAQUE) end
 		self.Vort:SetModelScale(Vector(Width * 0.05 + (Speed * 0.1),Width * 0.05 + (Speed * 0.1),Width * 0.05 + (Speed * 0.1)))
 		self.Vort:SetModel( "models/props_combine/stasisvortex.mdl" )
-		self.Vort:SetColor(255,255,255,255)
+		self.Vort:SetColor(Color(255,255,255,255))
 		self.Vort:SetMaterial("")
 		self.Vort:SetPos( Pos )
 		self.Vort:SetAngles( NAng )
 		*/
 		
-		self.Entity:SetModelScale(Vector(Speed * 0.05 + (Width * 0.05),Speed * 0.05 + (Width * 0.05),(Speed * 0.1 + (Width * 0.01)) * Length))
-		--self.Entity:SetColor(255,255,255,255)
-		--self.Entity:SetMaterial( "spacebuild/Fusion2" )
-		self.Entity:SetMaterial("")
-		self.Entity:SetModel( "models/Effects/vol_light128x512.mdl" )
-		self.Entity:DrawModel()
+		self:SetModelScale(Vector(Speed * 0.05 + (Width * 0.05),Speed * 0.05 + (Width * 0.05),(Speed * 0.1 + (Width * 0.01)) * Length))
+		--self:SetColor(Color(255,255,255,255))
+		--self:SetMaterial( "spacebuild/Fusion2" )
+		self:SetMaterial("")
+		self:SetModel( "models/Effects/vol_light128x512.mdl" )
+		self:DrawModel()
 		
 		/*
 		render.UpdateRefractTexture()
 		--self.Heat:SetMaterialFloat( "$refractamount", 0.02 + math.sin(math.rad((CurTime() - self.STime) * 0.01 )) )
-		self.Entity:SetModel( "models/Effects/combineball.mdl" )
+		self:SetModel( "models/Effects/combineball.mdl" )
 		--self.Heat:SetMaterialFloat( "$bluramount", 10 ) 
-		self.Entity:SetPos( Pos + self.Entity:GetForward() * ((Width * 14) + 55 ))
-		self.Entity:SetMaterial("sprites/heatwave")
-		self.Entity:SetModelScale(Vector(Width*0.3,Width,Width ))
-		self.Entity:DrawModel()
+		self:SetPos( Pos + self:GetForward() * ((Width * 14) + 55 ))
+		self:SetMaterial("sprites/heatwave")
+		self:SetModelScale(Vector(Width*0.3,Width,Width ))
+		self:DrawModel()
 		
-		self.Entity:SetPos( Pos + self.Entity:GetForward() * ((Width * 7) + (Speed * 3) + 55 ))
-		self.Entity:SetColor(255,255,255,255)
-		self.Entity:SetModel( "models/Effects/intro_vortshield.mdl" )
-		self.Entity:SetMaterial("")
-		self.Entity:SetModelScale(Vector(Width * 0.2 + (Speed * 0.2),Width * 0.2 + (Speed * 0.2),Width * 0.2 + (Speed * 0.2)))
-		self.Entity:DrawModel()
+		self:SetPos( Pos + self:GetForward() * ((Width * 7) + (Speed * 3) + 55 ))
+		self:SetColor(Color(255,255,255,255))
+		self:SetModel( "models/Effects/intro_vortshield.mdl" )
+		self:SetMaterial("")
+		self:SetModelScale(Vector(Width * 0.2 + (Speed * 0.2),Width * 0.2 + (Speed * 0.2),Width * 0.2 + (Speed * 0.2)))
+		self:DrawModel()
 		*/
-		--self.Entity:SetAngles( Ang )
+		--self:SetAngles( Ang )
 		render.UpdateRefractTexture()
 		render.SetMaterial( self.Heat )
-		render.DrawBeam( Pos, Pos + self.Entity:GetUp() * Width * -20, Speed * 25, Time * ScSpeed, 100 + (Time * ScSpeed), Col )
+		render.DrawBeam( Pos, Pos + self:GetUp() * Width * -20, Speed * 25, Time * ScSpeed, 100 + (Time * ScSpeed), Col )
 		
 	else
 		self.ExTime = 0
 	end
 		
-	self.Entity:SetPos( Pos )
+	self:SetPos( Pos )
 	
-	self.Entity:SetModel( "models/Slyfo/finfunnel.mdl" )
-	self.Entity:SetMaterial("")
-	self.Entity:SetModelScale(Vector(0.5,0.5,0.5))
-	self.Entity:DrawModel()
-	self.Entity:SetPos( Pos )
-	--self.Entity:SetAngles( Ang )
+	self:SetModel( "models/Slyfo/finfunnel.mdl" )
+	self:SetMaterial("")
+	self:SetModelScale(Vector(0.5,0.5,0.5))
+	self:DrawModel()
+	self:SetPos( Pos )
+	--self:SetAngles( Ang )
 
 end
 
 function ENT:Think()
 
-	self.OPos = self.OPos or self.Entity:GetPos()
+	self.OPos = self.OPos or self:GetPos()
 
-	self.DSpeed = math.Clamp(self.Entity:GetPos():Distance(self.OPos),0,150)
+	self.DSpeed = math.Clamp(self:GetPos():Distance(self.OPos),0,150)
 	
 	--if self.DSpeed > 0 then print(self.DSpeed) end
 	
@@ -120,9 +120,9 @@ function ENT:Think()
 	
 	--print(self.Spin)
 	
-	self.OPos = self.Entity:GetPos()
+	self.OPos = self:GetPos()
 	
-	self.Entity:NextThink(CurTime() + 0.1)
+	self:NextThink(CurTime() + 0.1)
 	
 	return true
 end

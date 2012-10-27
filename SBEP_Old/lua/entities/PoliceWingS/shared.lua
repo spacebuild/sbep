@@ -9,9 +9,9 @@ ENT.AdminSpawnable	= true
 
 
 function ENT:SetActive( val )
-	self.Entity:SetNetworkedBool("ClTracking",val,true)
+	self:SetNetworkedBool("ClTracking",val,true)
 end
 
 function ENT:GetActive()
-	return self.Entity:GetNetworkedBool("ClTracking")
+	return self:GetNetworkedBool("ClTracking")
 end

@@ -11,8 +11,8 @@ end
 
 function ENT:Draw()
 	
-	--if !self.Built then self.Entity:DrawModel() end
-	self.Entity:DrawModel()
+	--if !self.Built then self:DrawModel() end
+	self:DrawModel()
 
 end
 

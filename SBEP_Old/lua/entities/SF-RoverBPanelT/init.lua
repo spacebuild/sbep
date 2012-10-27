@@ -5,25 +5,25 @@ util.PrecacheSound( "SB/Gattling2.wav" )
 
 function ENT:Initialize()
 
-	self.Entity:SetModel( "models/Slyfo/rover1_backpanelmount.mdl" ) 
-	self.Entity:SetName("SmallMachineGun")
-	self.Entity:PhysicsInit( SOLID_VPHYSICS )
-	self.Entity:SetMoveType( MOVETYPE_VPHYSICS )
-	self.Entity:SetSolid( SOLID_VPHYSICS )
-	self.Inputs = Wire_CreateInputs( self.Entity, { "Fire" } )
+	self:SetModel( "models/Slyfo/rover1_backpanelmount.mdl" ) 
+	self:SetName("SmallMachineGun")
+	self:PhysicsInit( SOLID_VPHYSICS )
+	self:SetMoveType( MOVETYPE_VPHYSICS )
+	self:SetSolid( SOLID_VPHYSICS )
+	self.Inputs = Wire_CreateInputs( self, { "Fire" } )
 	
-	local phys = self.Entity:GetPhysicsObject()
+	local phys = self:GetPhysicsObject()
 	if (phys:IsValid()) then
 		phys:Wake()
 		phys:EnableGravity(true)
 		phys:EnableDrag(true)
 		phys:EnableCollisions(true)
 	end
-	self.Entity:SetKeyValue("rendercolor", "255 255 255")
-	self.PhysObj = self.Entity:GetPhysicsObject()
+	self:SetKeyValue("rendercolor", "255 255 255")
+	self.PhysObj = self:GetPhysicsObject()
 	
 	--self.val1 = 0
-	--RD_AddResource(self.Entity, "Munitions", 0)
+	--RD_AddResource(self, "Munitions", 0)
 
 	
 end
@@ -134,7 +134,7 @@ function ENT:OnRemove()
 end
 
 function ENT:Think()
-	--self.Entity:SetColor( 0, 0, 255, 255)
+	--self:SetColor(Color( 0, 0, 255, 255))
 
 	if self.Pod2 and self.Pod2:IsValid() and self.Pod2:IsVehicle() then
 		for i = 1, self.Pod2.HPC do
@@ -198,7 +198,7 @@ function ENT:Think()
 			
 		else
 			
-			local PRel = self.Pod2:GetPos() + self.Entity:GetForward() * 500
+			local PRel = self.Pod2:GetPos() + self:GetForward() * 500
 			local FDist = PRel:Distance( self.Pod2:GetPos() + self.Pod2:GetForward() * 100 )
 			local BDist = PRel:Distance( self.Pod2:GetPos() + self.Pod2:GetForward() * -100 )
 			local Yaw = math.Clamp((FDist - BDist) * 7.75, -1250, 1250)
@@ -216,7 +216,7 @@ function ENT:Think()
 	end
 
 	
-	self.Entity:NextThink( CurTime() + 0.01 ) 
+	self:NextThink( CurTime() + 0.01 ) 
 	return true	
 end
 
@@ -234,9 +234,9 @@ end
 
 function ENT:Touch( ent )
 	if ent.HasHardpoints then
-		if ent.Cont and ent.Cont:IsValid() then HPLink( ent.Cont, ent.Entity, self.Entity ) end
-		self.Entity:GetPhysicsObject():EnableCollisions(true)
-		self.Entity:SetParent()
+		if ent.Cont and ent.Cont:IsValid() then HPLink( ent.Cont, ent.Entity, self ) end
+		self:GetPhysicsObject():EnableCollisions(true)
+		self:SetParent()
 	end
 end
 

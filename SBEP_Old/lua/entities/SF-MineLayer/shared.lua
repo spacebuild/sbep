@@ -18,7 +18,7 @@ ENT.APPos			= Vector(0,0,-30)
 ENT.APAng			= Angle(0,0,180)
 
 function ENT:ShotsAdd(ShotsAdd)
-	local Shots = self.Entity:GetNetworkedInt("Shots")
+	local Shots = self:GetNetworkedInt("Shots")
 	Shots = Shots + ShotsAdd
-	self.Entity:SetNetworkedInt("Shots",Shots)
+	self:SetNetworkedInt("Shots",Shots)
 end

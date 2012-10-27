@@ -6,11 +6,11 @@ end
 
 function ENT:Draw()
 	
-	self.Entity:DrawModel()
+	self:DrawModel()
 
 end
 
 function ENT:Think()
-	local Shots = self.Entity:GetNetworkedInt("Shots") or 0
+	local Shots = self:GetNetworkedInt("Shots") or 0
 	self.WInfo = "MCP Cannon - Shots: "..Shots
 end

@@ -6,29 +6,29 @@ util.PrecacheSound( "SB/Gattling2.wav" )
 
 function ENT:Initialize()
 
-	--self.Entity:SetModel( "models/Slyfo/smlturrettop.mdl" ) 
-	self.Entity:SetName("SmallMachineGun")
-	self.Entity:PhysicsInit( SOLID_VPHYSICS )
-	self.Entity:SetMoveType( MOVETYPE_VPHYSICS )
-	self.Entity:SetSolid( SOLID_VPHYSICS )
+	--self:SetModel( "models/Slyfo/smlturrettop.mdl" ) 
+	self:SetName("SmallMachineGun")
+	self:PhysicsInit( SOLID_VPHYSICS )
+	self:SetMoveType( MOVETYPE_VPHYSICS )
+	self:SetSolid( SOLID_VPHYSICS )
 	local inNames = {"Active", "Fire", "X", "Y", "Z","Vector"}
 	local inTypes = {"NORMAL","NORMAL","NORMAL","NORMAL","NORMAL","VECTOR"}
-	self.Inputs = WireLib.CreateSpecialInputs( self.Entity,inNames,inTypes)
+	self.Inputs = WireLib.CreateSpecialInputs( self,inNames,inTypes)
 	
-	local phys = self.Entity:GetPhysicsObject()
+	local phys = self:GetPhysicsObject()
 	if (phys:IsValid()) then
 		phys:Wake()
 		phys:EnableGravity(true)
 		phys:EnableDrag(true)
 		phys:EnableCollisions(true)
 	end
-	self.Entity:SetKeyValue("rendercolor", "255 255 255")
-	self.PhysObj = self.Entity:GetPhysicsObject()
+	self:SetKeyValue("rendercolor", "255 255 255")
+	self.PhysObj = self:GetPhysicsObject()
 	
 	--self.val1 = 0
-	--RD_AddResource(self.Entity, "Munitions", 0)
+	--RD_AddResource(self, "Munitions", 0)
 	
-	self.Cont = self.Entity
+	self.Cont = self
 	self.Firing = false
 	self.Active = false
 	
@@ -116,9 +116,9 @@ function ENT:Think()
 		if !Weap.Swivved then
 			local LPos = Vector(0,0,0)
 			LPos = Weap:WorldToLocal(Weap:GetPos() + (Weap:GetForward() * -Weap.APPos.x) + (Weap:GetRight() * (-Weap.APPos.y + 10)) + (Weap:GetUp() * -Weap.APPos.z ) )
-			self.WSock1 = constraint.Ballsocket( self.Entity, Weap, 0, 0, LPos, 0, 0, 1)
+			self.WSock1 = constraint.Ballsocket( self, Weap, 0, 0, LPos, 0, 0, 1)
 			LPos = Weap:WorldToLocal(Weap:GetPos() + (Weap:GetForward() * -Weap.APPos.x) + (Weap:GetRight() * (-Weap.APPos.y + -10)) + (Weap:GetUp() * -Weap.APPos.z ) )
-			self.WSock2 = constraint.Ballsocket( self.Entity, Weap, 0, 0, LPos, 0, 0, 1)
+			self.WSock2 = constraint.Ballsocket( self, Weap, 0, 0, LPos, 0, 0, 1)
 			
 			constraint.RemoveConstraints( Weap, "Weld" )
 			Weap:SetParent()
@@ -155,7 +155,7 @@ function ENT:Think()
 			BDist = TargPos:Distance( Weap:GetPos() + Weap:GetRight() * -200 )
 			local Yaw = math.Clamp((BDist - FDist) * 6.75, -1050, 1050)
 			
-			local physi = self.Entity:GetPhysicsObject()
+			local physi = self:GetPhysicsObject()
 			local physi2 = Weap:GetPhysicsObject()
 			
 			physi:AddAngleVelocity((physi:GetAngleVelocity() * -1) + Angle(0,0,-Yaw))
@@ -163,7 +163,7 @@ function ENT:Think()
 		end
 	end
 	
-	self.Entity:NextThink( CurTime() + 0.01 ) 
+	self:NextThink( CurTime() + 0.01 ) 
 	return true	
 end
 
@@ -206,7 +206,7 @@ function ENT:PreEntityCopy()
 	end
 	
 	if WireAddon then
-		DI.WireData = WireLib.BuildDupeInfo( self.Entity )
+		DI.WireData = WireLib.BuildDupeInfo( self )
 	end
 	
 	duplicator.StoreEntityModifier(self, "SBEPSwivelMountS", DI)

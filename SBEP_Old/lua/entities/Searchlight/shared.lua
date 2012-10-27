@@ -12,9 +12,9 @@ ENT.APPos			= Vector(15,0,0)
 ENT.WInfo			= "Searchlight"
 
 function ENT:SetActive( val )
-	self.Entity:SetNetworkedBool("ClActive",val,true)
+	self:SetNetworkedBool("ClActive",val,true)
 end
 
 function ENT:GetActive()
-	return self.Entity:GetNetworkedBool("ClActive")
+	return self:GetNetworkedBool("ClActive")
 end

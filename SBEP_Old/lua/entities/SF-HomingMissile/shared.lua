@@ -16,17 +16,17 @@ ENT.Target			= nil
 
 
 function ENT:SetArmed( val )
-	self.Entity:SetNetworkedBool("ClArmed",val,true)
+	self:SetNetworkedBool("ClArmed",val,true)
 end
 
 function ENT:GetArmed()
-	return self.Entity:GetNetworkedBool("ClArmed")
+	return self:GetNetworkedBool("ClArmed")
 end
 
 function ENT:SetTracking( val )
-	self.Entity:SetNetworkedBool("ClTracking",val,true)
+	self:SetNetworkedBool("ClTracking",val,true)
 end
 
 function ENT:GetTracking()
-	return self.Entity:GetNetworkedBool("ClTracking")
+	return self:GetNetworkedBool("ClTracking")
 end

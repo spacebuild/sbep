@@ -6,28 +6,28 @@ util.PrecacheSound( "SB/Gattling2.wav" )
 
 function ENT:Initialize()
 
-	self.Entity:SetModel( "models/Slyfo/rover1_sidegun.mdl" ) 
-	self.Entity:SetName("TinyMachineGun")
-	self.Entity:PhysicsInit( SOLID_VPHYSICS )
-	self.Entity:SetMoveType( MOVETYPE_VPHYSICS )
-	self.Entity:SetSolid( SOLID_VPHYSICS )
+	self:SetModel( "models/Slyfo/rover1_sidegun.mdl" ) 
+	self:SetName("TinyMachineGun")
+	self:PhysicsInit( SOLID_VPHYSICS )
+	self:SetMoveType( MOVETYPE_VPHYSICS )
+	self:SetSolid( SOLID_VPHYSICS )
 
 	if WireAddon then
 		self.Inputs = WireLib.CreateInputs( self, { "Fire" } )
 	end
 
-	local phys = self.Entity:GetPhysicsObject()
+	local phys = self:GetPhysicsObject()
 	if (phys:IsValid()) then
 		phys:Wake()
 		phys:EnableGravity(true)
 		phys:EnableDrag(true)
 		phys:EnableCollisions(true)
 	end
-	self.Entity:SetKeyValue("rendercolor", "255 255 255")
-	self.PhysObj = self.Entity:GetPhysicsObject()
+	self:SetKeyValue("rendercolor", "255 255 255")
+	self.PhysObj = self:GetPhysicsObject()
 	
 	--self.val1 = 0
-	--RD_AddResource(self.Entity, "Munitions", 0)
+	--RD_AddResource(self, "Munitions", 0)
 
 
 end
@@ -67,13 +67,13 @@ function ENT:Think()
 	
 	if (self.Active == true or self.FTime > CurTime() ) then
 	
-		local vStart = self.Entity:GetPos()-- + (self.Entity:GetForward() * 20) + (self.Entity:GetUp() * BUp) + (self.Entity:GetRight() * BRi)
-		local vForward = self.Entity:GetForward()
+		local vStart = self:GetPos()-- + (self:GetForward() * 20) + (self:GetUp() * BUp) + (self:GetRight() * BRi)
+		local vForward = self:GetForward()
 		
 		local Bullet = {}
 		Bullet.Num = 1
-		Bullet.Src = self.Entity:GetPos()
-		Bullet.Dir = self.Entity:GetForward() --Position * -1
+		Bullet.Src = self:GetPos()
+		Bullet.Dir = self:GetForward() --Position * -1
 		Bullet.Spread = Vector( 0.04, 0.04, 0.04 )
 		Bullet.Tracer = 1
 		Bullet.Force = 10
@@ -112,10 +112,10 @@ function ENT:Think()
 				
 		self:FireBullets(Bullet)
 				
-		self.Entity:EmitSound("SB/Gattling2.wav", 400)
+		self:EmitSound("SB/Gattling2.wav", 400)
 		
 	end
-	self.Entity:NextThink( CurTime() + 0.10 )
+	self:NextThink( CurTime() + 0.10 )
 	return true
 end
 
@@ -133,7 +133,7 @@ end
 
 function ENT:Touch( ent )
 	if ent.HasHardpoints then
-		if ent.Cont and ent.Cont:IsValid() then HPLink( ent.Cont, ent.Entity, self.Entity ) end
+		if ent.Cont and ent.Cont:IsValid() then HPLink( ent.Cont, ent.Entity, self ) end
 	end
 end
 
@@ -143,7 +143,7 @@ end
 
 function ENT:PreEntityCopy()
 	if WireAddon then
-		duplicator.StoreEntityModifier(self,"WireDupeInfo",WireLib.BuildDupeInfo(self.Entity))
+		duplicator.StoreEntityModifier(self,"WireDupeInfo",WireLib.BuildDupeInfo(self))
 	end
 end
 

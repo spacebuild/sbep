@@ -7,7 +7,7 @@ end
 
 function ENT:Draw()
 	
-	self.Entity:DrawModel()
+	self:DrawModel()
 
 end
 
@@ -15,8 +15,8 @@ function ENT:Think()
 	if LocalPlayer():GetInfoNum( "SBEPLighting" ) > 0 then
 		local dlight = DynamicLight( 0 )
 		if ( dlight ) then
-			--local r, g, b, a = self:GetColor()
-			dlight.Pos = self:GetPos() + (self.Entity:GetForward() * 105) + (self.Entity:GetUp() * 70) 
+			--local c = self:GetColor();  local r,g,b,a = c.r, c.g, c.b, c.a;
+			dlight.Pos = self:GetPos() + (self:GetForward() * 105) + (self:GetUp() * 70) 
 			dlight.r = 60
 			dlight.g = 140
 			dlight.b = 40
@@ -28,8 +28,8 @@ function ENT:Think()
 		
 		local dlight = DynamicLight( 0 )
 		if ( dlight ) then
-			--local r, g, b, a = self:GetColor()
-			dlight.Pos = self:GetPos() + (self.Entity:GetForward() * 150) + (self.Entity:GetUp() * -50) 
+			--local c = self:GetColor();  local r,g,b,a = c.r, c.g, c.b, c.a;
+			dlight.Pos = self:GetPos() + (self:GetForward() * 150) + (self:GetUp() * -50) 
 			dlight.r = 60
 			dlight.g = 140
 			dlight.b = 40
@@ -39,6 +39,6 @@ function ENT:Think()
 			dlight.DieTime = CurTime() + 0.2
 		end
 	end
-	self.Entity:NextThink( CurTime() + 0.1 ) 
+	self:NextThink( CurTime() + 0.1 ) 
 	return true
 end

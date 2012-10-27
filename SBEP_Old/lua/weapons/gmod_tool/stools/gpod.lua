@@ -28,13 +28,13 @@ if ( !trace.Hit ) then return end
 	if (!trace.Entity.GPod) and (trace.Entity:IsValid()) then
 		if trace.Entity:IsVehicle() then
 			if self.LP then
-				self.LP:SetColor( 255 , 255 , 255 , 255 )
+				self.LP:SetColor( Color(255 , 255 , 255 , 255 ))
 			end
 			self.LP = trace.Entity
-			trace.Entity:SetColor( 0 , 0 , 255 , 255 )
+			trace.Entity:SetColor(Color( 0 , 0 , 255 , 255 ))
 		else
 			table.insert( self.LT , trace.Entity )
-			trace.Entity:SetColor( 255 , 0 , 0 , 255 )
+			trace.Entity:SetColor(Color( 255 , 0 , 0 , 255 ))
 		end
 
 		self:SetStage(1)
@@ -42,13 +42,13 @@ if ( !trace.Hit ) then return end
 	elseif (self:GetStage() == 1) and (trace.Entity.GPod) and (trace.Entity:IsValid()) then
 		for n,E in ipairs( self.LT ) do
 			trace.Entity:Link( E )
-			E:SetColor( 255 , 255 , 255 , 255 )
+			E:SetColor(Color( 255 , 255 , 255 , 255 ))
 		end
 		self.LT = {}
 		
 		if self.LP then
 			trace.Entity:Link( self.LP )
-			self.LP:SetColor( 255 , 255 , 255 , 255 )
+			self.LP:SetColor(Color( 255 , 255 , 255 , 255 ))
 		end
 		self.LP = nil
 		
@@ -93,12 +93,12 @@ function TOOL:Holster( wep )
 	self:SetStage(0)
 	
 	for n,E in ipairs( self.LT ) do
-		E:SetColor( 255 , 255 , 255 , 255 )
+		E:SetColor(Color( 255 , 255 , 255 , 255 ))
 	end
 	self.LT = {}
 	
 	if self.LP then
-		self.LP:SetColor( 255 , 255 , 255 , 255 )
+		self.LP:SetColor(Color( 255 , 255 , 255 , 255 ))
 	end
 	self.LP = nil
 end

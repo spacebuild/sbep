@@ -5,28 +5,28 @@ include( 'shared.lua' )
 
 function ENT:Initialize()
 
-	self.Entity:SetModel( "models/Spacebuild/Nova/flak1.mdl" ) 
-	self.Entity:SetName("FlakCannon")
-	self.Entity:PhysicsInit( SOLID_VPHYSICS )
-	self.Entity:SetMoveType( MOVETYPE_VPHYSICS )
-	self.Entity:SetSolid( SOLID_VPHYSICS )
+	self:SetModel( "models/Spacebuild/Nova/flak1.mdl" ) 
+	self:SetName("FlakCannon")
+	self:PhysicsInit( SOLID_VPHYSICS )
+	self:SetMoveType( MOVETYPE_VPHYSICS )
+	self:SetSolid( SOLID_VPHYSICS )
 
 	if WireAddon then
 		self.Inputs = WireLib.CreateInputs( self, { "Fire" } )
 	end
 	
-	local phys = self.Entity:GetPhysicsObject()
+	local phys = self:GetPhysicsObject()
 	if (phys:IsValid()) then
 		phys:Wake()
 		phys:EnableGravity(true)
 		phys:EnableDrag(true)
 		phys:EnableCollisions(true)
 	end
-	self.Entity:SetKeyValue("rendercolor", "255 255 255")
-	self.PhysObj = self.Entity:GetPhysicsObject()
+	self:SetKeyValue("rendercolor", "255 255 255")
+	self.PhysObj = self:GetPhysicsObject()
 	
 	--self.val1 = 0
-	--RD_AddResource(self.Entity, "Munitions", 0)
+	--RD_AddResource(self, "Munitions", 0)
 	
 	self.MCDown = 0
 	
@@ -56,7 +56,7 @@ function ENT:TriggerInput(iname, value)
 		
 		if (value > 0) then
 			--if (self.val1 >= 1000) then
-				self.Entity:HPFire()
+				self:HPFire()
 			--end
 		end
 
@@ -69,7 +69,7 @@ function ENT:PhysicsUpdate()
 end
 
 function ENT:Think()
-	--self.val1 = RD_GetResourceAmount(self.Entity, "Munitions")
+	--self.val1 = RD_GetResourceAmount(self, "Munitions")
 
 end
 
@@ -87,7 +87,7 @@ end
 
 function ENT:Touch( ent )
 	if ent.HasHardpoints then
-		if ent.Cont and ent.Cont:IsValid() then HPLink( ent.Cont, ent.Entity, self.Entity ) end
+		if ent.Cont and ent.Cont:IsValid() then HPLink( ent.Cont, ent.Entity, self ) end
 	end
 end
 
@@ -95,36 +95,36 @@ function ENT:HPFire()
 	if (CurTime() >= self.MCDown) then
 		local NewShell = ents.Create( "SF-FlakShell" )
 		if ( !NewShell:IsValid() ) then return end
-		NewShell:SetPos( self.Entity:GetPos() + (self.Entity:GetUp() * (14 * self.BMul)) )
-		NewShell:SetAngles( self.Entity:GetAngles() )
+		NewShell:SetPos( self:GetPos() + (self:GetUp() * (14 * self.BMul)) )
+		NewShell:SetAngles( self:GetAngles() )
 		NewShell.SPL = self.SPL
 		NewShell:Spawn()
 		NewShell:Initialize()
 		NewShell:Activate()
 		NewShell:SetOwner(self)
-		NewShell.PhysObj:SetVelocity(self.Entity:GetForward() * 1000)
+		NewShell.PhysObj:SetVelocity(self:GetForward() * 1000)
 		NewShell:Fire("kill", "", 30)
-		NewShell.ParL = self.Entity
+		NewShell.ParL = self
 		--RD_ConsumeResource(self, "Munitions", 1000)
-		self.Entity:SetNetworkedFloat("CDown1",CurTime() + 5)
+		self:SetNetworkedFloat("CDown1",CurTime() + 5)
 		self.MCDown = CurTime() + 0.4
-		local phys = self.Entity:GetPhysicsObject()  	
+		local phys = self:GetPhysicsObject()  	
 		if (phys:IsValid()) then  		
-			phys:ApplyForceCenter( self.Entity:GetForward() * -1000 ) 
+			phys:ApplyForceCenter( self:GetForward() * -1000 ) 
 		end
 		
 		self.BMul = self.BMul * -1
 		
 		local effectdata = EffectData()
-		effectdata:SetOrigin(self.Entity:GetPos() +  self.Entity:GetUp() * (14 * self.BMul))
-		effectdata:SetStart(self.Entity:GetPos() +  self.Entity:GetUp() * (14 * self.BMul))
+		effectdata:SetOrigin(self:GetPos() +  self:GetUp() * (14 * self.BMul))
+		effectdata:SetStart(self:GetPos() +  self:GetUp() * (14 * self.BMul))
 		util.Effect( "Explosion", effectdata )
 	end
 end
 
 function ENT:PreEntityCopy()
 	if WireAddon then
-		duplicator.StoreEntityModifier(self,"WireDupeInfo",WireLib.BuildDupeInfo(self.Entity))
+		duplicator.StoreEntityModifier(self,"WireDupeInfo",WireLib.BuildDupeInfo(self))
 	end
 end
 

@@ -6,13 +6,13 @@ include( 'shared.lua' )
 
 function ENT:Initialize()
 	
-	self.Entity:SetModel( "models/Slyfo/rover_winchhookclosed.mdl" ) 
-	self.Entity:SetName( "GrapplingHook" )
-	self.Entity:PhysicsInit( SOLID_VPHYSICS )
-	self.Entity:SetMoveType( MOVETYPE_VPHYSICS )
-	self.Entity:SetSolid( SOLID_VPHYSICS )
+	self:SetModel( "models/Slyfo/rover_winchhookclosed.mdl" ) 
+	self:SetName( "GrapplingHook" )
+	self:PhysicsInit( SOLID_VPHYSICS )
+	self:SetMoveType( MOVETYPE_VPHYSICS )
+	self:SetSolid( SOLID_VPHYSICS )
 
-	local phys = self.Entity:GetPhysicsObject()
+	local phys = self:GetPhysicsObject()
 	if (phys:IsValid()) then
 		phys:Wake()
 		phys:EnableGravity(true)
@@ -20,8 +20,8 @@ function ENT:Initialize()
 		phys:EnableCollisions(true)
 		phys:SetMass(5)
 	end
-	self.Entity:StartMotionController()
-	self.PhysObj = self.Entity:GetPhysicsObject()
+	self:StartMotionController()
+	self.PhysObj = self:GetPhysicsObject()
 
 
 	self.ATime = 0
@@ -72,11 +72,11 @@ end
 function ENT:Think()
 	if (self.Active and !self.Impact) then
 				
-		local physi = self.Entity:GetPhysicsObject()
-		--physi:SetVelocity(self.Entity:GetForward() * 5000)
+		local physi = self:GetPhysicsObject()
+		--physi:SetVelocity(self:GetForward() * 5000)
 		--physi:EnableGravity(false)
 		if self.ParL and self.ParL:IsValid() then
-			local Dist = self.Entity:GetPos():Distance(self.ParL:GetPos())
+			local Dist = self:GetPos():Distance(self.ParL:GetPos())
 			if Dist < 8000 and self.ParL.LChange < self.ITime then
 				if self.Elastic and self.Elastic:IsValid() then
 					self.Elastic:Fire("SetSpringLength",Dist * 1.4,0)
@@ -90,24 +90,24 @@ function ENT:Think()
 		end
 		
 		if CurTime() >= self.ATime then
-			if self.Entity:GetPhysicsObject():GetVelocity():Length() > 200 then
+			if self:GetPhysicsObject():GetVelocity():Length() > 200 then
 				local trace = {}
-				trace.start = self.Entity:GetPos()
-				trace.endpos = self.Entity:GetPos() + self.Entity:GetForward() * 100
-				trace.filter = self.Entity
+				trace.start = self:GetPos()
+				trace.endpos = self:GetPos() + self:GetForward() * 100
+				trace.filter = self
 				local tr = util.TraceLine( trace )
 				if tr.HitNonWorld and tr.Entity and tr.Entity:IsValid() then
-					self.Entity:SetModel("models/Slyfo/rover_winchhookopen.mdl")
+					self:SetModel("models/Slyfo/rover_winchhookopen.mdl")
 					self.Impact = true
 					self.ITime = CurTime()
 					self.Active = false
-					self.Entity:SetPos(tr.HitPos + self.Entity:GetForward() * 7)
-					self.HWeld = constraint.Weld(self.Entity, tr.Entity, 0, 0, 0, true)
+					self:SetPos(tr.HitPos + self:GetForward() * 7)
+					self.HWeld = constraint.Weld(self, tr.Entity, 0, 0, 0, true)
 					if self.ParL and self.ParL:IsValid() then
-						local Vec = tr.Entity:WorldToLocal(self.Entity:GetPos() + (self.Entity:GetForward() * -16)) -- 
-						self.ParL:Latch( self.Entity, Vec, tr.Entity )
+						local Vec = tr.Entity:WorldToLocal(self:GetPos() + (self:GetForward() * -16)) -- 
+						self.ParL:Latch( self, Vec, tr.Entity )
 					end
-					local phys = self.Entity:GetPhysicsObject()
+					local phys = self:GetPhysicsObject()
 					if (phys:IsValid()) then
 						phys:Wake()
 						phys:EnableGravity(false)
@@ -116,24 +116,24 @@ function ENT:Think()
 						phys:SetMass(5)
 					end
 					local effectdata = EffectData()
-					effectdata:SetOrigin( self.Entity:GetPos() )
-					effectdata:SetStart( self.Entity:GetPos() )
-					effectdata:SetAngle( self.Entity:GetAngles() )
-					effectdata:SetNormal( self.Entity:GetForward() )
+					effectdata:SetOrigin( self:GetPos() )
+					effectdata:SetStart( self:GetPos() )
+					effectdata:SetAngle( self:GetAngles() )
+					effectdata:SetNormal( self:GetForward() )
 					util.Effect( "HookImpact", effectdata )
-					self.Entity:EmitSound("Metal_Barrel.BulletImpact")
+					self:EmitSound("Metal_Barrel.BulletImpact")
 				elseif tr.HitWorld then
 					if self.Standalone and self.ParL and self.ParL:IsValid() then
 						self.Active = false
 					else
 						local effectdata = EffectData()
-						effectdata:SetOrigin( self.Entity:GetPos() )
-						effectdata:SetStart( self.Entity:GetPos() )
-						effectdata:SetAngle( self.Entity:GetAngles() )
-						effectdata:SetNormal( self.Entity:GetForward() )
+						effectdata:SetOrigin( self:GetPos() )
+						effectdata:SetStart( self:GetPos() )
+						effectdata:SetAngle( self:GetAngles() )
+						effectdata:SetNormal( self:GetForward() )
 						util.Effect( "HookImpact", effectdata )
-						self.Entity:EmitSound("Metal_Barrel.BulletImpact")
-						self.Entity:Remove()
+						self:EmitSound("Metal_Barrel.BulletImpact")
+						self:Remove()
 					end
 				end
 			else
@@ -171,7 +171,7 @@ function ENT:Think()
 				self:Fire("kill", "", 5 + math.random() * 5)
 			end
 			if self.ParL.Retracting then
-				self.Entity:Retract()
+				self:Retract()
 			end
 			if self.Rope and self.Rope:IsValid() then
 				if self.ITime < self.ParL.LChange then
@@ -192,7 +192,7 @@ function ENT:Think()
 		end
 	end
 
-	self.Entity:NextThink( CurTime() + 0.01 ) 
+	self:NextThink( CurTime() + 0.01 ) 
 	return true
 end
 
@@ -205,19 +205,19 @@ function ENT:Punt( ply )
 		if self.Rope and self.Rope:IsValid() then
 			self.Rope:Fire("SetLength",5000,0)
 		end
-		DropEntityIfHeld( self.Entity )
-		self.Entity:SetAngles(ply:GetAimVector():Angle())
+		DropEntityIfHeld( self )
+		self:SetAngles(ply:GetAimVector():Angle())
 		self.Active = true
-		self.Entity:GetPhysicsObject():SetVelocity(self.Entity:GetForward() * 5000)
+		self:GetPhysicsObject():SetVelocity(self:GetForward() * 5000)
 		self.ITime = CurTime()
 	end
-	DropEntityIfHeld( self.Entity )
+	DropEntityIfHeld( self )
 	return false
 end
 
 function ENT:GravyGrab( ply )
-	self.Entity:Retract()
-	self.Entity:SetAngles(ply:GetAimVector():Angle())
+	self:Retract()
+	self:SetAngles(ply:GetAimVector():Angle())
 	self.ITime = CurTime()
 	if self.CLength < 400 then
 		self.CLength = 400
@@ -235,8 +235,8 @@ end
 --function ENT:SetActive()
 --	self.Active = true
 --	self.ATime = CurTime() + 0.5
---	self.Entity:GetPhysicsObject():Wake()
---	self.Entity:GetPhysicsObject():EnableMotion( true )
+--	self:GetPhysicsObject():Wake()
+--	self:GetPhysicsObject():EnableMotion( true )
 --end
 
 function ENT:PhysicsCollide( data, physobj )
@@ -253,7 +253,7 @@ function ENT:OnRemove()
 end
 
 function ENT:OnTakeDamage( dmginfo )
-	self.Entity:Retract()
+	self:Retract()
 end
 
 function ENT:Touch( ent )
@@ -261,13 +261,13 @@ function ENT:Touch( ent )
 end
 
 function ENT:Retract()
-	self.Entity:SetModel( "models/Slyfo/rover_winchhookclosed.mdl" ) 
-	constraint.RemoveConstraints( self.Entity, "Weld" )
+	self:SetModel( "models/Slyfo/rover_winchhookclosed.mdl" ) 
+	constraint.RemoveConstraints( self, "Weld" )
 	self.Impact = false
 	self.Active = false
 	self.ICD = CurTime() + .5
-	self.Entity:SetPos(self.Entity:GetPos() + self.Entity:GetForward() * -30)
-	local phys = self.Entity:GetPhysicsObject()
+	self:SetPos(self:GetPos() + self:GetForward() * -30)
+	local phys = self:GetPhysicsObject()
 	if (phys:IsValid()) then
 		phys:Wake()
 		phys:EnableGravity(true)
@@ -277,13 +277,13 @@ function ENT:Retract()
 end
 
 function ENT:Use( activator, caller )
-	self.Entity:Retract()
+	self:Retract()
 end
 
 function ENT:PhysicsUpdate( phys )
 	if self.Active and !self.Impact then
 		local Vel = phys:GetVelocity()
-		self.Entity:SetAngles( Vel:Angle() )
+		self:SetAngles( Vel:Angle() )
 		phys:SetVelocity(Vel)
 	end
 end

@@ -21,16 +21,16 @@ function ENT:Initialize()
 	util.PrecacheSound( "warpdrive/warp.wav" )
 	util.PrecacheSound( "warpdrive/error2.wav" )
 	
-	--self.Entity:SetModel( "models/props_c17/consolebox03a.mdl" )
-	self.Entity:SetModel( "models/Slyfo/ftl_drive.mdl" )
+	--self:SetModel( "models/props_c17/consolebox03a.mdl" )
+	self:SetModel( "models/Slyfo/ftl_drive.mdl" )
 	
-	self.Entity:PhysicsInit( SOLID_VPHYSICS )
-	self.Entity:SetMoveType( MOVETYPE_VPHYSICS )
-	self.Entity:SetSolid( SOLID_VPHYSICS )
+	self:PhysicsInit( SOLID_VPHYSICS )
+	self:SetMoveType( MOVETYPE_VPHYSICS )
+	self:SetSolid( SOLID_VPHYSICS )
 	
-	self.Entity:DrawShadow(false)
+	self:DrawShadow(false)
 	
-	local phys = self.Entity:GetPhysicsObject()
+	local phys = self:GetPhysicsObject()
 	
 	self.NTime = 0
 	
@@ -43,7 +43,7 @@ function ENT:Initialize()
 	self.JumpCoords.Dest = Vector(0,0,0)
 	self.SearchRadius = 512
 	self.Constrained = 1
-	self.Inputs = WireLib.CreateSpecialInputs( self.Entity, { "Radius", "UnConstrained", "Destination X", "Destination Y", "Destination Z", "Destination", "Warp" }, { [6] = "VECTOR"} );
+	self.Inputs = WireLib.CreateSpecialInputs( self, { "Radius", "UnConstrained", "Destination X", "Destination Y", "Destination Z", "Destination", "Warp" }, { [6] = "VECTOR"} );
 end
 
 function ENT:TriggerInput(iname, value)
@@ -71,25 +71,25 @@ function ENT:TriggerInput(iname, value)
 			self.JumpCoords.Dest = self.JumpCoords.Vec
 		end
 	--[[	print( timer.IsTimer( "warpdrivewaittime" ) ) ]]
-		if (CurTime()-self.NTime)>7 and !timer.IsTimer( "warpdrivewaittime" ) and self.JumpCoords.Dest~=self.Entity:GetPos() and util.IsInWorld(self.JumpCoords.Dest) then
+		if (CurTime()-self.NTime)>7 and !timer.IsTimer( "warpdrivewaittime" ) and self.JumpCoords.Dest~=self:GetPos() and util.IsInWorld(self.JumpCoords.Dest) then
 			self.NTime=CurTime()
-			self.Entity:EmitSound("WarpDrive/warp.wav", 450, 70)
-			timer.Create( "warpdrivewaittime", 1, 1, function(self) self.Entity:Go() timer.Destroy("warpdrivewaittime") end, self )
+			self:EmitSound("WarpDrive/warp.wav", 450, 70)
+			timer.Create( "warpdrivewaittime", 1, 1, function(self) self:Go() timer.Destroy("warpdrivewaittime") end, self )
 		else
-			self.Entity:EmitSound("WarpDrive/error2.wav", 450, 70)
+			self:EmitSound("WarpDrive/error2.wav", 450, 70)
 		end
 	--[[	print( self.NTime )
 		print( timer.IsTimer( "warpdrivewaittime" ) )
-		print( self.JumpCoords.Dest ~= self.Entity:GetPos() )
+		print( self.JumpCoords.Dest ~= self:GetPos() )
 		print( util.IsInWorld( self.JumpCoords.Dest ) ) ]]
 	end
 end
 
 function ENT:Go()
-	local WarpDrivePos = self.Entity:GetPos()
+	local WarpDrivePos = self:GetPos()
 	if(self.Constrained == 1) then
 		self.DoneList = {}
-		self.ConstrainedEnts = ents.FindInSphere( self.Entity:GetPos() , self.SearchRadius)
+		self.ConstrainedEnts = ents.FindInSphere( self:GetPos() , self.SearchRadius)
 		for _, v in pairs(self.ConstrainedEnts) do
 			if v:IsValid() and !self.DoneList[v] then
 				self.ToTele = constraint.GetAllConstrainedEntities(v)
@@ -105,10 +105,10 @@ function ENT:Go()
 			end
 		end
 	else
-		self.ConstrainedEnts = constraint.GetAllConstrainedEntities(self.Entity)
+		self.ConstrainedEnts = constraint.GetAllConstrainedEntities(self)
 		local Peeps = player.GetAll()
 		for _, k in pairs(Peeps) do
-			if(k:GetPos():Distance(self.Entity:GetPos()) <= self.SearchRadius ) then
+			if(k:GetPos():Distance(self:GetPos()) <= self.SearchRadius ) then
 				self:SharedJump(k)
 			end
 		end
@@ -121,7 +121,7 @@ function ENT:Go()
 end
 
 function ENT:SharedJump(ent)
-local WarpDrivePos = self.Entity:GetPos()
+local WarpDrivePos = self:GetPos()
 	local phys = ent:GetPhysicsObject()
 	if !(ent:IsPlayer() or ent:IsNPC()) then DoPropSpawnedEffect( ent ) ent=phys end
 	ent:SetPos(self.JumpCoords.Dest + (ent:GetPos() - WarpDrivePos) + Vector(0,0,10))
@@ -134,7 +134,7 @@ end
 
 function ENT:PreEntityCopy()
 	if WireAddon then
-		duplicator.StoreEntityModifier(self,"WireDupeInfo",WireLib.BuildDupeInfo(self.Entity))
+		duplicator.StoreEntityModifier(self,"WireDupeInfo",WireLib.BuildDupeInfo(self))
 	end
 end
 

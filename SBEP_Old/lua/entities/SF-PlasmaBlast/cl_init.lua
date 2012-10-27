@@ -11,7 +11,7 @@ function ENT:Draw()
 	
 	render.SetMaterial( self.Matt )	
 	local color = Color( 50, 50, 200, 200 )
-	render.DrawSprite( self.Entity:GetPos(), 100, 100, color )
+	render.DrawSprite( self:GetPos(), 100, 100, color )
 	
 end
 

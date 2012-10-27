@@ -6,31 +6,31 @@ util.PrecacheSound( "SB/RailGunSmall.wav" )
 
 function ENT:Initialize()
 
-	self.Entity:SetModel( "models/Slyfo_2/drone_railgun.mdl" ) 
-	self.Entity:SetName("RailGun")
-	self.Entity:PhysicsInit( SOLID_VPHYSICS )
-	self.Entity:SetMoveType( MOVETYPE_VPHYSICS )
-	self.Entity:SetSolid( SOLID_VPHYSICS )
+	self:SetModel( "models/Slyfo_2/drone_railgun.mdl" ) 
+	self:SetName("RailGun")
+	self:PhysicsInit( SOLID_VPHYSICS )
+	self:SetMoveType( MOVETYPE_VPHYSICS )
+	self:SetSolid( SOLID_VPHYSICS )
 
 	if WireAddon then
 		self.Inputs = WireLib.CreateInputs( self, { "Fire" } )
 		self.Outputs = WireLib.CreateOutputs( self, { "Charge", "Ready" })
 	end
 
-	local phys = self.Entity:GetPhysicsObject()
+	local phys = self:GetPhysicsObject()
 	if (phys:IsValid()) then
 		phys:Wake()
 		phys:EnableGravity(true)
 		phys:EnableDrag(true)
 		phys:EnableCollisions(true)
 	end
-	self.Entity:SetKeyValue("rendercolor", "255 255 255")
-	self.PhysObj = self.Entity:GetPhysicsObject()
+	self:SetKeyValue("rendercolor", "255 255 255")
+	self.PhysObj = self:GetPhysicsObject()
 	
 	--self.val1 = 0
-	--RD_AddResource(self.Entity, "Munitions", 0)
+	--RD_AddResource(self, "Munitions", 0)
 	
-	self.ChSound = CreateSound( self.Entity, "SB/Charging2.wav" )
+	self.ChSound = CreateSound( self, "SB/Charging2.wav" )
 	self.ChSound:Stop()
 	self.ChSPlaying = false
 	self.CTime = 0
@@ -70,13 +70,13 @@ end
 function ENT:RGFire()
 
 	local trace = {}
-	trace.start = self.Entity:GetPos() + (self.Entity:GetForward() * 15)
-	trace.endpos = self.Entity:GetPos() + (self.Entity:GetForward() * 10000)
-	trace.filter = self.Entity
+	trace.start = self:GetPos() + (self:GetForward() * 15)
+	trace.endpos = self:GetPos() + (self:GetForward() * 10000)
+	trace.filter = self
 	local tr = util.TraceLine( trace )
 	if tr.Hit and !tr.HitSky then
-		util.BlastDamage(self.Entity, self.Entity, tr.HitPos, self.Charge * 2.5, self.Charge * 5)
-		util.BlastDamage(self.Entity, self.Entity, tr.HitPos, self.Charge, self.Charge * 100)
+		util.BlastDamage(self, self, tr.HitPos, self.Charge * 2.5, self.Charge * 5)
+		util.BlastDamage(self, self, tr.HitPos, self.Charge, self.Charge * 100)
 		local effectdata = EffectData()
 		local effectdata = EffectData()
 		effectdata:SetStart(self:GetPos())
@@ -86,9 +86,9 @@ function ENT:RGFire()
 		if tr.Entity and tr.Entity:IsValid() then
 			local Phys = tr.Entity:GetPhysicsObject()
 			if Phys:IsValid() then			
-				Phys:ApplyForceOffset( self.Entity:GetForward() * (self.Charge * 200000), tr.HitPos )
+				Phys:ApplyForceOffset( self:GetForward() * (self.Charge * 200000), tr.HitPos )
 				--print("Thrusting...")
-				--Phys:ApplyForceCenter( self.Entity:GetForward() * (self.Charge * 200) )
+				--Phys:ApplyForceCenter( self:GetForward() * (self.Charge * 200) )
 			end
 			local gdmg = math.random(self.Charge * 10,self.Charge * 20)
 			attack = cbt_dealdevhit(tr.Entity, gdmg, 5 + (self.Charge * 0.1))
@@ -118,7 +118,7 @@ function ENT:RGFire()
 	effectdata2:SetScale(self.Charge)
 	util.Effect( "SmallRailTrace", effectdata2 )
 	
-	self.Entity:EmitSound("EnergyBall.KillImpact")
+	self:EmitSound("EnergyBall.KillImpact")
 	
 	self.CDown = CurTime() + 3
 end
@@ -126,7 +126,7 @@ end
 function ENT:Touch( ent )
 	if ent.HasHardpoints then
 		if ent.Cont and ent.Cont:IsValid() then
-			HPLink( ent.Cont, ent.Entity, self.Entity )
+			HPLink( ent.Cont, ent.Entity, self )
 		end
 	end
 end
@@ -143,11 +143,11 @@ end
 
 function ENT:Think()
 	if (CurTime() < self.FTime or self.WCharge) and CurTime() >= self.CDown then
-		--self.Entity:RGFire()
+		--self:RGFire()
 		self.Charge = math.Clamp( self.Charge + 1, 0, 50 )
 	else
 		if self.Charge > 0 then
-			self.Entity:RGFire()
+			self:RGFire()
 		end
 		self.Charge = 0
 	end
@@ -163,13 +163,13 @@ function ENT:Think()
 	end
 	
 	if CurTime() >= self.CDown then
-		Wire_TriggerOutput( self.Entity, "Ready", 1 )
+		Wire_TriggerOutput( self, "Ready", 1 )
 	else
-		Wire_TriggerOutput( self.Entity, "Ready", 0 )
+		Wire_TriggerOutput( self, "Ready", 0 )
 	end
-	Wire_TriggerOutput( self.Entity, "Charge", self.Charge )
+	Wire_TriggerOutput( self, "Charge", self.Charge )
 	
-	self.Entity:NextThink( CurTime() + 0.1 ) 
+	self:NextThink( CurTime() + 0.1 ) 
 	return true
 
 end
@@ -192,7 +192,7 @@ end
 
 function ENT:PreEntityCopy()
 	if WireAddon then
-		duplicator.StoreEntityModifier(self,"WireDupeInfo",WireLib.BuildDupeInfo(self.Entity))
+		duplicator.StoreEntityModifier(self,"WireDupeInfo",WireLib.BuildDupeInfo(self))
 	end
 end
 

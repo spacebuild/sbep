@@ -8,17 +8,17 @@ ENT.Spawnable		= false
 ENT.AdminSpawnable	= false
 
 function ENT:Burn()
-	self.Entity:SetNetworkedBool("Burning",true,true)
+	self:SetNetworkedBool("Burning",true,true)
 end
 
 function ENT:IsBurning()
-	return self.Entity:GetNetworkedBool("Burning")
+	return self:GetNetworkedBool("Burning")
 end
 
 function ENT:Puddle()
-	self.Entity:SetNetworkedBool("Puddle",true,true)
+	self:SetNetworkedBool("Puddle",true,true)
 end
 
 function ENT:IsPuddle()
-	return self.Entity:GetNetworkedBool("Puddle")
+	return self:GetNetworkedBool("Puddle")
 end

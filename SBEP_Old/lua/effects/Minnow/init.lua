@@ -63,7 +63,7 @@ function EFFECT:Think()
 	if LocalPlayer():GetInfoNum( "SBEPLighting" ) > 0 then
 		local dlight = DynamicLight( self.STime )
 		if ( dlight ) then
-			--local r, g, b, a = self:GetColor()
+			--local c = self:GetColor();  local r,g,b,a = c.r, c.g, c.b, c.a;
 			dlight.Pos = self.vOffset
 			dlight.r = 190
 			dlight.g = 210

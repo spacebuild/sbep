@@ -5,15 +5,15 @@ include( 'shared.lua' )
 
 function ENT:Initialize()
 
-	self.Entity:SetModel( "models/Slyfo_2/weap_gigafish.mdl" )
-	self.Entity:SetName("Gigafish")
-	self.Entity:PhysicsInit( SOLID_VPHYSICS )
-	self.Entity:SetMoveType( MOVETYPE_VPHYSICS )
-	self.Entity:SetSolid( SOLID_VPHYSICS )
-	--self.Entity:SetMaterial("models/props_combine/combinethumper002")
-	self.Inputs = Wire_CreateInputs( self.Entity, { "Arm","Detonate" } )
+	self:SetModel( "models/Slyfo_2/weap_gigafish.mdl" )
+	self:SetName("Gigafish")
+	self:PhysicsInit( SOLID_VPHYSICS )
+	self:SetMoveType( MOVETYPE_VPHYSICS )
+	self:SetSolid( SOLID_VPHYSICS )
+	--self:SetMaterial("models/props_combine/combinethumper002")
+	self.Inputs = Wire_CreateInputs( self, { "Arm","Detonate" } )
 	
-	local phys = self.Entity:GetPhysicsObject()
+	local phys = self:GetPhysicsObject()
 	if (phys:IsValid()) then
 		phys:Wake()
 		phys:EnableGravity(true)
@@ -21,9 +21,9 @@ function ENT:Initialize()
 		phys:EnableCollisions(true)
 	end
 	
-    --self.Entity:SetKeyValue("rendercolor", "0 0 0")
-	self.PhysObj = self.Entity:GetPhysicsObject()
-	self.CAng = self.Entity:GetAngles()
+    --self:SetKeyValue("rendercolor", "0 0 0")
+	self.PhysObj = self:GetPhysicsObject()
+	self.CAng = self:GetAngles()
 	
 	self.NFire = 0
 	self.MCD = 0
@@ -35,12 +35,12 @@ function ENT:TriggerInput(iname, value)
 	
 	if (iname == "Arm") then
 		if value > 0 then
-			self.Entity:Arm()
+			self:Arm()
 		end
 		
 	elseif (iname == "Detonate") then
 		if value > 0 then
-			self.Entity:Splode()
+			self:Splode()
 		end
 	end	
 end
@@ -74,7 +74,7 @@ end
 function ENT:Touch( ent )
 	if ent.HasHardpoints then
 		if ent.Cont and ent.Cont:IsValid() then
-			HPLink( ent.Cont, ent.Entity, self.Entity )
+			HPLink( ent.Cont, ent.Entity, self )
 		end
 	end
 end
@@ -86,7 +86,7 @@ function ENT:Splode()
 		Splode:Spawn()
 	end
 	self.Exploded = true
-	self.Entity:Remove()
+	self:Remove()
 end
 
 function ENT:HPFire()
@@ -95,7 +95,7 @@ end
 
 function ENT:Arm()
 	self.Armed = true
-	self.Entity:SetArmed( true )
+	self:SetArmed( true )
 end
 
 function ENT:PhysicsCollide( data, physobj )

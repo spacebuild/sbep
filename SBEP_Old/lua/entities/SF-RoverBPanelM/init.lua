@@ -5,25 +5,25 @@ util.PrecacheSound( "SB/Gattling2.wav" )
 
 function ENT:Initialize()
 
-	self.Entity:SetModel( "models/Slyfo/rover1_backpanelmount.mdl" ) 
-	self.Entity:SetName("SmallMachineGun")
-	self.Entity:PhysicsInit( SOLID_VPHYSICS )
-	self.Entity:SetMoveType( MOVETYPE_VPHYSICS )
-	self.Entity:SetSolid( SOLID_VPHYSICS )
-	self.Inputs = Wire_CreateInputs( self.Entity, { "Fire" } )
+	self:SetModel( "models/Slyfo/rover1_backpanelmount.mdl" ) 
+	self:SetName("SmallMachineGun")
+	self:PhysicsInit( SOLID_VPHYSICS )
+	self:SetMoveType( MOVETYPE_VPHYSICS )
+	self:SetSolid( SOLID_VPHYSICS )
+	self.Inputs = Wire_CreateInputs( self, { "Fire" } )
 	
-	local phys = self.Entity:GetPhysicsObject()
+	local phys = self:GetPhysicsObject()
 	if (phys:IsValid()) then
 		phys:Wake()
 		phys:EnableGravity(true)
 		phys:EnableDrag(true)
 		phys:EnableCollisions(true)
 	end
-	self.Entity:SetKeyValue("rendercolor", "255 255 255")
-	self.PhysObj = self.Entity:GetPhysicsObject()
+	self:SetKeyValue("rendercolor", "255 255 255")
+	self.PhysObj = self:GetPhysicsObject()
 	
 	--self.val1 = 0
-	--RD_AddResource(self.Entity, "Munitions", 0)
+	--RD_AddResource(self, "Munitions", 0)
 
 	self.HPC			= 1
 	self.HP				= {}
@@ -32,7 +32,7 @@ function ENT:Initialize()
 	self.HP[1]["Type"]	= "Small"
 	self.HP[1]["Pos"]	= Vector(14,0,12)
 	
-	self.Cont = self.Entity
+	self.Cont = self
 end
 
 function ENT:SpawnFunction( ply, tr )
@@ -67,7 +67,7 @@ function ENT:PhysicsUpdate()
 end
 
 function ENT:Think()
-	--self.Entity:SetColor( 0, 0, 255, 255)
+	--self:SetColor(Color( 0, 0, 255, 255))
 	local Weap = self.HP[1]["Ent"]
 	
 	if Weap and Weap:IsValid() then
@@ -79,16 +79,16 @@ function ENT:Think()
 			Weap:GetPhysicsObject():EnableCollisions(false)
 			
 			LPos = Weap:WorldToLocal(Weap:GetPos() + (Weap:GetForward() * (-Weap.APPos.x + -10)) + (Weap:GetRight() * (-Weap.APPos.y + 10 )) + (Weap:GetUp() * (-Weap.APPos.z + 5)))
-			self.WSock1 = constraint.Ballsocket( self.Entity, Weap, 0, 0, LPos, 0, 0, 1)
+			self.WSock1 = constraint.Ballsocket( self, Weap, 0, 0, LPos, 0, 0, 1)
 			LPos = Weap:WorldToLocal(Weap:GetPos() + (Weap:GetForward() * (-Weap.APPos.x + -10)) + (Weap:GetRight() * (-Weap.APPos.y + -10)) + (Weap:GetUp() * (-Weap.APPos.z + 5)))
-			self.WSock2 = constraint.Ballsocket( self.Entity, Weap, 0, 0, LPos, 0, 0, 1)
+			self.WSock2 = constraint.Ballsocket( self, Weap, 0, 0, LPos, 0, 0, 1)
 			
-			local Noc = constraint.NoCollide( Weap, self.Entity, 0, 0 )
+			local Noc = constraint.NoCollide( Weap, self, 0, 0 )
 			Weap:GetPhysicsObject():EnableCollisions(false)
 			Weap.Swivved = true
-			--Weap:SetColor( 0, 255, 0, 255)
+			--Weap:SetColor(Color( 0, 255, 0, 255))
 		else
-			--Weap:SetColor( 255, 0, 0, 255)
+			--Weap:SetColor(Color( 255, 0, 0, 255))
 		end
 		
 		if self.Pod and self.Pod:IsValid() and self.Pod:IsVehicle() then
@@ -116,7 +116,7 @@ function ENT:Think()
 				
 				physi2:AddAngleVelocity((physi2:GetAngleVelocity() * -1) + Angle(0,Pitch,0))
 			else
-				local PRel = Weap:GetPos() + self.Entity:GetForward() * 500
+				local PRel = Weap:GetPos() + self:GetForward() * 500
 				local FDist = PRel:Distance( Weap:GetPos() + Weap:GetUp() * 100 )
 				local BDist = PRel:Distance( Weap:GetPos() + Weap:GetUp() * -100 )
 				local Pitch = math.Clamp((FDist - BDist) * 0.75, -250, 250)
@@ -128,7 +128,7 @@ function ENT:Think()
 		end
 	end
 	
-	self.Entity:NextThink( CurTime() + 0.01 ) 
+	self:NextThink( CurTime() + 0.01 ) 
 	return true	
 end
 
@@ -146,9 +146,9 @@ end
 
 function ENT:Touch( ent )
 	if ent.HasHardpoints then
-		if ent.Cont and ent.Cont:IsValid() then HPLink( ent.Cont, ent.Entity, self.Entity ) end
-		self.Entity:GetPhysicsObject():EnableCollisions(true)
-		self.Entity:SetParent()
+		if ent.Cont and ent.Cont:IsValid() then HPLink( ent.Cont, ent.Entity, self ) end
+		self:GetPhysicsObject():EnableCollisions(true)
+		self:SetParent()
 	end
 end
 
@@ -172,7 +172,7 @@ function ENT:PreEntityCopy()
 	end
 	
 	if WireAddon then
-		DI.WireData = WireLib.BuildDupeInfo( self.Entity )
+		DI.WireData = WireLib.BuildDupeInfo( self )
 	end
 	
 	duplicator.StoreEntityModifier(self, "SBEPRoverBPanel", DI)

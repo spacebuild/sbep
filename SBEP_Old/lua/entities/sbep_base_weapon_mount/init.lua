@@ -4,23 +4,23 @@ include( 'shared.lua' )
 
 function ENT:Initialize()
 
-	if self.MountData then self.Entity:SetModel( self.MountData["model"] ) end
-	if self.MountName then self.Entity:SetName( self.MountName ) end
-	self.Entity:PhysicsInit( SOLID_VPHYSICS )
-	self.Entity:SetMoveType( MOVETYPE_VPHYSICS )
-	self.Entity:SetSolid( SOLID_VPHYSICS )
-	self.Entity:SetUseType( SIMPLE_USE )
-	self.Inputs = Wire_CreateInputs( self.Entity, { "Fire" } )
+	if self.MountData then self:SetModel( self.MountData["model"] ) end
+	if self.MountName then self:SetName( self.MountName ) end
+	self:PhysicsInit( SOLID_VPHYSICS )
+	self:SetMoveType( MOVETYPE_VPHYSICS )
+	self:SetSolid( SOLID_VPHYSICS )
+	self:SetUseType( SIMPLE_USE )
+	self.Inputs = Wire_CreateInputs( self, { "Fire" } )
 
-	local phys = self.Entity:GetPhysicsObject()
+	local phys = self:GetPhysicsObject()
 	if (phys:IsValid()) then
 		phys:Wake()
 		phys:EnableGravity(true)
 		phys:EnableDrag(true)
 		phys:EnableCollisions(true)
 	end
-	self.Entity:SetKeyValue("rendercolor", "255 255 255")
-	self.PhysObj = self.Entity:GetPhysicsObject()
+	self:SetKeyValue("rendercolor", "255 255 255")
+	self.PhysObj = self:GetPhysicsObject()
 
 	if self.HP then
 		self.HPC	= #self.HP
@@ -28,9 +28,9 @@ function ENT:Initialize()
 		self.HPC	= 0
 	end
 	
-	self.Entity:SetNetworkedInt( "HPC", self.HPC )
+	self:SetNetworkedInt( "HPC", self.HPC )
 	
-	self.Cont = self.Entity
+	self.Cont = self
 end
 
 function ENT:TriggerInput(iname, value)		
@@ -69,11 +69,11 @@ function ENT:Touch( ent )
 	if ent.HasHardpoints then
 		
 		if ent.Cont and ent.Cont:IsValid() then
-			HPLink( ent.Cont, ent.Entity, self.Entity )
+			HPLink( ent.Cont, ent.Entity, self )
 		end
-		self.Entity:GetPhysicsObject():EnableCollisions(true)
-		self.Entity:SetParent()
-		--constraint.NoCollide( ent, self.Entity, 0, 0 )
+		self:GetPhysicsObject():EnableCollisions(true)
+		self:SetParent()
+		--constraint.NoCollide( ent, self, 0, 0 )
 	end
 end
 
@@ -99,7 +99,7 @@ function ENT:PreEntityCopy()
 	end
 	
 	if WireAddon then
-		dupeInfo.WireData = WireLib.BuildDupeInfo( self.Entity )
+		dupeInfo.WireData = WireLib.BuildDupeInfo( self )
 	end
 	
 	duplicator.StoreEntityModifier(self, "SBEPWeaponMountDupeInfo", dupeInfo)

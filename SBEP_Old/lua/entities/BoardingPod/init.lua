@@ -6,15 +6,15 @@ include( 'shared.lua' )
 
 function ENT:Initialize()
 	
-	self.Entity:SetModel( "models/Spacebuild/medbridge2_doublehull_elevatorclamp.mdl" ) 
-	self.Entity:SetName( "AssaultPodC" )-- .. self.Entity:EntIndex() )
-	self.Entity:PhysicsInit( SOLID_VPHYSICS )
-	self.Entity:SetMoveType( 0 )
-	self.Entity:SetSolid( 0 )
-	--self.Entity:SetMaterial("models/props_wasteland/tugboat02")
-	--self.Inputs = Wire_CreateInputs( self.Entity, { "Activate" } )
+	self:SetModel( "models/Spacebuild/medbridge2_doublehull_elevatorclamp.mdl" ) 
+	self:SetName( "AssaultPodC" )-- .. self:EntIndex() )
+	self:PhysicsInit( SOLID_VPHYSICS )
+	self:SetMoveType( 0 )
+	self:SetSolid( 0 )
+	--self:SetMaterial("models/props_wasteland/tugboat02")
+	--self.Inputs = Wire_CreateInputs( self, { "Activate" } )
 
-	local phys = self.Entity:GetPhysicsObject()
+	local phys = self:GetPhysicsObject()
 	if (phys:IsValid()) then
 		phys:Wake()
 		phys:EnableGravity(false)
@@ -22,8 +22,8 @@ function ENT:Initialize()
 		phys:EnableCollisions(false)
 		--phys:SetMass(20)
 	end
-	self.Entity:StartMotionController()
-	self.PhysObj = self.Entity:GetPhysicsObject()
+	self:StartMotionController()
+	self.PhysObj = self:GetPhysicsObject()
 
 
 	self.Speed = 0
@@ -39,7 +39,7 @@ function ENT:Initialize()
 	self.HP[1]["Type"]	= "Small"
 	self.HP[1]["Pos"]	= Vector(-40,0,110)
 	
-	self:SetColor(0,0,0,0)
+	self:SetColor(Color(0,0,0,0))
 end
 
 function ENT:SpawnFunction( ply, tr )
@@ -139,14 +139,14 @@ function ENT:Think()
 					--self.CamC:Initialize()
 					self.CamC:Activate()
 					self.CamC:SetParent( self.Pod )
-					self.CamC:SetColor(0,0,0,1)
+					self.CamC:SetColor(Color(0,0,0,1))
 				end
 				self.CPL:SetViewEntity( self.CamC )	
 			end
 			
 			if (self.CPL:KeyDown( IN_JUMP )) then
 				if not self.Active then
-					self.Entity:SetActive()
+					self:SetActive()
 				end
 			end
 	
@@ -185,7 +185,7 @@ function ENT:Think()
 				end
 				if (joystick.Get(self.CPL, "bpod_launch")) then
 					if not self.Active then
-						self.Entity:SetActive()
+						self:SetActive()
 					end
 				end
 			end
@@ -289,12 +289,12 @@ function ENT:Think()
 		end
 		
 	else
-		self.Entity:Remove()
+		self:Remove()
 	end
 	
 	
 
-	self.Entity:NextThink( CurTime() + 0.01 ) 
+	self:NextThink( CurTime() + 0.01 ) 
 	return true
 end
 
@@ -314,14 +314,14 @@ function ENT:HPFire()
 			end)	
 		end
 	end
-	self.Entity:SetActive()
+	self:SetActive()
 end
 
 function ENT:SetActive()
 	self.Active = true
 	self.ATime = CurTime() + 0.5
 	self.Pod:Fire("kill", "", 90)
-	--self.Entity:SetActive( true )
+	--self:SetActive( true )
 	
 	self.RockTrail = ents.Create("env_rockettrail")
 	self.RockTrail:SetAngles( self.Pod:GetAngles()  )
@@ -371,7 +371,7 @@ function ENT:PreEntityCopy()
 	end
 	
 	if WireAddon then
-		DI.WireData = WireLib.BuildDupeInfo( self.Entity )
+		DI.WireData = WireLib.BuildDupeInfo( self )
 	end
 	
 	duplicator.StoreEntityModifier(self, "SBEPBoardPod", DI)
@@ -391,7 +391,7 @@ function ENT:PostEntityPaste(pl, Ent, CreatedEntities)
 			self.Pod.Pod = ents.GetByIndex(DI.Pod2)
 		end*/
 		self.Pod.Pod.Pod = self.Pod
-		self.Pod.Cont = self.Entity
+		self.Pod.Cont = self
 		self.Pod.SPL = ply
 		self.Pod:SetNetworkedInt( "HPC", ent.HPC )
 		local TB = self.Pod:GetTable()

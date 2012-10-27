@@ -12,7 +12,6 @@ local SRT = {
 	ELRG = true  ,
 	
 	INSR = false ,
-	HNGR = false ,
 
 	LRC1 = false ,
 	LRC2 = false ,
@@ -33,16 +32,16 @@ local SRT = {
 
 function ENT:Initialize()
 
-	self.Entity:SetModel( "models/Combine_Helicopter/helicopter_bomb01.mdl" )
+	self:SetModel( "models/Combine_Helicopter/helicopter_bomb01.mdl" )
 	
-	self.Entity:PhysicsInit( SOLID_VPHYSICS )
-	self.Entity:SetMoveType( MOVETYPE_VPHYSICS )
-	self.Entity:SetSolid( SOLID_VPHYSICS )
-	self.Entity:DrawShadow( false )
+	self:PhysicsInit( SOLID_VPHYSICS )
+	self:SetMoveType( MOVETYPE_VPHYSICS )
+	self:SetSolid( SOLID_VPHYSICS )
+	self:DrawShadow( false )
 	
 	self:SetNWString( "SBEPSpriteType" , "SWSH" )
 
-	local phys = self.Entity:GetPhysicsObject()
+	local phys = self:GetPhysicsObject()
 	if (phys:IsValid()) then
 		phys:Wake()
 		phys:EnableGravity(false)
@@ -95,13 +94,13 @@ function ENT:GetSpriteType()
 end
 
 function ENT:PreEntityCopy()
-	if self.Entity and self.Entity:IsValid() then
-		self.Entity:Remove()
+	if self and self:IsValid() then
+		self:Remove()
 	end
 end
 
 function ENT:PostEntityPaste(pl, Ent, CreatedEntities)
-	if self.Entity and self.Entity:IsValid() then
-		self.Entity:Remove()
+	if self and self:IsValid() then
+		self:Remove()
 	end
 end

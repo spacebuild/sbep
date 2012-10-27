@@ -7,12 +7,12 @@ end
 
 function ENT:Draw()
 	
-	self.Entity:DrawModel()
+	self:DrawModel()
 
 end
 
 function ENT:Think()
-	local LP = self.Entity:GetNetworkedInt("Loading")
+	local LP = self:GetNetworkedInt("Loading")
 	local Suff = ""
 	if LP == 0 then
 		Suff = "Not Loaded"

@@ -24,8 +24,8 @@ ENT.Roll			= 0
 ENT.WInfo			= "Jalopy"
 
 function ENT:SetPassengers( val )
-	local CVal = self.Entity:GetNetworkedInt( "Passengers" )
+	local CVal = self:GetNetworkedInt( "Passengers" )
 	if CVal ~= val then
-		self.Entity:SetNetworkedInt( "Passengers", val )
+		self:SetNetworkedInt( "Passengers", val )
 	end
 end

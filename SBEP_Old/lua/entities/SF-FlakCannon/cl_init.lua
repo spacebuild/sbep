@@ -6,13 +6,13 @@ end
 
 function ENT:Draw()
 	
-	self.Entity:DrawModel()
+	self:DrawModel()
 
 end
 
 function ENT:Think()
-	local C1 = self.Entity:GetNetworkedInt("CDown1")
-	local C2 = self.Entity:GetNetworkedInt("CDown2")
+	local C1 = self:GetNetworkedInt("CDown1")
+	local C2 = self:GetNetworkedInt("CDown2")
 	C1PC = ((5-( C1-CurTime())) / 5)*100
 	C2PC = ((5-( C2-CurTime())) / 5)*100
 	C1S = (C1PC>100) and "Loaded" or math.Round(C1PC).."%"

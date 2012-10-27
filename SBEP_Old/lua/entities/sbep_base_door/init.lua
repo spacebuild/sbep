@@ -150,17 +150,17 @@ function ENT:Initialize()
 	self.Locked     		= false
 	self.DisableUse 		= false
 	self.Timers 			= {}
-	self.Index				= self.Entity:EntIndex()
+	self.Index				= self:EntIndex()
 	
-	self.Entity:SetUseType( SIMPLE_USE )
-	self.Entity:PhysicsInitialize()
+	self:SetUseType( SIMPLE_USE )
+	self:PhysicsInitialize()
 end
 
 function ENT:PhysicsInitialize()
-	self.Entity:PhysicsInit( SOLID_VPHYSICS )
-		self.Entity:SetMoveType( MOVETYPE_VPHYSICS )
-		self.Entity:SetSolid( SOLID_VPHYSICS )
-		local phys = self.Entity:GetPhysicsObject()  	
+	self:PhysicsInit( SOLID_VPHYSICS )
+		self:SetMoveType( MOVETYPE_VPHYSICS )
+		self:SetSolid( SOLID_VPHYSICS )
+		local phys = self:GetPhysicsObject()  	
 		if (phys:IsValid()) then  		
 			phys:Wake()  
 			phys:EnableGravity(false)
@@ -174,11 +174,11 @@ function ENT:SetDoorType( strType , nClass )
 		print( "Invalid Door Type: "..tostring(strType) )
 		return false 
 	end
-	self.Entity:SetDoorVars( strType , nClass )
-	self.Entity:SetModel( self.D.model )
-	self.Entity:GetSequenceData()
-	self.Entity:PhysicsInitialize()	
-	self.Entity:Close()
+	self:SetDoorVars( strType , nClass )
+	self:SetModel( self.D.model )
+	self:GetSequenceData()
+	self:PhysicsInitialize()	
+	self:Close()
 end
 
 function ENT:SetDoorVars( strType , nClass )
@@ -204,27 +204,27 @@ function ENT:GetDoorClass()
 end
 
 function ENT:Attach( ent , V , A )
-	self.Entity.D = self.Entity.D or {}
+	self.D = self.D || {}
 	
 	local Voff = Vector(0,0,0)
 	if V then Voff = Vector( V.x , V.y , V.z ) end
-		self.Entity:SetPos( ent:LocalToWorld( Voff ) )
+		self:SetPos( ent:LocalToWorld( Voff ) )
 		
 	local Aoff = Angle(0,0,0)
 	if A then Aoff = Angle( A.p , A.y , A.r ) end
-		self.Entity:SetAngles( ent:GetAngles() + Aoff )
+		self:SetAngles( ent:GetAngles() + Aoff )
 		
-	self.ATWeld = constraint.Weld( ent , self.Entity , 0, 0, 0, true )
+	self.ATWeld = constraint.Weld( ent , self , 0, 0, 0, true )
 	
-		self.Entity:SetSkin( ent:GetSkin() )
-		--self.Entity.OpenTrigger = false
+		self:SetSkin( ent:GetSkin() )
+		--self.OpenTrigger = false
 		
-		self.Entity.ATEnt	= ent
-		self.Entity.VecOff	= Voff
-		self.Entity.AngOff	= Aoff
+		self.ATEnt	= ent
+		self.VecOff	= Voff
+		self.AngOff	= Aoff
 		
-		self.Entity:GetPhysicsObject():EnableMotion( true )
-	ent:DeleteOnRemove( self.Entity )
+		self:GetPhysicsObject():EnableMotion( true )
+	ent:DeleteOnRemove( self )
 end
 
 function ENT:SetController( cont , sysnum )
@@ -237,39 +237,39 @@ function ENT:SetController( cont , sysnum )
 end
 
 function ENT:OpenDoorSounds()
-	self.Entity:EmitSound( self.D.OS[0] )
+	self:EmitSound( self.D.OS[0] )
 	for k,v in pairs( self.D.OS ) do
 		local var = "SBEP_"..tostring( self.Index ).."_OpenSounds_"..tostring( k )
 		table.insert( self.Timers , var )
 		timer.Create( var , k , 1 , function()
-								self.Entity:EmitSound( v )
+								self:EmitSound( v )
 						end )
 	end
 end
 
 function ENT:CloseDoorSounds()
-	self.Entity:EmitSound( self.D.CS[0] )
+	self:EmitSound( self.D.CS[0] )
 	for k,v in pairs( self.D.CS ) do
 		local var = "SBEP_"..tostring( self.Index ).."_CloseSounds_"..tostring( k )
 		table.insert( self.Timers , var )
 		timer.Create( var , k , 1 , function()
-								self.Entity:EmitSound( v )
+								self:EmitSound( v )
 						end )
 	end
 end
 
 function ENT:GetSequenceData()
-	self.OSeq = self.Entity:LookupSequence( "open" )
-	self.CSeq = self.Entity:LookupSequence( "close" )
+	self.OSeq = self:LookupSequence( "open" )
+	self.CSeq = self:LookupSequence( "close" )
 end
 
 function ENT:Open()
-	self.Entity:ResetSequence( self.OSeq )
-		self.Entity:OpenDoorSounds()
+	self:ResetSequence( self.OSeq )
+		self:OpenDoorSounds()
 		local var = "SBEP_"..tostring( self.Index ).."_OpenSolid"
 		table.insert( self.Timers , var )
 		timer.Create( var , self.D.OD , 1 , function()
-							self.Entity:SetNotSolid( true )
+							self:SetNotSolid( true )
 						end)
 		local var = "SBEP_"..tostring( self.Index ).."_OpenStatus"
 		table.insert( self.Timers , var )
@@ -285,12 +285,12 @@ function ENT:Open()
 end
 
 function ENT:Close()
-	self.Entity:ResetSequence( self.CSeq )
-		self.Entity:CloseDoorSounds()
+	self:ResetSequence( self.CSeq )
+		self:CloseDoorSounds()
 		local var = "SBEP_"..tostring( self.Index ).."_CloseSolid"
 		table.insert( self.Timers , var )
 		timer.Create( var , self.D.CD , 1 , function()
-							self.Entity:SetNotSolid( false )
+							self:SetNotSolid( false )
 						end)
 		local var = "SBEP_"..tostring( self.Index ).."_CloseStatus"
 		table.insert( self.Timers , var )
@@ -307,14 +307,14 @@ end
 
 function ENT:Think()
 	if !(self.OpenTrigger == nil) then
-		if self.OpenTrigger and !self.Entity:IsOpen() and !self.OpenStatus then
-			self.Entity:Open()
-		elseif !self.OpenTrigger and self.Entity:IsOpen() and self.OpenStatus then
-			self.Entity:Close()
+		if self.OpenTrigger and !self:IsOpen() and !self.OpenStatus then
+			self:Open()
+		elseif !self.OpenTrigger and self:IsOpen() and self.OpenStatus then
+			self:Close()
 		end
 	end
 	if (self.ATEnt and self.ATEnt:IsValid() ) and (!self.ATWeld or !self.ATWeld:IsValid()) then
-		local wt = constraint.FindConstraints( self.Entity , "Weld" )
+		local wt = constraint.FindConstraints( self , "Weld" )
 		for n,C in ipairs( wt ) do
 			if C.Ent2 == self.ATEnt or C.Ent1 == self.ATEnt then
 				self.ATWeld = C.Constraint
@@ -327,19 +327,19 @@ function ENT:Think()
 		end
 	end
 	if self.Cont then
-		if self.Entity:GetSkin() ~= self.Cont.Skin then
-			self.Entity:SetSkin( self.Cont.Skin )
+		if self:GetSkin() ~= self.Cont.Skin then
+			self:SetSkin( self.Cont.Skin )
 		end
 	end
-	self.Entity:NextThink( CurTime() + 0.05 )
+	self:NextThink( CurTime() + 0.05 )
 	return true
 end
 
 function ENT:IsOpen()
 
-	if self.Entity:GetSequence() == self.OSeq then -- and  self.OpenStatus then
+	if self:GetSequence() == self.OSeq then -- and  self.OpenStatus then
 		return true
-	elseif self.Entity:GetSequence() == self.CSeq then -- and  !self.OpenStatus then
+	elseif self:GetSequence() == self.CSeq then -- and  !self.OpenStatus then
 		return false
 	end	
 
@@ -387,9 +387,9 @@ function ENT:PostEntityPaste(pl, Ent, CreatedEntities)
 	self.AngOff	= DI.AngOff
 	self.Duped	= true
 	if Ent.EntityMods.SBEPD.Cont then
-		self.Entity:SetController( CreatedEntities[ DI.Cont ] )
+		self:SetController( CreatedEntities[ DI.Cont ] )
 	end
-	self.Entity:PhysicsInitialize()
-	self.Entity:GetSequenceData()
-	self.Entity:Close()
+	self:PhysicsInitialize()
+	self:GetSequenceData()
+	self:Close()
 end

@@ -13,9 +13,9 @@ ENT.APPos			= Vector(0,0,15)
 ENT.WInfo			= "Small Torpedo"
 
 function ENT:SetArmed( val )
-	self.Entity:SetNetworkedBool("ClArmed",val,true)
+	self:SetNetworkedBool("ClArmed",val,true)
 end
 
 function ENT:GetArmed()
-	return self.Entity:GetNetworkedBool("ClArmed")
+	return self:GetNetworkedBool("ClArmed")
 end

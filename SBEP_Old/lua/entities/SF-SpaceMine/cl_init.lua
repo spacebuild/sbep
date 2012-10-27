@@ -9,13 +9,13 @@ end
 
 function ENT:Draw()
 	
-	self.Entity:DrawModel()
+	self:DrawModel()
 
 	render.SetMaterial( self.Matt )	
 	local color = Color( 200, 60, 60, 200 )
 	if self.Blip then
-		render.DrawSprite( self.Entity:GetPos() + self.Entity:GetUp() * 70, 100, 100, color )
-		render.DrawSprite( self.Entity:GetPos() + self.Entity:GetUp() * -70, 100, 100, color )
+		render.DrawSprite( self:GetPos() + self:GetUp() * 70, 100, 100, color )
+		render.DrawSprite( self:GetPos() + self:GetUp() * -70, 100, 100, color )
 	end
 end
 
@@ -37,7 +37,7 @@ function ENT:Think()
 			if LocalPlayer():GetInfoNum( "SBEPLighting" ) > 0 then
 				local dlight = DynamicLight( self:EntIndex() )
 				if ( dlight ) then
-					--local r, g, b, a = self:GetColor()
+					--local c = self:GetColor();  local r,g,b,a = c.r, c.g, c.b, c.a;
 					dlight.Pos = self:GetPos() + self:GetUp() * 70
 					dlight.r = 200
 					dlight.g = 60
@@ -50,7 +50,7 @@ function ENT:Think()
 				
 				local dlight = DynamicLight( self:EntIndex() )
 				if ( dlight ) then
-					--local r, g, b, a = self:GetColor()
+					--local c = self:GetColor();  local r,g,b,a = c.r, c.g, c.b, c.a;
 					dlight.Pos = self:GetPos() + self:GetUp() * -70
 					dlight.r = 200
 					dlight.g = 60

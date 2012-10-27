@@ -57,13 +57,13 @@ function ENT:Think()
         --self:SetModel( "models/Gibs/Antlion_gib_small_1.mdl" )
         --self:SetMaterial("models/antlion/antlion_innards")
         --self:SetModel( "models/props_phx/gibs/flakgib1.mdl" )
-        --self.Entity:SetModel( "models/props_junk/watermelon01.mdl" )
+        --self:SetModel( "models/props_junk/watermelon01.mdl" )
        
        
         ---------------------------------------------------------- Seedling ----------------------------------------------------------
         if Mutation == 0 then
                 self:SetModelScale(Vector(Size - W,Size + W,Size + W) * 0.07)
-                self.Entity:SetModel( "models/props_junk/watermelon01.mdl" )
+                self:SetModel( "models/props_junk/watermelon01.mdl" )
                 self:SetMaterial("models/antlion/antlion_innards")
                 if self.VEn > 20 then
                         self.VEn = 20

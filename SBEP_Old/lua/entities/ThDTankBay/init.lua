@@ -4,16 +4,16 @@ include( 'shared.lua' )
 
 function ENT:Initialize()
 
-	self.Entity:SetModel( "models/Slyfo/sat_rtankstand.mdl" ) 
-	self.Entity:SetName("Fuel Tank")
-	self.Entity:PhysicsInit( SOLID_VPHYSICS )
-	self.Entity:SetMoveType( MOVETYPE_VPHYSICS )
-	self.Entity:SetSolid( SOLID_VPHYSICS )
-	self.Inputs = Wire_CreateInputs( self.Entity, { "Vent1", "Vent2", "Eject1", "Eject2", "Disengage1", "Disengage2" } )
-	self.Outputs = Wire_CreateOutputs( self.Entity, { "Tank1Fuel", "Tank2Fuel" })
-	self.Entity:SetUseType( 3 )
+	self:SetModel( "models/Slyfo/sat_rtankstand.mdl" ) 
+	self:SetName("Fuel Tank")
+	self:PhysicsInit( SOLID_VPHYSICS )
+	self:SetMoveType( MOVETYPE_VPHYSICS )
+	self:SetSolid( SOLID_VPHYSICS )
+	self.Inputs = Wire_CreateInputs( self, { "Vent1", "Vent2", "Eject1", "Eject2", "Disengage1", "Disengage2" } )
+	self.Outputs = Wire_CreateOutputs( self, { "Tank1Fuel", "Tank2Fuel" })
+	self:SetUseType( 3 )
 
-	local phys = self.Entity:GetPhysicsObject()
+	local phys = self:GetPhysicsObject()
 	if (phys:IsValid()) then
 		phys:Wake()
 		phys:EnableGravity(true)
@@ -21,11 +21,11 @@ function ENT:Initialize()
 		phys:EnableCollisions(true)
 		phys:SetMass(50)
 	end
-	self.Entity:StartMotionController()
-	self.PhysObj = self.Entity:GetPhysicsObject()
+	self:StartMotionController()
+	self.PhysObj = self:GetPhysicsObject()
 	self.HasHardpoints = true
 
-	--RD_AddResource(self.Entity, "thfuel", 0)
+	--RD_AddResource(self, "thfuel", 0)
 	
 	self.HPC			= 2
 	self.HP				= {}
@@ -38,7 +38,7 @@ function ENT:Initialize()
 	self.HP[2]["Type"]	= "TankS"
 	self.HP[2]["Pos"]	= Vector(-38,-19,22)
 	
-	self.Cont = self.Entity
+	self.Cont = self
 end
 
 function ENT:TriggerInput(iname, value)		
@@ -89,7 +89,7 @@ function ENT:TriggerInput(iname, value)
 				local phys = self.HP[1].Ent:GetPhysicsObject()
 				phys:EnableGravity(true)
 				phys:EnableCollisions(true)
-				phys:ApplyForceOffset(self.Entity:GetUp() * 30000 + self.Entity:GetForward() * 1000, self.HP[1].Ent:GetPos() + self.Entity:GetForward() * -40)
+				phys:ApplyForceOffset(self:GetUp() * 30000 + self:GetForward() * 1000, self.HP[1].Ent:GetPos() + self:GetForward() * -40)
 			end
 		end
 		
@@ -102,7 +102,7 @@ function ENT:TriggerInput(iname, value)
 				local phys = self.HP[2].Ent:GetPhysicsObject()
 				phys:EnableGravity(true)
 				phys:EnableCollisions(true)
-				phys:ApplyForceOffset(self.Entity:GetUp() * 30000 + self.Entity:GetForward() * 1000, self.HP[2].Ent:GetPos() + self.Entity:GetForward() * -40)
+				phys:ApplyForceOffset(self:GetUp() * 30000 + self:GetForward() * 1000, self.HP[2].Ent:GetPos() + self:GetForward() * -40)
 			end
 		end
 					
@@ -129,15 +129,15 @@ end
 
 function ENT:Think()
 	if self.HP[1].Ent and self.HP[1].Ent:IsValid() then
-		Wire_TriggerOutput( self.Entity, "Tank1Fuel", self.HP[1].Ent.Fuel )
+		Wire_TriggerOutput( self, "Tank1Fuel", self.HP[1].Ent.Fuel )
 	else
-		Wire_TriggerOutput( self.Entity, "Tank1Fuel", -1 )
+		Wire_TriggerOutput( self, "Tank1Fuel", -1 )
 	end
 	
 	if self.HP[2].Ent and self.HP[2].Ent:IsValid() then
-		Wire_TriggerOutput( self.Entity, "Tank2Fuel", self.HP[2].Ent.Fuel )
+		Wire_TriggerOutput( self, "Tank2Fuel", self.HP[2].Ent.Fuel )
 	else
-		Wire_TriggerOutput( self.Entity, "Tank2Fuel", -1 )
+		Wire_TriggerOutput( self, "Tank2Fuel", -1 )
 	end
 end
 

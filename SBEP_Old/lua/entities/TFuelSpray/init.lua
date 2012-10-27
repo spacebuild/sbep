@@ -5,18 +5,18 @@ include( 'shared.lua' )
 
 function ENT:Initialize()
 
-	self.Entity:SetModel( "models/items/combine_rifle_ammo01.mdl" )
-	self.Entity:SetName("Fuel Cloud")
-	--self.Entity:PhysicsInit( SOLID_VPHYSICS )
+	self:SetModel( "models/items/combine_rifle_ammo01.mdl" )
+	self:SetName("Fuel Cloud")
+	--self:PhysicsInit( SOLID_VPHYSICS )
 	local r = 5
-	self.Entity:PhysicsInitSphere(r)
-	self.Entity:SetCollisionBounds(Vector(-r,-r,-r),Vector(r,r,r))
-	self.Entity:SetMoveType( MOVETYPE_VPHYSICS )
-	self.Entity:SetSolid( SOLID_VPHYSICS )
-	self.Entity:SetCollisionGroup(3)
+	self:PhysicsInitSphere(r)
+	self:SetCollisionBounds(Vector(-r,-r,-r),Vector(r,r,r))
+	self:SetMoveType( MOVETYPE_VPHYSICS )
+	self:SetSolid( SOLID_VPHYSICS )
+	self:SetCollisionGroup(3)
 	self.Ignition = false
 	
-	local phys = self.Entity:GetPhysicsObject()
+	local phys = self:GetPhysicsObject()
 	if (phys:IsValid()) then
 		phys:Wake()
 		phys:EnableGravity(false)
@@ -26,79 +26,79 @@ function ENT:Initialize()
 		phys:SetMaterial( "gmod_ice" )
 	end
 	
-	self.PhysObj = self.Entity:GetPhysicsObject()
+	self.PhysObj = self:GetPhysicsObject()
 	
-	self.Entity:Fire("kill", "", math.random(25,30))
+	self:Fire("kill", "", math.random(25,30))
 	
 	self.hasdamagecase = true
 	
 	self.BTime = CurTime()
 	self.DTime = 0
 	
-	self.Entity:SetColor(0,0,0,1)
+	self:SetColor(Color(0,0,0,1))
 end
 
 function ENT:Think()
 	self.PhysObj:SetVelocity(self.PhysObj:GetVelocity() * 0.90)
 	if !self.Ignited then
-		local targets = ents.FindInSphere( self.Entity:GetPos(), 50)
+		local targets = ents.FindInSphere( self:GetPos(), 50)
 		for _,i in pairs(targets) do
-			if i:GetClass() == self.Entity:GetClass() then
+			if i:GetClass() == self:GetClass() then
 				--if !i.Ignition then
-					i:GetPhysicsObject():ApplyForceCenter((i:GetPos() - self.Entity:GetPos()):GetNormal() * 2)
+					i:GetPhysicsObject():ApplyForceCenter((i:GetPos() - self:GetPos()):GetNormal() * 2)
 				--end
 			end
 			if i:IsOnFire() then
-				self.Entity:PreIgnite(0.1)
+				self:PreIgnite(0.1)
 			end
 		end
 	else
 		local Power = 10
 		--local FVec = Vector(0,0,0)
-		local targets = ents.FindInSphere( self.Entity:GetPos(), 400)
+		local targets = ents.FindInSphere( self:GetPos(), 400)
 		for _,i in pairs(targets) do
-			if i:GetClass() == self.Entity:GetClass() then
+			if i:GetClass() == self:GetClass() then
 				if !self:IsPuddle() then
 					Power = Power + 40
 				else
 					Power = Power + 1
 				end
-				--FVec = FVec + (i:GetPos() - self.Entity:GetPos()
-				--i:GetPhysicsObject():ApplyForceCenter((i:GetPos() - self.Entity:GetPos()):GetNormal() * Power)
+				--FVec = FVec + (i:GetPos() - self:GetPos()
+				--i:GetPhysicsObject():ApplyForceCenter((i:GetPos() - self:GetPos()):GetNormal() * Power)
 			end
 		end
 		for _,i in pairs(targets) do
-			if i:GetClass() == self.Entity:GetClass() and !i:IsPuddle() then
-				i:GetPhysicsObject():ApplyForceCenter((i:GetPos() - self.Entity:GetPos()):GetNormal() * Power)
+			if i:GetClass() == self:GetClass() and !i:IsPuddle() then
+				i:GetPhysicsObject():ApplyForceCenter((i:GetPos() - self:GetPos()):GetNormal() * Power)
 			end
 		end
-		if !self.Entity:IsPuddle() then
-			util.BlastDamage(self.Entity, self.Entity, self.Entity:GetPos(), 200, Power * 10)
+		if !self:IsPuddle() then
+			util.BlastDamage(self, self, self:GetPos(), 200, Power * 10)
 		end
-		util.BlastDamage(self.Entity, self.Entity, self.Entity:GetPos(), 400, Power * 1)
-		--util.BlastDamage(self.Entity, self.Entity, self.Entity:GetPos(), 800, Power * 0.1)
+		util.BlastDamage(self, self, self:GetPos(), 400, Power * 1)
+		--util.BlastDamage(self, self, self:GetPos(), 800, Power * 0.1)
 	end
 	if self.PuddlePrep then
-		self.Entity:Puddle()
+		self:Puddle()
 		if self.PudEnt:IsWorld() then
-			self.Entity:SetPos(self.PudLoc)
+			self:SetPos(self.PudLoc)
 		else
-			self.Entity:SetPos(self.PudEnt:NearestPoint(self.Entity:GetPos()))
+			self:SetPos(self.PudEnt:NearestPoint(self:GetPos()))
 		end
-		self.Entity:SetAngles((self.PudNorm + Vector(0,0,0.1)):Angle())
-		local FWeld = constraint.Weld(self.Entity,self.PudEnt,0,0,0,true)
-		self.Entity:GetPhysicsObject():EnableCollisions(false)
-		self.Entity:GetPhysicsObject():EnableGravity(false)
+		self:SetAngles((self.PudNorm + Vector(0,0,0.1)):Angle())
+		local FWeld = constraint.Weld(self,self.PudEnt,0,0,0,true)
+		self:GetPhysicsObject():EnableCollisions(false)
+		self:GetPhysicsObject():EnableGravity(false)
 		self.PuddlePrep = false
 	end
 end
 
 function ENT:PhysicsCollide( data, phys )
-	if !self.Entity:IsPuddle() and !self.Ignition and !self.Ignited and self.CanPuddle then
+	if !self:IsPuddle() and !self.Ignition and !self.Ignited and self.CanPuddle then
 		self.PuddlePrep = true
 		self.PudNorm = data.HitNormal * -1
 		self.PudEnt = data.HitEntity
-		self.PudLoc = self.Entity:GetPos()
+		self.PudLoc = self:GetPos()
 	else
 		NVel = data.OurOldVelocity + (data.HitNormal * (data.Speed * 5))
 		phys:SetVelocity(NVel)
@@ -124,11 +124,11 @@ function ENT:SpawnFunction( ply, tr )
 end
 
 function ENT:OnTakeDamage( info )
-	self.Entity:PreIgnite(0.1)
+	self:PreIgnite(0.1)
 end
 
 function ENT:gcbt_breakactions(damage, pierce)
-	self.Entity:PreIgnite(0.1)
+	self:PreIgnite(0.1)
 end
 
 function ENT:PreIgnite( T )
@@ -145,18 +145,18 @@ function ENT:PreIgnite( T )
 end
 
 function ENT:Whomph()
-	self.Entity:EmitSound("Fire.Engulf")
+	self:EmitSound("Fire.Engulf")
 	self.Ignited = true
-	self.Entity:Burn()
+	self:Burn()
 	if self.efct and self.efct:IsValid() then
 		self.efct:Remove()
 	end
-	self.Entity:Fire("kill", "", math.Rand(2,4))
+	self:Fire("kill", "", math.Rand(2,4))
 	--self.DTime = CurTime() + math.Rand(2,4)
 	local Power = 50
-	local targets = ents.FindInSphere( self.Entity:GetPos(), 250)
+	local targets = ents.FindInSphere( self:GetPos(), 250)
 	for _,i in pairs(targets) do
-		if i:GetClass() == self.Entity:GetClass() then
+		if i:GetClass() == self:GetClass() then
 			Power = Power + 20
 		end
 	end
@@ -164,16 +164,16 @@ function ENT:Whomph()
 	for _,i in pairs(targets) do
 		if i:GetClass() == "prop_physics" then
 			local Force = i:GetPhysicsObject():GetMass() * (Power * 2)
-			i:GetPhysicsObject():ApplyForceOffset( (i.Entity:NearestPoint(self.Entity:GetPos()) - self.Entity:GetPos()):Normalize() * Force, self.Entity:GetPos() )
+			i:GetPhysicsObject():ApplyForceOffset( (i.Entity:NearestPoint(self:GetPos()) - self:GetPos()):Normalize() * Force, self:GetPos() )
 			gcombat.devhit( i, math.random(Power * 0.1,Power * 5), 4 )
 		elseif i:IsPlayer() or i:IsNPC() then
 			local Force = Power * 10
-			i:SetVelocity( i.Entity:GetPos() - self.Entity:GetPos():Normalize() * Force )
+			i:SetVelocity( i.Entity:GetPos() - self:GetPos():Normalize() * Force )
 		end
 	end
 	
-	util.BlastDamage(self.Entity, self.Entity, self.Entity:GetPos(), 300, Power * 10)
-	util.BlastDamage(self.Entity, self.Entity, self.Entity:GetPos(), 600, Power * 1)
-	--cbt_hcgexplode( self.Entity:GetPos(), Power, math.random(Power * 0.1,Power * 5), 5)
+	util.BlastDamage(self, self, self:GetPos(), 300, Power * 10)
+	util.BlastDamage(self, self, self:GetPos(), 600, Power * 1)
+	--cbt_hcgexplode( self:GetPos(), Power, math.random(Power * 0.1,Power * 5), 5)
 	
 end

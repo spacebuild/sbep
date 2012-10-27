@@ -5,14 +5,14 @@ util.PrecacheSound( "SB/Charging.wav" )
 
 function ENT:Initialize()
 
-	self.Entity:SetModel( "models/Slyfo/jetenginemed.mdl" ) 
-	self.Entity:SetName("JetEngine")
-	self.Entity:PhysicsInit( SOLID_VPHYSICS )
-	self.Entity:SetMoveType( MOVETYPE_VPHYSICS )
-	self.Entity:SetSolid( SOLID_VPHYSICS )
-	--self.Inputs = Wire_CreateInputs( self.Entity, { "Fire" } )
+	self:SetModel( "models/Slyfo/jetenginemed.mdl" ) 
+	self:SetName("JetEngine")
+	self:PhysicsInit( SOLID_VPHYSICS )
+	self:SetMoveType( MOVETYPE_VPHYSICS )
+	self:SetSolid( SOLID_VPHYSICS )
+	--self.Inputs = Wire_CreateInputs( self, { "Fire" } )
 	
-	local phys = self.Entity:GetPhysicsObject()
+	local phys = self:GetPhysicsObject()
 	if (phys:IsValid()) then
 		phys:Wake()
 		phys:EnableGravity(true)
@@ -21,10 +21,10 @@ function ENT:Initialize()
 		phys:SetMass( 1000 )
 	end
 	
-	self.Entity:StartMotionController()
+	self:StartMotionController()
 	
-	self.Entity:SetKeyValue("rendercolor", "255 255 255")
-	self.PhysObj = self.Entity:GetPhysicsObject()
+	self:SetKeyValue("rendercolor", "255 255 255")
+	self.PhysObj = self:GetPhysicsObject()
 	
 	self.TargetZ = 0
 	self.ZVelocity = 5
@@ -55,7 +55,7 @@ end
 function ENT:TriggerInput(iname, value)		
 	if (iname == "Fire") then
 		if (value > 0) then
-			self.Entity:HPFire()
+			self:HPFire()
 		end
 
 	end
@@ -136,9 +136,9 @@ function ENT:Think()
 			end
 			
 			local trace = {}
-			trace.start = self.Entity:GetPos() + self.Entity:GetUp() * 20
-			trace.endpos = self.Entity:GetPos() + (self.Entity:GetUp() * -400)
-			trace.filter = self.Entity
+			trace.start = self:GetPos() + self:GetUp() * 20
+			trace.endpos = self:GetPos() + (self:GetUp() * -400)
+			trace.filter = self
 			trace.mask = -1
 			local tr = util.TraceLine( trace )
 			if tr.Hit then
@@ -149,14 +149,14 @@ function ENT:Think()
 					self.TRDist = (50 + HOffset) - (tr.Fraction * 420) -- I swear traces used to return their length... Ah well, better to just calculate the length manually than run a distance function.
 					
 					
-					FSpeed = FSpeed * self.Entity:GetPhysicsObject():GetMass()
-					SSpeed = SSpeed * self.Entity:GetPhysicsObject():GetMass()
-					self.StrafeSpeed = self.StrafeSpeed * self.Entity:GetPhysicsObject():GetMass()
+					FSpeed = FSpeed * self:GetPhysicsObject():GetMass()
+					SSpeed = SSpeed * self:GetPhysicsObject():GetMass()
+					self.StrafeSpeed = self.StrafeSpeed * self:GetPhysicsObject():GetMass()
 					
 					local physi = self.Pod:GetPhysicsObject()
 					
 					physi:ApplyForceCenter( self.Pod:GetRight() * (FSpeed) - self.Pod:GetForward() * (self.StrafeSpeed) )
-					self.Pod:GetPhysicsObject():ApplyForceOffset( self.Entity:GetRight() * SSpeed, self.Pod:GetPos() + self.Entity:GetForward() * 300 )
+					self.Pod:GetPhysicsObject():ApplyForceOffset( self:GetRight() * SSpeed, self.Pod:GetPos() + self:GetForward() * 300 )
 					physi:SetVelocity( physi:GetVelocity() * 0.75 )
 					physi:AddAngleVelocity(physi:GetAngleVelocity() * -0.75)
 				--end
@@ -169,7 +169,7 @@ function ENT:Think()
 		end
 	end
 	
-	self.Entity:NextThink( CurTime() + 0.01 ) 
+	self:NextThink( CurTime() + 0.01 ) 
 	return true
 end
 
@@ -187,7 +187,7 @@ end
 
 function ENT:Touch( ent )
 	if ent.HasWheels and !self.Mounted then
-		if ent.Cont and ent.Cont:IsValid() then self.Entity:WLink( ent.Cont, ent.Entity ) end
+		if ent.Cont and ent.Cont:IsValid() then self:WLink( ent.Cont, ent.Entity ) end
 	end
 end
 
@@ -200,11 +200,11 @@ function ENT:WLink( Cont, Pod )
 			elseif Cont.Wh[i]["Side"] == "Right" then
 				Offset = -10
 			end
-			self.Entity:SetAngles(Pod:GetAngles())
-			self.Entity:SetPos(Pod:GetPos() + Pod:GetForward() * (Cont.Wh[i]["Pos"].x + Offset) + (Pod:GetRight() * Cont.Wh[i]["Pos"].y ) + (Pod:GetUp() * (Cont.Wh[i]["Pos"].z - 10 )) )
+			self:SetAngles(Pod:GetAngles())
+			self:SetPos(Pod:GetPos() + Pod:GetForward() * (Cont.Wh[i]["Pos"].x + Offset) + (Pod:GetRight() * Cont.Wh[i]["Pos"].y ) + (Pod:GetUp() * (Cont.Wh[i]["Pos"].z - 10 )) )
 			--weap.HPNoc = constraint.NoCollide(pod, weap, 0, 0, 0, true)
-			self.WhWeld = constraint.Weld(Pod, self.Entity, 0, 0, 0, true)
-			Cont.Wh[i]["Ent"] = self.Entity
+			self.WhWeld = constraint.Weld(Pod, self, 0, 0, 0, true)
+			Cont.Wh[i]["Ent"] = self
 			self.Pod = Pod
 			self.Cont = Cont
 			self.Side = Cont.Wh[i]["Side"]
@@ -222,7 +222,7 @@ function ENT:PhysicsSimulate( phys, deltatime )
 	if ( self.ZVelocity ~= 0 ) then
 	
 		self.TargetZ = self.TargetZ + (self.ZVelocity * deltatime * self.HSpeed)
-		self.Entity:GetPhysicsObject():Wake()
+		self:GetPhysicsObject():Wake()
 	
 	end
 	*/
@@ -280,7 +280,7 @@ function ENT:PreEntityCopy()
 	end
 	
 	if WireAddon then
-		DI.WireData = WireLib.BuildDupeInfo( self.Entity )
+		DI.WireData = WireLib.BuildDupeInfo( self )
 	end
 	
 	duplicator.StoreEntityModifier(self, "SBEPHovJetS", DI)

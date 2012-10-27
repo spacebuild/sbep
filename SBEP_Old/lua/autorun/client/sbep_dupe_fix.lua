@@ -52,7 +52,7 @@ function SBEP_RecursiveFix(_,_,args)
 		SBEP_RecursiveFix(nil,nil,{dir.."/"..dirPath})
 	end
 	--print("Files Found: ")
-	local files = file.Find(dir.."/*.txt")
+	local files = file.Find(dir.."/*.txt", "DATA") -- OR should it be GAME ?
 	--PrintTable(files)
 	for _,filePath in pairs(files) do
 		SBEP.FixDupe(nil,nil,{dir.."/"..filePath})

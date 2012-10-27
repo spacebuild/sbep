@@ -7,28 +7,28 @@ include( 'shared.lua' )
 
 function ENT:Initialize()
 
-	self.Entity:SetModel( "models/Slyfo/rover_stinger.mdl" ) 
-	self.Entity:SetName("Stinger Mortar")
-	self.Entity:PhysicsInit( SOLID_VPHYSICS )
-	self.Entity:SetMoveType( MOVETYPE_VPHYSICS )
-	self.Entity:SetSolid( SOLID_VPHYSICS )
+	self:SetModel( "models/Slyfo/rover_stinger.mdl" ) 
+	self:SetName("Stinger Mortar")
+	self:PhysicsInit( SOLID_VPHYSICS )
+	self:SetMoveType( MOVETYPE_VPHYSICS )
+	self:SetSolid( SOLID_VPHYSICS )
 
 	if WireAddon then
 		self.Inputs = WireLib.CreateInputs( self, { "Fire" } )
 	end
 	
-	local phys = self.Entity:GetPhysicsObject()
+	local phys = self:GetPhysicsObject()
 	if (phys:IsValid()) then
 		phys:Wake()
 		phys:EnableGravity(true)
 		phys:EnableDrag(true)
 		phys:EnableCollisions(true)
 	end
-	self.Entity:SetKeyValue("rendercolor", "255 255 255")
-	self.PhysObj = self.Entity:GetPhysicsObject()
+	self:SetKeyValue("rendercolor", "255 255 255")
+	self.PhysObj = self:GetPhysicsObject()
 	
 	--self.val1 = 0
-	--RD_AddResource(self.Entity, "Munitions", 0)
+	--RD_AddResource(self, "Munitions", 0)
 	
 	self.CDL = {}
 	self.CDL[1] = 0
@@ -51,7 +51,7 @@ function ENT:Initialize()
 	self.CDL["8r"] = true
 	self.CDL["9r"] = true
 	self.CDL["10r"] = true
-	self.Entity:SetNetworkedInt("Shots",10)
+	self:SetNetworkedInt("Shots",10)
 	
 end
 
@@ -74,7 +74,7 @@ end
 function ENT:TriggerInput(iname, value)		
 	if (iname == "Fire") then
 		if (value > 0) then
-			self.Entity:HPFire()
+			self:HPFire()
 		end
 	end
 end
@@ -89,12 +89,12 @@ function ENT:Think()
 		if (CurTime() >= self.CDL[n]) then
 			if self.CDL[n.."r"] == false then
 				self.CDL[n.."r"] = true
-				self.Entity:EmitSound("Buttons.snd26")
+				self:EmitSound("Buttons.snd26")
 			end
 			MCount = MCount + 1
 		end
 	end
-	self.Entity:SetShots(MCount)
+	self:SetShots(MCount)
 end
 
 function ENT:PhysicsCollide( data, physobj )
@@ -111,7 +111,7 @@ end
 
 function ENT:Touch( ent )
 	if ent.HasHardpoints then
-		if ent.Cont and ent.Cont:IsValid() then HPLink( ent.Cont, ent.Entity, self.Entity ) end
+		if ent.Cont and ent.Cont:IsValid() then HPLink( ent.Cont, ent.Entity, self ) end
 	end
 end
 
@@ -119,7 +119,7 @@ function ENT:HPFire()
 	if (CurTime() >= self.MCDown) then
 		for n = 1, 10 do
 			if (CurTime() >= self.CDL[n]) then
-				self.Entity:FFire(n)
+				self:FFire(n)
 				return
 			end
 		end
@@ -129,9 +129,9 @@ end
 function ENT:FFire( CCD )
 	local NewShell = ents.Create( "SF-MortarShell" )
 	if ( !NewShell:IsValid() ) then return end
-	local CVel = self.Entity:GetPhysicsObject():GetVelocity():Length()
-	NewShell:SetPos( self.Entity:GetPos() + (self.Entity:GetUp() * 10) + (self.Entity:GetForward() * (115 + CVel)) )
-	NewShell:SetAngles( self.Entity:GetAngles() )
+	local CVel = self:GetPhysicsObject():GetVelocity():Length()
+	NewShell:SetPos( self:GetPos() + (self:GetUp() * 10) + (self:GetForward() * (115 + CVel)) )
+	NewShell:SetAngles( self:GetAngles() )
 	NewShell.SPL = self.SPL
 	NewShell:Spawn()
 	NewShell:Initialize()
@@ -139,11 +139,11 @@ function ENT:FFire( CCD )
 	NewShell:GetPhysicsObject():EnableGravity(true)
 	NewShell:GetPhysicsObject():EnableDrag(true)
 	NewShell:SetOwner(self)
-	NewShell.PhysObj:SetVelocity(self.Entity:GetForward() * 5000)
+	NewShell.PhysObj:SetVelocity(self:GetForward() * 5000)
 	NewShell:Fire("kill", "", 30)
-	NewShell.ParL = self.Entity
+	NewShell.ParL = self
 	--RD_ConsumeResource(self, "Munitions", 1000)
-	self.Entity:EmitSound("Weapon_GrenadeLauncher.Single")
+	self:EmitSound("Weapon_GrenadeLauncher.Single")
 	self.MCDown = CurTime() + 0.1 + math.Rand(0,0.2)
 	self.CDL[CCD] = CurTime() + 6
 	self.CDL[CCD.."r"] = false
@@ -151,7 +151,7 @@ end
 
 function ENT:PreEntityCopy()
 	if WireAddon then
-		duplicator.StoreEntityModifier(self,"WireDupeInfo",WireLib.BuildDupeInfo(self.Entity))
+		duplicator.StoreEntityModifier(self,"WireDupeInfo",WireLib.BuildDupeInfo(self))
 	end
 end
 

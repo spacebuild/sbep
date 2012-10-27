@@ -214,7 +214,7 @@ function SBEPDoc.ReloadDocs()
 	SBEPDoc.DocEnumTable = {}
 	for n,D in ipairs( SBEPDoc.DirTable ) do
 		SBEPDoc.DirEnumTable[ D ] = n
-		SBEPDoc.DocTable[ D ] = file.Find( "sbep_manual/"..D.."/*.txt" )
+		SBEPDoc.DocTable[ D ] = file.Find( "sbep_manual/"..D.."/*.txt", "DATA" )
 		SBEPDoc.DocEnumTable[ D ] = {}
 		for i,F in ipairs( SBEPDoc.DocTable[ D ] ) do
 			SBEPDoc.RebuildTags( D , F )

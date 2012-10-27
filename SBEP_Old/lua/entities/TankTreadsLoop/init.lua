@@ -5,14 +5,14 @@ include( 'shared.lua' )
 
 function ENT:Initialize()
 
-	self.Entity:SetModel( "models/props_phx/construct/metal_plate1.mdl" )
-	self.Entity:SetName("TankTread")
-	self.Entity:PhysicsInit( SOLID_VPHYSICS )
-	self.Entity:SetMoveType( MOVETYPE_VPHYSICS )
-	self.Entity:SetSolid( SOLID_VPHYSICS )
-	--self.Entity:SetMaterial("models/props_combine/combinethumper002")
-	self.Inputs = Wire_CreateInputs( self.Entity, { "MoveSpeed", "HeightOffset", "TrackLength", "SegWidth", "SegHeight", "SegLength", "Radius", "Model" } )
-	--self.Outputs = Wire_CreateOutputs( self.Entity, { "Scroll" })
+	self:SetModel( "models/props_phx/construct/metal_plate1.mdl" )
+	self:SetName("TankTread")
+	self:PhysicsInit( SOLID_VPHYSICS )
+	self:SetMoveType( MOVETYPE_VPHYSICS )
+	self:SetSolid( SOLID_VPHYSICS )
+	--self:SetMaterial("models/props_combine/combinethumper002")
+	self.Inputs = Wire_CreateInputs( self, { "MoveSpeed", "HeightOffset", "TrackLength", "SegWidth", "SegHeight", "SegLength", "Radius", "Model" } )
+	--self.Outputs = Wire_CreateOutputs( self, { "Scroll" })
     
 	self.SWidth = 1
 	self.SHeight = 1
@@ -20,12 +20,12 @@ function ENT:Initialize()
 	self.CSModel = 0
 	self.Radius = 50
 	self.TLength = 300
-    self.Entity:SetLength( self.TLength )
-    self.Entity:SetSegSize( Vector(self.SLength, self.SWidth, self.SHeight) )
-    self.Entity:SetRadius( self.Radius )
-    self.Entity:SetCSModel( self.CSModel )
+    self:SetLength( self.TLength )
+    self:SetSegSize( Vector(self.SLength, self.SWidth, self.SHeight) )
+    self:SetRadius( self.Radius )
+    self:SetCSModel( self.CSModel )
 	
-	local phys = self.Entity:GetPhysicsObject()
+	local phys = self:GetPhysicsObject()
 	if (phys:IsValid()) then
 		phys:Wake()
 		phys:EnableGravity(true)
@@ -34,12 +34,12 @@ function ENT:Initialize()
 		phys:SetMass( 1000 )
 	end
 	
-	self.PhysObj = self.Entity:GetPhysicsObject()
-	self.CAng = self.Entity:GetAngles()
-	self.Entity:StartMotionController()
+	self.PhysObj = self:GetPhysicsObject()
+	self.CAng = self:GetAngles()
+	self:StartMotionController()
 	
 	self.IsTankTrack = true
-	self.PrevPos = self.Entity:GetPos()
+	self.PrevPos = self:GetPos()
 	self.TargetZ = 0
 	self.ZVelocity = 5
 	self.HSpeed = 3
@@ -48,14 +48,14 @@ function ENT:Initialize()
 	self.CSpeed = 0
 	self.HeightOffSet = 0
 	
-	self.FTab = { self.Entity }
+	self.FTab = { self }
 end
 
 function ENT:TriggerInput(iname, value)		
 	
 	if (iname == "TrackLength") then
 		if ( value > 0 and value < 1000 ) then
-			self.Entity:SetLength( value )
+			self:SetLength( value )
 		end
 		
 	elseif (iname == "MoveSpeed") then	
@@ -67,30 +67,30 @@ function ENT:TriggerInput(iname, value)
 	elseif (iname == "SegWidth") then	
 		if ( value > 0 and value < 50 ) then
 			self.SWidth = value
-			self.Entity:SetSegSize( Vector(self.SLength, self.SWidth, self.SHeight) )
+			self:SetSegSize( Vector(self.SLength, self.SWidth, self.SHeight) )
 		end
 		
 	elseif (iname == "SegHeight") then	
 		if ( value > 0 and value < 50 ) then
 			self.SHeight = value
-			self.Entity:SetSegSize( Vector(self.SLength, self.SWidth, self.SHeight) )
+			self:SetSegSize( Vector(self.SLength, self.SWidth, self.SHeight) )
 		end
 		
 	elseif (iname == "SegLength") then	
 		if ( value > 0 and value < 50 ) then
 			self.SLength = value
-			self.Entity:SetSegSize( Vector(self.SLength, self.SWidth, self.SHeight) )
+			self:SetSegSize( Vector(self.SLength, self.SWidth, self.SHeight) )
 		end
 
 	elseif (iname == "Radius") then	
 		if ( value > 0 ) then
-			self.Entity:SetRadius( value )
+			self:SetRadius( value )
 		end
 		
 	elseif (iname == "Model") then	
 		if ( value > 0 ) then
 			self.CSModel = value
-			self.Entity:SetCSModel( self.CSModel )
+			self:SetCSModel( self.CSModel )
 		end
 
 	end
@@ -130,8 +130,8 @@ function ENT:Think()
 	--print(self.CSpeed..", "..self.DSpeed)
 
 	local trace = {}
-	trace.start = self.Entity:GetPos()
-	trace.endpos = self.Entity:GetPos() + (self.Entity:GetUp() * (-self.Radius - (self.HeightOffSet * 2) - 200))
+	trace.start = self:GetPos()
+	trace.endpos = self:GetPos() + (self:GetUp() * (-self.Radius - (self.HeightOffSet * 2) - 200))
 	trace.filter = self.FTab
 	--trace.mask = -1
 	local tr = util.TraceLine( trace )
@@ -141,18 +141,18 @@ function ENT:Think()
 			self.Hovering = true
 			self.TargetZ = tr.HitPos.z + self.Radius + (self.SHeight * 10) + self.HeightOffSet
 			
-			local Speed = self.CSpeed * self.Entity:GetPhysicsObject():GetMass()
+			local Speed = self.CSpeed * self:GetPhysicsObject():GetMass()
 			
-			local physi = self.Entity:GetPhysicsObject()
+			local physi = self:GetPhysicsObject()
 			
 			physi:SetVelocity( physi:GetVelocity() * 0.9 )
-			physi:ApplyForceCenter( self.Entity:GetForward() * Speed )
+			physi:ApplyForceCenter( self:GetForward() * Speed )
 		end
 	else
 		self.Hovering = false
 	end
 	
-	self.Entity:NextThink( CurTime() + 0.1 ) 
+	self:NextThink( CurTime() + 0.1 ) 
 	return true
 
 end
@@ -175,8 +175,8 @@ function ENT:SpawnFunction( ply, tr )
 end
 
 function ENT:Use( activator, caller )
-	local CEnts = constraint.GetAllConstrainedEntities( self.Entity )
-	self.FTab = { self.Entity }
+	local CEnts = constraint.GetAllConstrainedEntities( self )
+	self.FTab = { self }
 	for _, constr in pairs( CEnts ) do
 		table.insert( self.FTab, constr.Entity )
 	end
@@ -184,7 +184,7 @@ end
 
 function ENT:Touch( ent )
 	if self.Linking and ent:IsValid() and ent.IsTankTrack then
-		ent:SetCont( self.Entity )
+		ent:SetCont( self )
 	end
 end
 
@@ -195,7 +195,7 @@ function ENT:PhysicsSimulate( phys, deltatime )
 	if ( self.ZVelocity ~= 0 ) then
 	
 		self.TargetZ = self.TargetZ + (self.ZVelocity * deltatime * self.HSpeed)
-		self.Entity:GetPhysicsObject():Wake()
+		self:GetPhysicsObject():Wake()
 	
 	end
 	
@@ -255,7 +255,7 @@ function ENT:PreEntityCopy()
 	end
 	
 	if WireAddon then
-		DI.WireData = WireLib.BuildDupeInfo( self.Entity )
+		DI.WireData = WireLib.BuildDupeInfo( self )
 	end
 	
 	duplicator.StoreEntityModifier(self, "SBEPTankTread", DI)
@@ -269,10 +269,10 @@ function ENT:PostEntityPaste(pl, Ent, CreatedEntities)
 		self[ P ] = q
 	end
 	
-	self.Entity:SetCSModel( self.CSModel )
-	self.Entity:SetSegSize( Vector(self.SLength, self.SWidth, self.SHeight) )
-	self.Entity:SetLength( self.TLength )
-    self.Entity:SetRadius( self.Radius )
+	self:SetCSModel( self.CSModel )
+	self:SetSegSize( Vector(self.SLength, self.SWidth, self.SHeight) )
+	self:SetLength( self.TLength )
+    self:SetRadius( self.Radius )
 	
 	if(Ent.EntityMods and Ent.EntityMods.SBEPTankTread.WireData) then
 		WireLib.ApplyDupeInfo( pl, Ent, Ent.EntityMods.SBEPTankTread.WireData, function(id) return CreatedEntities[id] end)

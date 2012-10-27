@@ -5,22 +5,22 @@ include( 'shared.lua' )
 
 function ENT:Initialize()
 
-	self.Entity:SetModel( "models/jaanus/wiretool/wiretool_range.mdl" ) 
-	self.Entity:SetName("NCController")
-	self.Entity:PhysicsInit( SOLID_VPHYSICS )
-	self.Entity:SetMoveType( MOVETYPE_VPHYSICS )
-	self.Entity:SetSolid( SOLID_VPHYSICS )
+	self:SetModel( "models/jaanus/wiretool/wiretool_range.mdl" ) 
+	self:SetName("NCController")
+	self:PhysicsInit( SOLID_VPHYSICS )
+	self:SetMoveType( MOVETYPE_VPHYSICS )
+	self:SetSolid( SOLID_VPHYSICS )
 
-	local phys = self.Entity:GetPhysicsObject()
+	local phys = self:GetPhysicsObject()
 	if (phys:IsValid()) then
 		phys:Wake()
 		phys:EnableGravity(false)
 		phys:EnableDrag(false)
 		phys:EnableCollisions(true)
 	end
-	self.Entity:StartMotionController()
-	self.PhysObj = self.Entity:GetPhysicsObject()
-	self.Inputs = Wire_CreateInputs( self.Entity, { "Priority" } )
+	self:StartMotionController()
+	self.PhysObj = self:GetPhysicsObject()
+	self.Inputs = Wire_CreateInputs( self, { "Priority" } )
 	self.CDown = 0
 end
 
@@ -66,20 +66,20 @@ end
 
 function ENT:Touch( ent )
 	if (ent:IsVehicle()) then
-		ent.ExitPoint = self.Entity
+		ent.ExitPoint = self
 		self.Vec = ent
 	end
 	if (ent.Bay) then
 		local closest
 		local distance = 100000
 		for k,v in pairs(ent.Bay) do
-			local tdis = self.Entity:GetPos():Distance(ent:LocalToWorld(v.pos))
+			local tdis = self:GetPos():Distance(ent:LocalToWorld(v.pos))
 			if (!v.EP or tdis < distance) then
 				distance = tdis
 				closest = v
 			end
 		end
-		closest.EP = self.Entity
+		closest.EP = self
 	end
 end
 
@@ -102,7 +102,7 @@ function ENT:PreEntityCopy()
 	end
 	
 	if WireAddon then
-		DI.WireData = WireLib.BuildDupeInfo( self.Entity )
+		DI.WireData = WireLib.BuildDupeInfo( self )
 	end
 	
 	duplicator.StoreEntityModifier(self, "SBEPEPoint", DI)
@@ -114,7 +114,7 @@ function ENT:PostEntityPaste(pl, Ent, CreatedEntities)
 
 	if DI.Vec then
 		self.Vec = CreatedEntities[ DI.Vec ]
-		self.Vec.ExitPoint = self.Entity
+		self.Vec.ExitPoint = self
 	end
 	
 	if(Ent.EntityMods and Ent.EntityMods.SBEPEPoint.WireData) then

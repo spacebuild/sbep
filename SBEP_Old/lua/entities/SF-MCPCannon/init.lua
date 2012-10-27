@@ -6,28 +6,28 @@ util.PrecacheSound( "SB/Charging.wav" )
 
 function ENT:Initialize()
 
-	self.Entity:SetModel( "models/Slyfo/mcpcannon.mdl" ) 
-	self.Entity:SetName("MCP Cannon")
-	self.Entity:PhysicsInit( SOLID_VPHYSICS )
-	self.Entity:SetMoveType( MOVETYPE_VPHYSICS )
-	self.Entity:SetSolid( SOLID_VPHYSICS )
+	self:SetModel( "models/Slyfo/mcpcannon.mdl" ) 
+	self:SetName("MCP Cannon")
+	self:PhysicsInit( SOLID_VPHYSICS )
+	self:SetMoveType( MOVETYPE_VPHYSICS )
+	self:SetSolid( SOLID_VPHYSICS )
 
 	if WireAddon then
 		self.Inputs = WireLib.CreateInputs( self, { "Fire" } )
 	end
 	
-	local phys = self.Entity:GetPhysicsObject()
+	local phys = self:GetPhysicsObject()
 	if (phys:IsValid()) then
 		phys:Wake()
 		phys:EnableGravity(true)
 		phys:EnableDrag(true)
 		phys:EnableCollisions(true)
 	end
-	self.Entity:SetKeyValue("rendercolor", "255 255 255")
-	self.PhysObj = self.Entity:GetPhysicsObject()
+	self:SetKeyValue("rendercolor", "255 255 255")
+	self.PhysObj = self:GetPhysicsObject()
 	
 	--self.val1 = 0
-	--RD_AddResource(self.Entity, "Munitions", 0)
+	--RD_AddResource(self, "Munitions", 0)
 	
 	self.CDL = {}
 	self.CDL[1] = 0
@@ -38,7 +38,7 @@ function ENT:Initialize()
 	self.CDL["2r"] = true
 	self.CDL["3r"] = true
 	self.CDL["4r"] = true
-	self.Entity:SetNetworkedInt("Shots",4)
+	self:SetNetworkedInt("Shots",4)
 
 
 end
@@ -62,7 +62,7 @@ end
 function ENT:TriggerInput(iname, value)		
 	if (iname == "Fire") then
 		if (value > 0) then
-			self.Entity:HPFire()
+			self:HPFire()
 		end
 
 	end
@@ -78,12 +78,12 @@ function ENT:Think()
 		if (CurTime() >= self.CDL[n]) then
 			if self.CDL[n.."r"] == false then
 				self.CDL[n.."r"] = true
-				self.Entity:EmitSound("Buttons.snd26")
+				self:EmitSound("Buttons.snd26")
 			end
 			MCount = MCount + 1
 		end
 	end
-	self.Entity:SetShots(MCount)
+	self:SetShots(MCount)
 end
 
 function ENT:PhysicsCollide( data, physobj )
@@ -100,7 +100,7 @@ end
 
 function ENT:Touch( ent )
 	if ent.HasHardpoints then
-		if ent.Cont and ent.Cont:IsValid() then HPLink( ent.Cont, ent.Entity, self.Entity ) end
+		if ent.Cont and ent.Cont:IsValid() then HPLink( ent.Cont, ent.Entity, self ) end
 	end
 end
 
@@ -108,7 +108,7 @@ function ENT:HPFire()
 	if (CurTime() >= self.MCDown) then
 		for n = 1, 4 do
 			if (CurTime() >= self.CDL[n]) then
-				self.Entity:FFire(n)
+				self:FFire(n)
 				return
 			end
 		end
@@ -118,36 +118,36 @@ end
 function ENT:FFire( CCD )
 	local NewShell = ents.Create( "SF-MCPShell" )
 	if ( !NewShell:IsValid() ) then return end
-	local CVel = self.Entity:GetPhysicsObject():GetVelocity():Length()
-	NewShell:SetPos( self.Entity:GetPos() + (self.Entity:GetUp() * 10) + (self.Entity:GetForward() * (160 + CVel)) )
-	NewShell:SetAngles( self.Entity:GetForward():Angle() )
+	local CVel = self:GetPhysicsObject():GetVelocity():Length()
+	NewShell:SetPos( self:GetPos() + (self:GetUp() * 10) + (self:GetForward() * (160 + CVel)) )
+	NewShell:SetAngles( self:GetForward():Angle() )
 	NewShell.SPL = self.SPL
 	NewShell:Spawn()
 	NewShell:Initialize()
 	NewShell:Activate()
 	NewShell:SetOwner(self)
-	NewShell.PhysObj:SetVelocity(self.Entity:GetForward() * 1000)
+	NewShell.PhysObj:SetVelocity(self:GetForward() * 1000)
 	NewShell:Fire("kill", "", 30)
-	NewShell.ParL = self.Entity
+	NewShell.ParL = self
 	--RD_ConsumeResource(self, "Munitions", 1000)
 	self.CDL[CCD] = CurTime() + 9
 	self.CDL[CCD.."r"] = false
-	self.Entity:EmitSound("Buttons.snd24")
+	self:EmitSound("Buttons.snd24")
 	self.MCDown = CurTime() + 0.5
-	local phys = self.Entity:GetPhysicsObject()  	
+	local phys = self:GetPhysicsObject()  	
 	if (phys:IsValid()) then  		
-		phys:ApplyForceCenter( self.Entity:GetForward() * -1000 ) 
+		phys:ApplyForceCenter( self:GetForward() * -1000 ) 
 	end 
 	
 	local effectdata = EffectData()
-	effectdata:SetOrigin(self.Entity:GetPos() +  self.Entity:GetForward() * 150)
-	effectdata:SetStart(self.Entity:GetPos() +  self.Entity:GetForward() * 150)
+	effectdata:SetOrigin(self:GetPos() +  self:GetForward() * 150)
+	effectdata:SetStart(self:GetPos() +  self:GetForward() * 150)
 	util.Effect( "Explosion", effectdata )
 end
 
 function ENT:PreEntityCopy()
 	if WireAddon then
-		duplicator.StoreEntityModifier(self,"WireDupeInfo",WireLib.BuildDupeInfo(self.Entity))
+		duplicator.StoreEntityModifier(self,"WireDupeInfo",WireLib.BuildDupeInfo(self))
 	end
 end
 

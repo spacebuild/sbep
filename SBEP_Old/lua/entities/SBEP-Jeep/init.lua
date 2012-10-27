@@ -6,23 +6,23 @@ include( 'shared.lua' )
 
 function ENT:Initialize()
 	
-	self.Entity:SetModel( "models/Spacebuild/medbridge2_doublehull_elevatorclamp.mdl" ) 
-	self.Entity:SetName("Jalopy")
-	self.Entity:PhysicsInit( SOLID_VPHYSICS )
-	self.Entity:SetMoveType( MOVETYPE_VPHYSICS )
-	self.Entity:SetSolid( SOLID_VPHYSICS )
-	--self.Entity:SetMaterial("models/props_wasteland/tugboat02")
-	--self.Inputs = Wire_CreateInputs( self.Entity, { "Activate" } )
+	self:SetModel( "models/Spacebuild/medbridge2_doublehull_elevatorclamp.mdl" ) 
+	self:SetName("Jalopy")
+	self:PhysicsInit( SOLID_VPHYSICS )
+	self:SetMoveType( MOVETYPE_VPHYSICS )
+	self:SetSolid( SOLID_VPHYSICS )
+	--self:SetMaterial("models/props_wasteland/tugboat02")
+	--self.Inputs = Wire_CreateInputs( self, { "Activate" } )
 
-	local phys = self.Entity:GetPhysicsObject()
+	local phys = self:GetPhysicsObject()
 	if (phys:IsValid()) then
 		phys:Wake()
 		phys:EnableGravity(false)
 		phys:EnableDrag(false)
 		phys:EnableCollisions(false)
 	end
-	self.Entity:StartMotionController()
-	self.PhysObj = self.Entity:GetPhysicsObject()
+	self:StartMotionController()
+	self.PhysObj = self:GetPhysicsObject()
 
 
 	self.Speed = 0
@@ -134,7 +134,7 @@ function ENT:Think()
 			
 			if self.CPL:KeyDown( IN_JUMP ) then
 				if self.Pod.Pod and self.Pod.Pod:IsValid() then
-					self.Entity:HPRelease()
+					self:HPRelease()
 				end
 			end
 					
@@ -161,10 +161,10 @@ function ENT:Think()
 		end
 		
 	else
-		self.Entity:Remove()
+		self:Remove()
 	end
 	
-	self.Entity:NextThink( CurTime() + 0.01 ) 
+	self:NextThink( CurTime() + 0.01 ) 
 	return true
 end
 
@@ -203,7 +203,7 @@ function ENT:HPFire()
 		end
 	end
 	
-	self.Entity:HPRelease()
+	self:HPRelease()
 end
 
 function ENT:HPRelease()
@@ -243,7 +243,7 @@ function ENT:PreEntityCopy()
 	end
 	
 	if WireAddon then
-		DI.WireData = WireLib.BuildDupeInfo( self.Entity )
+		DI.WireData = WireLib.BuildDupeInfo( self )
 	end
 	
 	duplicator.StoreEntityModifier(self, "SBEPJeep", DI)

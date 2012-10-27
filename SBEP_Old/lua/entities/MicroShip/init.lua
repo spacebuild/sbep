@@ -6,13 +6,13 @@ util.PrecacheSound( "SB/Charging.wav" )
 
 function ENT:Initialize()
 
-	self.Entity:SetModel( "models/props_combine/headcrabcannister01a_skybox.mdl" ) 
-	self.Entity:SetName("MicroShip")
-	self.Entity:PhysicsInit( SOLID_VPHYSICS )
-	self.Entity:SetMoveType( MOVETYPE_VPHYSICS )
-	self.Entity:SetSolid( SOLID_VPHYSICS )
+	self:SetModel( "models/props_combine/headcrabcannister01a_skybox.mdl" ) 
+	self:SetName("MicroShip")
+	self:PhysicsInit( SOLID_VPHYSICS )
+	self:SetMoveType( MOVETYPE_VPHYSICS )
+	self:SetSolid( SOLID_VPHYSICS )
 	
-	local phys = self.Entity:GetPhysicsObject()
+	local phys = self:GetPhysicsObject()
 	if (phys:IsValid()) then
 		phys:Wake()
 		phys:EnableGravity(false)
@@ -21,10 +21,10 @@ function ENT:Initialize()
 		phys:SetMass( 1000 )
 	end
 	
-	self.Entity:StartMotionController()
+	self:StartMotionController()
 	
-	self.Entity:SetKeyValue("rendercolor", "255 255 255")
-	self.PhysObj = self.Entity:GetPhysicsObject()
+	self:SetKeyValue("rendercolor", "255 255 255")
+	self.PhysObj = self:GetPhysicsObject()
 		
 	self.W = 0
 	self.S = 0
@@ -125,7 +125,7 @@ function ENT:Think()
 		Phys:AddAngleVelocity((Phys:GetAngleVelocity() * -0.1) + RAng)
 	end
 	
-	self.Entity:NextThink( CurTime() + 0.01 ) 
+	self:NextThink( CurTime() + 0.01 ) 
 	return true
 end
 
@@ -159,7 +159,7 @@ end
 function ENT:BuildClientModel(Scale)
 	if !self.Building then
 		--self.Building = true
-		local CEnts = constraint.GetAllConstrainedEntities( self.Entity )
+		local CEnts = constraint.GetAllConstrainedEntities( self )
 		for k,e in pairs(CEnts) do
 			if e and e:IsValid() and e ~= self then
 				--local V,A = WorldToLocal( e:GetPos(), e:GetAngles(), self:GetPos(), self:GetAngles() ) --Why doesn't this work anymore?

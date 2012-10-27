@@ -6,29 +6,29 @@ util.PrecacheSound( "SB/Gattling2.wav" )
 
 function ENT:Initialize()
 
-	self.Entity:SetModel( "models/Slyfo/flakvierling_blasternorm.mdl" ) 
-	self.Entity:SetName("AA-Blaster")
-	self.Entity:PhysicsInit( SOLID_VPHYSICS )
-	self.Entity:SetMoveType( MOVETYPE_VPHYSICS )
-	self.Entity:SetSolid( SOLID_VPHYSICS )
+	self:SetModel( "models/Slyfo/flakvierling_blasternorm.mdl" ) 
+	self:SetName("AA-Blaster")
+	self:PhysicsInit( SOLID_VPHYSICS )
+	self:SetMoveType( MOVETYPE_VPHYSICS )
+	self:SetSolid( SOLID_VPHYSICS )
 
 	if WireAddon then
 		self.Inputs = WireLib.CreateInputs( self, { "Fire" } )
 	end
 
-	local phys = self.Entity:GetPhysicsObject()
+	local phys = self:GetPhysicsObject()
 	if (phys:IsValid()) then
 		phys:Wake()
 		phys:EnableGravity(true)
 		phys:EnableDrag(true)
 		phys:EnableCollisions(true)
 	end
-	self.Entity:SetKeyValue("rendercolor", "255 255 255")
-	self.PhysObj = self.Entity:GetPhysicsObject()
+	self:SetKeyValue("rendercolor", "255 255 255")
+	self.PhysObj = self:GetPhysicsObject()
 	self.CDown = 0
 	
 	--self.val1 = 0
-	--RD_AddResource(self.Entity, "Munitions", 0)
+	--RD_AddResource(self, "Munitions", 0)
 
 
 end
@@ -68,13 +68,13 @@ function ENT:Think()
 	
 	if (self.Active == true or self.FTime > CurTime() ) and CurTime() >= self.CDown then
 	
-		local vStart = self.Entity:GetPos()
-		local vForward = self.Entity:GetForward()
+		local vStart = self:GetPos()
+		local vForward = self:GetForward()
 		
 		local Bullet = {}
 		Bullet.Num = 1
-		Bullet.Src = self.Entity:GetPos()
-		Bullet.Dir = self.Entity:GetForward() --Position * -1
+		Bullet.Src = self:GetPos()
+		Bullet.Dir = self:GetForward() --Position * -1
 		Bullet.Spread = Vector( 0.01, 0.01, 0.01 )
 		Bullet.Tracer = 1
 		Bullet.Force = 100
@@ -82,7 +82,7 @@ function ENT:Think()
 		Bullet.Attacker = self.SPL
 		Bullet.Damage = 100
 		Bullet.Callback = function (attacker, tr, dmginfo)
-			util.BlastDamage(self.Entity, self.Entity, tr.HitPos, 100, 100)
+			util.BlastDamage(self, self, tr.HitPos, 100, 100)
 			gcombat.hcgexplode( tr.HitPos, 100, math.Rand(150, 300), 8)
 			local effectdata = EffectData()
 			effectdata:SetOrigin(tr.HitPos)
@@ -93,11 +93,11 @@ function ENT:Think()
 				
 		self:FireBullets(Bullet)
 				
-		self.Entity:EmitSound("SB/Gattling2.wav", 400)
+		self:EmitSound("SB/Gattling2.wav", 400)
 		
 		self.CDown = CurTime() + 0.3
 	end
-	self.Entity:NextThink( CurTime() + 0.01 )
+	self:NextThink( CurTime() + 0.01 )
 	return true
 end
 
@@ -115,7 +115,7 @@ end
 
 function ENT:Touch( ent )
 	if ent.HasHardpoints then
-		if ent.Cont and ent.Cont:IsValid() then HPLink( ent.Cont, ent.Entity, self.Entity ) end
+		if ent.Cont and ent.Cont:IsValid() then HPLink( ent.Cont, ent.Entity, self ) end
 	end
 end
 
@@ -125,7 +125,7 @@ end
 
 function ENT:PreEntityCopy()
 	if WireAddon then
-		duplicator.StoreEntityModifier(self,"WireDupeInfo",WireLib.BuildDupeInfo(self.Entity))
+		duplicator.StoreEntityModifier(self,"WireDupeInfo",WireLib.BuildDupeInfo(self))
 	end
 end
 

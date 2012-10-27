@@ -6,13 +6,13 @@ include( 'shared.lua' )
 
 function ENT:Initialize()
 	
-	self.Entity:SetModel( "models/Slyfo_2/miscequipmentradiodish.mdl" ) 
-	self.Entity:SetName( "Sensor" )
-	self.Entity:PhysicsInit( SOLID_VPHYSICS )
-	self.Entity:SetMoveType( MOVETYPE_VPHYSICS )
-	self.Entity:SetSolid( SOLID_VPHYSICS )
+	self:SetModel( "models/Slyfo_2/miscequipmentradiodish.mdl" ) 
+	self:SetName( "Sensor" )
+	self:PhysicsInit( SOLID_VPHYSICS )
+	self:SetMoveType( MOVETYPE_VPHYSICS )
+	self:SetSolid( SOLID_VPHYSICS )
 
-	local phys = self.Entity:GetPhysicsObject()
+	local phys = self:GetPhysicsObject()
 	if (phys:IsValid()) then
 		phys:Wake()
 		phys:EnableGravity(true)
@@ -20,8 +20,8 @@ function ENT:Initialize()
 		phys:EnableCollisions(true)
 		phys:SetMass(5)
 	end
-	self.Entity:StartMotionController()
-	self.PhysObj = self.Entity:GetPhysicsObject()
+	self:StartMotionController()
+	self.PhysObj = self:GetPhysicsObject()
 	
 	if WireAddon then
 		local V,A,N,E,S = "VECTOR","ANGLE","NORMAL","ENTITY","STRING"

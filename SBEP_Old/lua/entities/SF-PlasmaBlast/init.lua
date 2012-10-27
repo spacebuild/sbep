@@ -5,13 +5,13 @@ include( 'shared.lua' )
 
 function ENT:Initialize()
 
-	self.Entity:SetModel( "models/Items/combine_rifle_ammo01.mdl" )
-	self.Entity:SetName("Plasma Burst")
-	self.Entity:PhysicsInit( SOLID_VPHYSICS )
-	self.Entity:SetMoveType( MOVETYPE_VPHYSICS )
-	self.Entity:SetSolid( SOLID_VPHYSICS )
+	self:SetModel( "models/Items/combine_rifle_ammo01.mdl" )
+	self:SetName("Plasma Burst")
+	self:PhysicsInit( SOLID_VPHYSICS )
+	self:SetMoveType( MOVETYPE_VPHYSICS )
+	self:SetSolid( SOLID_VPHYSICS )
 	
-	local phys = self.Entity:GetPhysicsObject()
+	local phys = self:GetPhysicsObject()
 	if (phys:IsValid()) then
 		phys:Wake()
 		phys:EnableGravity(true)
@@ -24,10 +24,10 @@ function ENT:Initialize()
 	self.cbt.armor = 500
 	self.cbt.maxhealth = 5000
 		
-    self.Entity:SetKeyValue("rendercolor", "0 0 0")
-	self.PhysObj = self.Entity:GetPhysicsObject()
-	self.CAng = self.Entity:GetAngles()
-	--util.SpriteTrail( self.Entity, 0, Color(50,50,200,50), false, 10, 0, 1, 1, "models/effects/splodearc_sheet.vmt" ) --"trails/smoke.vmt"
+    self:SetKeyValue("rendercolor", "0 0 0")
+	self.PhysObj = self:GetPhysicsObject()
+	self.CAng = self:GetAngles()
+	--util.SpriteTrail( self, 0, Color(50,50,200,50), false, 10, 0, 1, 1, "models/effects/splodearc_sheet.vmt" ) --"trails/smoke.vmt"
 
 	self.Power = self.Power or 1
 end
@@ -35,7 +35,7 @@ end
 function ENT:PhysicsUpdate()
 
 	if(self.Exploded) then
-		self.Entity:Remove()
+		self:Remove()
 		return
 	end
 
@@ -45,7 +45,7 @@ function ENT:Think()
 	
 	if (self.PreLaunch == false) then
 		self.PreLaunch = true
-		local phys = self.Entity:GetPhysicsObject()
+		local phys = self:GetPhysicsObject()
 		if (phys:IsValid()) then
 			phys:Wake()
 			phys:EnableGravity(true)
@@ -54,43 +54,43 @@ function ENT:Think()
 			phys:EnableMotion(true)
 		end
 		 
-		--self.PhysObj:SetVelocity(self.Entity:GetForward()*3100)
+		--self.PhysObj:SetVelocity(self:GetForward()*3100)
 
 		self.PreLaunch = true
 	end
 	
 	if (self.Exploded ~= true) then
-		self.CAng = self.Entity:GetAngles()
+		self.CAng = self:GetAngles()
 	end
 	
 	local trace = {}
-	trace.start = self.Entity:GetPos()
-	trace.endpos = self.Entity:GetPos() + (self.Entity:GetForward() * 300)
-	trace.filter = self.Entity
+	trace.start = self:GetPos()
+	trace.endpos = self:GetPos() + (self:GetForward() * 300)
+	trace.filter = self
 	local tr = util.TraceLine( trace )
 	if !tr.Hit then
-		self.Entity:SetPos(self.Entity:GetPos() + self.Entity:GetForward() * 300)
+		self:SetPos(self:GetPos() + self:GetForward() * 300)
 	else
 		if tr.HitSky then
-			self.Entity:Remove()
+			self:Remove()
 		else
-			self.PhysObj:SetVelocity(self.Entity:GetForward()*3100)
+			self.PhysObj:SetVelocity(self:GetForward()*3100)
 		end
 	end
 
-	self.Entity:NextThink( CurTime() + 0.01 )
+	self:NextThink( CurTime() + 0.01 )
 	return true
 end
 
 function ENT:PhysicsCollide( data, physobj )
 	if(!self.Exploded) then
-		self.Entity:GoBang()
+		self:GoBang()
 	end
 end
 
 function ENT:OnTakeDamage( dmginfo )
 	if(!self.Exploded) then
-		--self.Entity:GoBang()
+		--self:GoBang()
 	end
 end
 
@@ -100,15 +100,15 @@ end
 
 function ENT:GoBang()
 	self.Exploded = true
-	util.BlastDamage(self.Entity, self.Entity, self.Entity:GetPos(), self.Power * 2, self.Power * 1.5)
-	gcombat.nrgexplode( self.Entity:GetPos(),  self.Power * 1.5, math.Rand(self.Power, self.Power * 5), 8)
+	util.BlastDamage(self, self, self:GetPos(), self.Power * 2, self.Power * 1.5)
+	gcombat.nrgexplode( self:GetPos(),  self.Power * 1.5, math.Rand(self.Power, self.Power * 5), 8)
 
-	self.Entity:EmitSound("WeaponDissolve.Dissolve")
+	self:EmitSound("WeaponDissolve.Dissolve")
 	
 	local effectdata = EffectData()
-	effectdata:SetOrigin(self.Entity:GetPos())
-	effectdata:SetStart(self.Entity:GetPos())
-	effectdata:SetAngle(self.Entity:GetAngles())
+	effectdata:SetOrigin(self:GetPos())
+	effectdata:SetStart(self:GetPos())
+	effectdata:SetAngle(self:GetAngles())
 	effectdata:SetScale(self.Power)
 	util.Effect( "PlasmaImpact", effectdata )
 end

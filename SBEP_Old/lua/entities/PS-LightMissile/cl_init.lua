@@ -36,17 +36,17 @@ function ENT:Draw()
 	local ESA2 = math.sin(math.rad(self.ESin2)) * 60
 	
 		
-	self.Entity:DrawModel()
+	self:DrawModel()
 	
 	render.SetMaterial( self.Matt )	
 	local color = Color( 190, 210, 255, 255 )
 	if self:GetArmed() then
 		local Flare = self.FSize * 0.15
-		render.DrawSprite( (self.Entity:GetPos() + self:GetForward() * -35), 100 * Flare, (400 + ESA1) * Flare, color )
-		render.DrawSprite( (self.Entity:GetPos() + self:GetForward() * -35), (400 - ESA1) * Flare, 100 * Flare, color )
-		render.DrawSprite( (self.Entity:GetPos() + self:GetForward() * -35), (200 + ESA2) * Flare, (200 + ESA2) * Flare, color )
-		--render.DrawSprite( self.Entity:GetPos() + self.Entity:GetRight() * 100 + self.Entity:GetForward() * 40, 500, 500, color )
-		--render.DrawSprite( self.Entity:GetPos() + self.Entity:GetRight() * 100 + self.Entity:GetForward() * -40, 500, 500, color )
+		render.DrawSprite( (self:GetPos() + self:GetForward() * -35), 100 * Flare, (400 + ESA1) * Flare, color )
+		render.DrawSprite( (self:GetPos() + self:GetForward() * -35), (400 - ESA1) * Flare, 100 * Flare, color )
+		render.DrawSprite( (self:GetPos() + self:GetForward() * -35), (200 + ESA2) * Flare, (200 + ESA2) * Flare, color )
+		--render.DrawSprite( self:GetPos() + self:GetRight() * 100 + self:GetForward() * 40, 500, 500, color )
+		--render.DrawSprite( self:GetPos() + self:GetRight() * 100 + self:GetForward() * -40, 500, 500, color )
 		
 		self.FSize = math.Approach(self.FSize, 5, 1)
 		local FS2 = self.FSize * 1.2
@@ -63,7 +63,7 @@ function ENT:Think()
 		
 			local dlight = DynamicLight( self:EntIndex() )
 			if ( dlight ) then
-				--local r, g, b, a = self:GetColor()
+				--local c = self:GetColor();  local r,g,b,a = c.r, c.g, c.b, c.a;
 				dlight.Pos = self:GetPos() + self:GetRight() * 50
 				dlight.r = 190
 				dlight.g = 210

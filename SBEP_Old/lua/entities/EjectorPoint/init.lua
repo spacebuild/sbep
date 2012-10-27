@@ -5,22 +5,22 @@ include( 'shared.lua' )
 
 function ENT:Initialize()
 
-	self.Entity:SetModel( "models/jaanus/wiretool/wiretool_range.mdl" ) 
-	self.Entity:SetName("NCController")
-	self.Entity:PhysicsInit( SOLID_VPHYSICS )
-	self.Entity:SetMoveType( MOVETYPE_VPHYSICS )
-	self.Entity:SetSolid( SOLID_VPHYSICS )
+	self:SetModel( "models/jaanus/wiretool/wiretool_range.mdl" ) 
+	self:SetName("NCController")
+	self:PhysicsInit( SOLID_VPHYSICS )
+	self:SetMoveType( MOVETYPE_VPHYSICS )
+	self:SetSolid( SOLID_VPHYSICS )
 
-	local phys = self.Entity:GetPhysicsObject()
+	local phys = self:GetPhysicsObject()
 	if (phys:IsValid()) then
 		phys:Wake()
 		phys:EnableGravity(false)
 		phys:EnableDrag(false)
 		phys:EnableCollisions(true)
 	end
-	self.Entity:StartMotionController()
-	self.PhysObj = self.Entity:GetPhysicsObject()
-	self.Inputs = Wire_CreateInputs( self.Entity, { "Launch", "Velocity" } )
+	self:StartMotionController()
+	self.PhysObj = self:GetPhysicsObject()
+	self.Inputs = Wire_CreateInputs( self, { "Launch", "Velocity" } )
 	
 	self.Velocity = 2000
 	
@@ -47,7 +47,7 @@ function ENT:TriggerInput(iname, value)
 	
 	if (iname == "Launch") then
 		if (value >= 0) then
-			self.Entity:Launch()
+			self:Launch()
 		end
 	elseif (iname == "Velocity") then
 		self.Velocity = value
@@ -60,7 +60,7 @@ function ENT:Think()
 		local Ply = self.Vec:GetPassenger()
 		if Ply and Ply:IsValid() then
 			if (Ply:KeyDown( IN_RELOAD ) and Ply:KeyDown( IN_DUCK )) then
-				self.Entity:Launch()
+				self:Launch()
 			end
 		end
 	end
@@ -88,7 +88,7 @@ end
 
 function ENT:Launch( )
 	if self.Vec and self.Vec:IsValid() then
-		local EPP = self.Entity:GetPos()
+		local EPP = self:GetPos()
 		local VP = self.Vec:GetPos()
 		local Dist = EPP:Distance(VP)
 		if Dist <= 3500 then
@@ -100,8 +100,8 @@ function ENT:Launch( )
 				NPod:SetKeyValue("vehiclescript", "scripts/vehicles/prisoner_pod.txt")
 				NPod:SetKeyValue("limitview", 0)
 				--NPod:SetMembers(HandleAnimation, HandleSBMPSitAnimation)
-				NPod:SetPos( self.Entity:GetPos() + self.Entity:GetUp() * 50 )
-				NPod:SetAngles( self.Entity:GetAngles() )
+				NPod:SetPos( self:GetPos() + self:GetUp() * 50 )
+				NPod:SetAngles( self:GetAngles() )
 				NPod:Spawn()
 				NPod:Activate()
 				
@@ -114,7 +114,7 @@ function ENT:Launch( )
 				local RTT = self.Velocity * 0.001
 				RockTrail:Fire("kill", "", RTT)
 				
-				NPod:SetSkin(self.Entity:GetSkin())
+				NPod:SetSkin(self:GetSkin())
 				
 				local TB = NPod:GetTable()
 				TB.HandleAnimation = function (vec, ply)
@@ -122,13 +122,13 @@ function ENT:Launch( )
 				end 
 				NPod:SetTable(TB)
 				
-				local NC = constraint.NoCollide(self.Entity, NPod, 0, 0)
+				local NC = constraint.NoCollide(self, NPod, 0, 0)
 				NC = constraint.NoCollide(self.Vec, NPod, 0, 0)
 				
 				Ply:ExitVehicle()
 				Ply:EnterVehicle( NPod )
 				local phy = NPod:GetPhysicsObject()
-				phy:SetVelocity(self.Entity:GetUp() * self.Velocity)
+				phy:SetVelocity(self:GetUp() * self.Velocity)
 				NPod:Fire("kill", "", 15)
 				
 			end
@@ -144,7 +144,7 @@ function ENT:PreEntityCopy()
 	end
 	
 	if WireAddon then
-		DI.WireData = WireLib.BuildDupeInfo( self.Entity )
+		DI.WireData = WireLib.BuildDupeInfo( self )
 	end
 	
 	duplicator.StoreEntityModifier(self, "SBEPEjecP", DI)

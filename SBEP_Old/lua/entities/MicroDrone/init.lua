@@ -6,20 +6,20 @@ util.PrecacheSound( "SB/Charging.wav" )
 
 function ENT:Initialize()
 
-	self.Entity:SetModel( "models/Spacebuild/Nova/dronebase.mdl" ) 
-	self.Entity:SetName("ShipAI")
-	self.Entity:PhysicsInit( SOLID_VPHYSICS )
-	self.Entity:SetMoveType( MOVETYPE_VPHYSICS )
-	self.Entity:SetSolid( SOLID_VPHYSICS )
-	self.Entity:SetUseType( SIMPLE_USE )
-	self.Entity:SetCollisionGroup(3)
+	self:SetModel( "models/Spacebuild/Nova/dronebase.mdl" ) 
+	self:SetName("ShipAI")
+	self:PhysicsInit( SOLID_VPHYSICS )
+	self:SetMoveType( MOVETYPE_VPHYSICS )
+	self:SetSolid( SOLID_VPHYSICS )
+	self:SetUseType( SIMPLE_USE )
+	self:SetCollisionGroup(3)
 	--local V,N,A = "VECTOR","NORMAL","ANGLE"
 	--local inNames = {"MoveVector", "TargetVector", "Angle", "Stance", "TargetsFound", "Size", "AlternateTargetVector1", "AlternateTargetVector2", "AlternateTargetVector3", "AlternateTargetVector4", "AlternateTargetVector5"}
 	--local inTypes = {V,V,A,N,N,N,V,V,V,V,V}
-	--self.Inputs = WireLib.CreateSpecialInputs( self.Entity,inNames,inTypes)
-	self.Outputs = Wire_CreateOutputs( self.Entity, { "Pitch", "Yaw", "Roll", "Forward", "Lateral", "Vertical", "WaypointReached", "Stance" })
+	--self.Inputs = WireLib.CreateSpecialInputs( self,inNames,inTypes)
+	self.Outputs = Wire_CreateOutputs( self, { "Pitch", "Yaw", "Roll", "Forward", "Lateral", "Vertical", "WaypointReached", "Stance" })
 	
-	local phys = self.Entity:GetPhysicsObject()
+	local phys = self:GetPhysicsObject()
 	if (phys:IsValid()) then
 		phys:Wake()
 		phys:EnableGravity(false)
@@ -28,10 +28,10 @@ function ENT:Initialize()
 		phys:SetMass( 10 )
 	end
 	
-	self.Entity:StartMotionController()
+	self:StartMotionController()
 	
-	self.Entity:SetKeyValue("rendercolor", "255 255 255")
-	self.PhysObj = self.Entity:GetPhysicsObject()
+	self:SetKeyValue("rendercolor", "255 255 255")
+	self.PhysObj = self:GetPhysicsObject()
 	
 	self.Stance = 3
 	self.AVec = Vector(0,0,0)
@@ -46,7 +46,7 @@ function ENT:Initialize()
 	self.Reversible = false
 	self.Targets = 0
 	self.WPRad = 80
-	self.Entity:SetNetworkedInt("Size", 50)
+	self:SetNetworkedInt("Size", 50)
 	self.Fade = false
 	self.Speed = 100
 	
@@ -71,7 +71,7 @@ function ENT:Initialize()
 	
 	self.NextScan = 0
 		
-	self.Cont 			= self.Entity
+	self.Cont 			= self
 	self.HasHardpoints 	= true
 	self.HPC			= 2
 	self.HP				= {}
@@ -126,7 +126,7 @@ function ENT:TriggerInput(iname, value)
 		
 	elseif (iname == "Size") then
 		self.WPRad = math.abs(value)
-		self.Entity:SetNetworkedInt("Size", self.WPRad)
+		self:SetNetworkedInt("Size", self.WPRad)
 		
 	elseif (iname == "TargetsFound") then
 		if value > 0 then
@@ -306,32 +306,32 @@ function ENT:Think()
 	if self.Stance > 0 then --Dear god, this is a mess... I must remember to organize this function better.
 		if (self.Stance < 3) or (self.Stance == 3 and !self.TFound) then
 			if self.MVec ~= Vector(0,0,0) then
-				local MDist = self.Entity:GetPos():Distance(self.MVec)
+				local MDist = self:GetPos():Distance(self.MVec)
 				if MDist < self.WPRad then
 					self.WaypointReached = 1
 					if self.Angling then--self.MAngle ~= Angle(0,0,0) then
-						self.Pitch = math.AngleDifference(self.Entity:GetAngles().p,self.MAngle.p) * -0.01
-						self.Roll = math.AngleDifference(self.Entity:GetAngles().r,self.MAngle.r) * -0.01
-						self.Yaw = math.AngleDifference(self.Entity:GetAngles().y,self.MAngle.y) * -0.01
+						self.Pitch = math.AngleDifference(self:GetAngles().p,self.MAngle.p) * -0.01
+						self.Roll = math.AngleDifference(self:GetAngles().r,self.MAngle.r) * -0.01
+						self.Yaw = math.AngleDifference(self:GetAngles().y,self.MAngle.y) * -0.01
 					end
 					if MDist > self.WPRad * 0.001 then
-						self.Entity:StrafeFinder( self.MVec, self.Entity:GetPos(), self.Entity:GetUp(), self.Entity:GetRight(), self.Entity:GetForward() )
+						self:StrafeFinder( self.MVec, self:GetPos(), self:GetUp(), self:GetRight(), self:GetForward() )
 					else
 						self.MVec = Vector(0,0,0)
 					end
 				else
-					self.Entity:Orient( self.MVec, self.Entity:GetPos(), self.Entity:GetUp(), self.Entity:GetRight() )
+					self:Orient( self.MVec, self:GetPos(), self:GetUp(), self:GetRight() )
 					
-					self.Roll = self.Entity:GetAngles().r * -0.005
+					self.Roll = self:GetAngles().r * -0.005
 					
-					self.Entity:SpeedFinder( self.MVec, self.Entity:GetPos(), self.Entity:GetForward() )
+					self:SpeedFinder( self.MVec, self:GetPos(), self:GetForward() )
 				end
 			end
 		elseif self.Stance == 3 and self.TFound then
-			local MDist = self.Entity:GetPos():Distance(self.TVec)
+			local MDist = self:GetPos():Distance(self.TVec)
 			if MDist > 500 then
-				self.Entity:Orient( self.TVec, self.Entity:GetPos(), self.Entity:GetUp(), self.Entity:GetRight() )
-				self.Entity:SpeedFinder( self.TVec, self.Entity:GetPos(), self.Entity:GetForward() )
+				self:Orient( self.TVec, self:GetPos(), self:GetUp(), self:GetRight() )
+				self:SpeedFinder( self.TVec, self:GetPos(), self:GetForward() )
 			else
 				local HighP = 0
 				local MainG = 0
@@ -342,13 +342,13 @@ function ENT:Think()
 					end
 				end
 				if MainG > 0 then
-					self.Entity:Orient( self.TVec, self.Weaponry[MainG]:GetPos(), self.Weaponry[MainG]:GetUp(), self.Weaponry[MainG]:GetRight() )
+					self:Orient( self.TVec, self.Weaponry[MainG]:GetPos(), self.Weaponry[MainG]:GetUp(), self.Weaponry[MainG]:GetRight() )
 				else
-					self.Entity:Orient( self.TVec, self.Entity:GetPos(), self.Entity:GetUp(), self.Entity:GetRight() )
+					self:Orient( self.TVec, self:GetPos(), self:GetUp(), self:GetRight() )
 					
-					self.Roll = self.Entity:GetAngles().r * -0.001
+					self.Roll = self:GetAngles().r * -0.001
 					if MDist > 1000 then
-						self.Entity:SpeedFinder( self.TVec, self.Entity:GetPos(), self.Entity:GetForward() )
+						self:SpeedFinder( self.TVec, self:GetPos(), self:GetForward() )
 					end
 				end
 			end
@@ -371,16 +371,16 @@ function ENT:Think()
 				--print("Weapon "..i)
 				local Weap = self.HP[i]["Ent"]
 				Weap:GetPhysicsObject():SetMass(1)
-				local RAng = (self.TVec - self.Entity:GetPos()):Angle()
+				local RAng = (self.TVec - self:GetPos()):Angle()
 				local SAng = self:LocalToWorldAngles(self.HP[i]["Angle"])
 				--print(self:GetAngles(),SAng,RAng)
 				--print(math.abs(math.AngleDifference(SAng.p,RAng.p)) < self.PArc)
 				--print(math.abs(math.AngleDifference(SAng.y,RAng.y)) < self.YArc)
-				--print(self.Entity:GetPos():Distance(self.TVec) < self.Range)
-				if math.abs(math.AngleDifference(SAng.p,RAng.p)) < self.PArc and math.abs(math.AngleDifference(SAng.y,RAng.y)) < self.YArc and self.Entity:GetPos():Distance(self.TVec) < self.Range then
-					local Dir = (self.TVec - (self.Entity:GetPos() + (self.Entity:GetUp() * self.HP[i]["Pos"].z) + (self.Entity:GetForward() * self.HP[i]["Pos"].x) + (self.Entity:GetRight() * -self.HP[i]["Pos"].y))):GetNormal()
+				--print(self:GetPos():Distance(self.TVec) < self.Range)
+				if math.abs(math.AngleDifference(SAng.p,RAng.p)) < self.PArc and math.abs(math.AngleDifference(SAng.y,RAng.y)) < self.YArc and self:GetPos():Distance(self.TVec) < self.Range then
+					local Dir = (self.TVec - (self:GetPos() + (self:GetUp() * self.HP[i]["Pos"].z) + (self:GetForward() * self.HP[i]["Pos"].x) + (self:GetRight() * -self.HP[i]["Pos"].y))):GetNormal()
 					local Ang = Dir:Angle()
-					local WAng = self.Entity:WorldToLocalAngles(Ang) -- It stands for "Weapon Angle". If I get even one "Wang" joke, I swear there will be bloodshed.
+					local WAng = self:WorldToLocalAngles(Ang) -- It stands for "Weapon Angle". If I get even one "Wang" joke, I swear there will be bloodshed.
 					--print(WAng)
 					WAng.r = 0
 					if Weap.APAng then
@@ -399,12 +399,12 @@ function ENT:Think()
 					local Aiming = false
 					for n = 1,5 do
 						--print("Alternate "..i)
-						RAng = (self.Alternates[n] - self.Entity:GetPos()):Angle()
-						if math.abs(math.AngleDifference(SAng.p,RAng.p)) < self.PArc and math.abs(math.AngleDifference(SAng.y,RAng.y)) < self.YArc and self.Entity:GetPos():Distance(self.TVec) < self.Range and self.TargetCount > i then
+						RAng = (self.Alternates[n] - self:GetPos()):Angle()
+						if math.abs(math.AngleDifference(SAng.p,RAng.p)) < self.PArc and math.abs(math.AngleDifference(SAng.y,RAng.y)) < self.YArc and self:GetPos():Distance(self.TVec) < self.Range and self.TargetCount > i then
 							--print("Found one")
-							local Dir = (self.Alternates[n] - (self.Entity:GetPos() + (self.Entity:GetUp() * self.HP[i]["Pos"].z) + (self.Entity:GetForward() * self.HP[i]["Pos"].x) + (self.Entity:GetRight() * -self.HP[i]["Pos"].y))):GetNormal()
+							local Dir = (self.Alternates[n] - (self:GetPos() + (self:GetUp() * self.HP[i]["Pos"].z) + (self:GetForward() * self.HP[i]["Pos"].x) + (self:GetRight() * -self.HP[i]["Pos"].y))):GetNormal()
 							local Ang = Dir:Angle()
-							local WAng = self.Entity:WorldToLocalAngles(Ang)
+							local WAng = self:WorldToLocalAngles(Ang)
 							WAng.r = 0
 							if Weap.APAng then
 								Weap:SetLocalAngles(Weap.APAng + WAng)
@@ -434,16 +434,16 @@ function ENT:Think()
 ---																		Script for movement																 ---
 ------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-	Wire_TriggerOutput( self.Entity, "WaypointReached", self.WaypointReached )			
+	Wire_TriggerOutput( self, "WaypointReached", self.WaypointReached )			
 	
-	Wire_TriggerOutput( self.Entity, "Forward", self.Forward )
+	Wire_TriggerOutput( self, "Forward", self.Forward )
 	
-	Wire_TriggerOutput( self.Entity, "Lateral", self.Lat )
-	Wire_TriggerOutput( self.Entity, "Vertical", self.Vert )
+	Wire_TriggerOutput( self, "Lateral", self.Lat )
+	Wire_TriggerOutput( self, "Vertical", self.Vert )
 	
-	local Phys = self.Entity:GetPhysicsObject()
+	local Phys = self:GetPhysicsObject()
 	
-	Phys:SetVelocity((self.Entity:GetForward() * self.Forward) + (self.Entity:GetRight() * self.Lat) + (self.Entity:GetUp() * self.Vert))
+	Phys:SetVelocity((self:GetForward() * self.Forward) + (self:GetRight() * self.Lat) + (self:GetUp() * self.Vert))
 	
 	if self.TFound and self.Stance > 1 and self.Squad.Alpha ~= self then
 		local AVDir = Vector(0,0,0)
@@ -465,20 +465,20 @@ function ENT:Think()
 	
 	Phys:AddAngleVelocity((Phys:GetAngleVelocity() * -0.9))
 	
-	Phys:ApplyForceOffset(self.Entity:GetUp() * -self.Pitch * Sp,self.Entity:GetForward() * 100)
-	Phys:ApplyForceOffset(self.Entity:GetUp() * self.Pitch * Sp,self.Entity:GetForward() * -100)
-	Phys:ApplyForceOffset(self.Entity:GetForward() * self.Yaw * Sp,self.Entity:GetRight() * 100)
-	Phys:ApplyForceOffset(self.Entity:GetForward() * -self.Yaw * Sp,self.Entity:GetRight() * -100)
-	Phys:ApplyForceOffset(self.Entity:GetUp() * -self.Roll * Sp,self.Entity:GetRight() * 100)
-	Phys:ApplyForceOffset(self.Entity:GetUp() * self.Roll * Sp,self.Entity:GetRight() * -100)
+	Phys:ApplyForceOffset(self:GetUp() * -self.Pitch * Sp,self:GetForward() * 100)
+	Phys:ApplyForceOffset(self:GetUp() * self.Pitch * Sp,self:GetForward() * -100)
+	Phys:ApplyForceOffset(self:GetForward() * self.Yaw * Sp,self:GetRight() * 100)
+	Phys:ApplyForceOffset(self:GetForward() * -self.Yaw * Sp,self:GetRight() * -100)
+	Phys:ApplyForceOffset(self:GetUp() * -self.Roll * Sp,self:GetRight() * 100)
+	Phys:ApplyForceOffset(self:GetUp() * self.Roll * Sp,self:GetRight() * -100)
 	
-	Wire_TriggerOutput( self.Entity, "Pitch", self.Pitch )
-	Wire_TriggerOutput( self.Entity, "Roll", self.Roll )
-	Wire_TriggerOutput( self.Entity, "Yaw", self.Yaw )
+	Wire_TriggerOutput( self, "Pitch", self.Pitch )
+	Wire_TriggerOutput( self, "Roll", self.Roll )
+	Wire_TriggerOutput( self, "Yaw", self.Yaw )
 	
-	Wire_TriggerOutput( self.Entity, "Stance", self.Stance )
+	Wire_TriggerOutput( self, "Stance", self.Stance )
 		
-	self.Entity:NextThink( CurTime() + 0.01 ) 
+	self:NextThink( CurTime() + 0.01 ) 
 	return true
 end
 

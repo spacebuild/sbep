@@ -6,23 +6,23 @@ include( 'shared.lua' )
 
 function ENT:Initialize()
 	
-	self.Entity:SetModel( "models/Spacebuild/medbridge2_doublehull_elevatorclamp.mdl" ) 
-	self.Entity:SetName("Jalopy")
-	self.Entity:PhysicsInit( SOLID_VPHYSICS )
-	self.Entity:SetMoveType( MOVETYPE_VPHYSICS )
-	self.Entity:SetSolid( SOLID_VPHYSICS )
-	--self.Entity:SetMaterial("models/props_wasteland/tugboat02")
-	--self.Inputs = Wire_CreateInputs( self.Entity, { "Activate" } )
+	self:SetModel( "models/Spacebuild/medbridge2_doublehull_elevatorclamp.mdl" ) 
+	self:SetName("Jalopy")
+	self:PhysicsInit( SOLID_VPHYSICS )
+	self:SetMoveType( MOVETYPE_VPHYSICS )
+	self:SetSolid( SOLID_VPHYSICS )
+	--self:SetMaterial("models/props_wasteland/tugboat02")
+	--self.Inputs = Wire_CreateInputs( self, { "Activate" } )
 
-	local phys = self.Entity:GetPhysicsObject()
+	local phys = self:GetPhysicsObject()
 	if (phys:IsValid()) then
 		phys:Wake()
 		phys:EnableGravity(false)
 		phys:EnableDrag(false)
 		phys:EnableCollisions(false)
 	end
-	self.Entity:StartMotionController()
-	self.PhysObj = self.Entity:GetPhysicsObject()
+	self:StartMotionController()
+	self.PhysObj = self:GetPhysicsObject()
 
 
 	self.Speed = 0
@@ -118,7 +118,7 @@ function ENT:SpawnFunction( ply, tr )
 	ent3.cbt.health = 1000
 	ent3.cbt.armor = 1000
 	ent3.cbt.maxhealth = 1000
-	ent3:SetColor(255,255,255,1)
+	ent3:SetColor(Color(255,255,255,1))
 	local TB = ent3:GetTable()
 	TB.HandleAnimation = function (vec, ply)
 		return ply:SelectWeightedSequence( ACT_HL2MP_SIT ) 
@@ -176,7 +176,7 @@ function ENT:Think()
 			
 			if self.CPL:KeyDown( IN_JUMP ) then
 				if self.Pod.Pod and self.Pod.Pod:IsValid() then
-					self.Entity:HPRelease()
+					self:HPRelease()
 				end
 			end
 			
@@ -202,7 +202,7 @@ function ENT:Think()
 		end
 		
 	else
-		self.Entity:Remove()
+		self:Remove()
 	end
 	
 	if self.PassPod and self.PassPod:IsValid() then
@@ -212,15 +212,15 @@ function ENT:Think()
 		end
 				
 	else
-		self.Entity:Remove()
+		self:Remove()
 	end
 	
 	local C = 0 
 	if (self.CPL and self.CPL:IsValid()) then C = C + 1 end
 	if (self.CPL2 and self.CPL2:IsValid()) then C = C + 1 end
-	self.Entity:SetPassengers(C)
+	self:SetPassengers(C)
 	
-	self.Entity:NextThink( CurTime() + 0.01 )
+	self:NextThink( CurTime() + 0.01 )
 	return true
 end
 
@@ -259,7 +259,7 @@ function ENT:HPFire()
 		end
 	end
 	
-	self.Entity:HPRelease()
+	self:HPRelease()
 end
 
 function ENT:HPRelease()
@@ -299,7 +299,7 @@ function ENT:PreEntityCopy()
 	end
 	
 	if WireAddon then
-		DI.WireData = WireLib.BuildDupeInfo( self.Entity )
+		DI.WireData = WireLib.BuildDupeInfo( self )
 	end
 	
 	duplicator.StoreEntityModifier(self, "SBEPJalopy", DI)

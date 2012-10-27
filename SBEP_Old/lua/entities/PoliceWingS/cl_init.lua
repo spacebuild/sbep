@@ -11,18 +11,18 @@ end
 
 function ENT:Draw()
 	
-	self.Entity:DrawModel()
+	self:DrawModel()
 
 	render.SetMaterial( self.Matt )	
 	
 	if self.Blip1 > 0 then
 		local color = Color( 200, 60, 60, self.Blip1 )
-		render.DrawSprite( self.Entity:GetPos() + self.Entity:GetRight() * 35 + self.Entity:GetForward() * 10, self.Blip1 * 0.5, self.Blip1 * 0.5, color )
+		render.DrawSprite( self:GetPos() + self:GetRight() * 35 + self:GetForward() * 10, self.Blip1 * 0.5, self.Blip1 * 0.5, color )
 		--self.Blip1 = self.Blip1 - 50
 	end
 	if self.Blip2 > 0 then
 		local color = Color( 60, 60, 200, self.Blip2 )
-		render.DrawSprite( self.Entity:GetPos() + self.Entity:GetRight() * -35 + self.Entity:GetForward() * 10, self.Blip2 * 0.5, self.Blip2 * 0.5, color )
+		render.DrawSprite( self:GetPos() + self:GetRight() * -35 + self:GetForward() * 10, self.Blip2 * 0.5, self.Blip2 * 0.5, color )
 		--self.Blip2 = self.Blip2 - 50
 	end
 end
@@ -53,7 +53,7 @@ function ENT:Think()
 			
 			local dlight = DynamicLight( self:EntIndex() )
 			if ( dlight ) then
-				--local r, g, b, a = self:GetColor()
+				--local c = self:GetColor();  local r,g,b,a = c.r, c.g, c.b, c.a;
 				dlight.Pos = self:GetPos() + self:GetRight() * 35
 				dlight.r = 200
 				dlight.g = 60
@@ -69,7 +69,7 @@ function ENT:Think()
 			
 			local dlight = DynamicLight( self:EntIndex() )
 			if ( dlight ) then
-				--local r, g, b, a = self:GetColor()
+				--local c = self:GetColor();  local r,g,b,a = c.r, c.g, c.b, c.a;
 				dlight.Pos = self:GetPos() + self:GetRight() * -35
 				dlight.r = 60
 				dlight.g = 60

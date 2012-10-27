@@ -5,13 +5,13 @@ include( 'shared.lua' )
 
 function ENT:Initialize()
 
-	self.Entity:SetModel( "models/Dts Stuff/BF2142 weapons/unl_grenade_frag_2.mdl" )
-	self.Entity:SetName("Frag Nade")
-	self.Entity:PhysicsInit( SOLID_VPHYSICS )
-	self.Entity:SetMoveType( MOVETYPE_VPHYSICS )
-	self.Entity:SetSolid( SOLID_VPHYSICS )
+	self:SetModel( "models/Dts Stuff/BF2142 weapons/unl_grenade_frag_2.mdl" )
+	self:SetName("Frag Nade")
+	self:PhysicsInit( SOLID_VPHYSICS )
+	self:SetMoveType( MOVETYPE_VPHYSICS )
+	self:SetSolid( SOLID_VPHYSICS )
 	
-	local phys = self.Entity:GetPhysicsObject()
+	local phys = self:GetPhysicsObject()
 	if (phys:IsValid()) then
 		phys:Wake()
 		phys:EnableGravity(true)
@@ -24,10 +24,10 @@ function ENT:Initialize()
 	self.cbt.armor = 500
 	self.cbt.maxhealth = 5000
 		
-    --self.Entity:SetKeyValue("rendercolor", "0 0 0")
-	self.PhysObj = self.Entity:GetPhysicsObject()
-	self.CAng = self.Entity:GetAngles()
-	util.SpriteTrail( self.Entity, 0, Color(50,50,50,50), false, 10, 0, 1, 1, "trails/smoke.vmt" ) --"trails/smoke.vmt"
+    --self:SetKeyValue("rendercolor", "0 0 0")
+	self.PhysObj = self:GetPhysicsObject()
+	self.CAng = self:GetAngles()
+	util.SpriteTrail( self, 0, Color(50,50,50,50), false, 10, 0, 1, 1, "trails/smoke.vmt" ) --"trails/smoke.vmt"
 	
 	self.DTime = CurTime() + 5
 
@@ -37,7 +37,7 @@ end
 function ENT:PhysicsUpdate(phys)
 
 	if(self.Exploded) then
-		self.Entity:Remove()
+		self:Remove()
 		return
 	end
 
@@ -50,7 +50,7 @@ function ENT:Think()
 	end
 	
 	if(self.Exploded) then
-		self.Entity:Remove()
+		self:Remove()
 		return
 	end
 end
@@ -61,15 +61,15 @@ end
 
 function ENT:GoBang()
 	self.Exploded = true
-	util.BlastDamage(self.Entity, self.Entity, self.Entity:GetPos(), 300, 150)
-	gcombat.hcgexplode( self.Entity:GetPos(), 200, math.Rand(50, 100), 7)
+	util.BlastDamage(self, self, self:GetPos(), 300, 150)
+	gcombat.hcgexplode( self:GetPos(), 200, math.Rand(50, 100), 7)
 
-	self.Entity:EmitSound("explode_4")
+	self:EmitSound("explode_4")
 	
 	local effectdata = EffectData()
-	effectdata:SetOrigin(self.Entity:GetPos())
-	effectdata:SetStart(self.Entity:GetPos())
-	effectdata:SetAngle(self.Entity:GetAngles())
+	effectdata:SetOrigin(self:GetPos())
+	effectdata:SetStart(self:GetPos())
+	effectdata:SetAngle(self:GetAngles())
 	util.Effect( "TinyWhomphSplode", effectdata )
 	
 	self:Remove()

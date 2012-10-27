@@ -18,8 +18,8 @@ ENT.APPos			= Vector(40,0,-20)
 ENT.APAng			= Angle(0,0,180)
 
 function ENT:SetShots( val )
-	local CVal = self.Entity:GetNetworkedInt( "Shots" )
+	local CVal = self:GetNetworkedInt( "Shots" )
 	if CVal ~= val then
-		self.Entity:SetNetworkedInt( "Shots", val )
+		self:SetNetworkedInt( "Shots", val )
 	end
 end

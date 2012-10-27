@@ -8,15 +8,15 @@ util.PrecacheSound( "explode_5" )
 
 function ENT:Initialize()
 
-	self.Entity:SetModel( "models/Slyfo/missile_sturmfaustshot.mdl" )
-	self.Entity:SetName("HomingMissile")
-	self.Entity:PhysicsInit( SOLID_VPHYSICS )
-	self.Entity:SetMoveType( MOVETYPE_VPHYSICS )
-	self.Entity:SetSolid( SOLID_VPHYSICS )
-	--self.Entity:SetMaterial("models/props_combine/combinethumper002")
-	--self.Inputs = Wire_CreateInputs( self.Entity, { "Arm" } )
+	self:SetModel( "models/Slyfo/missile_sturmfaustshot.mdl" )
+	self:SetName("HomingMissile")
+	self:PhysicsInit( SOLID_VPHYSICS )
+	self:SetMoveType( MOVETYPE_VPHYSICS )
+	self:SetSolid( SOLID_VPHYSICS )
+	--self:SetMaterial("models/props_combine/combinethumper002")
+	--self.Inputs = Wire_CreateInputs( self, { "Arm" } )
 	
-	local phys = self.Entity:GetPhysicsObject()
+	local phys = self:GetPhysicsObject()
 	if (phys:IsValid()) then
 		phys:Wake()
 		phys:EnableGravity(false)
@@ -25,18 +25,18 @@ function ENT:Initialize()
 		phys:SetMass( 1 )
 	end
 
-	gcombat.registerent( self.Entity, 10, 4 )
+	gcombat.registerent( self, 10, 4 )
 	self.Armed = false
 	
-    --self.Entity:SetKeyValue("rendercolor", "0 0 0")
-	self.PhysObj = self.Entity:GetPhysicsObject()
+    --self:SetKeyValue("rendercolor", "0 0 0")
+	self.PhysObj = self:GetPhysicsObject()
 	
 end
 
 function ENT:PhysicsUpdate()
 	if self.Armed then
-		local physi = self.Entity:GetPhysicsObject()
-		physi:SetVelocity( self.Entity:GetForward() * 5000 )
+		local physi = self:GetPhysicsObject()
+		physi:SetVelocity( self:GetForward() * 5000 )
 	end
 end
 
@@ -54,28 +54,28 @@ end
 
 function ENT:Think()
 	local trace = {}
-	trace.start = self.Entity:GetPos()
-	trace.endpos = self.Entity:GetPos() + (self.Entity:GetVelocity())
-	trace.filter = self.Entity
+	trace.start = self:GetPos()
+	trace.endpos = self:GetPos() + (self:GetVelocity())
+	trace.filter = self
 	local tr = util.TraceLine( trace )
 	if tr.Hit and tr.HitSky then
-		self.Entity:Remove()
+		self:Remove()
 	end
 end
 
 function ENT:Splode()
 	if(!self.Exploded) then
 		self.Exploded = true
-		util.BlastDamage(self.Entity, self.Entity, self.Entity:GetPos(), 100, 100)
-		SBGCSplash( self.Entity:GetPos(), 100, math.Rand(400, 700), 9, { self.Entity:GetClass() } )
+		util.BlastDamage(self, self, self:GetPos(), 100, 100)
+		SBGCSplash( self:GetPos(), 100, math.Rand(400, 700), 9, { self:GetClass() } )
 		
-		--targets = ents.FindInSphere( self.Entity:GetPos(), 2000)
+		--targets = ents.FindInSphere( self:GetPos(), 2000)
 		
-		self.Entity:EmitSound("explode_9")
+		self:EmitSound("explode_9")
 		
 		local effectdata = EffectData()
-		effectdata:SetOrigin(self.Entity:GetPos())
-		effectdata:SetStart(self.Entity:GetPos())
+		effectdata:SetOrigin(self:GetPos())
+		effectdata:SetStart(self:GetPos())
 		util.Effect( "explosion", effectdata )
 		self.Exploded = true
 		
@@ -85,7 +85,7 @@ function ENT:Splode()
 		ShakeIt:SetKeyValue("radius", "200" )
 		ShakeIt:SetKeyValue("duration", "5" )
 		ShakeIt:SetKeyValue("frequency", "255" )
-		ShakeIt:SetPos( self.Entity:GetPos() )
+		ShakeIt:SetPos( self:GetPos() )
 		ShakeIt:Fire("StartShake", "", 0);
 		ShakeIt:Spawn()
 		ShakeIt:Activate()
@@ -93,5 +93,5 @@ function ENT:Splode()
 		ShakeIt:Fire("kill", "", 6)
 	end
 	self.Exploded = true
-	self.Entity:Remove()
+	self:Remove()
 end

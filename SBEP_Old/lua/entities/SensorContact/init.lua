@@ -6,13 +6,13 @@ include( 'shared.lua' )
 
 function ENT:Initialize()
 	
-	self.Entity:SetModel( "models/Slyfo_2/acc_food_stridernugsml.mdl" ) 
-	self.Entity:SetName( "SensorContact" )
-	self.Entity:PhysicsInit( 6 )
-	self.Entity:SetMoveType( 0 )
-	self.Entity:SetSolid( 0 )
+	self:SetModel( "models/Slyfo_2/acc_food_stridernugsml.mdl" ) 
+	self:SetName( "SensorContact" )
+	self:PhysicsInit( 6 )
+	self:SetMoveType( 0 )
+	self:SetSolid( 0 )
 
-	local phys = self.Entity:GetPhysicsObject()
+	local phys = self:GetPhysicsObject()
 	if (phys:IsValid()) then
 		phys:Wake()
 		phys:EnableGravity(false)
@@ -20,8 +20,8 @@ function ENT:Initialize()
 		phys:EnableCollisions(false)
 		phys:SetMass(1)
 	end
-	self.Entity:StartMotionController()
-	self.PhysObj = self.Entity:GetPhysicsObject()
+	self:StartMotionController()
+	self.PhysObj = self:GetPhysicsObject()
 	
 	self.hasdamagecase = true
 	

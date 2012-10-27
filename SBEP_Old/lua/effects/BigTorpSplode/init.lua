@@ -71,7 +71,7 @@ local matRefraction	= Material( "refract_ring" )
  ---------------------------------------------------------]]
  function EFFECT:Think( ) 
    
- 	self.Entity:SetColor(100,100,200,100)
+ 	self.Entity:SetColor(Color(100,100,200,100))
 	self.CScale = self.CScale + 0.1
 	 
  	self.Refract = self.Refract + 2.0 * FrameTime() 

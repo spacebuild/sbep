@@ -7,12 +7,12 @@ end
 
 function ENT:Draw()
 	
-	self.Entity:DrawModel()
+	self:DrawModel()
 	
 	if self.dt.Active then
 		local color = Color( 255, 255, 255, 100 )
 		render.SetMaterial( self.Matt )	
-		render.DrawSprite( self.Entity:GetPos() + self.Entity:GetForward() * 8, 25, 25, color )
+		render.DrawSprite( self:GetPos() + self:GetForward() * 8, 25, 25, color )
 	end
 
 end

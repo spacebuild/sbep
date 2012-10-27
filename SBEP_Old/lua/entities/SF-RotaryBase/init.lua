@@ -5,25 +5,25 @@ include( 'shared.lua' )
 
 function ENT:Initialize()
 
-	self.Entity:SetModel( "models/Slyfo/sat_grappler.mdl" ) 
-	self.Entity:SetName("RotaryBase")
-	self.Entity:PhysicsInit( SOLID_VPHYSICS )
-	self.Entity:SetMoveType( MOVETYPE_VPHYSICS )
-	self.Entity:SetSolid( SOLID_VPHYSICS )
-	self.Inputs = Wire_CreateInputs( self.Entity, { "Fire", "Rotate" } )
+	self:SetModel( "models/Slyfo/sat_grappler.mdl" ) 
+	self:SetName("RotaryBase")
+	self:PhysicsInit( SOLID_VPHYSICS )
+	self:SetMoveType( MOVETYPE_VPHYSICS )
+	self:SetSolid( SOLID_VPHYSICS )
+	self.Inputs = Wire_CreateInputs( self, { "Fire", "Rotate" } )
 	
-	local phys = self.Entity:GetPhysicsObject()
+	local phys = self:GetPhysicsObject()
 	if (phys:IsValid()) then
 		phys:Wake()
 		phys:EnableGravity(true)
 		phys:EnableDrag(true)
 		phys:EnableCollisions(true)
 	end
-	self.Entity:SetKeyValue("rendercolor", "255 255 255")
-	self.PhysObj = self.Entity:GetPhysicsObject()
+	self:SetKeyValue("rendercolor", "255 255 255")
+	self.PhysObj = self:GetPhysicsObject()
 	
 	--self.val1 = 0
-	--RD_AddResource(self.Entity, "Munitions", 0)
+	--RD_AddResource(self, "Munitions", 0)
 	
 	self.LTT = 0
 	self.CGun = 1
@@ -36,7 +36,7 @@ function ENT:Initialize()
 	self.OGuns = 0 --The last known number of guns
 	
 	
-	self.Cont 			= self.Entity
+	self.Cont 			= self
 	self.HasHardpoints 	= true
 	self.HPC			= 8
 	self.HP				= {}
@@ -112,7 +112,7 @@ end
 function ENT:Touch( ent )
 	if ent.HasHardpoints then
 		if ent.Cont and ent.Cont:IsValid() then
-			HPLink( ent.Cont, ent.Entity, self.Entity )
+			HPLink( ent.Cont, ent.Entity, self )
 		end
 	end
 end
@@ -289,7 +289,7 @@ function ENT:Think()
 	
 	
 	self.LTT = CurTime()
-	self.Entity:NextThink( CurTime() + 0.01 ) 
+	self:NextThink( CurTime() + 0.01 ) 
 	return true
 
 end
