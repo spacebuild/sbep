@@ -315,7 +315,7 @@ function ENT:Think()
 	local abs, round, clamp, sqrt = math.abs, math.Round, math.Clamp, math.sqrt  --speed up math
  	local gyroshipangles = self:GetAngles()  
 	if (self.Pod and self.Pod:IsValid()) then  --Determins whether stuff comes from vehicle or entity
-		self.GyroDriver, self.entorpod  = self.Pod:GetPassenger(), self.Pod	
+		self.GyroDriver, self.entorpod  = self.Pod:GetDriver(), self.Pod	
 	else
 		self.entorpod = self	
 	end 
@@ -406,9 +406,9 @@ function ENT:Think()
 		end
 		self.HighEnginePitch = (speedmph * 1.2) + 60
 		self.LowDronePitch = 35+(speedmph * 0.2)
-		self.HighEngineSound.ChangeVolume(self.HighEngineSound, self.HighEngineVolume)
-		self.HighEngineSound.ChangePitch(self.HighEngineSound, math.Clamp(self.HighEnginePitch, 0, 255))
-		self.LowDroneSound.ChangePitch(self.LowDroneSound, math.Clamp(self.LowDronePitch, 0, 255))
+		self.HighEngineSound.ChangeVolume(self.HighEngineSound, self.HighEngineVolume, 0)
+		self.HighEngineSound.ChangePitch(self.HighEngineSound, math.Clamp(self.HighEnginePitch, 0, 255), 0)
+		self.LowDroneSound.ChangePitch(self.LowDroneSound, math.Clamp(self.LowDronePitch, 0, 255), 0)
 		
 		local speedx, speedy, speedz = abs(localentorparvel.x) / 17.6, abs(localentorparvel.y) / 17.6, abs(localentorparvel.z) / 17.6
 		local SMult, HMult, VMult, GyroRoll = (self.Forw - self.Back) + self.SpAbs, (self.SRight - self.SLeft) + self.LatAbs, (self.HUp - self.HDown) + self.VertAbs, (self.RollRight - self.RollLeft) + self.RollAbs
@@ -531,9 +531,9 @@ function ENT:Think()
 			self.HighEnginePitch = clamp(self.HighEnginePitch - 0.7, 0, 300)
 			self.LowDronePitch = clamp(self.LowDronePitch - 0.3, 0, 300)
 			self.HighEngineVolume = clamp(self.HighEngineVolume - 0.005, 0, 2)
-			self.HighEngineSound.ChangeVolume(self.HighEngineSound, self.HighEngineVolume)
-			self.HighEngineSound.ChangePitch(self.HighEngineSound, self.HighEnginePitch)
-			self.LowDroneSound.ChangePitch(self.LowDroneSound, self.LowDronePitch)
+			self.HighEngineSound.ChangeVolume(self.HighEngineSound, self.HighEngineVolume, 0)
+			self.HighEngineSound.ChangePitch(self.HighEngineSound, self.HighEnginePitch, 0)
+			self.LowDroneSound.ChangePitch(self.LowDroneSound, self.LowDronePitch, 0)
 			if self.LowDronePitch < 1 then
 				self.LowDroneSound:Stop()
 				self.HighEngineSound:Stop()
@@ -642,7 +642,7 @@ function ENT:GyroWeight()
 				table.insert(self.BackDist, backdist)
 				table.insert(self.RightDist, rightdist)
 				table.insert(self.LeftDist, leftdist)
-				table.sortdesc(self.MassTable)
+				table.SortDesc(self.MassTable)
 				table.sort(self.FrontDist)
 				table.sort(self.BackDist)
 				table.sort(self.RightDist)
