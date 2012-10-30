@@ -38,11 +38,11 @@ local SPD = {
 			}
 
 if CLIENT then
-	language.Add( "Tool_sbep_part_assembler_name" , "SBEP Part Assembly Tool" 								)
-	language.Add( "Tool_sbep_part_assembler_desc" , "Easily assemble SBEP parts." 							)
-	language.Add( "Tool_sbep_part_assembler_0"	  , "Left-click an attachment point."						)
-	language.Add( "Tool_sbep_part_assembler_1"	  , "Left-click another attachement point to connect to."	)
-	language.Add( "Tool_sbep_part_assembler_2"	  , "Right-click to rotate, and left click to finish."		)
+	language.Add( "Tool.sbep_part_assembler.name" , "SBEP Part Assembly Tool" 								)
+	language.Add( "Tool.sbep_part_assembler.desc" , "Easily assemble SBEP parts." 							)
+	language.Add( "Tool.sbep_part_assembler.0"	  , "Left-click an attachment point."						)
+	language.Add( "Tool.sbep_part_assembler.1"	  , "Left-click another attachement point to connect to."	)
+	language.Add( "Tool.sbep_part_assembler.2"	  , "Right-click to rotate, and left click to finish."		)
 	language.Add( "undone_SBEP Part Assembly"	  , "Undone SBEP Part Assembly"								)
 end
 
@@ -56,16 +56,24 @@ function TOOL:LeftClick( trace )
 	local ply = self:GetOwner()
 
 	if self:GetStage() == 2 then
+		
 		self.E1.SEO:SetColor(Color( 255,255,255,255 ))
+
 		local weld = constraint.Weld( self.E1.SEO , self.E2.SEO , 0 , 0 , 0 , self:ShouldNoCollide() )	
+		
 		undo.Create( "SBEP Part Assembly Weld" )
 			undo.AddEntity( weld )
 			undo.SetPlayer( ply )
 		undo.Finish()
+		
+		-- Entity 1
 		self.E1:Remove()
-			self.E1 = nil
+		self.E1 = nil
+
+		-- Entity 2
 		self.E2:Remove()
-			self.E2 = nil
+		self.E2 = nil
+		
 		self:SetStage( 0 )
 		return true
 	end
@@ -107,11 +115,11 @@ function TOOL:LeftClick( trace )
 			self:SetStage( 2 )
 		else
 			local function MoveUndo( Undo, Entity, pos , ang )
-						if Entity:IsValid() then
-							Entity:SetAngles( ang )
-							Entity:SetPos( pos )
-						end
-					end
+				if Entity:IsValid() then
+					Entity:SetAngles( ang )
+					Entity:SetPos( pos )
+				end
+			end
 			
 			undo.Create( "SBEP Part Assembly Move" )
 				undo.AddEntity( weld )
@@ -119,7 +127,7 @@ function TOOL:LeftClick( trace )
 				undo.AddFunction( MoveUndo, self.E1.SEO , pos , ang )
 			undo.Finish()
 
-			if ply:GetInfoNum( "sbep_part_assembler_mode" ) == 2 then
+			if ply:GetInfoNum( "sbep_part_assembler_mode", 1 ) == 2 then
 				local weld = constraint.Weld( E1.SEO , E2.SEO , 0 , 0 , 0 , self:ShouldNoCollide() )
 				undo.Create( "SBEP Part Assembly Weld" )
 					undo.AddEntity( weld )
@@ -168,7 +176,7 @@ end
 
 function TOOL:ShouldNoCollide()
 	if SERVER then
-		return self:GetOwner():GetInfoNum( "sbep_part_assembler_nocollide" ) == 1
+		return self:GetOwner():GetInfoNum( "sbep_part_assembler_nocollide", 0 ) == 1
 	end
 end
 
@@ -244,48 +252,44 @@ if SERVER then
 end
 
 function TOOL.BuildCPanel( panel )
-	
-	panel:SetSpacing( 10 )
 	panel:SetName( "SBEP Part Assembler" )
-	
-	----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-	----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-	
-	local ModeTable = {
-			"1. Move first part to second"  			,
-			"2. Move first part to second and weld"   		
-				}
+	panel:DockPadding(2,2,2,2)
+	panel:DockMargin(2,2,2,2)
+	local ModeTable =
+	{
+		"1. Move first part to second",
+		"2. Move first part to second and weld"   		
+	}
 
-	local MLV = vgui.Create("DListView")
-		MLV:SetSize(100, 50)
-		MLV:SetMultiSelect(false)
-		MLV:AddColumn("Mode")
-		MLV.OnClickLine = function(parent, line, isselected)
-												parent:ClearSelection()
-												line:SetSelected( true )
-												RunConsoleCommand( "sbep_part_assembler_mode", line:GetID() )
-										end
-		 
-		for k,v in ipairs( ModeTable ) do
-			MLV:AddLine(v)
-		end
-	panel:AddItem( MLV )
+	local ModeSelect = vgui.Create("DComboBox", panel )
+	ModeSelect:Dock(TOP)
+	ModeSelect:DockMargin( 5,5,5,5 )
+	ModeSelect:SetValue( ModeTable[GetConVar("sbep_part_assembler_mode"):GetInt()] or ModeTable[1] )
+	ModeSelect.OnSelect = function ( index, value, data )
+		RunConsoleCommand( "sbep_part_assembler_mode", value )
+	end
+	
+	for k,v in ipairs( ModeTable ) do 
+		ModeSelect:AddChoice( v )
+	end
 	
 	----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	
-	local UseCheckBox = vgui.Create( "DCheckBoxLabel" )
-		UseCheckBox:SetText( "NoCollide Parts" )
-		UseCheckBox:SetConVar( "sbep_part_assembler_nocollide" )
-		UseCheckBox:SetValue( 0 )
-		UseCheckBox:SizeToContents()
-	panel:AddItem( UseCheckBox )
+	local UseCheckBox = vgui.Create( "DCheckBoxLabel", panel )
+	UseCheckBox:DockMargin( 5,5,5,5 )
+	UseCheckBox:Dock(TOP)
+	UseCheckBox:SetText( "NoCollide Parts" )
+	UseCheckBox:SetConVar( "sbep_part_assembler_nocollide" )
+	UseCheckBox:SetValue( 0 )
 	
-	local HelpB = vgui.Create( "DButton" )
-		HelpB.DoClick = function()
-								SBEPDoc.OpenPage( "Construction" , "Part Assembler.txt" )
-							end
-		HelpB:SetText( "Part Assembler Help Page" )
-	panel:AddItem( HelpB )
+	local HelpB = vgui.Create( "DButton", panel )
+	HelpB:Dock( TOP )
+	HelpB:DockMargin( 5,5,5,5 )
+	HelpB.DoClick = function()
+		SBEPDoc.OpenPage( "Construction" , "Part Assembler.txt" )
+	end
+		
+	HelpB:SetText( "Part Assembler Help Page" )
 	
  end  

@@ -17,32 +17,31 @@ if ( CLIENT ) then
 
 local SkinswitcherPreviousEntity = nil
 
-language.Add("Tool_skinswitcher_name", "Skin Switcher Tool")
-language.Add("Tool_skinswitcher_desc", "Directly select the model skin if it has more than one defined.")
-language.Add("Tool_skinswitcher_0", "Left click to cycle model skins. \nRight click to select a model for manipulation.\nReload to pick a random skin.")
+language.Add("Tool.skinswitcher.name", "Skin Switcher Tool")
+language.Add("Tool.skinswitcher.desc", "Directly select the model skin if it has more than one defined.")
+language.Add("Tool.skinswitcher.0", "Left click to cycle model skins. \nRight click to select a model for manipulation.\nReload to pick a random skin.")
 
-function TOOL.BuildCPanel( CPanel, SwitchEntity )
-  -- HEADER
-  CPanel:AddControl( "Header", { Text = "#Tool_skinswitcher_name", 
-                                 Description	= "#Tool_skinswitcher_desc" 
-                               }  )
-                               
-  if ValidEntity(SwitchEntity) then
-    local maxskins = SwitchEntity:SkinCount()
-    if maxskins > 1 then
-      CPanel:AddControl("Slider", { Label = "Select skin", 
-                                    Description = "Number of skins the model has.", 
-                                    Type = "Integer", 
-                                    Min = 0, 
-                                    Max = maxskins-1, 
-                                    Command = "skinswitcher_skin" 
-                                  } )
-    else
-      CPanel:AddControl("Label", { Text = "This model only has one skin." } )
-    end
-  else
-    CPanel:AddControl("Label", { Text = "No model selected." } )
-  end
+function TOOL.BuildCPanel( CPanel, SwitchEntity )                         
+	if ValidEntity(SwitchEntity) then
+		local maxskins = SwitchEntity:SkinCount()
+		if maxskins > 1 then
+			CPanel:AddControl(
+				"Slider", 
+				{ 
+					Label = "Select skin", 
+					Description = "Number of skins the model has.", 
+					Type = "Integer", 
+					Min = 0, 
+					Max = maxskins-1, 
+					Command = "skinswitcher_skin" 
+				} 
+			)
+		else
+			CPanel:AddControl("Label", { Text = "This model only has one skin." } )
+		end
+	else
+		CPanel:AddControl("Label", { Text = "No model selected." } )
+	end
 end
 
 function TOOL:RebuildControlPanel()

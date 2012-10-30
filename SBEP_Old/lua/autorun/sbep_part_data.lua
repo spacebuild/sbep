@@ -1,13 +1,14 @@
-/ * ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+--[[ ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
         PART ASSEMBLER
 
     --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- */
 
-/ * I would recommend using an advanced text editor such as Notepad + +, with lua syntax highlighting, to aid in making sure brackets and
-        general syntax are correct, and generally making the whole thing slightly less horrendous to read.It has also just occurred to me that it would be beneficial to only do this when the tool is first equipped in any given game , at least clientside -preventing the vast amount of memory -hogging that is performed on load at the moment .* /
-
-        / * TYPE CODES:Smallbridge:SWSH - Single width, single height
+--[[ I would recommend using an advanced text editor such as Notepad + +, with lua syntax highlighting, to aid in making sure brackets and
+        general syntax are correct, and generally making the whole thing slightly less horrendous to read.
+		It has also just occurred to me that it would be beneficial to only do this when the tool is first equipped in any given game , 
+		at least clientside - preventing the vast amount of memory -hogging that is performed on load at the moment .]]--
+--[[ TYPE CODES:Smallbridge:SWSH - Single width, single height
 DWSH - Double width, single height
 SWDH - Single width, double height
 DWDH - Double width, double height
@@ -32,11 +33,8 @@ sprite can still be shown with the aspect ratio you want , so just convert it wi
         or false, is simply whether you want it to rotate or not -the elevator type has the ability to rotate in 90 degree increments , for example, whereas the rest
 are all one -orientation - only.Then open cl_init .lua and make a new entry in the MatTab table at the top , for your new type .The Material() function gets yoursprite, so put the right
     filename in there, and then in the second entry , put the dimensions you want your sprite to be rendered with.Lastly, go to SBEP_Experimental / lua / weapons / gmod_tool / stools / sbep_part_assembler.lua and add the type to the table .I really need to redo huge chunks of this system.
-    ----------------------------------------------------------------------------------------------------------------------------------------* /
 
-            / * ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-    -- /																EXAMPLEBRIDGE															      --/
-    -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     local EXB_PAD = {
         -- Example entries. The keys are the model paths - this is how the tool looks up the model - and the values are a table, which itself contains one table for each attachment point.
         Each point has a type, a position , and an orientation.( The latter two are both relative to the model origin .) MODEL PATHS MUST BE LOWER CASE.["MODEL PATH" ] = { { type = "TYPE CODE", pos = VECTOR POSITION, dir = ANGLE ORIENTATION } ,
@@ -61,11 +59,9 @@ are all one -orientation - only.Then open cl_init .lua and make a new entry in t
             list.Set("SBEP_PartAssemblyData", k, v)
         end
     end
-    --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- */
 
 
-
-
+]]
     -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     -- /																	SMALLBRIDGE															      --/
     -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------

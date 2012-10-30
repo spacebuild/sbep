@@ -3,12 +3,12 @@ TOOL.Name = "#Part Spawner"
 TOOL.Command = nil
 TOOL.ConfigName = ""
 
-local SMBMST = list.Get("SBEP_SmallBridgeModels")
+local SmallBridgeModels = list.Get("SBEP_SmallBridgeModels")
 
 if CLIENT then
-    language.Add("Tool_sbep_part_spawner_name", "SBEP Part Spawner")
-    language.Add("Tool_sbep_part_spawner_desc", "Spawn SBEP props.")
-    language.Add("Tool_sbep_part_spawner_0", "Left click to spawn a prop.")
+    language.Add("Tool.sbep_part_spawner.name", "SBEP Part Spawner")
+    language.Add("Tool.sbep_part_spawner.desc", "Spawn SBEP props.")
+    language.Add("Tool.sbep_part_spawner.0", "Left click to spawn a prop.")
     language.Add("undone_SBEP Part", "Undone SBEP Part")
 end
 
@@ -70,57 +70,63 @@ function TOOL.BuildCPanel(panel)
 
     panel:SetSpacing(10)
     panel:SetName("SBEP Part Spawner")
-
-    local PropertySheet = vgui.Create("DPropertySheet")
-    PropertySheet:SetSize(50, 660)
-    panel:AddItem(PropertySheet)
-
-    for Tab, cl in pairs(SMBMST) do
-        local MCPS = vgui.Create("MCPropSelect")
-        MCPS:SetConVar("sbep_part_spawner_model")
-
-        local SkinMenu = vgui.Create("DButton")
-        SkinMenu:SetText("Skin")
-        SkinMenu:SetSize(100, 20)
-
-        local SkinTable = {
-            "Scrappers",
-            "Advanced",
-            "SlyBridge",
-            "MedBridge2",
-            "Jaanus"
-        }
-
-        SkinMenu.DoClick = function(btn)
-            local SkinMenuOptions = DermaMenu()
-            for i = 1, #SkinTable do
-                SkinMenuOptions:AddOption(SkinTable[i], function() RunConsoleCommand("sbep_part_spawner_skin", (i - 1)) end)
-            end
-            SkinMenuOptions:Open()
-        end
-        MCPS:AddItem(SkinMenu)
-
-        local GlassCheckBox = vgui.Create("DCheckBoxLabel")
-        GlassCheckBox:SetText("Glass")
-        GlassCheckBox:SetConVar("sbep_part_spawner_glass")
-        GlassCheckBox:SetValue(0)
-        GlassCheckBox:SizeToContents()
-        MCPS:AddItem(GlassCheckBox)
-
-        if CAF and CAF.GetAddon("Spacebuild") and CAF.GetAddon("Spacebuild").GetStatus() then
-            local HabCheckBox = vgui.Create("DCheckBoxLabel")
-            HabCheckBox:SetText("Habitable Module")
-            HabCheckBox:SetConVar("sbep_part_spawner_hab_mod")
-            HabCheckBox:SetValue(0)
-            HabCheckBox:SizeToContents()
-            MCPS:AddItem(HabCheckBox)
-        end
-
-        for Cat, mt in pairs(cl) do
-            MCPS:AddMCategory(Cat, mt)
-        end
-        MCPS:SetCategory(8)
-
-        PropertySheet:AddSheet(Tab, MCPS, "gui/silkicons/plugin", false, false, "SmallBridge")
-    end
+	
+	local SkinTable = 
+	{
+		"Advanced",
+		"SlyBridge",
+		"MedBridge2",
+		"Jaanus",
+		"Scrappers"
+	}
+	
+	local SkinSelector = vgui.Create( "DComboBox", panel )
+	SkinSelector:Dock(TOP)
+	SkinSelector:DockMargin( 2,2,2,2 )
+	SkinSelector:SetValue( SkinTable[GetConVar("sbep_part_spawner_skin"):GetInt()] or SkinTable[1] )
+	SkinSelector.OnSelect = function( index, value, data )
+		RunConsoleCommand( "sbep_part_spawner_skin", value )
+	end
+	for k,v in pairs( SkinTable ) do
+		SkinSelector:AddChoice( v )
+	end
+	
+	local GlassButton = vgui.Create( "DCheckBoxLabel", panel )
+	GlassButton:Dock(TOP)
+	GlassButton:DockMargin(2,2,2,2)
+	GlassButton:SetValue( GetConVar( "sbep_part_spawner_glass" ):GetBool() )
+	GlassButton:SetText( "Glass:" )
+	GlassButton:SetConVar( "sbep_part_spawner_glass" )
+	
+	for Tab,v  in pairs( SmallBridgeModels ) do
+		for Category, models in pairs( v ) do
+			local catPanel = vgui.Create( "DCollapsibleCategory", panel )
+			catPanel:Dock( TOP )
+			catPanel:DockMargin(2,2,2,2)
+			catPanel:SetText(Category)
+			catPanel:SetLabel(Category)
+			
+			local grid = vgui.Create( "DGrid", catPanel )
+			grid:Dock( TOP )
+			--grid:SetCols( 3 )
+			local width,_ = catPanel:GetSize()
+			grid:SetColWide( 64 )
+			grid:SetRowHeight( 64 )
+			
+			for key, modelpath in pairs( models ) do
+				local icon = vgui.Create( "SpawnIcon", panel )
+				--icon:Dock( TOP )
+				icon:SetModel( modelpath )
+				icon:SetToolTip( modelpath )
+				icon.DoClick = function( panel )
+					
+					RunConsoleCommand( "sbep_part_spawner_model", modelpath )
+				end
+				--icon:SetIconSize( width )
+				grid:AddItem( icon )
+				
+			end
+			catPanel:SetExpanded( 0 )
+		end
+	end
 end
