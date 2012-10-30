@@ -1,15 +1,15 @@
 TOOL.Category		= "SBEP"
-TOOL.Name			= "#Gyro-Pod (Advanced)"
+TOOL.Name			= "#Gyro-Pod Adv"
 TOOL.Command		= nil
 TOOL.ConfigName		= ""
 TOOL.ent = {}
 TOOL.ClientConVar[ "model" ] = "models/Spacebuild/Nova/drone2.mdl"
 
 if ( CLIENT ) then
-	language.Add( "Tool_gyropod_advanced_name", "DataSchmuck's Enhanced Gyro-Pod" )
-	language.Add( "Tool_gyropod_advanced_desc", "Customize controls & sensitivity with inputs. READ THE INSTRUCTIONS!" )
-	language.Add( "Tool_gyropod_advanced_0", "Left-Click to spawn.  Right click the Gyro-Pod to start linking a vehicle." )
-	language.Add( "Tool_gyropod_advanced_1", "Now Right click the vehicle that will control the Gyro-Pod via mouselook.  Reload to cancel." )	
+	language.Add( "Tool.gyropod_advanced.name", "DataSchmuck's Enhanced Gyro-Pod" )
+	language.Add( "Tool.gyropod_advanced.desc", "Customize controls & sensitivity with inputs. READ THE INSTRUCTIONS!" )
+	language.Add( "Tool.gyropod_advanced.0", "Left-Click to spawn.  Right click the Gyro-Pod to start linking a vehicle." )
+	language.Add( "Tool.gyropod_advanced.1", "Now Right click the vehicle that will control the Gyro-Pod via mouselook.  Reload to cancel." )	
 	language.Add( "Tool_turret_type", "Type of weapon" )	
 end
 

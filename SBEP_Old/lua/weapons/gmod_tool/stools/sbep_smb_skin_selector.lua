@@ -7,9 +7,9 @@ TOOL.ClientConVar["skin"] = 0
 TOOL.ClientConVar["glass"] = 0
 
 if (CLIENT) then
-    language.Add("Tool_sbep_smb_skin_selector_name", "SBEP SmallBridge Skin Selector Tool")
-    language.Add("Tool_sbep_smb_skin_selector_desc", "Easily change skins of SmallBridge props.")
-    language.Add("Tool_sbep_smb_skin_selector_0", "Left click a prop to switch to the selected skin.")
+    language.Add("Tool.sbep_smb_skin_selector.name", "SBEP SmallBridge Skin Selector Tool")
+    language.Add("Tool.sbep_smb_skin_selector.desc", "Easily change skins of SmallBridge props.")
+    language.Add("Tool.sbep_smb_skin_selector.0", "Left click a prop to switch to the selected skin.")
 end
 
 
@@ -26,8 +26,8 @@ function TOOL:LeftClick(trace)
                 SkinInt = 0
             end
 
-            local SkinNumber = ply:GetInfoNum("sbep_smb_skin_selector_skin")
-            local GlassNumber = ply:GetInfoNum("sbep_smb_skin_selector_glass")
+            local SkinNumber = ply:GetInfoNum("sbep_smb_skin_selector_skin", 1)
+            local GlassNumber = ply:GetInfoNum("sbep_smb_skin_selector_glass", 0)
 
             local Skin = 1
             if SkinInt == 1 then
