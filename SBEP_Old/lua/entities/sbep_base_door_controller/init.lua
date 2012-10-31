@@ -66,8 +66,7 @@ function ENT:AddDoors()
 		table.insert( self.DT , D )
 	end
 end
-
-function ENT:Use( activator, caller )
+function ENT:Trigger()
 	if !self.EnableUse or self.DisableUse then return end
 
 	for k,v in pairs( self.DT ) do
@@ -75,6 +74,9 @@ function ENT:Use( activator, caller )
 			v.OpenTrigger = !v.OpenTrigger
 		end
 	end
+end
+function ENT:Use( activator, caller )
+	self:Trigger()
 end
 
 function ENT:Think()

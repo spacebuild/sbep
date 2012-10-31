@@ -208,27 +208,27 @@ function ENT:Attach( ent , V , A )
 	
 	local Voff = Vector(0,0,0)
 	if V then Voff = Vector( V.x , V.y , V.z ) end
-		self:SetPos( ent:LocalToWorld( Voff ) )
+	self:SetPos( ent:LocalToWorld( Voff ) )
 		
 	local Aoff = Angle(0,0,0)
 	if A then Aoff = Angle( A.p , A.y , A.r ) end
-		self:SetAngles( ent:GetAngles() + Aoff )
+	self:SetAngles( ent:GetAngles() + Aoff )
 		
 	self.ATWeld = constraint.Weld( ent , self , 0, 0, 0, true )
 	
-		self:SetSkin( ent:GetSkin() )
-		--self.OpenTrigger = false
-		
-		self.ATEnt	= ent
-		self.VecOff	= Voff
-		self.AngOff	= Aoff
-		
-		self:GetPhysicsObject():EnableMotion( true )
+	self:SetSkin( ent:GetSkin() )
+	--self.OpenTrigger = false
+	
+	self.ATEnt	= ent
+	self.VecOff	= Voff
+	self.AngOff	= Aoff
+	
+	self:GetPhysicsObject():EnableMotion( true )
 	ent:DeleteOnRemove( self )
 end
 
 function ENT:SetController( cont , sysnum )
-	if cont and cont:IsValid() then
+	if cont and IsValid(cont) then
 		self.Cont = cont
 	end
 	if sysnum then
@@ -241,9 +241,11 @@ function ENT:OpenDoorSounds()
 	for k,v in pairs( self.D.OS ) do
 		local var = "SBEP_"..tostring( self.Index ).."_OpenSounds_"..tostring( k )
 		table.insert( self.Timers , var )
+
 		timer.Create( var , k , 1 , function()
-								self:EmitSound( v )
-						end )
+			if( not v ) then return end
+			self:EmitSound( v )
+		end )
 	end
 end
 
@@ -252,9 +254,11 @@ function ENT:CloseDoorSounds()
 	for k,v in pairs( self.D.CS ) do
 		local var = "SBEP_"..tostring( self.Index ).."_CloseSounds_"..tostring( k )
 		table.insert( self.Timers , var )
+
 		timer.Create( var , k , 1 , function()
-								self:EmitSound( v )
-						end )
+			if( not v ) then return end
+			self:EmitSound( v )
+		end )
 	end
 end
 
@@ -268,17 +272,20 @@ function ENT:Open()
 		self:OpenDoorSounds()
 		local var = "SBEP_"..tostring( self.Index ).."_OpenSolid"
 		table.insert( self.Timers , var )
+		
 		timer.Create( var , self.D.OD , 1 , function()
-							self:SetNotSolid( true )
-						end)
+			self:SetNotSolid( true )
+		end)
 		local var = "SBEP_"..tostring( self.Index ).."_OpenStatus"
 		table.insert( self.Timers , var )
+		
 		timer.Create( var , self.D.UD , 1 , function()
-							self.OpenStatus = true
-							if self.Cont then
-								WireLib.TriggerOutput(self.Cont,"Open_"..tostring( self.SDN ),1)
-							end
-						end)
+			self.OpenStatus = true
+			if self.Cont then
+				WireLib.TriggerOutput(self.Cont,"Open_"..tostring( self.SDN ),1)
+			end
+		end)
+		
 	if self.Cont then
 		WireLib.TriggerOutput(self.Cont,"Open_"..tostring( self.SDN ),0.5)
 	end
@@ -345,19 +352,19 @@ function ENT:IsOpen()
 
 end
 
-function ENT:Use()
-	if self.Cont and self.Cont then
-		self.Cont:Use()
+function ENT:Use( activator, caller )
+	if IsValid(self.Cont) and self.Cont then
+		self.Cont:Trigger()
 	end
 end
 
 function ENT:OnRemove()
 	for k,v in ipairs( self.Timers ) do
-		if timer.IsTimer( v ) then
+		if timer.Exists( v ) then
 			timer.Remove( v )
 		end
 	end
-	if self.Cont and ValidEntity( self.Cont ) then
+	if self.Cont and IsValid( self.Cont ) then
 		table.remove( self.Cont.DT , self.SDN )
 		self.Cont:MakeWire( true )
 	end
