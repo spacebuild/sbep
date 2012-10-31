@@ -1,5 +1,5 @@
 TOOL.Category		= "SBEP"
-TOOL.Name			= "#Gyro-Pod Adv"
+TOOL.Name			= "#Gyro-Pod"
 TOOL.Command		= nil
 TOOL.ConfigName		= ""
 TOOL.ent = {}
