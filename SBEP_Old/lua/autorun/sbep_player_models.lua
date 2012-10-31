@@ -5,7 +5,7 @@ if (SERVER) then
 	player_manager.AddValidModel( "female_01_jumpsuit",		"models/player/Female/female_01_jumpsuit.mdl" )
 	AddCSLuaFile( "sbep_player_models.lua" )
 end
-
+--[[
 list.Set( "PlayerOptionsModel",  "SBEPRedHEV", "models/SBEP Player Models/redhevsuit.mdl" )
 list.Set( "PlayerOptionsModel",  "SBEPBlueHEV", "models/SBEP Player Models/bluehevsuit.mdl" )
 list.Set( "PlayerOptionsModel",  "SBEPOrangeHEV", "models/SBEP Player Models/orangehevsuit.mdl" )
@@ -70,3 +70,5 @@ local NPC =
 }
 
 list.Set( "NPC", "npc_female_01_jumpsuit", NPC )
+]]--
+
