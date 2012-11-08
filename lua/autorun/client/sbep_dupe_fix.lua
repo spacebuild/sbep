@@ -12,7 +12,7 @@ function SBEP_LoadReplaceTable()
 	for _,row in pairs(tableRows) do
 		--returns the pair of strings matched by this pattern
 		--currently only finds models, if we change entity names as well this will need changing
-		old,new = string.match(row, "^[ \t]*(models/[0-9A-Za-z/, _\-]*.mdl)[ \t]*\|[ \t]*(models/[0-9A-Za-z/, _\-]*.mdl)[ \t]*$")
+		old,new = string.match(row, "^[ \t]*(models/[0-9A-Za-z/, _-]*.mdl)[ \t]*|[ \t]*(models/[0-9A-Za-z/, _-]*.mdl)[ \t]*$")
 		if (old and new) then
 			repTab[old] = new
 		end
