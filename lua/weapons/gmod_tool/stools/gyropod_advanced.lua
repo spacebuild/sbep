@@ -85,8 +85,8 @@ if (SERVER) then
 	--stuff needed for setting up ghost and model selection
 	function MakeDataGPod( pl, Model, Pos, Ang )
 		if ( !pl:CheckLimit( "gyropod_advanceds" ) ) then return false end
-		local datagpod = ents.Create( "gyropod_advanced" )
-		if not(IsValid(datagpod)) then return false end
+		local datagpod = ents.Create( "gryopod_advanced" )
+		if not(IsValid(datagpod)) then return nil end
 		datagpod:SetAngles(Ang)
 		datagpod:SetPos(Pos)
 		datagpod:SetModel(Model)
@@ -99,7 +99,7 @@ if (SERVER) then
 		pl:AddCount( "gyropod_advanceds", datagpod )
 		return datagpod
 	end
-	duplicator.RegisterEntityClass("gyropod_advanced", MakeDataGPod, "Model", "Pos", "Ang", "Vel", "aVel", "frozen")
+	duplicator.RegisterEntityClass("gyropod", MakeDataGPod, "Model", "Pos", "Ang", "Vel", "aVel", "frozen")
 end
 
 --The detailed instructions

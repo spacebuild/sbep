@@ -314,7 +314,7 @@ function ENT:Think()
 	
 	local abs, round, clamp, sqrt = math.abs, math.Round, math.Clamp, math.sqrt  --speed up math
  	local gyroshipangles = self:GetAngles()  
-	if (self.Pod and IsValid(self.Pod) then  --Determines whether stuff comes from vehicle or entity
+	if (self.Pod and IsValid(self.Pod)) then  --Determines whether stuff comes from vehicle or entity
 		self.GyroDriver, self.entorpod  = self.Pod:GetDriver(), self.Pod	
 	else
 		self.entorpod = self	
@@ -364,7 +364,7 @@ function ENT:Think()
 			self.AimSound = false
 		end
 		if self.SystemOn or (joystick and joystick.Get(self.CPL, "gyro_launch")) then
-			if (self.GyroDriver and IsValid(self.GyroDriver) then
+			if (self.GyroDriver and IsValid(self.GyroDriver)) then
 				if (joystick) then
 					self:UseJoystick()
 				else 
@@ -472,7 +472,7 @@ function ENT:Think()
 		--Force Application
 		local mass, entfor, entright, entup = self.GyroMass * 0.2, self:GetForward(), self:GetRight(), self:GetUp() 
 		for x, c in pairs(self.MoveTable) do
-			if (IsValid(c) then
+			if (IsValid(c)) then
 				local physobj = c:GetPhysicsObject()
 				local physvel, physangvel = physobj:GetVelocity(), physobj:GetAngleVelocity()
 			
@@ -603,7 +603,7 @@ function ENT:AimByMouse()  --Mouselook Calculations (whoever figured this out is
 end	
 	
 function ENT:PodModelFix() --fixing the strange bug where some vehicles are rotated 90 degrees
-	if (self.Pod and IsValid(self.Pod) then  
+	if (self.Pod and IsValid(self.Pod)) then  
 		local podmodel = self.Pod:GetModel()
 		if (string.find(podmodel, "carseat") or string.find(podmodel, "nova") or string.find(podmodel, "prisoner_pod_inner")) then
 			local podright = self.Pod:GetRight()
@@ -627,7 +627,7 @@ function ENT:GyroWeight()
 	local gyroleft = GyroPos + (self:GetRight() * -5000)
 	if self.SystemOn then
 		for _, ents in pairs( self.AllGyroConstraints ) do
-			if (!IsValid(ents) then return end
+			if (!IsValid(ents)) then return end
 			local linkphys = ents:GetPhysicsObject()
 			local mass = linkphys:GetMass()
 			local entspos = ents:GetPos()
@@ -812,7 +812,7 @@ end
 function ENT:PreEntityCopy()
 	local DI = {}
 
-	if (self.Pod and IsValid(self.Pod) then
+	if (self.Pod and IsValid(self.Pod)) then
 		DI.Pod = self.Pod:EntIndex()
 	end
 	
