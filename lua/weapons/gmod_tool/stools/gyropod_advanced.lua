@@ -86,7 +86,7 @@ if (SERVER) then
 	function MakeDataGPod( pl, Model, Pos, Ang )
 		if ( !pl:CheckLimit( "gyropod_advanceds" ) ) then return false end
 		local datagpod = ents.Create( "gyropod_advanced" )
-		if (!datagpod:IsValid()) then return false end
+		if not(IsValid(datagpod)) then return false end
 		datagpod:SetAngles(Ang)
 		datagpod:SetPos(Pos)
 		datagpod:SetModel(Model)
