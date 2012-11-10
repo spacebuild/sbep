@@ -25,7 +25,7 @@ function ENT:Initialize()
 	--self.Outputs = Wire_CreateOutputs(self, { "On", "Frozen", "Targeting Mode", "MPH", "KmPH", "Leveler", "Total Mass", "Props Linked" })
 	self.Outputs = WireLib.CreateSpecialOutputs(self, { "On", "Frozen", "Targeting Mode", "MPH", "KmPH", "Leveler", "Total Mass", "Props Linked", "Angles" }, { "NORMAL", "NORMAL", "NORMAL", "NORMAL", "NORMAL", "NORMAL", "NORMAL", "NORMAL", "ANGLE" })
 	local phys = self:GetPhysicsObject()
-	if (phys:IsValid()) then
+	if (IsValid(phys)) then
 		phys:Wake()
 	end
 	self.LogicCases = ents.FindByClass( "logic_case" )
@@ -314,12 +314,12 @@ function ENT:Think()
 	
 	local abs, round, clamp, sqrt = math.abs, math.Round, math.Clamp, math.sqrt  --speed up math
  	local gyroshipangles = self:GetAngles()  
-	if (self.Pod and self.Pod:IsValid()) then  --Determins whether stuff comes from vehicle or entity
+	if (self.Pod and IsValid(self.Pod) then  --Determines whether stuff comes from vehicle or entity
 		self.GyroDriver, self.entorpod  = self.Pod:GetDriver(), self.Pod	
 	else
 		self.entorpod = self	
 	end 
-	if self:GetParent():IsValid() then  --Determines whether to get local velocity from the Gyropod, or the entity it is parented to, if it exists
+	if IsValid(self:GetParent()) then  --Determines whether to get local velocity from the Gyropod, or the entity it is parented to, if it exists
 		entorpar = self:GetParent()
 	else
 		entorpar = self
@@ -364,7 +364,7 @@ function ENT:Think()
 			self.AimSound = false
 		end
 		if self.SystemOn or (joystick and joystick.Get(self.CPL, "gyro_launch")) then
-			if (self.GyroDriver and self.GyroDriver:IsValid()) then
+			if (self.GyroDriver and IsValid(self.GyroDriver) then
 				if (joystick) then
 					self:UseJoystick()
 				else 
@@ -472,7 +472,7 @@ function ENT:Think()
 		--Force Application
 		local mass, entfor, entright, entup = self.GyroMass * 0.2, self:GetForward(), self:GetRight(), self:GetUp() 
 		for x, c in pairs(self.MoveTable) do
-			if (c:IsValid()) then
+			if (IsValid(c) then
 				local physobj = c:GetPhysicsObject()
 				local physvel, physangvel = physobj:GetVelocity(), physobj:GetAngleVelocity()
 			
@@ -603,7 +603,7 @@ function ENT:AimByMouse()  --Mouselook Calculations (whoever figured this out is
 end	
 	
 function ENT:PodModelFix() --fixing the strange bug where some vehicles are rotated 90 degrees
-	if (self.Pod and self.Pod:IsValid()) then  
+	if (self.Pod and IsValid(self.Pod) then  
 		local podmodel = self.Pod:GetModel()
 		if (string.find(podmodel, "carseat") or string.find(podmodel, "nova") or string.find(podmodel, "prisoner_pod_inner")) then
 			local podright = self.Pod:GetRight()
@@ -627,7 +627,7 @@ function ENT:GyroWeight()
 	local gyroleft = GyroPos + (self:GetRight() * -5000)
 	if self.SystemOn then
 		for _, ents in pairs( self.AllGyroConstraints ) do
-			if (!ents:IsValid()) then return end
+			if (!IsValid(ents) then return end
 			local linkphys = ents:GetPhysicsObject()
 			local mass = linkphys:GetMass()
 			local entspos = ents:GetPos()
@@ -652,7 +652,7 @@ function ENT:GyroWeight()
 		end
 		local frontent, rearent, rightent, leftent, heaviest = rnd(self.FrontDist[1]), rnd(self.BackDist[1]), rnd(self.RightDist[1]), rnd(self.LeftDist[1]), rnd(self.MassTable[1])
 		self.frontlength, self.rearlength, self.rightwidth, self.leftwidth = frontent, rearent, rightent, leftent
-		if self:GetParent():IsValid() then
+		if IsValid(self:GetParent()) then
 			local par = self:GetParent()
 			self.GyroParentIndex = par:EntIndex()
 		end	
@@ -682,7 +682,7 @@ end
 function ENT:Gravity()  --Turns on/off gravity for all constrained entities
 	local constrained = self.AllGyroConstraints
 	for _, ents in pairs( constrained ) do
-		if (!ents:IsValid()) then return end
+		if (!IsValid(ents)) then return end
 		local linkphys = ents:GetPhysicsObject()
 		linkphys:EnableDrag(false)
 		if self.SystemOn or !self.OnPlanet then
@@ -696,7 +696,7 @@ end
 function ENT:FreezeMotion()  --Freezes all constrained entities
 	local constrainedents = constraint.GetAllConstrainedEntities( self )
 	for _, ents in pairs( constrainedents ) do
-		if (!ents:IsValid()) then return end
+		if (!IsValid(ents))then return end
 		if self.FreezeOn then
 			local physobj = ents:GetPhysicsObject()
 			physobj:EnableMotion(false)
@@ -802,7 +802,7 @@ function ENT:OnRemove()
 	end	
 	local constrained = self.AllGyroConstraints
 	for _, ents in pairs( constrained ) do
-		if (!ents:IsValid()) then return end
+		if (!IsValid(ents)) then return end
 		local linkphys = ents:GetPhysicsObject()
 		linkphys:EnableDrag(true)
 		linkphys:EnableGravity(true)
@@ -812,7 +812,7 @@ end
 function ENT:PreEntityCopy()
 	local DI = {}
 
-	if (self.Pod and self.Pod:IsValid()) then
+	if (self.Pod and IsValid(self.Pod) then
 		DI.Pod = self.Pod:EntIndex()
 	end
 	

@@ -131,6 +131,11 @@ DCT["models/smallbridge/ship parts/sbhulldsdwe.mdl"] = {
 DCT["models/slyfo/slypaneldoor1.mdl"] = { { type = "Door_Sly1" } }
 DCT["models/slyfo/doublehatch.mdl"] = { { type = "Door_SlyDHatch" } }
 DCT["models/SBEP_community/d12MBSFrame.mdl"] = { { type = "Door_d12MBSFrame" } }
+local p = {}
+function p:Hello()
+    print("")
+end
+
 
 DCT["models/cerus/modbridge/misc/doors/door11a.mdl"] = { { type = "Door_ModBridge_11a" } }
 DCT["models/cerus/modbridge/misc/doors/door11b.mdl"] = { { type = "Door_ModBridge_11b" } }
