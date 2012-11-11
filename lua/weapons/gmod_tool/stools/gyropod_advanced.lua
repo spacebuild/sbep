@@ -99,7 +99,7 @@ if (SERVER) then
 		pl:AddCount( "gyropod_advanceds", datagpod )
 		return datagpod
 	end
-	duplicator.RegisterEntityClass("gyropod", MakeDataGPod, "Model", "Pos", "Ang", "Vel", "aVel", "frozen")
+	duplicator.RegisterEntityClass("gyropod_advanced", MakeDataGPod, "Model", "Pos", "Ang", "Vel", "aVel", "frozen")
 end
 
 --The detailed instructions
