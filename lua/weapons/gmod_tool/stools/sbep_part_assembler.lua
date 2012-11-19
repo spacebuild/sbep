@@ -159,7 +159,11 @@ if CLIENT then
 	DWDH = { Material( "sprites/sbep_assembler_tool/DWDHyellow"		) , { 42 , 30 } } ,
 	DWDH_MO = { Material( "sprites/sbep_assembler_tool/DWDHyellow_mo"		) , { 42 , 30 } } ,
 	DWDH_S = { Material( "sprites/sbep_assembler_tool/DWDHyellow_s"		) , { 42 , 30 } } ,
-	
+
+	INSR = { Material( "sprites/sbep_assembler_tool/Insert"			) , { 42 , 30 } } ,
+	INSR_MO = { Material( "sprites/sbep_assembler_tool/SWSHblue_mo"		) , { 42 , 30 } } ,
+	INSR_S = { Material( "sprites/sbep_assembler_tool/SWSHblue_s"		) , { 42 , 30 } } ,	
+
 	ESML = { Material( "sprites/sbep_assembler_tool/ESML"			) , { 35 , 35 } } ,
 	ESML_MO = { Material( "sprites/sbep_assembler_tool/ESML_mo"			) , { 35 , 35 } } ,
 	ESML_S = { Material( "sprites/sbep_assembler_tool/ESML_s"			) , { 35 , 35 } } ,
