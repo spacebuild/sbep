@@ -1794,3 +1794,41 @@ are all one -orientation - only.Then open cl_init .lua and make a new entry in t
             list.Set("SBEP_PartAssemblyData", m, D)
         end
     end
+
+	-- Start of more modbridge stuff from
+	
+	// Put into \SBEP_Experimental\lua\autorun
+local MODB_PAD = {
+  [ "models/cerus/modbridge/core/spartan/c-111.mdl"         ] = { { type = "MOD1x1" , pos = Vector(    0,   -75,    0) , dir = Angle(  0,270,  0) } ,
+                                                                  { type = "MOD1x1" , pos = Vector(  -75,    0 ,    0) , dir = Angle(  0,180,  0) } } ,
+  [ "models/cerus/modbridge/core/spartan/c-221.mdl"         ] = { { type = "MOD2x1" , pos = Vector(    0,   150,    0) , dir = Angle(  0, 90,  0) } ,
+                                                                  { type = "MOD2x1" , pos = Vector( -150,    0 ,    0) , dir = Angle(  0,180,  0) } } ,
+  [ "models/cerus/modbridge/core/spartan/cv-11-31.mdl"      ] = { { type = "MOD3x1" , pos = Vector(    0,   -75,    0) , dir = Angle(  0,270,  0) } ,
+                                                                  { type = "MOD1x1" , pos = Vector(    0,    75,    0) , dir = Angle(  0, 90,  0) } } ,
+  [ "models/cerus/modbridge/core/spartan/s-111.mdl"         ] = { { type = "MOD1x1" , pos = Vector(   75,    0 ,    0) , dir = Angle(  0,  0,  0) } ,
+                                                                  { type = "MOD1x1" , pos = Vector(  -75,    0 ,    0) , dir = Angle(  0,180,  0) } } ,
+  [ "models/cerus/modbridge/core/spartan/s-211.mdl"         ] = { { type = "MOD1x1" , pos = Vector(  225,    0 ,    0) , dir = Angle(  0,  0,  0) } ,
+                                                                  { type = "MOD1x1" , pos = Vector(  -75,    0 ,    0) , dir = Angle(  0,180,  0) } } ,
+  [ "models/cerus/modbridge/core/spartan/s-311.mdl"         ] = { { type = "MOD1x1" , pos = Vector(  225,    0 ,    0) , dir = Angle(  0,  0,  0) } ,
+                                                                  { type = "MOD1x1" , pos = Vector( -225,    0 ,    0) , dir = Angle(  0,180,  0) } } ,
+  [ "models/cerus/modbridge/core/spartan/s-121.mdl"         ] = { { type = "MOD2x1" , pos = Vector(   75,    0 ,    0) , dir = Angle(  0,  0,  0) } ,
+                                                                  { type = "MOD2x1" , pos = Vector(  -75,    0 ,    0) , dir = Angle(  0,180,  0) } } ,
+  [ "models/cerus/modbridge/core/spartan/s-221.mdl"         ] = { { type = "MOD2x1" , pos = Vector(  150,    0 ,    0) , dir = Angle(  0,  0,  0) } ,
+                                                                  { type = "MOD2x1" , pos = Vector( -150,    0 ,    0) , dir = Angle(  0,180,  0) } } ,
+  [ "models/cerus/modbridge/core/spartan/s-321.mdl"         ] = { { type = "MOD2x1" , pos = Vector(  300,    0 ,    0) , dir = Angle(  0,  0,  0) } ,
+                                                                  { type = "MOD2x1" , pos = Vector( -150,    0 ,    0) , dir = Angle(  0,180,  0) } } ,
+  [ "models/cerus/modbridge/core/spartan/s-131.mdl"         ] = { { type = "MOD3x1" , pos = Vector(   75,    0 ,    0) , dir = Angle(  0,  0,  0) } ,
+                                                                  { type = "MOD3x1" , pos = Vector(  -75,    0 ,    0) , dir = Angle(  0,180,  0) } } ,
+  [ "models/cerus/modbridge/core/spartan/s-231.mdl"         ] = { { type = "MOD3x1" , pos = Vector(   75,    0 ,    0) , dir = Angle(  0,  0,  0) } ,
+                                                                  { type = "MOD3x1" , pos = Vector( -225,    0 ,    0) , dir = Angle(  0,180,  0) } } ,
+  [ "models/cerus/modbridge/core/spartan/s-331.mdl"	        ] = { { type = "MOD3x1" , pos = Vector(  225,    0 ,    0) , dir = Angle(  0,  0,  0) } ,
+                                                                  { type = "MOD3x1" , pos = Vector( -225,    0 ,    0) , dir = Angle(  0,180,  0) } } ,
+  [ "models/cerus/modbridge/core/prefab/crew_331.mdl"	      ] = { { type = "MOD1x1" , pos = Vector(  225,    0 ,    0) , dir = Angle(  0,  0,  0) } ,
+                                                                  { type = "MOD1x1" , pos = Vector( -225,    0 ,    0) , dir = Angle(  0,180,  0) } }
+                  }
+
+for m,D in pairs( MODB_PAD ) do
+  if D ~= {} then
+    list.Set( "SBEP_PartAssemblyData", m , D )
+  end
+end

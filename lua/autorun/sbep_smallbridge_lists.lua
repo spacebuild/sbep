@@ -362,3 +362,143 @@ SMT.SmallBridge["Cohesion"] = {
 for k, v in pairs(SMT) do
     list.Set("SBEP_SmallBridgeModels", k, v)
 end
+local SMT = {}
+  SMT.ModBridge = {}
+  SMT.ModBridge["Other"] =
+  {
+    "models/Cerus/Modbridge/Core/PreFab/crew_331.mdl",
+    "models/Cerus/Modbridge/Core/cv-mb-smb.mdl"
+  }
+  SMT.ModBridge["Ship parts"] =
+  {
+    "models/Cerus/Modbridge/Core/g-211s.mdl",
+    "models/Cerus/Modbridge/Core/g-221.mdl",
+    "models/Cerus/Modbridge/Core/g-111wd.mdl",
+    "models/Cerus/Modbridge/Core/g-221s.mdl",
+    "models/Cerus/Modbridge/Core/g-231r.mdl",
+    "models/Cerus/Modbridge/Core/g-231s.mdl",
+    "models/Cerus/Modbridge/Core/g-231w.mdl"
+  }
+  SMT.ModBridge["Height transfer"] =
+  {
+    "models/Cerus/Modbridge/Core/rs-322.mdl",
+    "models/Cerus/Modbridge/Core/rs-332.mdl",
+    "models/Cerus/Modbridge/Core/rs-312.mdl",
+   
+    "models/Cerus/Modbridge/Core/rso-322.mdl",
+    "models/Cerus/Modbridge/Core/rso-332.mdl",
+    "models/Cerus/Modbridge/Core/rso-312.mdl",
+    "models/Cerus/Modbridge/Core/rso-332f.mdl",
+   
+    "models/Cerus/Modbridge/Core/rst-312.mdl",
+    "models/Cerus/Modbridge/Core/rst-322r.mdl",
+    "models/Cerus/Modbridge/Core/rst-322l.mdl",
+    "models/Cerus/Modbridge/Core/rst-332.mdl",
+    "models/Cerus/Modbridge/Core/rst-332c.mdl",
+    "models/Cerus/Modbridge/Core/rst-332cf.mdl",
+    "models/Cerus/Modbridge/Core/rst-332f.mdl",
+   
+    "models/Cerus/Modbridge/Core/r-312.mdl"
+  }
+  SMT.ModBridge["Elevators"] =
+  {
+    "models/Cerus/Modbridge/Core/s-331eb.mdl",
+    "models/Cerus/Modbridge/Core/s-331em.mdl",
+    "models/Cerus/Modbridge/Core/s-331et.mdl",
+    "models/Cerus/Modbridge/Core/s-332ep.mdl",
+    "models/Cerus/Modbridge/Misc/Elevator/se11f.mdl",
+   
+    "models/Cerus/Modbridge/Misc/Elevator/eb111.mdl",
+    "models/Cerus/Modbridge/Misc/Elevator/ecb111.mdl",
+    "models/Cerus/Modbridge/Misc/Elevator/ecm111.mdl",
+    "models/Cerus/Modbridge/Misc/Elevator/ect111.mdl",
+    "models/Cerus/Modbridge/Misc/Elevator/em111.mdl",
+    "models/Cerus/Modbridge/Misc/Elevator/et111.mdl",
+   
+    "models/Cerus/Modbridge/Misc/Elevator/elev_111.mdl",
+   
+    "models/Cerus/Modbridge/Misc/Elevator/eb332.mdl",
+    "models/Cerus/Modbridge/Misc/Elevator/em332.mdl",
+    "models/Cerus/Modbridge/Misc/Elevator/et332.mdl",
+   
+    "models/Cerus/Modbridge/Misc/Elevator/elev_332.mdl",
+    "models/Cerus/Modbridge/Misc/Elevator/elev_332b.mdl",
+   
+    "models/Cerus/Modbridge/Misc/Elevator/etm111.mdl",
+    "models/Cerus/Modbridge/Misc/Elevator/etm111g.mdl",
+    "models/Cerus/Modbridge/Misc/Elevator/etm112.mdl",
+    "models/Cerus/Modbridge/Misc/Elevator/etm113.mdl",
+    "models/Cerus/Modbridge/Misc/Elevator/etm113g.mdl"
+  }
+  SMT.ModBridge["Hulls"] =
+  {
+    "models/Cerus/Modbridge/Core/cvw-11-31.mdl",
+   
+    "models/Cerus/Modbridge/Core/c-111.mdl",
+    "models/Cerus/Modbridge/Core/c-131l.mdl",
+    "models/Cerus/Modbridge/Core/c-131r.mdl",
+    "models/Cerus/Modbridge/Core/c-221.mdl",
+    "models/Cerus/Modbridge/Core/c-331.mdl",
+    "models/Cerus/Modbridge/Core/c-332.mdl",
+   
+    "models/Cerus/Modbridge/Core/cv-21-31.mdl",
+    "models/Cerus/Modbridge/Core/cv-11-21.mdl",
+    "models/Cerus/Modbridge/Core/cv-11-31.mdl",
+   
+    "models/Cerus/Modbridge/Core/s-111.mdl",
+    "models/Cerus/Modbridge/Core/s-221.mdl",
+    "models/Cerus/Modbridge/Core/s-221g.mdl",
+    "models/Cerus/Modbridge/Core/s-231.mdl",
+    "models/Cerus/Modbridge/Core/s-311.mdl",
+    "models/Cerus/Modbridge/Core/s-331g.mdl",
+    "models/Cerus/Modbridge/Core/s-111g.mdl",
+    "models/Cerus/Modbridge/Core/s-121.mdl",
+    "models/Cerus/Modbridge/Core/s-131.mdl",
+    "models/Cerus/Modbridge/Core/s-211.mdl",
+    "models/Cerus/Modbridge/Core/s-321.mdl",
+    "models/Cerus/Modbridge/Core/s-331.mdl",
+    "models/Cerus/Modbridge/Core/s-332.mdl",
+   
+    "models/Cerus/Modbridge/Core/sc-111.mdl",
+    "models/Cerus/Modbridge/Core/sc-131g.mdl",
+    "models/Cerus/Modbridge/Core/sc-131g3.mdl",
+    "models/Cerus/Modbridge/Core/sc-111g.mdl",
+    "models/Cerus/Modbridge/Core/sc-121.mdl",
+    "models/Cerus/Modbridge/Core/sc-131.mdl",
+    "models/Cerus/Modbridge/Core/sc-131g2.mdl",
+    "models/Cerus/Modbridge/Core/sc-332.mdl",
+   
+    "models/Cerus/Modbridge/Core/t-331.mdl",
+    "models/Cerus/Modbridge/Core/t-111.mdl",
+    "models/Cerus/Modbridge/Core/t-131.mdl",
+    "models/Cerus/Modbridge/Core/t-221.mdl",
+    "models/Cerus/Modbridge/Core/t-332.mdl",
+   
+    "models/Cerus/Modbridge/Core/x-331.mdl",
+    "models/Cerus/Modbridge/Core/x-111.mdl",
+    "models/Cerus/Modbridge/Core/x-221.mdl",
+    "models/Cerus/Modbridge/Core/x-332.mdl",
+   
+    "models/Cerus/Modbridge/Core/bridgeg-211.mdl",
+   
+    "models/Cerus/Modbridge/Core/tc-131.mdl"
+  }
+  SMT.ModBridge["Spartan"] =
+  {
+    "models/Cerus/Modbridge/Core/Spartan/c-111.mdl",
+    "models/Cerus/Modbridge/Core/Spartan/c-221.mdl",
+    "models/Cerus/Modbridge/Core/Spartan/cv-11-31.mdl",
+    "models/Cerus/Modbridge/Core/Spartan/s-111.mdl",
+    "models/Cerus/Modbridge/Core/Spartan/s-121.mdl",
+    "models/Cerus/Modbridge/Core/Spartan/s-131.mdl",
+    "models/Cerus/Modbridge/Core/Spartan/s-211.mdl",
+    "models/Cerus/Modbridge/Core/Spartan/s-221.mdl",
+    "models/Cerus/Modbridge/Core/Spartan/s-231.mdl",
+    "models/Cerus/Modbridge/Core/Spartan/s-311.mdl",
+    "models/Cerus/Modbridge/Core/Spartan/s-321.mdl",
+    "models/Cerus/Modbridge/Core/Spartan/s-331.mdl"
+  }
+ 
+for k,v in pairs( SMT ) do
+  list.Set( "SBEP_SmallBridgeModels", k , v )
+end
