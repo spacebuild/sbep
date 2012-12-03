@@ -7,10 +7,10 @@
 --
 if SERVER then
 
-	CreateConVar("sv_sbep_debug", 1, FCVAR_SERVER_CAN_EXECUTE, "Enable Debug Messages for the Server")
+	CreateConVar("sv_sbep_debug", 0, FCVAR_SERVER_CAN_EXECUTE, "Enable Debug Messages for the Server")
 
 elseif CLIENT then
-	CreateClientConVar("cl_sbep_debug", 1, true, false )
+	CreateClientConVar("cl_sbep_debug", 0, true, false )
 
 end
 

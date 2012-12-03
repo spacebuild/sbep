@@ -7,8 +7,7 @@
 --
 
 --Australian Localization: (Because my spelling is bad enough, I don't need to be americanised)
-panel.SetColour = panel.SetColor
-Colour = Color
+
 
 
 serverVersion = "Unknown"
@@ -17,32 +16,52 @@ clientVersion = "Unknown"
 
 function ServerHaveSBEP()
 	-- Because I know of at least one SB server without SBEP, Amazing right?
-	if (ServerVersion = "Unknown") then
+	if (ServerVersion == "Unknown") then
 		return false
 	else
 		return true
 end
+end
+
 
 
 function CreateMenu( )
 	if (ServerHaveSBEP() == false ) then return end
+	--[[
 	local ClVersion = GetClientSVN()
 	local SvVersion = RequestServerSVN()
 	local Latest = GetLatestSVN()
-
-	local Frame = vgui.Create("DFrame")
-	frame:SetPos(ScrH / 4,ScrW / 4)
-	frame:SetSize( 300, 300 )
+	]]--
+	local frame = vgui.Create("DFrame")
+	frame:SetPos(ScrW() / 2,ScrH() / 2) --x, y (x being width,
+	frame:SetSize( ScreenScale(400), 300 )
 	frame:SetTitle( "Welcome to the Spacebuild Enhancement Project")
 	frame:SetDraggable(true)
 	frame:MakePopup()
 	frame:SetVisible( true )      -- Here we setup the base panel that everything else should be connected to.
 
-	--Create a Tab that will contain SVN Versions.
+	local PropSheet = vgui.Create("DPRopertySheet")
+	PropSheet:SetParent(frame)
+	PropSheet:SetPos(ScrH() /2  - 5, ScrW() /2 - 5)
+	PropSheet:SetSize( ScreenScale(400) - 5, 295 )	
+	
+	
+end
+
+
+concommand.Add("sbep_menu", CreateMenu, nil, "Open the SBEP welcome menu" )
+
+
+if CLIENT then
+	hook.Add("Initialize","Create SBEP Menu", CreateMenu )
+end
+
+--[[
+--Create a Tab that will contain SVN Versions.
 
 	local PropSheet = vgui.Create("DPRopertySheet")
 	PropSheet:SetParent(Frame)
-	PropSheet:SetPos(ScrH /4 - 5, ScrW /4 - 5)
+	PropSheet:SetPos(ScrH() /4 - 5, ScrW() /4 - 5)
 	PropSheet:SetSize( 295, 295 )
 
 
@@ -70,7 +89,7 @@ function CreateMenu( )
 	SVInfo:Text("The Server has Version: "..serverVersion.."") -- TODO: Check if this can be autowrapped around. The next line must say The Latest Version is and then The Server is ... behind (or) The Server is up to date.
 	SVInfo:SetWrap(true)
 	SVInfo:SetParent(ServerCat)
-	SVInfo:SetText("The Server has version: "..serverVersion..". \n The latest Version is "..latest..". The Server is "..toint(latest) - toint(serverVersion).. " versions behind."
+	SVInfo:SetText("The Server has version: "..serverVersion..". \n The latest Version is "..latest..". The Server is "..toint(latest) - toint(serverVersion).. " versions behind.")
 
 
 	-- Then we will change the colour of ColourWarning to notify it is behind (This is purely for looks) In fact it
@@ -91,11 +110,4 @@ function CreateMenu( )
 
 
 
-
-end
-concommand.Add("sbep_menu", CreateMenu, nil, "Open the SBEP welcome menu" )
-
-
-if CLIENT then
-	hook.Add("Initialize","Create SBEP Menu", CreateMenu )
-end
+]]--
