@@ -235,18 +235,36 @@ end
 -- End of old code That I do not need to change as it seems to work. The next piece of code should stop in the ground models! (Yay)
 
 
+
+
+
 function NotInTheGroundPlz( ply, vehicle ) -- Awesome function name hey? pretty descriptive to.
+	local PlyWeapon = ply:GetActiveWeapon()
+	DebugMessage(tostring(PlyWeapon))
+	local tempTable = string.Explode("]",tostring(PlyWeapon))
+	local tempString = table.concat(tempTable)
+	local tempTable = {}
+	local tempTable = string.Explode("[",tempString)
+	local weapon = tempTable[3]
+	if (weapon == "gmod_tool") then
+		mode = ply:GetActiveWeapon():GetMode()
+		if (mode == "adv_duplicator") or (mode == "duplicator") or (mode == "advdupe2") then
+			DebugMessage("Mode = ".. mode )
+			DebugMessage("Duplicator Detected")
+			return true
+		end
 	local model = vehicle:GetModel()
 	DebugMessage("SBEP Vehicle Ground Preventation")
 	DebugMessage("The Vehicle Model is: "..model.."")
 	DebugMessage("Player:"..tostring(ply).."")
+	--The BallPod:
 	if (model == "models/spacebuild/strange.mdl") then
 		local oldPos = vehicle:GetPos()
 		local mini = vehicle:OBBMins()
 		local height = vehicle:OBBMaxs().z - vehicle:OBBMins().z
 		vehicle:SetPos( Vector(oldPos.x, oldPos.y, oldPos.z + height/2 ))
 	end
-	
+	--Everything Else:
 	for k,v in pairs(VT) do
 		DebugMessage("V = "..v.model.."")
 		if (v.model == model) then -- We have found the corresponding element in the table. Now using OBBMins.
@@ -255,19 +273,43 @@ function NotInTheGroundPlz( ply, vehicle ) -- Awesome function name hey? pretty 
 			local height = vehicle:OBBMaxs().z - vehicle:OBBMins().z
 			DebugMessage("Old Pos: "..tostring(oldPos).."")
 			DebugMessage("Height: "..tostring( vehicle:OBBMaxs().z - vehicle:OBBMins().z).."")
-			
+			DebugMessage("Boosted:"..tostring(vehicle:GetNWBool("Boosted")).."")
 			DebugMessage("New Pos: "..tostring( Vector(oldPos.x, oldPos.y, oldPos.z + height/2)).."")
 		
-			
+			vehicle:SetPos( Vector(oldPos.x, oldPos.y, oldPos.z + height/2 ))			
+		end
+	end
+
+	else
+		local model = vehicle:GetModel()
+		DebugMessage("SBEP Vehicle Ground Preventation")
+		DebugMessage("The Vehicle Model is: "..model.."")
+		DebugMessage("Player:"..tostring(ply).."")
+		--The BallPod:
+		if (model == "models/spacebuild/strange.mdl") then
+			local oldPos = vehicle:GetPos()
+			local mini = vehicle:OBBMins()
+			local height = vehicle:OBBMaxs().z - vehicle:OBBMins().z
 			vehicle:SetPos( Vector(oldPos.x, oldPos.y, oldPos.z + height/2 ))
-			break -- Get out of the loop for performance (smalL but meh) 
-			
+		end
+		--Everything Else:
+		for k,v in pairs(VT) do
+			DebugMessage("V = "..v.model.."")
+			if (v.model == model) then -- We have found the corresponding element in the table. Now using OBBMins.
+				local oldPos = vehicle:GetPos()
+				local mini = vehicle:OBBMins()
+				local height = vehicle:OBBMaxs().z - vehicle:OBBMins().z
+				DebugMessage("Old Pos: "..tostring(oldPos).."")
+				DebugMessage("Height: "..tostring( vehicle:OBBMaxs().z - vehicle:OBBMins().z).."")
+				DebugMessage("Boosted:"..tostring(vehicle:GetNWBool("Boosted")).."")
+				DebugMessage("New Pos: "..tostring( Vector(oldPos.x, oldPos.y, oldPos.z + height/2)).."")
+
+				vehicle:SetPos( Vector(oldPos.x, oldPos.y, oldPos.z + height/2 ))
+			end
 		end
 	end
 end
 
+--Garry: Why the hell do you name your Hooks: PlayerSpawnedVehicle or PlayerSpawnVehicle when duplicators can call it....
 hook.Add("PlayerSpawnedVehicle","Stop SBEP Vehicles spawning in the ground", NotInTheGroundPlz)
 
---ISSUES:
--- Capitals (ASAP). (the models need to be lowercased and pushed to git)
--- Duping (ASAP). NotInGround bugs when a vehicle is duped  add an if-then-else to check if the vehicle has been spawned in by a player or duped in. Only occurs with Ad1 and IGN Dupe

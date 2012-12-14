@@ -26,6 +26,10 @@ MOD3x2 - Modbridge, triple width, double height
 MOD1x1e - Modbridge, square peice elevator
 MOD3x2e - Modbridge, triple width, single height elevator
 
+   --- H
+   --
+    -
+
 ----------------------------------------------------------------------------------------------------------------------------------------
 As you can see, there are currently no types assigned for Medbridge or Modbridge.To add a type, navigate to SBEP_Experimental / materials / sprites.Duplicate an existing VMT(essentially a text file ) and change its name to your new
 type.Create an image for your type, and use VTFEdit to convert it to a VTF.( VTFs have to have dimensions that are powers of two -however, your
