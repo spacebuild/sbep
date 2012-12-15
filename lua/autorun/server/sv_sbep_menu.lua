@@ -34,17 +34,7 @@ end
 
 function GetVersion( type )
 
-	if (type == "Git") then
-		file.Read("", "GAME\sbep\.git\\") --TODO: Figure out paths and editing this file etc.
-
-
-	elseif (type == "SVN" ) then
-		file.Read("", "GAME\sbep\.git\\")
-
-	else
-		return "Unknown"
-	end
-end
+cend
 
 
 function SetPlyVersion( ply, ip )
