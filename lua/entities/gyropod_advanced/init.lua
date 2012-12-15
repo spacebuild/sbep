@@ -19,8 +19,8 @@ function ENT:Initialize()
 	self:SetSolid( SOLID_VPHYSICS )
 	self:SetMaterial("spacebuild/SBLight5");
 	self.Inputs = WireLib.CreateSpecialInputs( self, {"Activate", "Forward", "Back", "SpeedAbs", "MoveLeft", "MoveRight", "Lateral", "MoveUp", "MoveDown", "Vertical", "RollLeft", "RollRight", "RollAbs",
-								"PitchUp", "PitchDown", "PitchAbs", "YawLeft", "YawRight", "YawAbs", "PitchMult", "YawMult", "RollMult", "ThrustMult", "MPH Limit", "Damper", "Level", "Freeze", "AimMode",
-								"AimX", "AimY", "AimZ", "AimVec"},{"NORMAL","NORMAL","NORMAL","NORMAL","NORMAL","NORMAL","NORMAL","NORMAL","NORMAL","NORMAL","NORMAL","NORMAL",
+								"PitchUp", "PitchDown", "PitchAbs", "YawLeft", "YawRight", "YawAbs", "PitchMult", "YawMult", "RollMult", "ThrustMult", "MPH Limit", "Damper", "Level", "Roll Lock", "Freeze", "AimMode",
+								"AimX", "AimY", "AimZ", "AimVec"},{"NORMAL","NORMAL","NORMAL","NORMAL","NORMAL","NORMAL","NORMAL","NORMAL","NORMAL","NORMAL","NORMAL","NORMAL","NORMAL",
 								"NORMAL","NORMAL","NORMAL","NORMAL","NORMAL","NORMAL","NORMAL","NORMAL","NORMAL","NORMAL","NORMAL","NORMAL","NORMAL","NORMAL","NORMAL","NORMAL","NORMAL","NORMAL","NORMAL","VECTOR"} )
 	--self.Outputs = Wire_CreateOutputs(self, { "On", "Frozen", "Targeting Mode", "MPH", "KmPH", "Leveler", "Total Mass", "Props Linked" })
 	self.Outputs = WireLib.CreateSpecialOutputs(self, { "On", "Frozen", "Targeting Mode", "MPH", "KmPH", "Leveler", "Total Mass", "Props Linked", "Angles" }, { "NORMAL", "NORMAL", "NORMAL", "NORMAL", "NORMAL", "NORMAL", "NORMAL", "NORMAL", "ANGLE" })
@@ -44,7 +44,7 @@ function ENT:Initialize()
 	self.RMult = 1
 	self.YaMult = 1
 	self.TMult = 1
-	self.SpdL = 112
+	self.SpdL = 250
 	self.Damper = 5
 	self.Forw = 0
 	self.Back = 0
@@ -59,6 +59,7 @@ function ENT:Initialize()
 	self.GyroYawLeft = 0
 	self.GyroYawRight = 0
 	self.GyroLvl = false
+	self.RollLock = false
 	self.TarPos = Vector(0, 0, 0)
 	self.ModeOut = 0
 	self.GyroMass = 0
@@ -287,9 +288,9 @@ function ENT:TriggerInput(iname, value)
 		self.TarPos = value
 	elseif (iname == "MPH Limit") then
 		if (value ~= 0) then
-			self.SpdL = math.Clamp(math.abs(value), 0, 112)
+			self.SpdL = math.Clamp(math.abs(value), 0, 999)
 		else
-			self.SpdL = 112
+			self.SpdL = 250
 		end	
 	elseif (iname == "Damper") then
 		if (value ~= 0) then
@@ -304,6 +305,14 @@ function ENT:TriggerInput(iname, value)
 		else
 			self.GyroLevelerOut = 0
 			self.GyroLvl = false
+		end		
+	elseif (iname == "Roll Lock") then
+		if (value ~= 0) then
+			--self.RollLockOut = 1
+			self.RollLock = true
+		else
+			--self.RollLockOut = 0
+			self.RollLock = false
 		end		
 	end
 end
@@ -429,44 +438,44 @@ function ENT:Think()
 		end
 
 		if (SMult > 0) and (self.GyroSpeed >= 0) then  --pressing forward and moving forwards
-			self.GyroSpeed = self.GyroSpeed + (3 * self.XMult * (abs(sqrt(speedx)-10.583) * 0.2))
+			self.GyroSpeed = self.GyroSpeed + ( self.TMult * self.XMult * (self.SpdL - abs(speedx)) * 0.05 )
 		elseif (SMult < 0) and (self.GyroSpeed <= 0) then --pressing reverse moving backwards
-			self.GyroSpeed = self.GyroSpeed - (3 * self.XMult * (abs(sqrt(speedx)-10.583) * 0.2))
+			self.GyroSpeed = self.GyroSpeed - ( self.TMult * self.XMult * (self.SpdL - abs(speedx)) * 0.05 )
 		elseif (SMult > 0) and (self.GyroSpeed < 0) then --pressing forward and moving backwards, increase speed faster until moving forwards again
-			self.GyroSpeed = clamp(self.GyroSpeed + (self.Damper * 4), -1000, 0)
+			self.GyroSpeed = self.GyroSpeed + ((abs(speedx) ) + self.Damper)
 		elseif (SMult < 0) and (self.GyroSpeed > 0) then  --pressing reverse and moving forwards, reverse speed faster until moving backwards again
-			self.GyroSpeed = clamp(self.GyroSpeed - (self.Damper * 4), 0, 1000)
+			self.GyroSpeed = self.GyroSpeed - ((abs(speedx) ) + self.Damper)
 		elseif (SMult == 0) and (self.GyroSpeed > 0) then  --not pressing for or back and moving forwards, slow movement faster until stopped
-			self.GyroSpeed = clamp(self.GyroSpeed - self.Damper, 0, 1000)
+			self.GyroSpeed = self.GyroSpeed - ((abs(speedx) * 0.2) + self.Damper)
 		elseif (SMult == 0) and (self.GyroSpeed < 0) then  --not pressing forw or back and moving backwards slow movement faster until stopped
-			self.GyroSpeed = clamp(self.GyroSpeed + self.Damper, -1000, 0)
+			self.GyroSpeed = self.GyroSpeed + ((abs(speedx) * 0.2) + self.Damper)
 		end
 		
 		if (HMult > 0) and (self.HSpeed >= 0) then  --Strafe movement
-			self.HSpeed = self.HSpeed + (3 * self.YMult * (abs(sqrt(speedy)-10.583) * 0.1))
+			self.HSpeed = self.HSpeed + ( self.TMult * self.YMult * (self.SpdL - abs(speedy)) * 0.05 )
 		elseif (HMult < 0) and (self.HSpeed <= 0) then
-			self.HSpeed = self.HSpeed - (3 * self.YMult * (abs(sqrt(speedy)-10.583) * 0.1))
+			self.HSpeed = self.HSpeed - ( self.TMult * self.YMult * (self.SpdL - abs(speedy)) * 0.05 )
 		elseif (HMult > 0) and (self.HSpeed < 0) then
-			self.HSpeed = clamp(self.HSpeed + (self.Damper * 4), -2000, 0)
+			self.HSpeed = self.HSpeed + ((abs(speedy) ) + self.Damper)
 		elseif (HMult < 0) and (self.HSpeed > 0) then
-			self.HSpeed = clamp(self.HSpeed - (self.Damper * 4), 0, 2000)
+			self.HSpeed = self.HSpeed - ((abs(speedy) ) + self.Damper)
 		elseif (HMult == 0) and (self.HSpeed > 0) then
-			self.HSpeed = clamp(self.HSpeed - self.Damper, 0, 2000)
+			self.HSpeed = self.HSpeed - ((abs(speedy) * 0.2) + self.Damper)
 		elseif (HMult == 0) and (self.HSpeed < 0) then
-			self.HSpeed = clamp(self.HSpeed + self.Damper, -2000, 0)
+			self.HSpeed = self.HSpeed + ((abs(speedy) * 0.2) + self.Damper)
 		end
 		if (VMult > 0) and (self.VSpeed >= 0) then  --Height Movement
-			self.VSpeed = self.VSpeed + (3 * self.ZMult * (abs(sqrt(speedz)-10.583) * 0.1))
+			self.VSpeed = self.VSpeed + ( self.TMult * self.ZMult * (self.SpdL - abs(speedz)) * 0.05 )
 		elseif (VMult < 0) and (self.VSpeed <= 0) then
-			self.VSpeed = self.VSpeed - (3 * self.ZMult * (abs(sqrt(speedz)-10.583) * 0.1))
+			self.VSpeed = self.VSpeed - ( self.TMult * self.ZMult * (self.SpdL - abs(speedz)) * 0.05 )
 		elseif (VMult > 0) and (self.VSpeed < 0) then
-			self.VSpeed = clamp(self.VSpeed + (self.Damper * 4), -2000, 0)
+			self.VSpeed = self.VSpeed + ((abs(speedz) ) + self.Damper)
 		elseif (VMult < 0) and (self.VSpeed > 0) then
-			self.VSpeed = clamp(self.VSpeed - (self.Damper * 4), 0, 2000)
+			self.VSpeed = self.VSpeed - ((abs(speedz) ) + self.Damper)
 		elseif (VMult == 0) and (self.VSpeed > 0) then
-			self.VSpeed = clamp(self.VSpeed - self.Damper, 0, 2000)
+			self.VSpeed = self.VSpeed - ((abs(speedz) * 0.2) + self.Damper)
 		elseif (VMult == 0) and (self.VSpeed < 0) then
-			self.VSpeed = clamp(self.VSpeed + self.Damper, -2000, 0)
+			self.VSpeed = self.VSpeed + ((abs(speedz) * 0.2) + self.Damper)
 		end
 		
 		--Force Application
@@ -476,13 +485,36 @@ function ENT:Think()
 				local physobj = c:GetPhysicsObject()
 				local physvel, physangvel = physobj:GetVelocity(), physobj:GetAngleVelocity()
 			
-				physobj:SetVelocity( (((entfor * self.GyroSpeed) + (entup * self.VSpeed) + (entright * self.HSpeed)) * self.TMult) )
+				physobj:SetVelocity( (entfor * self.GyroSpeed) + (entup * self.VSpeed) + (entright * self.HSpeed) )
 				physobj:AddAngleVelocity(physangvel * -1)
 				if self.GyroLvl then
 					physobj:ApplyForceOffset( entup * math.NormalizeAngle(gyroshipangles.p * 0.05) * self.PMult * mass, entpos + entfor * self.frontlength )
 					physobj:ApplyForceOffset( entup * math.NormalizeAngle(-gyroshipangles.p * 0.05) * self.PMult * mass, entpos + entfor * -self.rearlength )
 					physobj:ApplyForceOffset( entup * math.NormalizeAngle(gyroshipangles.r * 0.05)  * self.RMult * mass, entpos + entright * self.rightwidth )
 					physobj:ApplyForceOffset( entup * math.NormalizeAngle(-gyroshipangles.r * 0.05)  * self.RMult * mass, entpos + entright * -self.leftwidth )						
+				elseif self.RollLock then
+					physobj:ApplyForceOffset( entup * -(self.GyroPitch + GyroPitchComp) * self.PMult * mass * NTC, entpos + entfor * self.frontlength )
+					physobj:ApplyForceOffset( entup * (self.GyroPitch + GyroPitchComp) * self.PMult * mass * NTC, entpos + entfor * -self.rearlength )
+					if abs(GyroRoll) > 0 then 
+						physobj:ApplyForceOffset( entup * -GyroRoll * self.RMult * mass, entpos + entright * self.rightwidth )
+						physobj:ApplyForceOffset( entup * GyroRoll * self.RMult * mass, entpos + entright * -self.leftwidth )	
+					else 
+						local RMM = mass * 0.00005 * self.RMult
+						local gyrophys = self:GetPhysicsObject():GetAngleVelocity()
+						
+						if abs(gyroshipangles.p) > 80 then 
+							self.WLRM = gyrophys.r * (-0.0132 * RMM)        
+						else 
+							if abs(gyroshipangles.r) < 100 then 
+								self.WLRM = gyroshipangles.r * (0.25 * RMM) 
+							else 
+								self.WLRM = math.NormalizeAngle(gyroshipangles.r + 180) * (0.25 * RMM) 
+							end
+						end                       
+						local GyroRollLvl = -abs(self.WLRM)
+						physobj:ApplyForceOffset( entup * -GyroRollLvl * self.WLRM * mass, entpos + entright * self.rightwidth )
+						physobj:ApplyForceOffset( entup * GyroRollLvl * self.WLRM * mass, entpos + entright * -self.leftwidth )						
+					end					
 				else
 					physobj:ApplyForceOffset( entup * -(self.GyroPitch + GyroPitchComp) * self.PMult * mass * NTC, entpos + entfor * self.frontlength )
 					physobj:ApplyForceOffset( entup * (self.GyroPitch + GyroPitchComp) * self.PMult * mass * NTC, entpos + entfor * -self.rearlength )
@@ -524,7 +556,7 @@ function ENT:Think()
 			self:GyroWeight()
 		end	
 
-		self.OnOut, self.GyroSpeed, self.VSpeed, self.HSpeed = 0, localentorparvel.x, localentorparvel.z, localentorparvel.y
+		self.OnOut, self.GyroSpeed, self.VSpeed, self.HSpeed = 0, localentorparvel.x, localentorparvel.z, -localentorparvel.y
 		lastshipangle = self:GetAngles()
 		
 		if self.HighEngineSound or self.LowDroneSound then  --Wind down engine sound when turned off
@@ -557,7 +589,9 @@ end
 function ENT:AimByTarPos()    --Aiming mode Calculations
 	self:PodModelFix()
 	local PodPos, PodUp = self.entorpod:GetPos(), self.entorpod:GetUp()
-	local TarMod = PodPos + ((self.TarPos - PodPos):Normalize()) * 100
+	local TarPosVec = self.TarPos - PodPos
+	TarPosVec:Normalize()
+	local TarMod = PodPos + TarPosVec * 100
 	local FDistP = TarMod:Distance( PodPos + PodUp * 500 )
 	local BDistP = TarMod:Distance( PodPos + PodUp * -500 )
 	self.GyroPitch = (FDistP - BDistP) * 0.1
