@@ -12,7 +12,7 @@
 CreateClientConVar("sbep_disable_menu", 0, true, false )
 
 
-local ServerVersion = {}
+local serverVersion = "Unknown"
 local LatestVersion = "Unknown"
 
 local ClientMsg, ServerMsg, ClientInfo, hash, behind
@@ -111,7 +111,7 @@ function setVersionCL( body, length, headers, code )
 	else
 		ClientInfo:SetText( "You are behind!! You have version: "..SBEP.Version..". \nThe latest version is: "..latestVersion..". Please update before reporting any issues" )
 	end
-
+	
 	--Disable the button
 	CheckClientVersion:SetDisabled(true)
 end
