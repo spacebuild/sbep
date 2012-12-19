@@ -5,6 +5,11 @@
 -- Time: 11:08 AM
 -- Last Updated :  
 --
+SBEP = SBEP or {}
+
+--Version:
+SBEP.Version = "\"1.0.1\""
+
 if SERVER then
 
 	CreateConVar("sv_sbep_debug", 0, FCVAR_SERVER_CAN_EXECUTE, "Enable Debug Messages for the Server")
