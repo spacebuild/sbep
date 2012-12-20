@@ -35,3 +35,5 @@ function DebugMessage( Message )
 	end
 
 end
+
+SBEP = SBEP or {}
