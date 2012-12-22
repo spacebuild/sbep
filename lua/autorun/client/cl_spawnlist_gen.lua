@@ -24,26 +24,31 @@ SBEP.FolderName = "SBEP"
 
 
 --TODO: Create a way to check FolderName (SBEP or SBMP)
+--TODO: Get Better icons...
+--TODO: Maybe load names from line 1 of each file
+--TODO: Either write a function to lower case the whole file or lower case them using Npp.
 
+function LoadContent( mode, pnl, ViewPanel,pnlContent  )
+	ViewPanel:Clear( true )
 
-function LoadContent( number, pnl )
-	local models = Nodes[number].models
-	for _,v in ipairs(models) do
-		--Based off Vanilla GMod Code
-		local cp = spawnmenu.GetContentType( "model" )
-		if (cp) then
-			cp( pnl, {model = v})
+	DebugMessage(mode)
+	local data = file.Read("addons\\"..SBEP.FolderName.. "\\data\\ModelLists\\"..mode,"GAME")
+		local models = util.KeyValuesToTable(data)
+		for i,j in ipairs(models) do
+			--Based off Vanilla GMod Code
+			local cp = spawnmenu.GetContentType( "model" )
+			if (cp) then
+				cp( ViewPanel, {model = j})
+			end
 		end
-	end
+	pnlContent:SwitchPanel( ViewPanel )
 end
 
 function LoadAllContent( mode, pnl )
-	local lists = file.Find("addons\\"..SBEP.FolderName.. "\\data\\ModelLists\\SMB\\*","GAME")
+	local lists = file.Find("addons\\"..SBEP.FolderName.. "\\data\\ModelLists\\"..mode.."\\*","GAME")
 
 	for k,v in ipairs(lists) do
-		DebugMessage("V = "..v)
-		local data = file.Read("addons\\"..SBEP.FolderName.. "\\data\\ModelLists\\SMB\\"..v,"GAME")
-		print(data)
+		local data = file.Read("addons\\"..SBEP.FolderName.. "\\data\\ModelLists\\"..mode.."\\"..v,"GAME")
 		local models = util.KeyValuesToTable(data)
 		for i,j in ipairs(models) do
 			--Based off Vanilla GMod Code
@@ -55,74 +60,161 @@ function LoadAllContent( mode, pnl )
 	end
 end
 
+function DoMedbridge( pnlContent, tree, node, MainNode, ViewPanel )
 
-hook.Add("PopulateContent", "SBEP Models", function( pnlContent, tree, node)
 
 
-	local files,folders = file.Find( "addons/SBEP/models/*","GAME")
+	local MedNode = MainNode:AddNode( "MedBridge Parts", "icon16/folder_database.png")
+	MedNode.DoClick = function()
+	--TODO: Show all SmallBridge models.
+		ViewPanel:Clear( true )
+		LoadAllContent( "Med",ViewPanel )
+		pnlContent:SwitchPanel( ViewPanel )
+	end
+	--Then cycle through all folders under Data\ModelListt\SMB)
+	local path = "addons\\"..SBEP.FolderName.. "\\data\\ModelLists\\Med\\"
+	local lists = file.Find(path .. "*","GAME")
 
-	local ViewPanel = vgui.Create( "ContentContainer", pnlContent )
-	ViewPanel:SetVisible(false)
+	for k,v in ipairs(lists) do
+
+		local temp = string.Explode( ".txt", v )
+		local name = temp[1]
+		local MyNode = MedNode:AddNode( name, "icon16/folder_database.png") --TODO: Find better image.
+		MyNode.DoClick = function() LoadContent("Med\\"..v.."", MyNode, ViewPanel,pnlContent ) end
+
+
+	end
+
+end
+
+function DoSmallBridge( pnlContent, tree, node, ViewPanel  )
 
 	local MyNode = node:AddNode( "SBEP Models", "icon16/folder_database.png" )
 
 	local SmbNode = MyNode:AddNode( "SmallBridge Parts", "icon16/folder_database.png")
 	SmbNode.DoClick = function()
-		   --TODO: Show all SmallBridge models.
-			ViewPanel:Clear( true )
-			LoadAllContent( "SMB",ViewPanel )
-			pnlContent:SwitchPanel( ViewPanel )
-		end
+	--TODO: Show all SmallBridge models.
+		ViewPanel:Clear( true )
+		LoadAllContent( "SMB",ViewPanel )
+		pnlContent:SwitchPanel( ViewPanel )
+	end
 	--Then cycle through all folders under Data\ModelListt\SMB)
 	local path = "addons\\"..SBEP.FolderName.. "\\data\\ModelLists\\SMB\\"
 	local lists = file.Find(path .. "*","GAME")
-	Nodes = {}
 
-	local counter = 1
 
 
 	--[[if ( cp ) then
 		cp( ViewPanel, { model = [Read from file] )
 	end  ]]--
 	for k,v in ipairs(lists) do
-		Nodes[counter] = {}
+
 		local temp = string.Explode( ".txt", v )
-		Nodes[counter].name = temp[1]
-		Nodes[counter].node = SmbNode:AddNode( Nodes[counter].name, "icon16/folder_database.png") --TODO: Find better image.
-		Nodes[counter].models = {}
-		local data = file.Read(path..v,"GAME")
-
-		local models = util.KeyValuesToTable(data)
-		for i,j in ipairs(models) do
-			--Add the models to the button's information so we can easily load it later.
-			table.insert(Nodes[counter].models, j)
-		end
-
-		counter = counter + 1
+		local name = temp[1]
+		local MyNode = SmbNode:AddNode( name, "icon16/folder_database.png") --TODO: Find better image.
+		MyNode.DoClick = function() LoadContent("SMB\\"..v.."", MyNode, ViewPanel,pnlContent ) end
 	end
-	PrintTable(Nodes)
 
 	--Then setup what happens when you click on each node
-	local counter = 1
-	for k,v in pairs(Nodes) do
-		local folder = v.node
-		folder.DoClick = function()
-				ViewPanel:Clear( true )
-				LoadContent( k, ViewPanel )
-				pnlContent:SwitchPanel( ViewPanel )
-			end
+	return MyNode
+
+end
+
+function DoModBridge( pnlContent, tree, node, MainNode, ViewPanel )
+
+
+	local ModNode = MainNode:AddNode( "ModBridge Parts", "icon16/folder_database.png")
+	ModNode.DoClick = function()
+	--TODO: Show all SmallBridge models.
+		ViewPanel:Clear( true )
+		LoadAllContent( "Mod",ViewPanel )
+		pnlContent:SwitchPanel( ViewPanel )
+	end
+	--Then cycle through all folders under Data\ModelListt\SMB)
+	local path = "addons\\"..SBEP.FolderName.. "\\data\\ModelLists\\Mod\\"
+	local lists = file.Find(path .. "*","GAME")
+
+	for k,v in ipairs(lists) do
+
+		local temp = string.Explode( ".txt", v )
+		local name = temp[1]
+		local MyNode = ModNode:AddNode( name, "icon16/folder_database.png") --TODO: Find better image.
+		MyNode.DoClick = function() LoadContent("Mod\\"..v.."", MyNode, ViewPanel,pnlContent ) end
+
 
 	end
 
+end
+
+function DoSBMP( pnlContent, tree, node, MainNode, ViewPanel )
+	local SBMPNode = MainNode:AddNode( "SBMP Parts", "icon16/folder_database.png")
+	SBMPNode.DoClick = function()
+	--TODO: Show all SmallBridge models.
+		ViewPanel:Clear( true )
+		LoadAllContent( "SBMP",ViewPanel )
+		pnlContent:SwitchPanel( ViewPanel )
+	end
+	--Then cycle through all folders under Data\ModelListt\SMB)
+	local path = "addons\\"..SBEP.FolderName.. "\\data\\ModelLists\\SBMP\\"
+	local lists = file.Find(path .. "*","GAME")
+
+	for k,v in ipairs(lists) do
+
+		local temp = string.Explode( ".txt", v )
+		local name = temp[1]
+		local MyNode = SBMPNode:AddNode( name, "icon16/folder_database.png") --TODO: Find better image.
+		MyNode.DoClick = function() LoadContent("SBMP\\"..v.."", MyNode, ViewPanel,pnlContent ) end
 
 
-	--[[for k,v in SortedPairs(folders) do
-		local mdls, folders = file.Find("Addons\\SBEP\\models\\"..v.."\\*","GAME")
-		if (folders) then   --if there are subfolders
-			subdir = MyNode:AddNode( v:sub(1,1):upper()..v:sub(2), "icon16/folder_database.png")   --  Create a button
-			CreateButtons( v )
-		end
-	end   ]]--
+	end
+
+end
+
+function DoOther( pnlContent, tree, node, MainNode, ViewPanel )
+	local OtherNode = MainNode:AddNode( "Other", "icon16/folder_database.png")
+	OtherNode.DoClick = function()
+	--TODO: Show all SmallBridge models.
+		ViewPanel:Clear( true )
+		LoadAllContent( "Other",ViewPanel )
+		pnlContent:SwitchPanel( ViewPanel )
+	end
+	--Then cycle through all folders under Data\ModelListt\SMB)
+	local path = "addons\\"..SBEP.FolderName.. "\\data\\ModelLists\\Other\\"
+	local lists = file.Find(path .. "*","GAME")
+
+	for k,v in ipairs(lists) do
+
+		local temp = string.Explode( ".txt", v )
+		local name = temp[1]
+		local MyNode = OtherNode:AddNode( name, "icon16/folder_database.png") --TODO: Find better image.
+		MyNode.DoClick = function() LoadContent("Other\\"..v.."", MyNode, ViewPanel,pnlContent ) end
+
+
+	end
+
+end
+
+
+hook.Add("PopulateContent", "SBEP Models", function( pnlContent, tree, node)
+	--Setup SmallBridge
+	local ViewPanel = vgui.Create( "ContentContainer", pnlContent )
+	ViewPanel:SetVisible(false)
+	local MasterNode = DoSmallBridge( pnlContent, tree, node, ViewPanel )
+
+	--Start of Medbridge Node
+	DebugMessage("Doing Medbridge")
+	DoMedbridge( pnlContent, tree, node, MasterNode, ViewPanel )
+
+
+	DebugMessage("Doing ModBridge")
+	DoModBridge( pnlContent, tree, node, MasterNode, ViewPanel )
+
+	DebugMessage("Doing SBMP")
+	DoSBMP( pnlContent, tree, node, MasterNode, ViewPanel )
+
+	DebugMessage("Doing Anything contained in the Other folder")
+	DoOther( pnlContent, tree, node, MasterNode, ViewPanel )
+
 --local models = MyNode:AddNode( v:sub(1,1):upper()..v:sub(2), "icon16/bricks.png"
 end)
 
