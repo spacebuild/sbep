@@ -29,11 +29,9 @@ function DebugMessage( Message )
 		if (GetConVar( "sv_sbep_debug" ):GetInt() == 1) then
 			print("SBEP Debug (SV): "..Message.."\n")
 
-			--TODO: Send Umsg containing errors to SuperAdmins, Admins and Sam Elmer (SteamID)
+			--TODO: Send Umsg containing errors to SuperAdmins, Admins and Sam (SteamID)
 
 		end
 	end
 
 end
-
-SBEP = SBEP or {}
