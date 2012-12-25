@@ -8,7 +8,7 @@
 SBEP = SBEP or {}
 
 --Version:
-SBEP.Version = "\"1.0.1\""
+SBEP.Version = "\"1.1.0\""
 
 if SERVER then
 
