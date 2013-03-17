@@ -22,7 +22,6 @@ function ENT:Initialize()
 								"PitchUp", "PitchDown", "PitchAbs", "YawLeft", "YawRight", "YawAbs", "PitchMult", "YawMult", "RollMult", "ThrustMult", "MPH Limit", "Damper", "Level", "Roll Lock", "Freeze", "AimMode",
 								"AimX", "AimY", "AimZ", "AimVec"},{"NORMAL","NORMAL","NORMAL","NORMAL","NORMAL","NORMAL","NORMAL","NORMAL","NORMAL","NORMAL","NORMAL","NORMAL","NORMAL",
 								"NORMAL","NORMAL","NORMAL","NORMAL","NORMAL","NORMAL","NORMAL","NORMAL","NORMAL","NORMAL","NORMAL","NORMAL","NORMAL","NORMAL","NORMAL","NORMAL","NORMAL","NORMAL","NORMAL","VECTOR"} )
-	--self.Outputs = Wire_CreateOutputs(self, { "On", "Frozen", "Targeting Mode", "MPH", "KmPH", "Leveler", "Total Mass", "Props Linked" })
 	self.Outputs = WireLib.CreateSpecialOutputs(self, { "On", "Frozen", "Targeting Mode", "MPH", "KmPH", "Leveler", "Total Mass", "Props Linked", "Angles" }, { "NORMAL", "NORMAL", "NORMAL", "NORMAL", "NORMAL", "NORMAL", "NORMAL", "NORMAL", "ANGLE" })
 	local phys = self:GetPhysicsObject()
 	if (IsValid(phys)) then
@@ -67,6 +66,7 @@ function ENT:Initialize()
 	self.GyroParentIndex = 0
 	lastshipangle = Angle(0, 0, 0)
 	self.OnPlanet = true
+	self.GravTrigger = true
 	GyroPitchComp = 0
 	self.Debug = 0
 	self.GyroPitch = 0
@@ -78,78 +78,6 @@ function ENT:Initialize()
 	self.LatAbs = 0
 	self.VertAbs = 0
 end
-
-
-local Gyrojcon = {}  --Joystick control stuff
-local GyroJoystickControl = function()
-	Gyrojcon.pitch = jcon.register{
-		uid = "gyro_pitch",
-		type = "analog",
-		description = "Pitch",
-		category = "Gyro-Pod",
-	}
-	Gyrojcon.yaw = jcon.register{
-		uid = "gyro_yaw",
-		type = "analog",
-		description = "Yaw",
-		category = "Gyro-Pod",
-	}
-	Gyrojcon.roll = jcon.register{
-		uid = "gyro_roll",
-		type = "analog",
-		description = "Roll",
-		category = "Gyro-Pod",
-	}
-	Gyrojcon.thrust = jcon.register{
-		uid = "gyro_thrust",
-		type = "analog",
-		description = "Thrust",
-		category = "Gyro-Pod",
-	}
-	Gyrojcon.accelerate = jcon.register{
-		uid = "gyro_accelerate",
-		type = "analog",
-		description = "Accelerate/Decelerate",
-		category = "Gyro-Pod",
-	}
-	Gyrojcon.up = jcon.register{
-		uid = "gyro_strafe_up",
-		type = "digital",
-		description = "Strafe Up",
-		category = "Gyro-Pod",
-	}
-	Gyrojcon.down = jcon.register{
-		uid = "gyro_strafe_down",
-		type = "digital",
-		description = "Strafe Down",
-		category = "Gyro-Pod",
-	}
-	Gyrojcon.right = jcon.register{
-		uid = "gyro_strafe_right",
-		type = "digital",
-		description = "Strafe Right",
-		category = "Gyro-Pod",
-	}
-	Gyrojcon.left = jcon.register{
-		uid = "gyro_strafe_left",
-		type = "digital",
-		description = "Strafe Left",
-		category = "Gyro-Pod",
-	}
-	Gyrojcon.launch = jcon.register{
-		uid = "gyro_launch",
-		type = "digital",
-		description = "Launch",
-		category = "Gyro-Pod",
-	}
-	Gyrojcon.switch = jcon.register{
-		uid = "gyro_switch",
-		type = "digital",
-		description = "Yaw/Roll Switch",
-		category = "Gyro-Pod",
-	}
-end
-hook.Add("JoystickInitialize","GyroJoystickControl",GyroJoystickControl)
 
 function ENT:TriggerInput(iname, value)
 	if (iname == "Activate") then
@@ -319,7 +247,7 @@ end
 
 function ENT:Think()	
 	
-	self:Gravity()
+	
 	
 	local abs, round, clamp, sqrt = math.abs, math.Round, math.Clamp, math.sqrt  --speed up math
  	local gyroshipangles = self:GetAngles()  
@@ -358,7 +286,7 @@ function ENT:Think()
 			self.entorpod:EmitSound( "buttons/combine_button3.wav" )
 			self.AimSound = true
 		end
-		if self.SystemOn or (joystick and joystick.Get(self.CPL, "gyro_launch")) then
+		if self.SystemOn then
 			self:AimByTarPos()
 		end	
 	else 
@@ -372,13 +300,9 @@ function ENT:Think()
 			self.entorpod:EmitSound( "buttons/combine_button2.wav" )
 			self.AimSound = false
 		end
-		if self.SystemOn or (joystick and joystick.Get(self.CPL, "gyro_launch")) then
+		if self.SystemOn then
 			if (self.GyroDriver and IsValid(self.GyroDriver)) then
-				if (joystick) then
-					self:UseJoystick()
-				else 
-					self:AimByMouse()				
-				end
+				self:AimByMouse()				
 			else						
 				self.GyroPitch =  ((self.GyroPitchDown - self.GyroPitchUp) + self.PitchAbs )* 2
 				self.GyroYaw = (self.GyroYawLeft - self.GyroYawRight)+ self.YawAbs
@@ -387,10 +311,15 @@ function ENT:Think()
 		end	
 	end 
 	
-	if self.SystemOn or (joystick and joystick.Get(self.CPL, "gyro_launch")) then
+	if self.SystemOn then
 		self.OnOut = 1
 		self.OnPlanet = false
-		if !self.gravtrigger then
+		self.plantrigger = true
+		-- if self.GravTrigger then
+			-- self:Gravity()
+			-- self.GravTrigger = false
+		-- end
+		if !self.gyroenginesound then
 			self.AllGyroConstraints = constraint.GetAllConstrainedEntities( self )
 			if self.HighEngineSound or self.LowDroneSound then
 				self.HighEngineSound:Stop()
@@ -401,7 +330,7 @@ function ENT:Think()
 			self.HighEngineSound:Play()
 			self.LowDroneSound:Play()
 			self.entorpod:EmitSound( "buttons/button1.wav" )
-			self.gravtrigger = true
+			self.gyroenginesound = true
 		end
 		
 		if !self.weighttrigger then
@@ -524,32 +453,44 @@ function ENT:Think()
 				physobj:ApplyForceOffset( entright * -self.GyroYaw * self.YaMult * mass * NTC, entpos + entfor * self.frontlength )
 				physobj:ApplyForceOffset( entright * self.GyroYaw * self.YaMult * mass * NTC, entpos + entfor * -self.rearlength )
 			end
-		end
-
+		end	
+	else		
 		
-	else
-		for _, logs in ipairs( self.LogicCases ) do
-			local logvalues = logs:GetKeyValues()
-			for key, logvalue1 in pairs(logvalues) do
-				if key == "Case01" then
-					if logvalue1 == "planet" or logvalue1 == "planet2" then
-						local pradius
-						for key2, logvalue2 in pairs(logvalues) do
-							if (key2 == "Case02") then
-								pradius = tonumber(logvalue2)
-								local pdist = self:GetPos():Distance(logs:GetPos())
-								if pdist < pradius then
-									self.OnPlanet = true
-								end	
+		if self.plantrigger or speedmph > 10 then 
+			self.OnPlanet = false		
+			for _, logs in ipairs( self.LogicCases ) do
+				if self.OnPlanet then break end
+				local logvalues = logs:GetKeyValues()
+				for key, logvalue1 in pairs(logvalues) do
+					if self.OnPlanet then break end
+					if key == "Case01" then
+						if logvalue1 == "planet" or logvalue1 == "planet2" then
+							local pradius
+							for key2, logvalue2 in pairs(logvalues) do
+								if (key2 == "Case02") then
+									pradius = tonumber(logvalue2)
+									local pdist = self:GetPos():Distance(logs:GetPos())
+									if pdist < pradius then
+										self.OnPlanet = true
+										Msg("  TRUE  ")
+										break
+									else 
+										self.OnPlanet = false
+										Msg("False ")
+									end	
+								end
 							end
 						end
 					end
 				end
-			end
-		end		
-		if self.gravtrigger then
+			end	
+			self:Gravity()
+			self.plantrigger = false
+			self.GravTrigger = true
+		end
+		if self.gyroenginesound then
 			self.entorpod:EmitSound( "buttons/button18.wav" )
-			self.gravtrigger = false
+			self.gyroenginesound = false
 		end
 		
 		if self.weighttrigger then
@@ -697,7 +638,8 @@ function ENT:GyroWeight()
 			if rnd(ipos:Distance(gyrofor)) == frontent or rnd(ipos:Distance(gyroback)) == rearent or rnd(ipos:Distance(gyroright)) == rightent or rnd(ipos:Distance(gyroleft)) == leftent or rnd(ilinkphys:GetMass()) == heaviest or idx == self.GyroParentIndex then
 			table.insert(self.MoveTable, i.Entity)
 			end
-		end			
+		end	
+		self:Gravity()		
 		self.weighttrigger = true
 	else
 		table.Empty(self.MassTable)
@@ -725,6 +667,7 @@ function ENT:Gravity()  --Turns on/off gravity for all constrained entities
 			linkphys:EnableGravity(true)
 		end
 	end
+	
 end
 
 function ENT:FreezeMotion()  --Freezes all constrained entities
@@ -745,84 +688,6 @@ function ENT:FreezeMotion()  --Freezes all constrained entities
 	end
 end
 
-function ENT:UseJoystick()  --Joystick Controls (I've never tested this)
-	if (joystick.Get(self.GyroDriver, "gyro_strafe_up")) then
-		self.VSpeed = 50
-	elseif (joystick.Get(self.GyroDriver, "gyro_strafe_down")) then
-		self.VSpeed = -50
-	end
-	if (joystick.Get(self.GyroDriver, "gyro_strafe_right")) then
-		self.HSpeed = 50
-	elseif (joystick.Get(self.GyroDriver, "gyro_strafe_left")) then
-		self.HSpeed = -50
-	else
-		self.HSpeed = 0
-	end
-	--Acceleration, greater than halfway accelerates, less than decelerates
-	if (joystick.Get(self.GyroDriver, "gyro_accelerate")) then
-		if (joystick.Get(self.GyroDriver, "gyro_accelerate") > 128) then
-			self.GyroSpeed = math.Clamp(self.GyroSpeed + (joystick.Get(self.GyroDriver, "gyro_accelerate")/127.5-1)*5, -40, 2000)
-		elseif (joystick.Get(self.GyroDriver, "gyro_accelerate") < 127) then
-			self.GyroSpeed = math.Clamp(self.GyroSpeed + (joystick.Get(self.GyroDriver, "gyro_accelerate")/127.5-1)*10, -40, 2000)
-		end
-	end
-	--Set the speed
-	if (joystick.Get(self.GyroDriver, "gyro_thrust")) then
-		if (joystick.Get(self.GyroDriver, "gyro_thrust") > 128) then
-			self.TarSpeed = (joystick.Get(self.GyroDriver, "gyro_thrust")/127.5-1)*2000
-		elseif (joystick.Get(self.GyroDriver, "gyro_thrust") < 127) then
-			self.TarSpeed = (joystick.Get(self.GyroDriver, "gyro_thrust")/127.5-1)*40
-		elseif (joystick.Get(self.GyroDriver, "gyro_thrust") < 128 and joystick.Get(self.GyroDriver, "gyro_thrust") > 127) then
-			self.TarSpeed = 0
-		end
-		if (self.TarSpeed > self.GyroSpeed) then
-			self.GyroSpeed = math.Clamp(self.GyroSpeed + 5, -40, 2000)
-		elseif (self.TarSpeed < self.GyroSpeed) then
-			self.GyroSpeed = math.Clamp(self.GyroSpeed - 10, -40, 2000)
-		end
-	end
-	--forward is down on pitch, if you don't like it check the box on joyconfig to invert it
-	if (joystick.Get(self.GyroDriver, "gyro_pitch")) then
-		if (joystick.Get(self.GyroDriver, "gyro_pitch") > 128) then
-			self.GyroPitch = -(joystick.Get(self.GyroDriver, "gyro_pitch")/127.5-1)*90
-		elseif (joystick.Get(self.GyroDriver, "gyro_pitch") < 127) then
-			self.GyroPitch = -(joystick.Get(self.GyroDriver, "gyro_pitch")/127.5-1)*90
-		elseif (joystick.Get(self.GyroDriver, "gyro_pitch") < 128 and joystick.Get(self.GyroDriver, "gyro_pitch") > 127) then
-			self.GyroPitch = 0
-		end
-	end
-	--The control for inverting yaw and roll
-	local yaw = ""
-	local roll = ""
-	if (joystick.Get(self.GyroDriver, "gyro_switch")) then
-		yaw = "gyro_roll"
-		roll = "gyro_yaw"
-	else
-		yaw = "gyro_yaw"
-		roll = "gyro_roll"
-	end
-	--Yaw is negative because Paradukes says so
-	--You could invert it, but the default configuration should be correct
-	if (joystick.Get(self.GyroDriver, yaw)) then
-		if (joystick.Get(self.GyroDriver, yaw) > 128) then
-			self.GyroYaw = -(joystick.Get(self.GyroDriver, yaw)/127.5-1)*90
-		elseif (joystick.Get(self.GyroDriver, yaw) < 127) then
-			self.GyroYaw = -(joystick.Get(self.GyroDriver, yaw)/127.5-1)*90
-		elseif (joystick.Get(self.GyroDriver, yaw) < 128 and joystick.Get(self.GyroDriver, yaw) > 127) then
-			self.GyroYaw = 0
-		end
-	end
-	if (joystick.Get(self.GyroDriver, roll)) then
-		if (joystick.Get(self.GyroDriver, roll) > 128) then
-			self.GyroRoll = (joystick.Get(self.GyroDriver, roll)/127.5-1)*90
-		elseif (joystick.Get(self.GyroDriver, roll) < 127) then
-			self.GyroRoll = (joystick.Get(self.GyroDriver, roll)/127.5-1)*90
-		elseif (joystick.Get(self.GyroDriver, roll) < 128 and joystick.Get(self.GyroDriver, roll) > 127) then
-			self.GyroRoll = 0
-		end
-	end
-end
-
 function ENT:Link(pod)
 	if !pod then return false end
 	self.Pod = pod
@@ -838,8 +703,10 @@ function ENT:OnRemove()
 	for _, ents in pairs( constrained ) do
 		if (!IsValid(ents)) then return end
 		local linkphys = ents:GetPhysicsObject()
-		linkphys:EnableDrag(true)
-		linkphys:EnableGravity(true)
+		if IsValid(linkphys) then
+			linkphys:EnableDrag(true)
+			linkphys:EnableGravity(true)
+		end
 	end	
 end
 
