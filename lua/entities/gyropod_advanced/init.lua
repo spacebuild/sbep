@@ -472,11 +472,9 @@ function ENT:Think()
 									local pdist = self:GetPos():Distance(logs:GetPos())
 									if pdist < pradius then
 										self.OnPlanet = true
-										Msg("  TRUE  ")
 										break
 									else 
 										self.OnPlanet = false
-										Msg("False ")
 									end	
 								end
 							end
