@@ -620,7 +620,7 @@ function ENT:GyroWeight()
 				table.sort(self.BackDist)
 				table.sort(self.RightDist)
 				table.sort(self.LeftDist)
-				table.insert(self.PhysTable, ents.Entity)
+				table.insert(self.PhysTable, ents)
 			end				
 		end
 		local frontent, rearent, rightent, leftent, heaviest = rnd(self.FrontDist[1]), rnd(self.BackDist[1]), rnd(self.RightDist[1]), rnd(self.LeftDist[1]), rnd(self.MassTable[1])
@@ -634,7 +634,7 @@ function ENT:GyroWeight()
 			local ipos = i:GetPos()
 			local idx = i:EntIndex()
 			if rnd(ipos:Distance(gyrofor)) == frontent or rnd(ipos:Distance(gyroback)) == rearent or rnd(ipos:Distance(gyroright)) == rightent or rnd(ipos:Distance(gyroleft)) == leftent or rnd(ilinkphys:GetMass()) == heaviest or idx == self.GyroParentIndex then
-			table.insert(self.MoveTable, i.Entity)
+			table.insert(self.MoveTable, i)
 			end
 		end	
 		self:Gravity()		
