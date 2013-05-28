@@ -573,12 +573,12 @@ util.AddNetworkString("SBEP_SetPHOffsetLiftDesignMenu_cl")
 		end
 		if n == C then
 			LiftSystem_SER.PT[ n ]:SetRenderMode( RENDERMODE_TRANSCOLOR )
-			LiftSystem_SER.PT[ n ]:SetColor( Color( 255 , 0 , 0 , 180 ))
+			LiftSystem_SER.PT[ n ]:SetColor( Color( 255 , 255 , 255 , 180 ))
 		else
 			LiftSystem_SER.PT[ n ]:SetRenderMode( RENDERMODE_TRANSCOLOR )
-			LiftSystem_SER.PT[ n ]:SetColor( Color( 0  , 255 , 0 , 255 ))
+			LiftSystem_SER.PT[ n ]:SetColor( Color( 200  , 255 , 200 , 255 ))
 			LiftSystem_SER.PT[ C ]:SetRenderMode( RENDERMODE_TRANSCOLOR )
-			LiftSystem_SER.PT[ C ]:SetColor( Color(255 , 0 , 0 ,  180  ))
+			LiftSystem_SER.PT[ C ]:SetColor( Color(255 , 255 , 255 ,  180  ))
 		end
 		
 		net.Start("SBEP_ReCalcViewAngles_LiftDesignMenu_cl")
@@ -706,6 +706,9 @@ function TOOL:LeftClick( trace )
 			NP:SetPartType( "M" )
 		LiftSystem_SER:RefreshParts( 1 )
 		
+		LiftSystem_SER.PT[ 1 ]:SetRenderMode( RENDERMODE_TRANSCOLOR )
+		LiftSystem_SER.PT[ 1 ]:SetColor( Color( 255 , 255 , 255 , 180 ))
+
 		net.Start("SBEP_OpenLiftDesignMenu_cl")
 			net.WriteEntity(LiftSystem_SER)
 		net.Send(ply)
