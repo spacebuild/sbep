@@ -523,27 +523,33 @@ end
 
 local DTT = {}
 
-DTT["Doors"] = {
+DTT.SmallBridge = {}
+DTT.SmallBridge["Doors"] = {
+    "models/smallbridge/panels/sbpaneldockin.mdl",
+    "models/smallbridge/panels/sbpaneldockout.mdl"
+}
+
+DTT.SmallBridge["Ramps"] = {
     "models/smallbridge/ship parts/sblandramp.mdl",
     "models/smallbridge/ship parts/sblanduramp.mdl",
-    "models/smallbridge/panels/sbpaneldockin.mdl",
-    "models/smallbridge/panels/sbpaneldockout.mdl",
     "models/smallbridge/ship parts/sblandrampdw.mdl",
     "models/smallbridge/ship parts/sblandurampdw.mdl",
     "models/smallbridge/ship parts/sblandrampdwdh.mdl",
     "models/smallbridge/ship parts/sblandurampdwdh.mdl"
 }
 
-DTT["MedBridge"] = {
+DTT.MedBridge = {}
+DTT.MedBridge["MedBridge"] = {
     "models/slyfo/airlock_docksys.mdl"
 }
 
-DTT["ElevatorSmall"] = {
+DTT.SmallBridge["Elevator Small"] = {
     "models/smallbridge/elevators_small/sbselevb.mdl",
     "models/smallbridge/elevators_small/sbselevt.mdl"
 }
 
-DTT["PHX"] = {
+DTT.PHX = {}
+DTT.PHX["PHX"] = {
     "models/props_phx/construct/metal_wire1x1.mdl",
     "models/props_phx/construct/metal_wire2x2b.mdl"
 }

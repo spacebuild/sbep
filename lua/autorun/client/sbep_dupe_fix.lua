@@ -7,7 +7,7 @@ SBEP = SBEP or {}
 function SBEP_LoadReplaceTable()
 	print("Loading Filename Changes")
 	local repTab = {}
-	local tableString = file.Read("SBEP/Smallbridge Filename Changes.txt")
+	local tableString = file.Read("Smallbridge Filename Changes.txt", "GAME")
 	local tableRows = string.Explode("\n",tableString)
 	for _,row in pairs(tableRows) do
 		--returns the pair of strings matched by this pattern
@@ -33,31 +33,39 @@ function SBEP_FixDupe(_,_,arg)
 	local filePath = table.concat(arg,' ')
 	--print("File Path = ",filePath)
 	local fileString = file.Read(filePath)
-	for old,new in pairs(SBEP.ReplaceTable) do
-		--print("Replacing "..old.." with "..new)
-		fileString = string.Replace(fileString,old,new)
-		fileString = string.Replace(fileString,string.lower(old),new)
+	if fileString then
+		for old,new in pairs(SBEP.ReplaceTable) do
+			--print("Replacing "..old.." with "..new)
+			fileString = string.Replace(fileString,old,new)
+			fileString = string.Replace(fileString,string.lower(old),new)
+		end
+		print(filePath.." fixed.")
+		file.Write(filePath,fileString)
+	else
+		print(filePath.." is broken, can't do anything")
 	end
-	file.Write(filePath,fileString)
-	print(filePath.." fixed.")
 end
 SBEP.FixDupe = SBEP_FixDupe
 concommand.Add("SBEP_FixDupe",SBEP.FixDupe)
 
 function SBEP_RecursiveFix(_,_,args)
-	--print("Recursive Fix Called")
 	local dir = table.concat(args,' ')
-	--print("Directories Found: ")
-	local dirs = file.FindDir(dir.."/*")
-	--PrintTable(dirs)
-	for _,dirPath in pairs(dirs) do
-		SBEP_RecursiveFix(nil,nil,{dir.."/"..dirPath})
+	--print("\nRecursive Fix Called, we are in: "..dir)
+	local files = file.Find(dir.."/*.txt", "DATA")
+	if files then
+		--print("Files Found: ")
+		--PrintTable(files)
+		for _,filePath in pairs(files) do
+			SBEP.FixDupe(nil,nil,{dir.."/"..filePath})
+		end
 	end
-	--print("Files Found: ")
-	local files = file.Find(dir.."/*.txt", "DATA") -- OR should it be GAME ?
-	--PrintTable(files)
-	for _,filePath in pairs(files) do
-		SBEP.FixDupe(nil,nil,{dir.."/"..filePath})
+	local files, directories = file.Find(dir.."/*","DATA")
+	if directories then
+		--print("Directories Found: ")
+		--PrintTable(directories)
+		for _,dirPath in pairs(directories) do
+			SBEP_RecursiveFix(nil,nil,{dir.."/"..dirPath})
+		end
 	end
 end
 SBEP.RecursiveFix = SBEP_RecursiveFix
@@ -66,6 +74,7 @@ concommand.Add("SBEP_FixDupeFolder",SBEP.RecursiveFix)
 function SBEP_FixAllDupes()
 	--print("Fix Dupes Called")
 	SBEP.RecursiveFix(nil,nil,{"adv_duplicator"})
+	print("Done!")
 end
 SBEP.FixAllDupes = SBEP_FixAllDupes
 concommand.Add("SBEP_FixAllDupes",SBEP.FixAllDupes)
