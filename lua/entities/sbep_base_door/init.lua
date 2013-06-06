@@ -334,7 +334,7 @@ function ENT:Think()
 		end
 	end
 	if self.Cont then
-		if self:GetSkin() ~= self.Cont.Skin then
+		if self:GetSkin() ~= self.Cont.Skin && self.Cont.Skin then
 			self:SetSkin( self.Cont.Skin )
 		end
 	end
