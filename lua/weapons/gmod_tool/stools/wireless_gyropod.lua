@@ -112,21 +112,18 @@ function TOOL:Reload( trace )
 end
 
 --The detailed instructions
-function TOOL.BuildCPanel(panel)
-
+function TOOL.BuildCPanel( panel )
 	panel:SetSpacing( 10 )
 	panel:SetName( DisplayName )
-
 	local BindLabel0 = {}
 	local BindLabel1 = {}
 	local BindLabel2 = {}
-
 	BindLabel0.Text =
 [[BASIC INSTRUCTIONS
 
 1:  Press Left-Click to create a gyropod.
 2:  Place the gyropod near center of ship.
-3:  Orient the gyropod so it is aligns with ship.
+3:  Orient the gyropod so it aligns with ship.
 4:  Weld the gyropod to the ship.
 5:  Link the gyropod to the ship:
     5.1: Right-Click the gyropod.
@@ -135,7 +132,6 @@ function TOOL.BuildCPanel(panel)
 7:  Press Reload to turn on the engine.
 
 ]]
-
 	BindLabel1.Text =
 [[CONTROLS
 
@@ -143,15 +139,14 @@ Reload   = Engine on/off
 Walk     = Freeze on/off
 Sprint   = Level
 RMB      = RollLock
-Forward  = Accelerate Forwards
-Backward = Accelerate Backwards
+Forward  = Accelerate Forward
+Backward = Accelerate Backward
 Left     = Roll Left (Accel. Left in RollLock mode)
 Right    = Roll Right (Accel. Right in RollLock mode)
-Jump     = Accelerate Upwards
+Jump     = Accelerate Upward
 Duck     = Accelerate Downward
 
 ]]
-
 	BindLabel2.Text =
 [[TIPS
 
@@ -161,14 +156,13 @@ Duck     = Accelerate Downward
  Credit goes to:
  *  Paradukes and the SBEP Team for creating the original Gyropod.
  *  DataSchmuck for improving the code.
- *  LoRAWN for improving the code even more.]]
-	
+ *  LoRAWN for improving the code even more.
+ 
+ ]]	
 	BindLabel0.Description = "Basic Instructions1"
 	panel:AddControl("Label", BindLabel0 )
-	
 	BindLabel1.Description = "Basic Instructions2"
 	panel:AddControl("Label", BindLabel1 )
-	
 	BindLabel2.Description = "Basic Instructions3"
 	panel:AddControl("Label", BindLabel2 )
 	
