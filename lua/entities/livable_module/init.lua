@@ -12,21 +12,22 @@ function ENT:Initialize()
 	self.Active = 0
 	self.damaged = 0
 	self:CreateEnvironment(1, 1, 1, 0, 0, 0, 0, 0)
-	self.currentsize = self.Entity:BoundingRadius()
-	self.maxsize = self.Entity:BoundingRadius()
+	self.currentsize = self:BoundingRadius()
+	self.maxsize = self:BoundingRadius()
 	self.maxO2Level = 100
 	if not (WireAddon == nil) then
 		self.WireDebugName = self.PrintName
-		self.Inputs = Wire_CreateInputs(self.Entity, { "On", "Gravity", "Max O2 level" })
-		self.Outputs = Wire_CreateOutputs(self.Entity, { "On", "Oxygen-Level", "Temperature", "Gravity" })
+		self.Inputs = Wire_CreateInputs(self, { "On", "Gravity", "Max O2 level" })
+		self.Outputs = Wire_CreateOutputs(self, { "On", "Oxygen-Level", "Temperature", "Gravity" })
 	else
         self.Inputs = { { Name = "On" }, { Name = "Radius" }, { Name = "Gravity" }, { Name = "Max O2 level" } }
     end
+	CAF.GetAddon("Resource Distribution").RegisterNonStorageDevice(self)
 end
 
 function ENT:TurnOn()
 	if (self.Active == 0) then
-		self.Entity:EmitSound( "apc_engine_start" )
+		self:EmitSound( "apc_engine_start" )
 		self.Active = 1
 		self:UpdateSize(self.sbenvironment.size, self.currentsize) --We turn the forcefield that contains the environment on
 		if self.environment and not self.environment:IsSpace() then --Fill the environment with air if the surounding environment has o2, replace with CO2
@@ -39,8 +40,8 @@ end
 
 function ENT:TurnOff()
 	if (self.Active == 1) then
-		self.Entity:StopSound( "apc_engine_start" )
-		self.Entity:EmitSound( "apc_engine_stop" )
+		self:StopSound( "apc_engine_start" )
+		self:EmitSound( "apc_engine_stop" )
 		self.Active = 0
 		if self.environment then --flush all resources into the environment if we are in one (used for the slownes of the SB updating process, we don't want errors do we?)
 			if self.sbenvironment.air.o2 > 0 then
@@ -94,7 +95,7 @@ end
 
 function ENT:Repair()
 	self.BaseClass.Repair(self)
-	self.Entity:SetColor(255, 255, 255, 255)
+	self:SetColor(255, 255, 255, 255)
 	self.damaged = 0
 end
 
@@ -475,16 +476,16 @@ function ENT:Climate_Control()
 		end
 	end
 	if not (WireAddon == nil) then
-		Wire_TriggerOutput(self.Entity, "Oxygen-Level", tonumber(self:GetO2Percentage()))
-		Wire_TriggerOutput(self.Entity, "Temperature", tonumber(self.sbenvironment.temperature))
-		Wire_TriggerOutput(self.Entity, "Gravity", tonumber(self.sbenvironment.gravity))
+		Wire_TriggerOutput(self, "Oxygen-Level", tonumber(self:GetO2Percentage()))
+		Wire_TriggerOutput(self, "Temperature", tonumber(self.sbenvironment.temperature))
+		Wire_TriggerOutput(self, "Gravity", tonumber(self.sbenvironment.gravity))
 	end
 end
 
 function ENT:Think()
 	self.BaseClass.Think(self)
 	self:Climate_Control()
-	self.Entity:NextThink(CurTime() + 1)
+	self:NextThink(CurTime() + 1)
 	return true
 end
 
@@ -524,3 +525,5 @@ function ENT:OnEnvironment(ent)
 	end			
 end
 ]]
+
+

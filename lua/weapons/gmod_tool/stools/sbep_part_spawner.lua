@@ -30,8 +30,7 @@ function TOOL:LeftClick(trace)
     local SMBProp = nil
 
     if hab == 1 then
-        SMBProp = ents.Create("base_livable_module")
-		CAF.GetAddon("Resource Distribution").RegisterNonStorageDevice(SMBProp)
+        SMBProp = ents.Create("livable_module")
     else
         SMBProp = ents.Create("prop_physics")
     end
