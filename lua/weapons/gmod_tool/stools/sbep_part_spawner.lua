@@ -30,7 +30,7 @@ function TOOL:LeftClick(trace)
     local SMBProp = nil
 
     if hab == 1 then
-        SMBProp = ents.Create("base_livable_module")
+        SMBProp = ents.Create("livable_module")
     else
         SMBProp = ents.Create("prop_physics")
     end
@@ -60,7 +60,7 @@ function TOOL:LeftClick(trace)
 end
 
 function TOOL:RightClick(trace)
-    CC_GMOD_Tool(self:GetOwner(), "", { "sbep_part_assembler" })
+    -- CC_GMOD_Tool(self:GetOwner(), "", { "sbep_part_assembler" })
 end
 
 function TOOL:Reload(trace)
@@ -97,6 +97,13 @@ function TOOL.BuildCPanel(panel)
 	GlassButton:SetValue( GetConVar( "sbep_part_spawner_glass" ):GetBool() )
 	GlassButton:SetText( "Glass:" )
 	GlassButton:SetConVar( "sbep_part_spawner_glass" )
+	
+	local HabitableModuleButton = vgui.Create("DCheckBoxLabel", panel )
+	HabitableModuleButton:Dock(TOP)
+	HabitableModuleButton:DockMargin(2,2,2,2)
+	HabitableModuleButton:SetValue( GetConVar( "sbep_part_spawner_hab_mod" ):GetBool() )
+	HabitableModuleButton:SetText( "Habitable Module:" )
+	HabitableModuleButton:SetConVar( "sbep_part_spawner_hab_mod" )
 	
 	for Tab,v  in pairs( SmallBridgeModels ) do
 		for Category, models in pairs( v ) do
