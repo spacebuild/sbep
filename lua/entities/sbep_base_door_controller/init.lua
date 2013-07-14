@@ -62,7 +62,7 @@ function ENT:AddDoors()
 			D:Initialize()
 			D:SetDoorType( Data.type )
 			D:Attach( self , Data.V , Data.A )
-		D:SetController( self , k )
+			D:SetController( self , n )
 		table.insert( self.DT , D )
 	end
 end
