@@ -1,6 +1,6 @@
 "VertexLitGeneric"
 {
-	"$basetexture" "spacebuild/Grate3"
+	"$basetexture" "spacebuild/grate3"
 	"$surfaceprop" "metal"
 	"$model"     1
 	"$translucent" 1

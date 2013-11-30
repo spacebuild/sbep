@@ -1,6 +1,6 @@
 "UnlitGeneric"
 {
-	"$basetexture" "spacebuild/Holo_ScreenElements1"
+	"$basetexture" "spacebuild/holo_screenelements1"
 	"$surfaceprop" "metal"
 	"$model" 1 
 	"$translucent" 1

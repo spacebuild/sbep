@@ -4,64 +4,64 @@ include( "shared.lua" )
 
 local LMT = {}
 LMT.S = {
-		[ "B" 	 ] = { model = "models/SmallBridge/Elevators_small/sbselevb.mdl" 	, ZUD =  65.1 	, ZDD =  65.1 	, AT = {0,1,0,0} } ,
-		[ "BE" 	 ] = { model = "models/SmallBridge/Elevators_small/sbselevbe.mdl" 	, ZUD =  65.1 	, ZDD =  65.1 	, AT = {0,1,0,1} } ,
-		[ "BEdh" ] = { model = "models/SmallBridge/Elevators_small/sbselevbedh.mdl" , ZUD = 195.3 	, ZDD =  65.1 	, AT = {0,1,0,1} , SD = { IsDH = true } },
-		[ "BEdw" ] = { model = "models/SmallBridge/Elevators_small/sbselevbedw.mdl" , ZUD =  65.1 	, ZDD =  65.1 	, AT = {0,1,0,1} } ,
-		[ "BR" 	 ] = { model = "models/SmallBridge/Elevators_small/sbselevbr.mdl" 	, ZUD =  65.1 	, ZDD =  65.1 	, AT = {1,1,0,0} } ,
-		[ "BT" 	 ] = { model = "models/SmallBridge/Elevators_small/sbselevbt.mdl" 	, ZUD =  65.1 	, ZDD =  65.1 	, AT = {1,1,1,0} } ,
-		[ "BX" 	 ] = { model = "models/SmallBridge/Elevators_small/sbselevbx.mdl" 	, ZUD =  65.1 	, ZDD =  65.1 	, AT = {1,1,1,1} } ,
+		[ "B" 	 ] = { model = "models/smallbridge/elevators_small/sbselevb.mdl" 	, ZUD =  65.1 	, ZDD =  65.1 	, AT = {0,1,0,0} } ,
+		[ "BE" 	 ] = { model = "models/smallbridge/elevators_small/sbselevbe.mdl" 	, ZUD =  65.1 	, ZDD =  65.1 	, AT = {0,1,0,1} } ,
+		[ "BEdh" ] = { model = "models/smallbridge/elevators_small/sbselevbedh.mdl" , ZUD = 195.3 	, ZDD =  65.1 	, AT = {0,1,0,1} , SD = { IsDH = true } },
+		[ "BEdw" ] = { model = "models/smallbridge/elevators_small/sbselevbedw.mdl" , ZUD =  65.1 	, ZDD =  65.1 	, AT = {0,1,0,1} } ,
+		[ "BR" 	 ] = { model = "models/smallbridge/elevators_small/sbselevbr.mdl" 	, ZUD =  65.1 	, ZDD =  65.1 	, AT = {1,1,0,0} } ,
+		[ "BT" 	 ] = { model = "models/smallbridge/elevators_small/sbselevbt.mdl" 	, ZUD =  65.1 	, ZDD =  65.1 	, AT = {1,1,1,0} } ,
+		[ "BX" 	 ] = { model = "models/smallbridge/elevators_small/sbselevbx.mdl" 	, ZUD =  65.1 	, ZDD =  65.1 	, AT = {1,1,1,1} } ,
 
-		[ "M" 	 ] = { model = "models/SmallBridge/Elevators_small/sbselevm.mdl" 	, ZUD =  65.1 	, ZDD =  65.1 	, AT = {0,1,0,0} } ,
-		[ "ME" 	 ] = { model = "models/SmallBridge/Elevators_small/sbselevme.mdl" 	, ZUD =  65.1 	, ZDD =  65.1 	, AT = {0,1,0,1} } ,
-		[ "MEdh" ] = { model = "models/SmallBridge/Elevators_small/sbselevmedh.mdl" , ZUD = 195.3 	, ZDD =  65.1 	, AT = {0,1,0,1} , SD = { IsDH = true } },
-		[ "MEdw" ] = { model = "models/SmallBridge/Elevators_small/sbselevmedw.mdl" , ZUD =  65.1 	, ZDD =  65.1 	, AT = {0,1,0,1} } ,
-		[ "MR" 	 ] = { model = "models/SmallBridge/Elevators_small/sbselevmr.mdl" 	, ZUD =  65.1 	, ZDD =  65.1 	, AT = {1,1,0,0} } ,
-		[ "MT" 	 ] = { model = "models/SmallBridge/Elevators_small/sbselevmt.mdl" 	, ZUD =  65.1 	, ZDD =  65.1 	, AT = {1,1,1,0} } ,
-		[ "MX" 	 ] = { model = "models/SmallBridge/Elevators_small/sbselevmx.mdl" 	, ZUD =  65.1 	, ZDD =  65.1 	, AT = {1,1,1,1} } ,
+		[ "M" 	 ] = { model = "models/smallbridge/elevators_small/sbselevm.mdl" 	, ZUD =  65.1 	, ZDD =  65.1 	, AT = {0,1,0,0} } ,
+		[ "ME" 	 ] = { model = "models/smallbridge/elevators_small/sbselevme.mdl" 	, ZUD =  65.1 	, ZDD =  65.1 	, AT = {0,1,0,1} } ,
+		[ "MEdh" ] = { model = "models/smallbridge/elevators_small/sbselevmedh.mdl" , ZUD = 195.3 	, ZDD =  65.1 	, AT = {0,1,0,1} , SD = { IsDH = true } },
+		[ "MEdw" ] = { model = "models/smallbridge/elevators_small/sbselevmedw.mdl" , ZUD =  65.1 	, ZDD =  65.1 	, AT = {0,1,0,1} } ,
+		[ "MR" 	 ] = { model = "models/smallbridge/elevators_small/sbselevmr.mdl" 	, ZUD =  65.1 	, ZDD =  65.1 	, AT = {1,1,0,0} } ,
+		[ "MT" 	 ] = { model = "models/smallbridge/elevators_small/sbselevmt.mdl" 	, ZUD =  65.1 	, ZDD =  65.1 	, AT = {1,1,1,0} } ,
+		[ "MX" 	 ] = { model = "models/smallbridge/elevators_small/sbselevmx.mdl" 	, ZUD =  65.1 	, ZDD =  65.1 	, AT = {1,1,1,1} } ,
 
-		[ "T" 	 ] = { model = "models/SmallBridge/Elevators_small/sbselevt.mdl" 	, ZUD =  65.1 	, ZDD =  65.1 	, AT = {0,1,0,0} } ,
-		[ "TE" 	 ] = { model = "models/SmallBridge/Elevators_small/sbselevte.mdl" 	, ZUD =  65.1 	, ZDD =  65.1 	, AT = {0,1,0,1} } ,
-		[ "TEdh" ] = { model = "models/SmallBridge/Elevators_small/sbselevtedh.mdl" , ZUD = 195.3 	, ZDD =  65.1 	, AT = {0,1,0,1} , SD = { IsDH = true } },
-		[ "TEdw" ] = { model = "models/SmallBridge/Elevators_small/sbselevtedw.mdl" , ZUD =  65.1 	, ZDD =  65.1 	, AT = {0,1,0,1} } ,
-		[ "TR" 	 ] = { model = "models/SmallBridge/Elevators_small/sbselevtr.mdl" 	, ZUD =  65.1 	, ZDD =  65.1 	, AT = {1,1,0,0} } ,
-		[ "TT" 	 ] = { model = "models/SmallBridge/Elevators_small/sbselevtt.mdl" 	, ZUD =  65.1 	, ZDD =  65.1 	, AT = {1,1,1,0} } ,
-		[ "TX" 	 ] = { model = "models/SmallBridge/Elevators_small/sbselevtx.mdl" 	, ZUD =  65.1 	, ZDD =  65.1 	, AT = {1,1,1,1} } ,
+		[ "T" 	 ] = { model = "models/smallbridge/elevators_small/sbselevt.mdl" 	, ZUD =  65.1 	, ZDD =  65.1 	, AT = {0,1,0,0} } ,
+		[ "TE" 	 ] = { model = "models/smallbridge/elevators_small/sbselevte.mdl" 	, ZUD =  65.1 	, ZDD =  65.1 	, AT = {0,1,0,1} } ,
+		[ "TEdh" ] = { model = "models/smallbridge/elevators_small/sbselevtedh.mdl" , ZUD = 195.3 	, ZDD =  65.1 	, AT = {0,1,0,1} , SD = { IsDH = true } },
+		[ "TEdw" ] = { model = "models/smallbridge/elevators_small/sbselevtedw.mdl" , ZUD =  65.1 	, ZDD =  65.1 	, AT = {0,1,0,1} } ,
+		[ "TR" 	 ] = { model = "models/smallbridge/elevators_small/sbselevtr.mdl" 	, ZUD =  65.1 	, ZDD =  65.1 	, AT = {1,1,0,0} } ,
+		[ "TT" 	 ] = { model = "models/smallbridge/elevators_small/sbselevtt.mdl" 	, ZUD =  65.1 	, ZDD =  65.1 	, AT = {1,1,1,0} } ,
+		[ "TX" 	 ] = { model = "models/smallbridge/elevators_small/sbselevtx.mdl" 	, ZUD =  65.1 	, ZDD =  65.1 	, AT = {1,1,1,1} } ,
 
-		[ "S" 	 ] = { model = "models/SmallBridge/Elevators_small/sbselevs.mdl" 	, ZUD =  65.1 	, ZDD =  65.1 	, AT = {0,0,0,0} , SD = { IsShaft = true } },
-		[ "S2" 	 ] = { model = "models/SmallBridge/Elevators_small/sbselevs2.mdl" 	, ZUD =  65.1 	, ZDD =  65.1 	, AT = {0,0,0,0} , SD = { IsShaft = true } },
+		[ "S" 	 ] = { model = "models/smallbridge/elevators_small/sbselevs.mdl" 	, ZUD =  65.1 	, ZDD =  65.1 	, AT = {0,0,0,0} , SD = { IsShaft = true } },
+		[ "S2" 	 ] = { model = "models/smallbridge/elevators_small/sbselevs2.mdl" 	, ZUD =  65.1 	, ZDD =  65.1 	, AT = {0,0,0,0} , SD = { IsShaft = true } },
 
-		[ "BV" 	 ] = { model = "models/SmallBridge/Station Parts/sbbridgevisorb.mdl", ZUD =  65.1 	, ZDD =  65.1 	, AT = {0,0,0,0} , SD = { IsVisor = true , IsSpecial = true } },
-		[ "MV" 	 ] = { model = "models/SmallBridge/Station Parts/sbbridgevisorm.mdl", ZUD =  65.1 	, ZDD =  65.1 	, AT = {0,0,0,0} , SD = { IsVisor = true , IsSpecial = true } },
-		[ "TV" 	 ] = { model = "models/SmallBridge/Station Parts/sbbridgevisort.mdl", ZUD =  65.1 	, ZDD =  65.1 	, AT = {0,0,0,0} , SD = { IsVisor = true , IsSpecial = true } },
+		[ "BV" 	 ] = { model = "models/smallbridge/station parts/sbbridgevisorb.mdl", ZUD =  65.1 	, ZDD =  65.1 	, AT = {0,0,0,0} , SD = { IsVisor = true , IsSpecial = true } },
+		[ "MV" 	 ] = { model = "models/smallbridge/station parts/sbbridgevisorm.mdl", ZUD =  65.1 	, ZDD =  65.1 	, AT = {0,0,0,0} , SD = { IsVisor = true , IsSpecial = true } },
+		[ "TV" 	 ] = { model = "models/smallbridge/station parts/sbbridgevisort.mdl", ZUD =  65.1 	, ZDD =  65.1 	, AT = {0,0,0,0} , SD = { IsVisor = true , IsSpecial = true } },
 
-		[ "H" 	 ] = { model = "models/SmallBridge/Station Parts/sbhuble.mdl" 		, ZUD = 195.3 	, ZDD = 195.3 	, AT = {0,0,0,0} , SD = { IsHub = true , IsSpecial = true , MFT = { 0 , 130.2 , 260.4 } } }
+		[ "H" 	 ] = { model = "models/smallbridge/station parts/sbhuble.mdl" 		, ZUD = 195.3 	, ZDD = 195.3 	, AT = {0,0,0,0} , SD = { IsHub = true , IsSpecial = true , MFT = { 0 , 130.2 , 260.4 } } }
 			}
 
 LMT.L = {
-		[ "B" 	 ] = { model = "models/SmallBridge/Elevators_Large/sblelevb.mdl" 	, ZUD =  65.1 	, ZDD =  65.1 	, AT = {0,0,0,1} } ,
-		[ "BE" 	 ] = { model = "models/SmallBridge/Elevators_Large/sblelevbe.mdl" 	, ZUD =  65.1 	, ZDD =  65.1 	, AT = {0,1,0,1} } ,
-		[ "BEdh" ] = { model = "models/SmallBridge/Elevators_Large/sblelevbedh.mdl" , ZUD = 195.3 	, ZDD =  65.1 	, AT = {0,1,0,1} , SD = { IsDH = true } },
-		[ "BR" 	 ] = { model = "models/SmallBridge/Elevators_Large/sblelevbr.mdl" 	, ZUD =  65.1 	, ZDD =  65.1 	, AT = {1,1,0,0} } ,
-		[ "BT" 	 ] = { model = "models/SmallBridge/Elevators_Large/sblelevbt.mdl" 	, ZUD =  65.1 	, ZDD =  65.1 	, AT = {1,1,1,0} } ,
-		[ "BX" 	 ] = { model = "models/SmallBridge/Elevators_Large/sblelevbx.mdl" 	, ZUD =  65.1 	, ZDD =  65.1 	, AT = {1,1,1,1} } ,
+		[ "B" 	 ] = { model = "models/smallbridge/elevators_large/sblelevb.mdl" 	, ZUD =  65.1 	, ZDD =  65.1 	, AT = {0,0,0,1} } ,
+		[ "BE" 	 ] = { model = "models/smallbridge/elevators_large/sblelevbe.mdl" 	, ZUD =  65.1 	, ZDD =  65.1 	, AT = {0,1,0,1} } ,
+		[ "BEdh" ] = { model = "models/smallbridge/elevators_large/sblelevbedh.mdl" , ZUD = 195.3 	, ZDD =  65.1 	, AT = {0,1,0,1} , SD = { IsDH = true } },
+		[ "BR" 	 ] = { model = "models/smallbridge/elevators_large/sblelevbr.mdl" 	, ZUD =  65.1 	, ZDD =  65.1 	, AT = {1,1,0,0} } ,
+		[ "BT" 	 ] = { model = "models/smallbridge/elevators_large/sblelevbt.mdl" 	, ZUD =  65.1 	, ZDD =  65.1 	, AT = {1,1,1,0} } ,
+		[ "BX" 	 ] = { model = "models/smallbridge/elevators_large/sblelevbx.mdl" 	, ZUD =  65.1 	, ZDD =  65.1 	, AT = {1,1,1,1} } ,
 
-		[ "M" 	 ] = { model = "models/SmallBridge/Elevators_Large/sblelevm.mdl" 	, ZUD =  65.1 	, ZDD =  65.1 	, AT = {0,0,0,1} } ,
-		[ "ME" 	 ] = { model = "models/SmallBridge/Elevators_Large/sblelevme.mdl" 	, ZUD =  65.1 	, ZDD =  65.1 	, AT = {0,1,0,1} } ,
-		[ "MEdh" ] = { model = "models/SmallBridge/Elevators_Large/sblelevmedh.mdl" , ZUD = 195.3 	, ZDD =  65.1 	, AT = {0,1,0,1} , SD = { IsDH = true } },
-		[ "MR" 	 ] = { model = "models/SmallBridge/Elevators_Large/sblelevmr.mdl" 	, ZUD =  65.1 	, ZDD =  65.1 	, AT = {1,1,0,0} } ,
-		[ "MT" 	 ] = { model = "models/SmallBridge/Elevators_Large/sblelevmt.mdl" 	, ZUD =  65.1 	, ZDD =  65.1 	, AT = {1,1,1,0} } ,
-		[ "MX" 	 ] = { model = "models/SmallBridge/Elevators_Large/sblelevmx.mdl" 	, ZUD =  65.1 	, ZDD =  65.1 	, AT = {1,1,1,1} } ,
+		[ "M" 	 ] = { model = "models/smallbridge/elevators_large/sblelevm.mdl" 	, ZUD =  65.1 	, ZDD =  65.1 	, AT = {0,0,0,1} } ,
+		[ "ME" 	 ] = { model = "models/smallbridge/elevators_large/sblelevme.mdl" 	, ZUD =  65.1 	, ZDD =  65.1 	, AT = {0,1,0,1} } ,
+		[ "MEdh" ] = { model = "models/smallbridge/elevators_large/sblelevmedh.mdl" , ZUD = 195.3 	, ZDD =  65.1 	, AT = {0,1,0,1} , SD = { IsDH = true } },
+		[ "MR" 	 ] = { model = "models/smallbridge/elevators_large/sblelevmr.mdl" 	, ZUD =  65.1 	, ZDD =  65.1 	, AT = {1,1,0,0} } ,
+		[ "MT" 	 ] = { model = "models/smallbridge/elevators_large/sblelevmt.mdl" 	, ZUD =  65.1 	, ZDD =  65.1 	, AT = {1,1,1,0} } ,
+		[ "MX" 	 ] = { model = "models/smallbridge/elevators_large/sblelevmx.mdl" 	, ZUD =  65.1 	, ZDD =  65.1 	, AT = {1,1,1,1} } ,
 
-		[ "T" 	 ] = { model = "models/SmallBridge/Elevators_Large/sblelevt.mdl" 	, ZUD =  65.1 	, ZDD =  65.1 	, AT = {0,0,0,1} } ,
-		[ "TE" 	 ] = { model = "models/SmallBridge/Elevators_Large/sblelevte.mdl" 	, ZUD =  65.1 	, ZDD =  65.1 	, AT = {0,1,0,1} } ,
-		[ "TEdh" ] = { model = "models/SmallBridge/Elevators_Large/sblelevtedh.mdl" , ZUD = 195.3 	, ZDD =  65.1 	, AT = {0,1,0,1} , SD = { IsDH = true } },
-		[ "TR" 	 ] = { model = "models/SmallBridge/Elevators_Large/sblelevtr.mdl" 	, ZUD =  65.1 	, ZDD =  65.1 	, AT = {1,1,0,0} } ,
-		[ "TT" 	 ] = { model = "models/SmallBridge/Elevators_Large/sblelevtt.mdl" 	, ZUD =  65.1 	, ZDD =  65.1 	, AT = {1,1,1,0} } ,
-		[ "TX" 	 ] = { model = "models/SmallBridge/Elevators_Large/sblelevtx.mdl" 	, ZUD =  65.1 	, ZDD =  65.1 	, AT = {1,1,1,1} } ,
+		[ "T" 	 ] = { model = "models/smallbridge/elevators_large/sblelevt.mdl" 	, ZUD =  65.1 	, ZDD =  65.1 	, AT = {0,0,0,1} } ,
+		[ "TE" 	 ] = { model = "models/smallbridge/elevators_large/sblelevte.mdl" 	, ZUD =  65.1 	, ZDD =  65.1 	, AT = {0,1,0,1} } ,
+		[ "TEdh" ] = { model = "models/smallbridge/elevators_large/sblelevtedh.mdl" , ZUD = 195.3 	, ZDD =  65.1 	, AT = {0,1,0,1} , SD = { IsDH = true } },
+		[ "TR" 	 ] = { model = "models/smallbridge/elevators_large/sblelevtr.mdl" 	, ZUD =  65.1 	, ZDD =  65.1 	, AT = {1,1,0,0} } ,
+		[ "TT" 	 ] = { model = "models/smallbridge/elevators_large/sblelevtt.mdl" 	, ZUD =  65.1 	, ZDD =  65.1 	, AT = {1,1,1,0} } ,
+		[ "TX" 	 ] = { model = "models/smallbridge/elevators_large/sblelevtx.mdl" 	, ZUD =  65.1 	, ZDD =  65.1 	, AT = {1,1,1,1} } ,
 
-		[ "S" 	 ] = { model = "models/SmallBridge/Elevators_Large/sblelevs.mdl" 	, ZUD =  65.1 	, ZDD =  65.1 	, AT = {0,0,0,0} , SD = { IsShaft = true } },
-		[ "S2" 	 ] = { model = "models/SmallBridge/Elevators_Large/sblelevs2.mdl" 	, ZUD =  65.1 	, ZDD =  65.1 	, AT = {0,0,0,0} , SD = { IsShaft = true } }
+		[ "S" 	 ] = { model = "models/smallbridge/elevators_large/sblelevs.mdl" 	, ZUD =  65.1 	, ZDD =  65.1 	, AT = {0,0,0,0} , SD = { IsShaft = true } },
+		[ "S2" 	 ] = { model = "models/smallbridge/elevators_large/sblelevs2.mdl" 	, ZUD =  65.1 	, ZDD =  65.1 	, AT = {0,0,0,0} , SD = { IsShaft = true } }
 			}
 
 ENT.WireDebugName = "SBEP Elevator Housing"

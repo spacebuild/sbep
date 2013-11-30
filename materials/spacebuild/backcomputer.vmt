@@ -1,5 +1,5 @@
 "VertexLitGeneric" 
 { 
-	"$basetexture"		"spacebuild/BackComputer"
+	"$basetexture"		"spacebuild/backcomputer"
 	"$surfaceprop" "metal"
 } 

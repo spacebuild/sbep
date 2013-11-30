@@ -1,6 +1,6 @@
 "UnlitGeneric"
 {
-	"$basetexture" "VGUI/entities/sbep_fighter_power_module"
+	"$basetexture" "vgui/entities/sbep_fighter_power_module"
 	"$vertexcolor" 		1 
 	"$vertexalpha" 		0 
 	"$nolod" 		1 

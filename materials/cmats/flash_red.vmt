@@ -1,6 +1,6 @@
 "VertexlitGeneric"
 {
-	"$basetexture" "CMats/Flash_Red"
+	"$basetexture" "cmats/flash_red"
 	"$selfillum" 1
 	"$model" 1
 

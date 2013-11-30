@@ -1,5 +1,5 @@
 "UnlitGeneric"
 {
-	"$basetexture" "sbep_icons/Camera"
+	"$basetexture" "sbep_icons/camera"
 	"$vertexalpha" 1
 }

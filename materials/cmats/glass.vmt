@@ -1,6 +1,6 @@
 "VertexLitGeneric"
 {
-	"$basetexture" "CMats/glass"
+	"$basetexture" "cmats/glass"
 	"$alpha" 0.7
 	"$translucent" 1
 	"$nocull" 0	

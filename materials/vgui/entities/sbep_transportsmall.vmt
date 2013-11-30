@@ -1,6 +1,6 @@
 "UnlitGeneric"
 {
-	"$basetexture" "VGUI/entities/sbep_transportsmall"
+	"$basetexture" "vgui/entities/sbep_transportsmall"
 	"$vertexcolor" 		1 
 	"$vertexalpha" 		0 
 	"$nolod" 		1 

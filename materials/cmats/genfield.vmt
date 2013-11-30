@@ -1,6 +1,6 @@
 "UnlitGeneric"
 {
-	"$basetexture" "CMats/genfield"
+	"$basetexture" "cmats/genfield"
 	"$selfillum" 1
 	"$translucent" 1
 	"Proxies"

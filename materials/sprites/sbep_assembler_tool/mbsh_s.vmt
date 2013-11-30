@@ -1,5 +1,5 @@
 "UnLitGeneric"
 {
-	"$basetexture" "sprites/sbep_assembler_tool/MBSH_s"
+	"$basetexture" "sprites/sbep_assembler_tool/mbsh_s"
 	"$translucent" 1
 }

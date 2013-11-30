@@ -102,7 +102,7 @@ local VT = {
 ---------------------------------------------------------------------------------------------------------------------
 	{	name = "Ball Pod"							,
 		info = "Ball Shaped Pod"					, 
-		model = "models/Spacebuild/strange.mdl"		,
+		model = "models/spacebuild/strange.mdl"		,
 		HA = SitAnim, ID = "sbep_stpod"				} ,
 ---------------------------------------------------------------------------------------------------------------------
 	{	name = "Assault Pod"						,
@@ -269,5 +269,4 @@ end
 hook.Add("PlayerSpawnedVehicle","Stop SBEP Vehicles spawning in the ground", NotInTheGroundPlz)
 
 --ISSUES:
--- Capitals (ASAP). (the models need to be lowercased and pushed to git)
 -- Duping (ASAP). NotInGround bugs when a vehicle is duped  add an if-then-else to check if the vehicle has been spawned in by a player or duped in. Only occurs with Ad1 and IGN Dupe

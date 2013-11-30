@@ -1,6 +1,6 @@
 "VertexLitGeneric"
 {
-	"$basetexture" "spacebuild/CoolantTank"
+	"$basetexture" "spacebuild/coolanttank"
 	"$surfaceprop" "metal"
 	"$vertexcolor" 		1 
 	"$nolod" 			1 

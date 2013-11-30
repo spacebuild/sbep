@@ -1,6 +1,6 @@
 "VertexLitGeneric"
 {
-	"$basetexture" "spacebuild/wheeltexSIDE"
+	"$basetexture" "spacebuild/wheeltexside"
 	"$surfaceprop" "metal"
 	"$model"     1
 	 "$phong"     "1"

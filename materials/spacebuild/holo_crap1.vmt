@@ -1,6 +1,6 @@
 "UnlitGeneric"
 {
-	"$basetexture" "spacebuild/Holo_Crap1"
+	"$basetexture" "spacebuild/holo_crap1"
 	"$surfaceprop" "metal"
 	"$model" 1 
 	"$translucent" 1

@@ -1,6 +1,6 @@
 VertexLitGeneric
 {
-	$basetexture "CMats/Glow_Blue_Ani"
+	$basetexture "cmats/glow_blue_ani"
 	$model 1
 	$translucent 1
 	$additive 1

@@ -1,6 +1,6 @@
 "VertexLitGeneric"
 {
-	"$basetexture" "spacebuild/StriderNugs"
+	"$basetexture" "spacebuild/stridernugs"
 	"$surfaceprop" "metal"
 	"$model"     1
 	 "$phong"     "1"

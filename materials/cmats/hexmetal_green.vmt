@@ -1,9 +1,9 @@
 "VertexLitGeneric"
 {
-	"$baseTexture" "CMats/HexMetal_Green"
+	"$baseTexture" "cmats/hexmetal_green"
 	"$surfaceprop" "metal"
 	"$model" 1
-	"$bumpmap" "CMats/HexMetal_Green_Bump"
+	"$bumpmap" "cmats/hexmetal_green_bump"
 	"$phong"     "1"
 	"$halflambert"	1
  	"$phongexponent"   "1"

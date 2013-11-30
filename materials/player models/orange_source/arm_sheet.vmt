@@ -1,5 +1,5 @@
 "VertexLitGeneric"
 {
-	"$baseTexture" "Player Models\orange_source/arm_sheet"
-	"$bumpmap" "Player Models\orange_source/arm_sheet_normal"
+	"$baseTexture" "player models\orange_source/arm_sheet"
+	"$bumpmap" "player models\orange_source/arm_sheet_normal"
 }

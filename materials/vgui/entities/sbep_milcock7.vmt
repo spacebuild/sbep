@@ -1,6 +1,6 @@
 "UnlitGeneric"
 {
-	"$basetexture" "VGUI/entities/sbep_milcock7"
+	"$basetexture" "vgui/entities/sbep_milcock7"
 	"$vertexcolor" 		1 
 	"$vertexalpha" 		0
 	"$nolod" 		1 

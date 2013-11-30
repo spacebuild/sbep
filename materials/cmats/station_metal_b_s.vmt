@@ -1,6 +1,6 @@
 "VertexLitGeneric"
 {
-	"$baseTexture" "CMats/Station_Metal_B_S"
+	"$baseTexture" "cmats/station_metal_b_s"
 	"$surfaceprop" "metal"
 	"$model" 1
 	"$phong"     "1"

@@ -1,6 +1,6 @@
 "VertexLitGeneric"
 {
-	"$basetexture" "spacebuild/DS9_LCARS"
+	"$basetexture" "spacebuild/ds9_lcars"
 	"$surfaceprop" "metal"
 	"$envmap" "env_cubemap"
 	"$envmapcontrast" 1

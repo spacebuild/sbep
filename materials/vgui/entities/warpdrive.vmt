@@ -1,6 +1,6 @@
 "UnlitGeneric"
 {
-	"$basetexture"	"vgui/entities/WarpDrive"
+	"$basetexture"	"vgui/entities/warpdrive"
 	"$vertexcolor"	1
 	"$vertexalpha"	0
 	"$nolod"	1

@@ -1,6 +1,6 @@
 "VertexLitGeneric"
 {
-	"$basetexture" "spacebuild/CaptainChairFabric"
+	"$basetexture" "spacebuild/captainchairfabric"
 	"$surfaceprop" "metal"
 	"$envmap" "env_cubemap"
 	"$envmapcontrast" 1

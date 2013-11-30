@@ -1,6 +1,6 @@
 "VertexLitGeneric"
 {
-	"$basetexture" "spacebuild/Body3"
+	"$basetexture" "spacebuild/body3"
 	"$surfaceprop" "metal"
 	"$model" 1 
 	//"$bumpmap" "spacebuild/iron_rails_bump"

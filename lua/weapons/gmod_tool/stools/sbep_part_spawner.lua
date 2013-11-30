@@ -12,7 +12,7 @@ if CLIENT then
     language.Add("undone_SBEP Part", "Undone SBEP Part")
 end
 
-TOOL.ClientConVar["model"] = "models/SmallBridge/Hulls_SW/sbhulle1.mdl"
+TOOL.ClientConVar["model"] = "models/smallbridge/hulls_sw/sbhulle1.mdl"
 TOOL.ClientConVar["skin"] = 0
 TOOL.ClientConVar["glass"] = 0
 TOOL.ClientConVar["hab_mod"] = 0

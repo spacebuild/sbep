@@ -1,9 +1,9 @@
 "VertexLitGeneric"
 {
-	"$basetexture" "SmallBridge/multimetal1"
+	"$basetexture" "smallbridge/multimetal1"
 	"$surfaceprop" "metal"
 	"$model" 1 
-	"$bumpmap" "SmallBridge/multimetal1_bump"
+	"$bumpmap" "smallbridge/multimetal1_bump"
 	"$normalmapalphaenvmapmask" 1
 	 "$phong"     "1"
 	"$halflambert"	1

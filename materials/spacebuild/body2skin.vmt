@@ -1,9 +1,9 @@
 "VertexLitGeneric"
 {
-	"$basetexture" "spacebuild/Body2"
+	"$basetexture" "spacebuild/body2"
 	"$surfaceprop" "metal"
 	"$model" 1 
-	"$bumpmap" "spacebuild/Body2Bump"
+	"$bumpmap" "spacebuild/body2bump"
 	 "$phong"     "1"
 	"$halflambert"	1
  	"$phongexponent"   "60"

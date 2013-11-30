@@ -1,6 +1,6 @@
 "UnlitGeneric"
 {
-	"$basetexture" "VGUI/entities/sbep_arwing_body"
+	"$basetexture" "vgui/entities/sbep_arwing_body"
 	"$vertexcolor" 		1 
 	"$vertexalpha" 		0 
 	"$nolod" 		1 

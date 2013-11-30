@@ -1,6 +1,6 @@
 "UnlitGeneric"
 {
-	"$basetexture" "VGUI/entities/sbep_stingermortar"
+	"$basetexture" "vgui/entities/sbep_stingermortar"
 	"$nolod" 	1
 	"$vertexalpha" 	0
 	"$vertexcolor" 	1

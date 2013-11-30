@@ -1,6 +1,6 @@
 "VertexLitGeneric"
 {
-	"$basetexture" "spacebuild/KATANA2_FULL"
+	"$basetexture" "spacebuild/katana2_full"
 	"$surfaceprop" "concrete"
 	"$model" 1 
 	"$normalmapalphaenvmapmask" 1

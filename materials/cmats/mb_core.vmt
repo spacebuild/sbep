@@ -1,9 +1,9 @@
 "VertexLitGeneric"
 {
-	"$baseTexture" "CMats/MB_Core"
+	"$baseTexture" "cmats/mb_core"
 	"$surfaceprop" "metal"
 	"$model" 1
-	"$bumpmap" "CMats/MB_Core_Bump"
+	"$bumpmap" "cmats/mb_core_bump"
 	"$phong"     "1"
 	"$halflambert"	1
  	"$phongboost"   "4"

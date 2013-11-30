@@ -1,9 +1,9 @@
 "VertexLitGeneric"
 {
-	"$basetexture" "spacebuild/drones/SBdroneLight"
+	"$basetexture" "spacebuild/drones/sbdronelight"
 	"$surfaceprop" "metal"
 	"$model" 1 
-	"$bumpmap" "spacebuild/drones/SBdroneLight_bump"
+	"$bumpmap" "spacebuild/drones/sbdronelight_bump"
 	 "$phong"     "1"
 	"$halflambert"	1
  	"$phongexponent"   "60"

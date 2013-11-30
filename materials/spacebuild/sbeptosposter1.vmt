@@ -1,6 +1,6 @@
 "VertexLitGeneric"
 {
-	"$basetexture" "spacebuild/SBEPtosposter1"
+	"$basetexture" "spacebuild/sbeptosposter1"
 	"$surfaceprop" "metal"
 	"$model"     1
 	 "$phong"     "1"

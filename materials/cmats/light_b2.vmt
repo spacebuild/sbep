@@ -1,9 +1,9 @@
 "VertexLitGeneric"
 {
-	"$baseTexture" "CMats/Light_B2"
+	"$baseTexture" "cmats/light_b2"
 	"$surfaceprop" "metal"
 	"$model" 1
-	"$bumpmap" "CMats/Light_B2_Bump"
+	"$bumpmap" "cmats/light_b2_bump"
 	"$selfillum" 1
 	"$phong"     "1"
 	"$halflambert"	1

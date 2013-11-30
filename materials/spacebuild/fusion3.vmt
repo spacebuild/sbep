@@ -1,6 +1,6 @@
 "UnlitGeneric"
 {
-   "$basetexture" "spacebuild/Fusion3"
+   "$basetexture" "spacebuild/fusion3"
    "Proxies"
    {
       "AnimatedTexture"

@@ -1,6 +1,6 @@
 "UnlitGeneric"
 {
-	"$basetexture"	"vgui/entities/Gigafish"
+	"$basetexture"	"vgui/entities/gigafish"
 	"$vertexcolor"	1
 	"$vertexalpha"	0
 	"$nolod"	1

@@ -1,10 +1,10 @@
 "VertexLitGeneric"
 {
-	"$basetexture" "spacebuild/SBLight5_X"
+	"$basetexture" "spacebuild/sblight5_x"
 	"$surfaceprop" "metal"
 	"$model" 1 
 	"$selfillum" 1
-	"$bumpmap" "spacebuild/SBLight5Bump_X"
+	"$bumpmap" "spacebuild/sblight5bump_x"
 	 "$phong"     "1"
 	"$halflambert"	1
  	"$phongexponent"   "60"

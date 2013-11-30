@@ -1,6 +1,6 @@
 "UnlitGeneric"
 {
-   "$basetexture" "lazor/Fusion"
+   "$basetexture" "lazor/fusion"
    "Proxies"
    {
       "AnimatedTexture"

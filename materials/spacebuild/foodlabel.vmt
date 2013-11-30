@@ -1,6 +1,6 @@
 "VertexLitGeneric"
 {
-	"$basetexture" "spacebuild/FoodLabel"
+	"$basetexture" "spacebuild/foodlabel"
 	"$surfaceprop" "metal"
 	"$model"     1
 	 "$phong"     "1"

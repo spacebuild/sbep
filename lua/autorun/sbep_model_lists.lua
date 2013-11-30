@@ -24,7 +24,7 @@ DTT.SmallBridge["Doors"] = {
     "models/smallbridge/ship parts/sbhulldsdwe.mdl",
     "models/slyfo/slypaneldoor1.mdl",
     "models/slyfo/doublehatch.mdl",
-    "models/sbep_community/d12MBSFrame.mdl"
+    "models/sbep_community/d12mbsframe.mdl"
 }
 
 DTT.SmallBridge["Hatches (Base)"] = {
@@ -83,14 +83,14 @@ DTT.SmallBridge["Other"] = {
 
 DTT.ModBridge = {}
 DTT.ModBridge["ModBridge"] = {
-    "models/Cerus/Modbridge/Misc/Doors/door11a.mdl",
-    "models/Cerus/Modbridge/Misc/Doors/door11b.mdl",
-    "models/Cerus/Modbridge/Misc/Doors/door12b.mdl",
-    "models/Cerus/Modbridge/Misc/Doors/door12a.mdl",
-    "models/Cerus/Modbridge/Misc/Doors/door13a.mdl",
-    "models/Cerus/Modbridge/Misc/Doors/door23a.mdl",
-    "models/Cerus/Modbridge/Misc/Doors/door33a.mdl",
-    "models/Cerus/Modbridge/Misc/Accessories/acc_furnace1.mdl"
+    "models/cerus/modbridge/misc/doors/door11a.mdl",
+    "models/cerus/modbridge/misc/doors/door11b.mdl",
+    "models/cerus/modbridge/misc/doors/door12b.mdl",
+    "models/cerus/modbridge/misc/doors/door12a.mdl",
+    "models/cerus/modbridge/misc/doors/door13a.mdl",
+    "models/cerus/modbridge/misc/doors/door23a.mdl",
+    "models/cerus/modbridge/misc/doors/door33a.mdl",
+    "models/cerus/modbridge/misc/accessories/acc_furnace1.mdl"
 }
 
 for k, v in pairs(DTT) do
@@ -130,7 +130,7 @@ DCT["models/smallbridge/ship parts/sbhulldsdwe.mdl"] = {
 }
 DCT["models/slyfo/slypaneldoor1.mdl"] = { { type = "Door_Sly1" } }
 DCT["models/slyfo/doublehatch.mdl"] = { { type = "Door_SlyDHatch" } }
-DCT["models/SBEP_community/d12MBSFrame.mdl"] = { { type = "Door_d12MBSFrame" } }
+DCT["models/sbep_community/d12mbsframe.mdl"] = { { type = "Door_d12MBSFrame" } }
 local p = {}
 function p:Hello()
     print("")
@@ -409,22 +409,22 @@ end
 local WTT = {}
 
 WTT["Wings"] = {
-    "models/Spacebuild/milcock4_wing1.mdl",
-    "models/Spacebuild/milcock4_wing2.mdl",
-    "models/Spacebuild/milcock4_wing3.mdl",
-    "models/Spacebuild/milcock4_wing4.mdl",
-    "models/Spacebuild/milcock4_wing5l.mdl",
-    "models/Spacebuild/milcock4_wing5r.mdl",
-    "models/Spacebuild/milcock4_wing6.mdl",
-    "models/Spacebuild/milcock4_wing7.mdl"
+    "models/spacebuild/milcock4_wing1.mdl",
+    "models/spacebuild/milcock4_wing2.mdl",
+    "models/spacebuild/milcock4_wing3.mdl",
+    "models/spacebuild/milcock4_wing4.mdl",
+    "models/spacebuild/milcock4_wing5l.mdl",
+    "models/spacebuild/milcock4_wing5r.mdl",
+    "models/spacebuild/milcock4_wing6.mdl",
+    "models/spacebuild/milcock4_wing7.mdl"
 }
 
 WTT["Rover"] = {
-    "models/Slyfo/rover1_backpanel.mdl",
-    "models/Slyfo/rover1_leftpanel.mdl",
-    "models/Slyfo/rover1_leftpanelmount.mdl",
-    "models/Slyfo/rover1_rightpanel.mdl",
-    "models/Slyfo/rover1_rightpanelmount.mdl"
+    "models/slyfo/rover1_backpanel.mdl",
+    "models/slyfo/rover1_leftpanel.mdl",
+    "models/slyfo/rover1_leftpanelmount.mdl",
+    "models/slyfo/rover1_rightpanel.mdl",
+    "models/slyfo/rover1_rightpanelmount.mdl"
 }
 
 for k, v in pairs(WTT) do
@@ -432,19 +432,19 @@ for k, v in pairs(WTT) do
 end
 
 local WMMT = {}
-WMMT["models/Spacebuild/milcock4_wing1.mdl"] = {
+WMMT["models/spacebuild/milcock4_wing1.mdl"] = {
     type = "Wing",
     V = Vector(0, 0, 0),
     A = Angle(0, 0, 90),
     HP = { { Type = { "Small", "Tiny" }, Pos = Vector(0, 24, 0), Angle = Angle(0, 0, 180) } }
 }
-WMMT["models/Spacebuild/milcock4_wing2.mdl"] = {
+WMMT["models/spacebuild/milcock4_wing2.mdl"] = {
     type = "Wing",
     V = Vector(0, 0, 0),
     A = Angle(0, 0, 90),
     HP = { { Type = { "Small", "Tiny" }, Pos = Vector(0, 16, 0), Angle = Angle(0, 0, 180) } }
 }
-WMMT["models/Spacebuild/milcock4_wing3.mdl"] = {
+WMMT["models/spacebuild/milcock4_wing3.mdl"] = {
     type = "Wing",
     V = Vector(0, 0, 0),
     A = Angle(0, 0, 90),
@@ -455,7 +455,7 @@ WMMT["models/Spacebuild/milcock4_wing3.mdl"] = {
         { Type = { "Small", "Tiny" }, Pos = Vector(0, 192, -2), Angle = Angle(0, 0, 180) }
     }
 }
-WMMT["models/Spacebuild/milcock4_wing4.mdl"] = {
+WMMT["models/spacebuild/milcock4_wing4.mdl"] = {
     type = "Wing",
     V = Vector(0, 0, 0),
     A = Angle(0, 0, 90),
@@ -464,25 +464,25 @@ WMMT["models/Spacebuild/milcock4_wing4.mdl"] = {
         { Type = { "Small", "Tiny" }, Pos = Vector(0, 64, -5), Angle = Angle(0, 0, 180) }
     }
 }
-WMMT["models/Spacebuild/milcock4_wing5l.mdl"] = {
+WMMT["models/spacebuild/milcock4_wing5l.mdl"] = {
     type = "Wing",
     V = Vector(0, 0, 0),
     A = Angle(0, 0, 90),
     HP = { { Type = { "Small", "Tiny" }, Pos = Vector(-11, 28, 5), Angle = Angle(0, 0, 180) } }
 }
-WMMT["models/Spacebuild/milcock4_wing5r.mdl"] = {
+WMMT["models/spacebuild/milcock4_wing5r.mdl"] = {
     type = "Wing",
     V = Vector(0, 0, 0),
     A = Angle(0, 0, -90),
     HP = { { Type = { "Small", "Tiny" }, Pos = Vector(-11, -28, 5), Angle = Angle(0, 0, 180) } }
 }
-WMMT["models/Spacebuild/milcock4_wing6.mdl"] = {
+WMMT["models/spacebuild/milcock4_wing6.mdl"] = {
     type = "Wing",
     V = Vector(0, 0, 0),
     A = Angle(0, 0, 90),
     HP = { { Type = { "Small", "Tiny" }, Pos = Vector(0, 96, 0), Angle = Angle(0, 0, -90) } }
 }
-WMMT["models/Spacebuild/milcock4_wing7.mdl"] = {
+WMMT["models/spacebuild/milcock4_wing7.mdl"] = {
     type = "Wing",
     V = Vector(-5, 27, -4),
     A = Angle(0, 0, 90),
@@ -492,21 +492,21 @@ WMMT["models/Spacebuild/milcock4_wing7.mdl"] = {
     }
 }
 
-WMMT["models/Slyfo/rover1_backpanel.mdl"] = {
+WMMT["models/slyfo/rover1_backpanel.mdl"] = {
     type = "RBackPanel",
     V = Vector(0, 0, -6),
     A = Angle(0, 0, 0),
     HP = { { Type = "Small", Pos = Vector(0, 14, -12) } }
 }
-WMMT["models/Slyfo/rover1_leftpanel.mdl"] = { type = "RLeftPanel", V = Vector(0, 0, 0), A = Angle(0, 0, 0) }
-WMMT["models/Slyfo/rover1_leftpanelmount.mdl"] = {
+WMMT["models/slyfo/rover1_leftpanel.mdl"] = { type = "RLeftPanel", V = Vector(0, 0, 0), A = Angle(0, 0, 0) }
+WMMT["models/slyfo/rover1_leftpanelmount.mdl"] = {
     type = "RLeftPanel",
     V = Vector(0, 0, 0),
     A = Angle(0, 0, 0),
     HP = { { Type = { "Tiny", "Small" }, Pos = Vector(-6, 6, -2), Angle = Angle(0, 0, 270) } }
 }
-WMMT["models/Slyfo/rover1_rightpanel.mdl"] = { type = "RRightPanel", V = Vector(0, 0, 0), A = Angle(0, 0, 0) }
-WMMT["models/Slyfo/rover1_rightpanelmount.mdl"] = {
+WMMT["models/slyfo/rover1_rightpanel.mdl"] = { type = "RRightPanel", V = Vector(0, 0, 0), A = Angle(0, 0, 0) }
+WMMT["models/slyfo/rover1_rightpanelmount.mdl"] = {
     type = "RRightPanel",
     V = Vector(0, 0, 0),
     A = Angle(0, 0, 0),

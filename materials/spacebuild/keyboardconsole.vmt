@@ -1,6 +1,6 @@
 "VertexLitGeneric"
 {
-	"$basetexture" "spacebuild/KeyBoardConsole.vtf"
+	"$basetexture" "spacebuild/keyboardconsole.vtf"
 	"$surfaceprop" "metal"
 	"$model"     1
 }

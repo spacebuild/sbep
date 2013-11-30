@@ -1,6 +1,6 @@
 "VertexLitGeneric"
 {
-	"$basetexture" "spacebuild/milgreenCAUTION"
+	"$basetexture" "spacebuild/milgreencaution"
 	"$surfaceprop" "metal"
 	"$model"     1
 	 "$phong"     "1"

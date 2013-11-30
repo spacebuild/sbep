@@ -1,5 +1,5 @@
 "UnlitGeneric"
 {
-	"$basetexture" "sbep_icons/Delete"
+	"$basetexture" "sbep_icons/delete"
 	"$vertexalpha" 1
 }

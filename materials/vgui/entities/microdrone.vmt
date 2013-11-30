@@ -1,6 +1,6 @@
 "UnlitGeneric"
 {
-	"$basetexture"	"vgui/entities/MicroDrone"
+	"$basetexture"	"vgui/entities/microdrone"
 	"$vertexcolor"	1
 	"$vertexalpha"	0
 	"$nolod"	1

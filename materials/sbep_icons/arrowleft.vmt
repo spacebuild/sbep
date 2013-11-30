@@ -1,5 +1,5 @@
 "UnlitGeneric"
 {
-	"$basetexture" "sbep_icons/ArrowLeft"
+	"$basetexture" "sbep_icons/arrowleft"
 	"$vertexalpha" 1
 }
