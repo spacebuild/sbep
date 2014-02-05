@@ -92,7 +92,7 @@ local VT = {
 ---------------------------------------------------------------------------------------------------------------------
 	{	name = "SmallBridge Drop Pod"				,
 		info = "SmallBridge Drop Pod"				, 
-		model = "models/smallbridge/vehicles/sbvroppod1.mdl", 
+		model = "models/smallbridge/vehicles/sbvdroppod1.mdl", 
 		HA = SitAnim, ID = "sbep_SB_pod"			} ,
 ---------------------------------------------------------------------------------------------------------------------
 	{	name = "SmallBridge Assault Pod"			,
