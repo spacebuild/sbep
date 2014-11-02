@@ -1,4 +1,5 @@
 TOOL.Category		= "SBEP"
+TOOL.Tab 			= "Spacebuild"
 TOOL.Name			= "#Door"
 TOOL.Command		= nil
 TOOL.ConfigName 	= ""
