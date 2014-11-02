@@ -1,4 +1,5 @@
-TOOL.Category = "SBEP"
+TOOL.Category		= "SBEP"
+TOOL.Tab 			= "Spacebuild"
 TOOL.Name = "#SmallBridge Skin Selector"
 TOOL.Command = nil
 TOOL.ConfigName = ""
