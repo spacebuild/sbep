@@ -1,4 +1,5 @@
-TOOL.Category = "SBEP"
+TOOL.Category		= "SBEP"
+TOOL.Tab 			= "Spacebuild"
 TOOL.Name = "#Part Spawner"
 TOOL.Command = nil
 TOOL.ConfigName = ""
