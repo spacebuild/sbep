@@ -1,4 +1,5 @@
 TOOL.Category		= "SBEP"
+TOOL.Tab 			= "Spacebuild"
 TOOL.Name			= "#Docking Clamp"
 TOOL.Command		= nil
 TOOL.ConfigName 	= ""
