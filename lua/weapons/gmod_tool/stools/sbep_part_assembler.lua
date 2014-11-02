@@ -1,6 +1,6 @@
 -- By Tingle
-
 TOOL.Category		= "SBEP"
+TOOL.Tab 			= "Spacebuild"
 TOOL.Name			= "#Part Assembler" 
 TOOL.Command 		= nil 
 TOOL.ConfigName 	= ""
