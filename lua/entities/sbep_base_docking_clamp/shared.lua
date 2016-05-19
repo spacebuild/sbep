@@ -5,7 +5,7 @@ ENT.Author			= "Paradukes, Hysteria"
 ENT.Category		= "SBEP"
 
 ENT.Spawnable		= true
-ENT.AdminSpawnable	= true
+ENT.AdminSpawnable	= false
 ENT.Owner			= nil
 ENT.CPL				= nil
 
