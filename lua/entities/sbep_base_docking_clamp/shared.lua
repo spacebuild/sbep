@@ -4,7 +4,7 @@ ENT.PrintName		= "Base Docking Clamp"
 ENT.Author			= "Paradukes, Hysteria"
 ENT.Category		= "SBEP"
 
-ENT.Spawnable		= false
+ENT.Spawnable		= true
 ENT.AdminSpawnable	= false
 ENT.Owner			= nil
 ENT.CPL				= nil
