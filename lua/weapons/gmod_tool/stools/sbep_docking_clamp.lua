@@ -24,6 +24,24 @@ CategoryTable[1] = {
 TOOL.ClientConVar[ "model" 		] = "models/smallbridge/panels/sbpaneldockin.mdl"
 TOOL.ClientConVar[ "allowuse"   ] = 1
 
+if ( SERVER ) then
+
+	function MakeDockingClamp( Player, Data )
+
+		local DockEnt = ents.Create( "sbep_base_docking_clamp" )
+		duplicator.DoGeneric( DockEnt, Data )
+		DockEnt:Spawn()
+
+		duplicator.DoGenericPhysics( DockEnt, Player, Data )
+
+		return DockEnt
+
+	end
+
+	duplicator.RegisterEntityClass( "sbep_base_docking_clamp", MakeDockingClamp, "Data" )
+	
+end
+
 function TOOL:LeftClick( tr )
 
 	if CLIENT then return end

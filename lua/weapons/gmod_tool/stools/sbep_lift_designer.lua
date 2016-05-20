@@ -658,6 +658,20 @@ util.AddNetworkString("SBEP_SetPHOffsetLiftDesignMenu_cl")
 		ply:ConCommand( "SBEP_LiftGetCamHeight_ser" )
 	end
 	concommand.Add( "SBEP_LiftDeletePart_ser" , SBEP_LiftDeletePart )
+
+	function MakeLift( Player, Data )
+
+		local ent = ents.Create( Data.Class )
+		duplicator.DoGeneric( ent, Data )
+		ent:Spawn()
+
+		duplicator.DoGenericPhysics( ent, Player, Data )
+
+		return ent
+
+	end
+	duplicator.RegisterEntityClass( "sbep_elev_housing", MakeLift, "Data" )
+	duplicator.RegisterEntityClass( "sbep_elev_system", MakeLift, "Data" )
 	
 	/*reset convars to defaults on load
 	for k,v in pairs( ConVars ) do

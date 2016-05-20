@@ -5,7 +5,7 @@ ENT.Author			      = "Hysteria"
 ENT.Category			  = "SBEP"
 
 ENT.AutomaticFrameAdvance = true
-ENT.Spawnable			  = true
+ENT.Spawnable			  = false
 ENT.AdminSpawnable		  = false
 
 ENT.Purpose 		      = "To open and close."
