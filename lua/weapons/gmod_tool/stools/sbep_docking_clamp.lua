@@ -95,7 +95,7 @@ function TOOL:RightClick( tr )
 				end
 				
 				DockEnt:SetPos( Vector(0,-50,100) + pos - Vector(0,0,DockEnt:OBBMins().z) )
-				DockEnt:SetAngles( ang + Angle( 0, data.Compatible[ check ].AYaw , 0 ) )
+				DockEnt:SetAngles( ang + Angle( 0, data.Compatible[ check ].AYaw or 0, 0 ) )
 				
 				DockEnt:AddDockDoor()
 				
@@ -126,6 +126,7 @@ function TOOL.BuildCPanel( panel )
 	local UseCheckBox = vgui.Create( "DCheckBoxLabel", panel )
 	UseCheckBox:Dock(TOP)
 	UseCheckBox:SetText( "Enable Use Key:" )
+	UseCheckBox:SetTextColor(Color(0,0,0,255))
 	UseCheckBox:SetConVar( "sbep_docking_clamp_allowuse" )
 	UseCheckBox:SetValue( GetConVar( "sbep_docking_clamp_allowuse" ):GetBool()  )
 
