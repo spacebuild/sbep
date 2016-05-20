@@ -30,9 +30,13 @@ function ENT:Initialize()
 	self.FT  = {} --Floor Table
 	self.HT  = {} --Hatch Table
 	
-	self.Usable = self.Usable or true
+	if self.Usable == nil then
+		self.Usable = true
+		self.ST.Usable = true
+	else
+		self.ST.Usable = self.Usable
+	end
 	self:SetSystemSize( "S" )
-	self.ST.Usable = self.Usable or true
 	self.ST.Skin   = self.Skin or 0
 	
 	self.Entity:SetNetworkedInt( "ActivePart" , 1 )
@@ -253,7 +257,7 @@ end
 
 function ENT:PhysicsSimulate( phys, deltatime )
 
-	if !self.LiftActive or !self.PT then return SIM_NOTHING end
+	if !self.LiftActive or !self.PT or !IsValid(self.PT[1]) or !IsValid(self.PT[self:GetPartCount()]) then return SIM_NOTHING end
 
 	local Pos1 = self.PT[1]:GetPos()
 	local Pos2 = self.PT[self:GetPartCount()]:GetPos()
@@ -388,6 +392,23 @@ function ENT:FinishSystem()
 	self:AddCallFloorNum( 1 )
 	
 	self.LiftActive = true
+	
+	local ply = self.Entity:GetOwner()
+	undo.Create( "SBEP Lift System" )
+		undo.AddEntity( self )
+		for _,P in ipairs( self.PT ) do
+			undo.AddEntity( P )
+			if P.PD and P.PD.FDT then
+				for _,D in ipairs( P.PD.FDT ) do
+					undo.AddEntity( D )
+				end
+			end
+		end
+		for _,P in ipairs( self.HT ) do
+			undo.AddEntity( P )
+		end
+		undo.SetPlayer( ply )
+	undo.Finish()
 
 end
 

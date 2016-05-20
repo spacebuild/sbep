@@ -43,6 +43,8 @@ for k,v in pairs(ConVars) do
 end
 
 local LD = {}
+local CL = {}
+local LiftSystem_SER = {}
 
 
 if CLIENT then
@@ -343,11 +345,14 @@ if CLIENT then
 		--					CLIENT FUNCTIONS
 		---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 		
-		function LD.SBEP_OpenLiftDesignMenu()
-			
+		function LD.SBEP_OpenLiftDesignMenu(entLift)
 			CL = LocalPlayer()
 			CL.LiftDes = {}
-			LiftSystem = net.ReadEntity()
+			if not (IsEntity(entLift) and IsValid(entLift)) then
+				return
+			end
+
+			LiftSystem = entLift
 			CL.LiftDes.LiftSystem = LiftSystem
 			CL.LiftDes.SBEPLDDM = CreateSBEPLiftDesignerMenu()
 			CL.LiftDes.DIR = "UP"
@@ -421,7 +426,7 @@ if CLIENT then
 
 		function LD.ReCalcViewAngles()
 			if  not net.BytesWritten() == 0 then CL.LiftDes.MBRange = net:ReadFloat() end
-			if LiftSystem and CL.LiftDes.LiftSystem then
+			if LiftSystem and CL.LiftDes.LiftSystem and IsValid(CL.LiftDes.LiftSystem) then
 				CL.LiftDes.StartPos	= (CL.LiftDes.LiftSystem:GetPos() + 60.45*CL.LiftDes.LiftSystem:GetUp() or Vector(0,0,0)) --breaks stuff
 			end
 		end
@@ -439,9 +444,10 @@ if CLIENT then
 		net.Receive("SBEP_SetPHOffsetLiftDesignMenu_cl", LD.SBEPSetPHOffset)
 		
 		local function SBEP_LiftCalcView( ply, origin, angles, fov )
+		if not CL or not CL.LiftDes then return end
 		if not CL.LiftDes.MVYaw then LD.SetBaseViewAngles() end
 			if LiftSystem and CL then
-				if CL.LiftDes.SBEPLDDM and CL.LiftDes.SBEPLDDM.Frame and CL.LiftDes.SBEPLDDM.Frame.visible then
+				if CL.LiftDes.CVYaw and CL.LiftDes.SBEPLDDM and CL.LiftDes.SBEPLDDM.Frame and CL.LiftDes.SBEPLDDM.Frame.visible then
 					local view = {}
 						CL.LiftDes.CVYaw   	= CL.LiftDes.CVYaw   	+ math.Clamp( CL.LiftDes.MVYaw   	- CL.LiftDes.CVYaw   	, -2.5 	, 2.5	)
 						CL.LiftDes.CVPitch 	= CL.LiftDes.CVPitch 	+ math.Clamp( CL.LiftDes.MVPitch 	- CL.LiftDes.CVPitch 	, -2.5 	, 2.5	)
@@ -488,18 +494,20 @@ if CLIENT then
 		end
 		
 		local function CLNWLift( entLift )
-			if entLift:GetNWBool( "Sendable" ) then
-				LD.SBEP_OpenLiftDesignMenu( entLift )
-				RunConsoleCommand( "SBEP_LiftGetCamHeight_ser" )
-				return true
-			end
+			timer.Simple( 0.2, function()  
+				if entLift:GetNWBool( "Sendable" ) and IsValid(entLift) and LocalPlayer() == entLift:GetOwner() then
+					LD.SBEP_OpenLiftDesignMenu( entLift )
+					RunConsoleCommand( "SBEP_LiftGetCamHeight_ser" )
+					return true
+				end
+			end )
 		end
-		hook.Add("OnEntityCreated", "SBEPLiftCreateDelay", CLNWLift ) 
+		hook.Add("OnEntityCreated", "SBEPLiftCreateDelay", CLNWLift )
 end
 
 function TOOL:Think()
 	if CLIENT then
-		if CL.LiftDes.SBEPLDDM then
+		if CL and CL.LiftDes and CL.LiftDes.SBEPLDDM then
 			for n,B in pairs( CL.LiftDes.SBEPLDDM.CButtons ) do
 				if B.Hold and B.Pressed then
 					B:DoClick()
@@ -523,35 +531,35 @@ util.AddNetworkString("SBEP_ReCalcViewAngles_LiftDesignMenu_cl")
 util.AddNetworkString("SBEP_SetPHOffsetLiftDesignMenu_cl")
 
 	function SBEP_SetLiftPartType( ply , cmd , args )
-		local n = LiftSystem_SER:GetNWInt("ActivePart")
+		local n = LiftSystem_SER[ply]:GetNWInt("ActivePart")
 		local type = tostring( args[1] )
-		if !LiftSystem_SER.PT[n] then return end
+		if !LiftSystem_SER[ply].PT[n] then return end
 		
 		ply:ConCommand( "sbep_lift_designer_type "..type )
-		LiftSystem_SER.PT[n]:SetPartType( type )
-		LiftSystem_SER:RefreshParts( n )
+		LiftSystem_SER[ply].PT[n]:SetPartType( type )
+		LiftSystem_SER[ply]:RefreshParts( n )
 		
 		ply:ConCommand( "SBEP_LiftGetCamHeight_ser" )
 	end
 	concommand.Add( "SBEP_LiftSys_SetLiftPartType_ser" , SBEP_SetLiftPartType )
 	
 	function SBEP_InvertLiftPart( ply , cmd , args )
-		local n = LiftSystem_SER:GetNWInt("ActivePart")
-			if !LiftSystem_SER.PT[n] then return end
-		LiftSystem_SER.PT[n]:Invert()
+		local n = LiftSystem_SER[ply]:GetNWInt("ActivePart")
+			if !LiftSystem_SER[ply].PT[n] then return end
+		LiftSystem_SER[ply].PT[n]:Invert()
 		ply:ConCommand( "SBEP_LiftGetCamHeight_ser" )
 	end
 	concommand.Add( "SBEP_LiftSys_InvertLiftPart_ser" , SBEP_InvertLiftPart )	
 
 	function SBEP_SetLiftPartYaw( ply , cmd , args )
-		local n = LiftSystem_SER:GetNWInt("ActivePart")
-			if !LiftSystem_SER.PT[n] then return end
-		LiftSystem_SER.PT[n]:RotatePartYaw( tonumber( args[1] ) )
+		local n = LiftSystem_SER[ply]:GetNWInt("ActivePart")
+			if !LiftSystem_SER[ply].PT[n] then return end
+		LiftSystem_SER[ply].PT[n]:RotatePartYaw( tonumber( args[1] ) )
 	end
 	concommand.Add( "SBEP_LiftSys_SetLiftPartYaw_ser" , SBEP_SetLiftPartYaw )	
 	
 	function SBEP_LiftCancelMenu( ply , cmd , args )
-		LiftSystem_SER:Remove()
+		LiftSystem_SER[ply]:Remove()
 		ply:ConCommand( "sbep_lift_designer_editing 0" )
 	end
 	concommand.Add( "SBEP_LiftCancelMenu_ser" , SBEP_LiftCancelMenu )	
@@ -559,55 +567,55 @@ util.AddNetworkString("SBEP_SetPHOffsetLiftDesignMenu_cl")
 	function SBEP_LiftGetCamHeight( ply , cmd , args )
 		local n = tonumber(args[1])
 		if not n then
-			n = LiftSystem_SER:GetNWInt("ActivePart")
+			n = LiftSystem_SER[ply]:GetNWInt("ActivePart")
 		end
-		LiftSystem_SER:SetNWInt("ActivePart", n)
+		LiftSystem_SER[ply]:SetNWInt("ActivePart", n)
 
-		local C = LiftSystem_SER:GetNWInt("SBEP_LiftPartCount")
+		local C = LiftSystem_SER[ply]:GetNWInt("SBEP_LiftPartCount")
 		net.Start( "SBEP_SetPHOffsetLiftDesignMenu_cl")
-			net.WriteFloat(LiftSystem_SER.PT[ n ].PD.HO)
+			net.WriteFloat(LiftSystem_SER[ply].PT[ n ].PD.HO)
 		net.Send(ply)
-		for k,v in ipairs( LiftSystem_SER.PT ) do
+		for k,v in ipairs( LiftSystem_SER[ply].PT ) do
 			v:SetRenderMode( RENDERMODE_TRANSCOLOR )
 			v:SetColor( Color( 255 , 255 , 255 , 255 ))
 		end
 		if n == C then
-			LiftSystem_SER.PT[ n ]:SetRenderMode( RENDERMODE_TRANSCOLOR )
-			LiftSystem_SER.PT[ n ]:SetColor( Color( 255 , 255 , 255 , 180 ))
+			LiftSystem_SER[ply].PT[ n ]:SetRenderMode( RENDERMODE_TRANSCOLOR )
+			LiftSystem_SER[ply].PT[ n ]:SetColor( Color( 255 , 255 , 255 , 180 ))
 		else
-			LiftSystem_SER.PT[ n ]:SetRenderMode( RENDERMODE_TRANSCOLOR )
-			LiftSystem_SER.PT[ n ]:SetColor( Color( 200  , 255 , 200 , 255 ))
-			LiftSystem_SER.PT[ C ]:SetRenderMode( RENDERMODE_TRANSCOLOR )
-			LiftSystem_SER.PT[ C ]:SetColor( Color(255 , 255 , 255 ,  180  ))
+			LiftSystem_SER[ply].PT[ n ]:SetRenderMode( RENDERMODE_TRANSCOLOR )
+			LiftSystem_SER[ply].PT[ n ]:SetColor( Color( 200  , 255 , 200 , 255 ))
+			LiftSystem_SER[ply].PT[ C ]:SetRenderMode( RENDERMODE_TRANSCOLOR )
+			LiftSystem_SER[ply].PT[ C ]:SetColor( Color(255 , 255 , 255 ,  180  ))
 		end
 		
 		net.Start("SBEP_ReCalcViewAngles_LiftDesignMenu_cl")
-		net.WriteFloat(LiftSystem_SER.PT[ n ]:OBBMaxs():Length())
+		net.WriteFloat(LiftSystem_SER[ply].PT[ n ]:OBBMaxs():Length())
 		net.Send(ply)
 		
-		LiftSystem_SER.CanDown = false
-		if n == 1 and LiftSystem_SER.MDB then
+		LiftSystem_SER[ply].CanDown = false
+		if n == 1 and LiftSystem_SER[ply].MDB then
 			local tracedata = {}
-				tracedata.start = LiftSystem_SER.PT[1]:GetPos()
-				if LiftSystem_SER.PT[1].PD.Inv then
-					tracedata.endpos = tracedata.start + 200*LiftSystem_SER.PT[1]:GetUp()
+				tracedata.start = LiftSystem_SER[ply].PT[1]:GetPos()
+				if LiftSystem_SER[ply].PT[1].PD.Inv then
+					tracedata.endpos = tracedata.start + 200*LiftSystem_SER[ply].PT[1]:GetUp()
 				else
-					tracedata.endpos = tracedata.start - 200*LiftSystem_SER.PT[1]:GetUp()
+					tracedata.endpos = tracedata.start - 200*LiftSystem_SER[ply].PT[1]:GetUp()
 				end
-				tracedata.filter = { LiftSystem_SER , LiftSystem_SER.PT[1] }
+				tracedata.filter = { LiftSystem_SER[ply] , LiftSystem_SER[ply].PT[1] }
 			local trace = util.TraceHull(tracedata)
-			if !trace.Hit then LiftSystem_SER.CanDown = true end
+			if !trace.Hit then LiftSystem_SER[ply].CanDown = true end
 		end
 		net.Start("SBEPDisableButtons_cl")
 		net.WriteInt( n, 16 )
 		net.WriteInt( C, 16 )
-		if LiftSystem_SER.CanDown then 
+		if LiftSystem_SER[ply].CanDown then 
 			net.WriteBit( 1 )
 		else net.WriteBit( 0 )
 		end
-		net.WriteString( LiftSystem_SER.PT[1]:GetPartType())
-		if C > 1 then net.WriteString( LiftSystem_SER.PT[2]:GetPartType()) end
-		if C > 2 then net.WriteString( LiftSystem_SER.PT[C-1]:GetPartType() ) end
+		net.WriteString( LiftSystem_SER[ply].PT[1]:GetPartType())
+		if C > 1 then net.WriteString( LiftSystem_SER[ply].PT[2]:GetPartType()) end
+		if C > 2 then net.WriteString( LiftSystem_SER[ply].PT[C-1]:GetPartType() ) end
 		net.Send(ply)
 	end
 	concommand.Add( "SBEP_LiftGetCamHeight_ser" , SBEP_LiftGetCamHeight )	
@@ -617,16 +625,16 @@ util.AddNetworkString("SBEP_SetPHOffsetLiftDesignMenu_cl")
 		local n = tonumber( args[1] )
 		local D = args[2]
 		--[[if n == 1 and D == "DOWN" then
-			local NP = LiftSystem_SER:CreatePart()
+			local NP = LiftSystem_SER[ply]:CreatePart()
 		end--]]
 		
-		LiftSystem_SER:SetNWInt("ActivePart", n )
+		LiftSystem_SER[ply]:SetNWInt("ActivePart", n )
 
-		local NP = LiftSystem_SER:CreatePart()
-		LiftSystem_SER:AddPartToTable( NP , n )
+		local NP = LiftSystem_SER[ply]:CreatePart()
+		LiftSystem_SER[ply]:AddPartToTable( NP , n )
 		NP:SetPartType( type )
 
-		LiftSystem_SER:RefreshParts( n )
+		LiftSystem_SER[ply]:RefreshParts( n )
 		
 		ply:ConCommand( "SBEP_LiftGetCamHeight_ser" )
 	end
@@ -635,25 +643,25 @@ util.AddNetworkString("SBEP_SetPHOffsetLiftDesignMenu_cl")
 	function SBEP_LiftFinishSystem( ply , cmd , args )
 		net.Start("SBEP_CloseLiftDesignMenu_cl")
 		net.Send(ply)
-		if LiftSystem_SER:GetPartCount() > 1 then
-		LiftSystem_SER:FinishSystem()
+		if LiftSystem_SER[ply]:GetPartCount() > 1 then
+		LiftSystem_SER[ply]:FinishSystem()
 		else
-		LiftSystem_SER:Remove()
+		LiftSystem_SER[ply]:Remove()
 		end
 		ply:ConCommand( "sbep_lift_designer_editing 0" )
 	end
 	concommand.Add( "SBEP_LiftFinishSystem_ser" , SBEP_LiftFinishSystem )
 	
 	function SBEP_LiftDeletePart( ply , cmd , args )
-		local n = LiftSystem_SER:GetNWInt("ActivePart")
-		if n == 1 and BEM[LiftSystem_SER.PT[2]:GetPartType()] then return end
+		local n = LiftSystem_SER[ply]:GetNWInt("ActivePart")
+		if n == 1 and BEM[LiftSystem_SER[ply].PT[2]:GetPartType()] then return end
 
-		LiftSystem_SER:RemovePartFromTable( n )
-		LiftSystem_SER:RefreshParts( 1 )
+		LiftSystem_SER[ply]:RemovePartFromTable( n )
+		LiftSystem_SER[ply]:RefreshParts( 1 )
 		
-		local C = LiftSystem_SER:GetPartCount()
+		local C = LiftSystem_SER[ply]:GetPartCount()
 		if n > C then
-			LiftSystem_SER:SetNWInt("ActivePart", C )
+			LiftSystem_SER[ply]:SetNWInt("ActivePart", C )
 		end
 		ply:ConCommand( "SBEP_LiftGetCamHeight_ser" )
 	end
@@ -673,6 +681,11 @@ util.AddNetworkString("SBEP_SetPHOffsetLiftDesignMenu_cl")
 	duplicator.RegisterEntityClass( "sbep_elev_housing", MakeLift, "Data" )
 	duplicator.RegisterEntityClass( "sbep_elev_system", MakeLift, "Data" )
 	
+	-- cleanup
+	hook.Add("PlayerDisconnected", "SBEPPlayerDisconnected", function(ply)
+		LiftSystem_SER[ply] = nil
+	end)
+	
 	/*reset convars to defaults on load
 	for k,v in pairs( ConVars ) do
 	ply:ConCommand( "sbep_lift_designer_"..k , v )
@@ -689,46 +702,37 @@ function TOOL:LeftClick( trace )
 	
 	if Editing == 0 then
 	
-		local startpos = trace.HitPos
-	
-			LiftSystem_SER = ents.Create( "sbep_elev_system" )
-			LiftSystem_SER:SetPos( startpos + Vector(0,0,4.65))
-			LiftSystem_SER:SetAngles( Angle(0,-90,0) )
-			LiftSystem_SER:SetModel( "models/SmallBridge/Elevators_Small/sbselevp3.mdl" )
-			LiftSystem_SER.Skin = ply:GetInfoNum( "sbep_lift_designer_skin", 0 )
-			LiftSystem_SER:SetNWBool( "Sendable" , true )
-			LiftSystem_SER.PLY		= ply
+		local startpos = trace.HitPos			
+			LiftSystem_SER[ply] = ents.Create( "sbep_elev_system" )
+			LiftSystem_SER[ply]:SetPos( startpos + Vector(0,0,4.65))
+			LiftSystem_SER[ply]:SetAngles( Angle(0,-90,0) )
+			LiftSystem_SER[ply]:SetModel( "models/SmallBridge/Elevators_Small/sbselevp3.mdl" )
+			LiftSystem_SER[ply].Skin = ply:GetInfoNum( "sbep_lift_designer_skin", 0 )
+			LiftSystem_SER[ply]:SetNWBool( "Sendable" , true )
+			LiftSystem_SER[ply].PLY		= ply
+			LiftSystem_SER[ply]:SetOwner(ply)
 			
-		LiftSystem_SER.Usable = ply:GetInfoNum( "sbep_lift_designer_enableuse", 0 ) == 1
+		LiftSystem_SER[ply].Usable = ply:GetInfoNum( "sbep_lift_designer_enableuse", 0 ) == 1
 		
-		LiftSystem_SER:Spawn()
+		LiftSystem_SER[ply]:Spawn()
 		
-		LiftSystem_SER:SetSystemSize( ply:GetInfoNum( "sbep_lift_designer_size", 1 ) )
+		LiftSystem_SER[ply]:SetSystemSize( ply:GetInfoNum( "sbep_lift_designer_size", 1 ) )
 		
 		local hatchconvar = ply:GetInfoNum( "sbep_lift_designer_doors", 0 )
-		LiftSystem_SER.ST.UseHatches = hatchconvar == 2
-		LiftSystem_SER.ST.UseDoors   = hatchconvar == 3
-		LiftSystem_SER:SetNWInt("ActivePart", 1 )
-		
-		undo.Create( "SBEP Lift System" )
-			undo.AddEntity( LiftSystem_SER )
-			undo.SetPlayer( ply )
-		undo.Finish()
-		
-		local NP = LiftSystem_SER:CreatePart()
-			LiftSystem_SER:AddPartToTable( NP , 1 )
+		LiftSystem_SER[ply].ST.UseHatches = hatchconvar == 2
+		LiftSystem_SER[ply].ST.UseDoors   = hatchconvar == 3
+		LiftSystem_SER[ply]:SetNWInt("ActivePart", 1 )
+			
+		local NP = LiftSystem_SER[ply]:CreatePart()
+			LiftSystem_SER[ply]:AddPartToTable( NP , 1 )
 			NP:SetPartType( "M" )
-		LiftSystem_SER:RefreshParts( 1 )
+		LiftSystem_SER[ply]:RefreshParts( 1 )
 		
-		LiftSystem_SER.PT[ 1 ]:SetRenderMode( RENDERMODE_TRANSCOLOR )
-		LiftSystem_SER.PT[ 1 ]:SetColor( Color( 255 , 255 , 255 , 180 ))
-
-		net.Start("SBEP_OpenLiftDesignMenu_cl")
-			net.WriteEntity(LiftSystem_SER)
-		net.Send(ply)
+		LiftSystem_SER[ply].PT[ 1 ]:SetRenderMode( RENDERMODE_TRANSCOLOR )
+		LiftSystem_SER[ply].PT[ 1 ]:SetColor( Color( 255 , 255 , 255 , 180 ))
 		
 		ply:ConCommand( "sbep_lift_designer_editing 1" )
-		
+
 		return true
 	end
 end
@@ -830,6 +834,7 @@ function TOOL.BuildCPanel(panel)
 	
 	local UseCheckBox = vgui.Create( "DCheckBoxLabel" )
 		UseCheckBox:SetText( "Enable Use Key on Housings" )
+		UseCheckBox:SetTextColor(Color(0,0,0,255))
 		UseCheckBox:SetConVar( "sbep_lift_designer_enableuse" )
 		UseCheckBox:SetValue( 0 )
 		UseCheckBox:SizeToContents()
@@ -840,6 +845,7 @@ function TOOL.BuildCPanel(panel)
 	
 	local ResetLabel= vgui.Create("DLabel")
 		ResetLabel:SetText("This tool is still a prototype. If the tool bugs,\nyou may need to reset it with this button.")
+		ResetLabel:SetTextColor(Color(0,0,0,255))
 		ResetLabel:SizeToContents()
 	panel:AddItem( ResetLabel )
 		
@@ -851,13 +857,14 @@ function TOOL.BuildCPanel(panel)
 						end
 	panel:AddItem( ResetButton )
 	
-	local HelpB = vgui.Create( "DButton" )
-		HelpB.DoClick = function()
-								SBEPDoc.OpenPage( "Construction" , "Lift Systems.txt" )
-							end
-		HelpB:SetText( "Lift Designer Help Page" )
-	panel:AddItem( HelpB )
-	
+	if SBEPDoc then
+		local HelpB = vgui.Create( "DButton" )
+			HelpB.DoClick = function()
+				SBEPDoc.OpenPage( "Construction" , "Lift Systems.txt" )
+			end
+			HelpB:SetText( "Lift Designer Help Page" )
+		panel:AddItem( HelpB )
+	end
 	--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	

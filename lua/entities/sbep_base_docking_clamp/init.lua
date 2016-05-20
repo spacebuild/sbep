@@ -59,11 +59,13 @@ function ENT:AddDockDoor()
 	local Data = DD[ string.lower( self.Entity:GetModel() ) ]
 	if !Data then return end
 	
+	local ply = self:GetOwner()
 	self.Doors = self.Doors or {}
 	for n,Door in ipairs( Data ) do
 		local D = ents.Create( "sbep_base_door" )
 			D:Spawn()
 			D:Initialize()
+			D:SetOwner( ply )
 			local ct = D:SetDoorType( Door.type )
 		D:Attach( self.Entity , Door.V , Door.A )
 		table.insert( self.Doors , D )
