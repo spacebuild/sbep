@@ -388,6 +388,23 @@ function ENT:FinishSystem()
 	self:AddCallFloorNum( 1 )
 	
 	self.LiftActive = true
+	
+	local ply = self.Entity:GetOwner()
+	undo.Create( "SBEP Lift System" )
+		undo.AddEntity( self )
+		for _,P in ipairs( self.PT ) do
+			undo.AddEntity( P )
+			if P.PD and P.PD.FDT then
+				for _,D in ipairs( P.PD.FDT ) do
+					undo.AddEntity( D )
+				end
+			end
+		end
+		for _,P in ipairs( self.HT ) do
+			undo.AddEntity( P )
+		end
+		undo.SetPlayer( ply )
+	undo.Finish()
 
 end
 

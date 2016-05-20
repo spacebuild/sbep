@@ -69,6 +69,11 @@ function TOOL:LeftClick( tr )
 
 	undo.Create("SBEP Door")
 		undo.AddEntity( DoorController )
+		if DoorController.DT then
+			for _,door in ipairs( DoorController.DT ) do
+				undo.AddEntity( door )
+			end
+		end
 		undo.SetPlayer( ply )
 	undo.Finish()
 	

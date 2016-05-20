@@ -53,6 +53,11 @@ function TOOL:LeftClick( tr )
 	
 	undo.Create("SBEP Docking Clamp")
 		undo.AddEntity( DockEnt )
+		if DockEnt.Doors then
+			for _,door in ipairs( DockEnt.Doors ) do
+				undo.AddEntity( door )
+			end
+		end
 		undo.SetPlayer( ply )
 	undo.Finish()
 
@@ -104,6 +109,11 @@ function TOOL:RightClick( tr )
 				
 				undo.Create("SBEP Docking Clamp")
 					undo.AddEntity( DockEnt )
+					if DockEnt.Doors then
+						for _,door in ipairs( DockEnt.Doors ) do
+							undo.AddEntity( door )
+						end
+					end
 					undo.SetPlayer( self:GetOwner() )
 				undo.Finish()
 				
