@@ -35,6 +35,24 @@ TOOL.ClientConVar[ "model"  	] = "models/SmallBridge/Panels/sbpaneldoor.mdl"
 TOOL.ClientConVar[ "wire"  		] = 1
 TOOL.ClientConVar[ "enableuse"	] = 1
 
+if ( SERVER ) then
+
+	function MakeDoorController( Player, Data )
+
+		local DoorController = ents.Create( "sbep_base_door_controller" )
+		duplicator.DoGeneric( DoorController, Data )
+		DoorController:Spawn()
+
+		duplicator.DoGenericPhysics( DoorController, Player, Data )
+
+		return DoorController
+
+	end
+
+	duplicator.RegisterEntityClass( "sbep_base_door_controller", MakeDoorController, "Data" )
+	
+end
+
 function TOOL:LeftClick( tr )
 
 	if CLIENT then return end
