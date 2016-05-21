@@ -410,6 +410,9 @@ function ENT:FinishSystem()
 		undo.SetPlayer( ply )
 	undo.Finish()
 
+	self:SetOwner(nil)
+	self:SetPlayer(ply)
+	self.Owner = ply
 end
 
 function ENT:CreateHatches()		--Creating Hatches. Each Hatch is paired with the part below it, so the top part has no hatch associated.
