@@ -1,0 +1,8 @@
+"VertexLitGeneric"
+{
+	"$basetexture" "spacebuild/sbep_photocell"
+	"$surfaceprop" "metal"
+	"$vertexcolor" 		1 
+	"$nolod" 			1 
+	"$model"			1
+}

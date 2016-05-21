@@ -6,19 +6,19 @@ ENT.WireDebugName = "SBEP Elevator System"
 
 local PMT = {}
 PMT.S = {
-		"models/SmallBridge/Elevators_small/sbselevp0.mdl"	,
-		"models/SmallBridge/Elevators_small/sbselevp1.mdl"	,
-		"models/SmallBridge/Elevators_small/sbselevp2e.mdl"	,
-		"models/SmallBridge/Elevators_small/sbselevp2r.mdl"	,
-		"models/SmallBridge/Elevators_small/sbselevp3.mdl"
+		"models/smallbridge/elevators_small/sbselevp0.mdl"	,
+		"models/smallbridge/elevators_small/sbselevp1.mdl"	,
+		"models/smallbridge/elevators_small/sbselevp2e.mdl"	,
+		"models/smallbridge/elevators_small/sbselevp2r.mdl"	,
+		"models/smallbridge/elevators_small/sbselevp3.mdl"
 			}
 
 PMT.L = {
-		"models/SmallBridge/Elevators_Large/sblelevp0.mdl"	,
-		"models/SmallBridge/Elevators_Large/sblelevp1.mdl"	,
-		"models/SmallBridge/Elevators_Large/sblelevp2e.mdl"	,
-		"models/SmallBridge/Elevators_Large/sblelevp2r.mdl"	,
-		"models/SmallBridge/Elevators_Large/sblelevp3.mdl"
+		"models/smallbridge/elevators_Large/sblelevp0.mdl"	,
+		"models/smallbridge/elevators_Large/sblelevp1.mdl"	,
+		"models/smallbridge/elevators_Large/sblelevp2e.mdl"	,
+		"models/smallbridge/elevators_Large/sblelevp2r.mdl"	,
+		"models/smallbridge/elevators_Large/sblelevp3.mdl"
 			}
 			
 local DD = list.Get( "SBEP_DoorControllerModels" )

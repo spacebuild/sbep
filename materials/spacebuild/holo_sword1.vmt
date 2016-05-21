@@ -1,0 +1,11 @@
+"UnlitGeneric"
+{
+	"$basetexture" "spacebuild/holo_sword1"
+	"$surfaceprop" "metal"
+	"$model" 1 
+	"$translucent" 1
+}
+
+
+
+

@@ -1,0 +1,13 @@
+"UnlitGeneric"
+{
+   "$basetexture" "spacebuild/fusion"
+   "Proxies"
+   {
+      "AnimatedTexture"
+      {
+         "animatedtexturevar" "$basetexture"
+         "animatedtextureframenumvar" "$frame"
+         "animatedtextureframerate" 15
+      }
+   }
+}

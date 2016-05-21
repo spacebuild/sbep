@@ -1,6 +1,0 @@
-"VertexLitGeneric"
-{
-	"$baseTexture" "Player Models\red_source/glassvisor"
-	"$envmap" "env_cubemap"
-	"$model" 1
-}

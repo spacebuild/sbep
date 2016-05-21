@@ -1,0 +1,6 @@
+"VertexlitGeneric"
+{
+	"$basetexture" "cmats/glow_blue"
+	"$selfillum" 1
+	"$model" 1
+}

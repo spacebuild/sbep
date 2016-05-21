@@ -1,0 +1,12 @@
+"VertexLitGeneric"
+{
+	"$basetexture" "smallbridge/metscreen"
+	"$surfaceprop" "metal"
+	"$model" 1 
+	"$bumpmap" "smallbridge/metscreen_bump"
+	 "$phong"     "1"
+	"$halflambert"	1
+ 	"$phongexponent"   "60"
+ 	"$phongboost"   "1"
+ 	"$phongfresnelranges"   "[.5 .8 1]"
+}

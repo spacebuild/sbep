@@ -27,11 +27,11 @@ CategoryTable[1] = {
 					}
 
 CategoryTable[2] = {
-	{ name = "ModBridge Doors"	, cat = "Modbridge" , model = "models/Cerus/Modbridge/Misc/Doors/door11a.mdl" 	 }
+	{ name = "ModBridge Doors"	, cat = "Modbridge" , model = "models/cerus/modbridge/misc/doors/door11a.mdl" 	 }
 					}
 
 TOOL.ClientConVar[ "skin"  		] = 0
-TOOL.ClientConVar[ "model"  	] = "models/SmallBridge/Panels/sbpaneldoor.mdl"
+TOOL.ClientConVar[ "model"  	] = "models/smallbridge/panels/sbpaneldoor.mdl"
 TOOL.ClientConVar[ "wire"  		] = 1
 TOOL.ClientConVar[ "enableuse"	] = 1
 
