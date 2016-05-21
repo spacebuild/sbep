@@ -7,8 +7,20 @@ SBEP = SBEP or {}
 function SBEP_LoadReplaceTable()
 	print("Loading Filename Changes")
 	local repTab = {}
-	local tableString = file.Read("smallbridge filename changes.txt", "GAME")
-	local tableRows = string.Explode("\n",tableString)
+	local tableString = file.Read("lua/data/sbep/smallbridge filename changes.lua", "GAME")
+	if not tableString then 
+		print("Couldn't load file data/sbep/smallbridge filename changes.txt")
+		return
+	end
+
+	--try exploding by windows style line endings
+	local tableRows = string.Explode("\r\n",tableString)
+
+	--try exploding by linux style line endings
+	if table.Count(tableRows) == 0 then
+		tableRows = string.Explode("\n",tableString)
+	end
+
 	for _,row in pairs(tableRows) do
 		--returns the pair of strings matched by this pattern
 		--currently only finds models, if we change entity names as well this will need changing
@@ -26,8 +38,10 @@ concommand.Add("SBEP_LoadReplaceTable",SBEP.LoadReplaceTable)
 --replaces all instances of models in the replace table with 
 function SBEP_FixDupe(_,_,arg)
 	--if the replace table hasn't been made yet, remake it
+	SBEP.LoadReplaceTable()
 	if not SBEP.ReplaceTable then
-		SBEP.LoadReplaceTable()
+		print("SBEP_FixDupe failed")
+		return
 	end
 	--print("FixDupe called")
 	local filePath = table.concat(arg,' ')
@@ -39,8 +53,8 @@ function SBEP_FixDupe(_,_,arg)
 			fileString = string.Replace(fileString,old,new)
 			fileString = string.Replace(fileString,string.lower(old),new)
 		end
-		print(filePath.." fixed.")
-		file.Write(filePath,fileString)
+		print(filePath..".new.txt fixed.")
+		file.Write(filePath..".new.txt",fileString)
 	else
 		print(filePath.." is broken, can't do anything")
 	end
