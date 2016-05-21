@@ -211,7 +211,7 @@ function ENT:Think()
 	end
 	
 	if self.THD > 0 and CurTime() < ( self.THST + self.THD ) then
-		WireLib.TriggerOutput( self , "Holding" , 1 )
+		if WireAddon then WireLib.TriggerOutput( self , "Holding" , 1 ) end
 		return true
 	elseif self.THD > 0 and CurTime() > ( self.THST + self.THD ) then
 		self.THD = 0
@@ -219,7 +219,7 @@ function ENT:Think()
 			self:AddHoldDelay( 2 )
 		end
 		self.IsHolding = false
-		WireLib.TriggerOutput( self , "Holding" , 0 )
+		if WireAddon then WireLib.TriggerOutput( self , "Holding" , 0 ) end
 	end
 
 	if self.ATL then return true end
@@ -238,7 +238,7 @@ function ENT:Think()
 
 	if F ~= self.OldCF then
 		self.ST.CF = F
-		WireLib.TriggerOutput( self , "Floor" , self.ST.CF )
+		if WireAddon then WireLib.TriggerOutput( self , "Floor" , self.ST.CF ) end
 	end
 	self.OldCF = self.ST.CF
 	
@@ -544,6 +544,9 @@ function ENT:CalcPanelModel( PartNum )
 end
 
 function ENT:MakeWire( bAdjust ) --Adds the appropriate wire inputs.
+
+	if(not WireAddon) then return end
+	
 	self.SBEP_WireInputsTable = {}
 	self.SBEP_WireInputsTable[1] = "FloorNum"
 	for k,v in ipairs( self.FT ) do
@@ -650,7 +653,7 @@ function ENT:PostEntityPaste(pl, Ent, CreatedEntities)
 	
 	self:MakeWire()
 	
-	if(Ent.EntityMods and DT.WireData) then
+	if(Ent.EntityMods and DT.WireData and WireAddon) then
 		WireLib.ApplyDupeInfo( pl, Ent, DT.WireData, function(id) return CreatedEntities[id] end)
 	end
 	

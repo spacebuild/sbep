@@ -101,6 +101,8 @@ function ENT:PhysicsInitialize()
 end
 
 function ENT:MakeWire( bAdjust )
+	
+	if(not WireAddon) then return end
 
 	if self.PD.SD.MFT then
 		self.PD.WI = {} --Wire Inputs
@@ -273,7 +275,7 @@ function ENT:PostEntityPaste(pl, Ent, CreatedEntities)
 		end
 	end
 	self:MakeWire()
-	if(Ent.EntityMods and DI.WireData) then
+	if(Ent.EntityMods and DI.WireData and WireAddon) then
 		WireLib.ApplyDupeInfo( pl, Ent, DI.WireData, function(id) return CreatedEntities[id] end)
 	end
 end
