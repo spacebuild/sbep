@@ -96,6 +96,7 @@ function TOOL.BuildCPanel(panel)
 	GlassButton:DockMargin(2,2,2,2)
 	GlassButton:SetValue( GetConVar( "sbep_part_spawner_glass" ):GetBool() )
 	GlassButton:SetText( "Glass:" )
+	GlassButton:SetTextColor(Color(0,0,0,255))
 	GlassButton:SetConVar( "sbep_part_spawner_glass" )
 	
 	local HabitableModuleButton = vgui.Create("DCheckBoxLabel", panel )
@@ -103,6 +104,7 @@ function TOOL.BuildCPanel(panel)
 	HabitableModuleButton:DockMargin(2,2,2,2)
 	HabitableModuleButton:SetValue( GetConVar( "sbep_part_spawner_hab_mod" ):GetBool() )
 	HabitableModuleButton:SetText( "Habitable Module:" )
+	HabitableModuleButton:SetTextColor(Color(0,0,0,255))
 	HabitableModuleButton:SetConVar( "sbep_part_spawner_hab_mod" )
 	
 	for Tab,v  in pairs( SmallBridgeModels ) do
