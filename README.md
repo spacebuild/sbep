@@ -3,10 +3,19 @@ Spacebuild Enhancement Project
 
 Part of the Garry's mod spacebuild project
 
-*Please do not upload to the workshop, if we do upload it to the workshop it will come from this repository and be synced with it if people get the community back up ;)*
+*Please do not upload to the workshop, we're creating an* **Official** *workshop version now and this repository will be synced with it.*
+
+**Feel free to help update the Readme as well!**
 
 If you would like to help just drop a pull request in with your changes! 
 Please try to keep your coding clean!
+
+Status
+===========
+
+Will be filled in when status is known xD
+ 
+ 
 
 May 18th 2016 *Time to revive*
 ============
