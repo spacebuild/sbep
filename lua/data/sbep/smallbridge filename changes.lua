@@ -5,99 +5,148 @@
             SW HULLS/CORRIDORS
 
 ------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------
-    models/smallbridge/SBcorridorCurveS/sbcorridorcurves.mdl                                    |    models/smallbridge/hulls_sw/sbhullcurves.mdl
+    models/smallbridge/sbcorridorcurves/sbcorridorcurves.mdl                                    |    models/smallbridge/hulls_sw/sbhullcurves.mdl
+    models/smallbridge/hulls,sw/sbhullcurves.mdl                                                |    models/smallbridge/hulls_sw/sbhullcurves.mdl
 ------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------
-    models/smallbridge/SBcorridorE1/sbcorridore1.mdl                                            |    models/smallbridge/hulls_sw/sbhulle1.mdl
+    models/smallbridge/sbcorridore1/sbcorridore1.mdl                                            |    models/smallbridge/hulls_sw/sbhulle1.mdl
+    models/smallbridge/hulls,sw/sbhulle1.mdl                                                    |    models/smallbridge/hulls_sw/sbhulle1.mdl
 ------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------
-    models/smallbridge/SBcorridorE2/sbcorridore2.mdl                                            |    models/smallbridge/hulls_sw/sbhulle2.mdl
+    models/smallbridge/sbcorridore2/sbcorridore2.mdl                                            |    models/smallbridge/hulls_sw/sbhulle2.mdl
+    models/smallbridge/hulls,sw/sbhulle2.mdl                                                    |    models/smallbridge/hulls_sw/sbhulle2.mdl
 ------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------
-    models/smallbridge/SBcorridorE3/sbcorridore3.mdl                                            |    models/smallbridge/hulls_sw/sbhulle3.mdl
+    models/smallbridge/sbcorridore3/sbcorridore3.mdl                                            |    models/smallbridge/hulls_sw/sbhulle3.mdl
+    models/smallbridge/hulls,sw/sbhulle3.mdl                                                    |    models/smallbridge/hulls_sw/sbhulle3.mdl
 ------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------
-    models/smallbridge/SBcorridorE4/sbcorridore4.mdl                                            |    models/smallbridge/hulls_sw/sbhulle4.mdl
+    models/smallbridge/sbcorridore4/sbcorridore4.mdl                                            |    models/smallbridge/hulls_sw/sbhulle4.mdl
+    models/smallbridge/hulls,sw/sbhulle4.mdl                                                    |    models/smallbridge/hulls_sw/sbhulle4.mdl
 ------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------
-    models/smallbridge/SBcorridorE05/sbcorridore05.mdl                                          |    models/smallbridge/hulls_sw/sbhulle05.mdl
+    models/smallbridge/sbcorridore05/sbcorridore05.mdl                                          |    models/smallbridge/hulls_sw/sbhulle05.mdl
+    models/smallbridge/hulls,sw/sbhulle05.mdl                                                   |    models/smallbridge/hulls_sw/sbhulle05.mdl
 ------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------
-    models/smallbridge/SBcorridorEdh/sbcorridoredh.mdl                                          |    models/smallbridge/hulls_sw/sbhulledh.mdl
+    models/smallbridge/sbcorridoredh/sbcorridoredh.mdl                                          |    models/smallbridge/hulls_sw/sbhulledh.mdl
+    models/smallbridge/hulls,sw/sbhulledh.mdl                                                   |    models/smallbridge/hulls_sw/sbhulledh.mdl
 ------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------
-    models/smallbridge/SBcorridorEdh2/sbcorridoredh2.mdl                                        |    models/smallbridge/hulls_sw/sbhulledh2.mdl
+    models/smallbridge/sbcorridoredh2/sbcorridoredh2.mdl                                        |    models/smallbridge/hulls_sw/sbhulledh2.mdl
+    models/smallbridge/hulls,sw/sbhulledh2.mdl                                                  |    models/smallbridge/hulls_sw/sbhulledh2.mdl
 ------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------
-    models/smallbridge/SBcorridorEdh3/sbcorridoredh3.mdl                                        |    models/smallbridge/hulls_sw/sbhulledh3.mdl
+    models/smallbridge/sbcorridoredh3/sbcorridoredh3.mdl                                        |    models/smallbridge/hulls_sw/sbhulledh3.mdl
+    models/smallbridge/hulls,sw/sbhulledh3.mdl                                                  |    models/smallbridge/hulls_sw/sbhulledh3.mdl
 ------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------
-    models/smallbridge/SBcorridorEdh4/sbcorridoredh4.mdl                                        |    models/smallbridge/hulls_sw/sbhulledh4.mdl
+    models/smallbridge/sbcorridoredh4/sbcorridoredh4.mdl                                        |    models/smallbridge/hulls_sw/sbhulledh4.mdl
+    models/smallbridge/hulls,sw/sbhulledh4.mdl                                                  |    models/smallbridge/hulls_sw/sbhulledh4.mdl
 ------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------
-    models/smallbridge/SBcorridorEFlip/sbcorridoreflip.mdl                                      |    models/smallbridge/hulls_sw/sbhulleflip.mdl
+    models/smallbridge/sbcorridoreflip/sbcorridoreflip.mdl                                      |    models/smallbridge/hulls_sw/sbhulleflip.mdl
+    models/smallbridge/hulls,sw/sbhulleflip.mdl                                                 |    models/smallbridge/hulls_sw/sbhulleflip.mdl
 ------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------
-    models/smallbridge/SBcorridorEnd/sbcorridorend.mdl                                          |    models/smallbridge/hulls_sw/sbhullend.mdl
+    models/smallbridge/sbcorridorend/sbcorridorend.mdl                                          |    models/smallbridge/hulls_sw/sbhullend.mdl
+    models/smallbridge/hulls,sw/sbhullend.mdl                                                   |    models/smallbridge/hulls_sw/sbhullend.mdl
 ------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------
-    models/smallbridge/SBcorridorR/sbcorridorr.mdl                                              |    models/smallbridge/hulls_sw/sbhullr.mdl
+	models/smallbridge/hulls,sw/sbhullenddh.mdl                                                 |    models/smallbridge/hulls_sw/sbhullenddh.mdl
 ------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------
-    models/smallbridge/SBcorridorRtri/sbcorridorrtri.mdl                                        |    models/smallbridge/hulls_sw/sbhullrtri.mdl
+    models/smallbridge/sbcorridorr/sbcorridorr.mdl                                              |    models/smallbridge/hulls_sw/sbhullr.mdl
+    models/smallbridge/hulls,sw/sbhullr.mdl                                                     |    models/smallbridge/hulls_sw/sbhullr.mdl
 ------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------
-    models/smallbridge/SBcorridorSlanthalfL/sbcorridorslanthalfl.mdl                            |    models/smallbridge/hulls_sw/sbhullslanthalfr.mdl
+    models/smallbridge/hulls,sw/sbhullrdh.mdl                                                   |    models/smallbridge/hulls_sw/sbhullrdh.mdl
 ------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------
-    models/smallbridge/SBcorridorSlanthalfR/sbcorridorslanthalfr.mdl                            |    models/smallbridge/hulls_sw/sbhullslanthalfl.mdl
+    models/smallbridge/sbcorridorrtri/sbcorridorrtri.mdl                                        |    models/smallbridge/hulls_sw/sbhullrtri.mdl
+    models/smallbridge/hulls,sw/sbhullrtri.mdl                                                  |    models/smallbridge/hulls_sw/sbhullrtri.mdl
 ------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------
-    models/smallbridge/SBcorridorSlantL/sbcorridorslantl.mdl                                    |    models/smallbridge/hulls_sw/sbhullslantr.mdl
+    models/smallbridge/sbcorridorslanthalfl/sbcorridorslanthalfl.mdl                            |    models/smallbridge/hulls_sw/sbhullslanthalfr.mdl
+    models/smallbridge/hulls,sw/sbhullslanthalfr.mdl                                            |    models/smallbridge/hulls_sw/sbhullslanthalfr.mdl
 ------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------
-    models/smallbridge/SBcorridorSlantR/sbcorridorslantr.mdl                                    |    models/smallbridge/hulls_sw/sbhullslantl.mdl
+    models/smallbridge/sbcorridorslanthalfr/sbcorridorslanthalfr.mdl                            |    models/smallbridge/hulls_sw/sbhullslanthalfl.mdl
+    models/smallbridge/hulls,sw/sbhullslanthalfl.mdl                                            |    models/smallbridge/hulls_sw/sbhullslanthalfl.mdl
 ------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------
-    models/smallbridge/SBcorridorT/sbcorridort.mdl                                              |    models/smallbridge/hulls_sw/sbhullt.mdl
+    models/smallbridge/sbcorridorslantl/sbcorridorslantl.mdl                                    |    models/smallbridge/hulls_sw/sbhullslantr.mdl
+    models/smallbridge/hulls,sw/sbhullslantr.mdl                                                |    models/smallbridge/hulls_sw/sbhullslantr.mdl
 ------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------
-    models/smallbridge/SBcorridorTdl/sbcorridortdl.mdl                                          |    models/smallbridge/hulls_sw/sbhulltdl.mdl
+    models/smallbridge/sbcorridorslantr/sbcorridorslantr.mdl                                    |    models/smallbridge/hulls_sw/sbhullslantl.mdl
+    models/smallbridge/hulls,sw/sbhullslantl.mdl                                                |    models/smallbridge/hulls_sw/sbhullslantl.mdl
 ------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------
-    models/smallbridge/SBcorridorTdldw/sbcorridortdldw.mdl                                      |    models/smallbridge/hulls_sw/sbhulltdldw.mdl
+    models/smallbridge/sbcorridort/sbcorridort.mdl                                              |    models/smallbridge/hulls_sw/sbhullt.mdl
+    models/smallbridge/hulls,sw/sbhullt.mdl                                                     |    models/smallbridge/hulls_sw/sbhullt.mdl
 ------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------
-    models/smallbridge/SBtriangleE1/sbtrianglee1.mdl                                            |    models/smallbridge/hulls_sw/sbhulltri1.mdl
+    models/smallbridge/sbcorridortdl/sbcorridortdl.mdl                                          |    models/smallbridge/hulls_sw/sbhulltdl.mdl
+    models/smallbridge/hulls,sw/sbhulltdl.mdl                                                   |    models/smallbridge/hulls_sw/sbhulltdl.mdl
 ------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------
-    models/smallbridge/SBtriangleE2/sbtrianglee2.mdl                                            |    models/smallbridge/hulls_sw/sbhulltri2.mdl
+    models/smallbridge/sbcorridortdldw/sbcorridortdldw.mdl                                      |    models/smallbridge/hulls_sw/sbhulltdldw.mdl
+    models/smallbridge/hulls,sw/sbhulltdldw.mdl                                                 |    models/smallbridge/hulls_sw/sbhulltdldw.mdl
 ------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------
-    models/smallbridge/SBtriangleE3/sbtrianglee3.mdl                                            |    models/smallbridge/hulls_sw/sbhulltri3.mdl
+    models/smallbridge/sbtrianglee1/sbtrianglee1.mdl                                            |    models/smallbridge/hulls_sw/sbhulltri1.mdl
+    models/smallbridge/hulls,sw/sbhulltri1.mdl                                                  |    models/smallbridge/hulls_sw/sbhulltri1.mdl
 ------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------
-    models/smallbridge/SBcorridorX/sbcorridorx.mdl                                              |    models/smallbridge/hulls_sw/sbhullx.mdl
+    models/smallbridge/sbtrianglee2/sbtrianglee2.mdl                                            |    models/smallbridge/hulls_sw/sbhulltri2.mdl
+    models/smallbridge/hulls,sw/sbhulltri2.mdl                                                  |    models/smallbridge/hulls_sw/sbhulltri2.mdl
 ------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------
-    models/smallbridge/SBcorridorXdl/sbcorridorxdl.mdl                                          |    models/smallbridge/hulls_sw/sbhullxdl.mdl
+    models/smallbridge/sbtrianglee3/sbtrianglee3.mdl                                            |    models/smallbridge/hulls_sw/sbhulltri3.mdl
+    models/smallbridge/hulls,sw/sbhulltri3.mdl                                                  |    models/smallbridge/hulls_sw/sbhulltri3.mdl
 ------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------
-    models/smallbridge/SBcorridorXdldw/sbcorridorxdldw.mdl                                      |    models/smallbridge/hulls_sw/sbhullxdldw.mdl
+    models/smallbridge/sbcorridorx/sbcorridorx.mdl                                              |    models/smallbridge/hulls_sw/sbhullx.mdl
+    models/smallbridge/hulls,sw/sbhullx.mdl                                                     |    models/smallbridge/hulls_sw/sbhullx.mdl
+------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------
+    models/smallbridge/sbcorridorxdl/sbcorridorxdl.mdl                                          |    models/smallbridge/hulls_sw/sbhullxdl.mdl
+    models/smallbridge/hulls,sw/sbhullxdl.mdl                                                   |    models/smallbridge/hulls_sw/sbhullxdl.mdl
+------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------
+    models/smallbridge/sbcorridorxdldw/sbcorridorxdldw.mdl                                      |    models/smallbridge/hulls_sw/sbhullxdldw.mdl
+    models/smallbridge/hulls,sw/sbhullxdldw.mdl                                                 |    models/smallbridge/hulls_sw/sbhullxdldw.mdl
 ------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------
 
             DW HULLS/CORRIDORS
 
 ------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------
-    models/smallbridge/SBcorridorEdw/sbcorridoredw.mdl                                          |    models/smallbridge/hulls_dw/sbhulldwe1.mdl
+    models/smallbridge/sbcorridoredw/sbcorridoredw.mdl                                          |    models/smallbridge/hulls_dw/sbhulldwe1.mdl
+    models/smallbridge/hulls,dw/sbhulldwe1.mdl                                                  |    models/smallbridge/hulls_dw/sbhulldwe1.mdl
 ------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------
-    models/smallbridge/SBcorridorEdw2/sbcorridoredw2.mdl                                        |    models/smallbridge/hulls_dw/sbhulldwe2.mdl
+    models/smallbridge/sbcorridoredw2/sbcorridoredw2.mdl                                        |    models/smallbridge/hulls_dw/sbhulldwe2.mdl
+    models/smallbridge/hulls,dw/sbhulldwe2.mdl                                                  |    models/smallbridge/hulls_dw/sbhulldwe2.mdl
 ------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------
-    models/smallbridge/SBcorridorEdw3/sbcorridoredw3.mdl                                        |    models/smallbridge/hulls_dw/sbhulldwe3.mdl
+    models/smallbridge/sbcorridoredw3/sbcorridoredw3.mdl                                        |    models/smallbridge/hulls_dw/sbhulldwe3.mdl
+    models/smallbridge/hulls,dw/sbhulldwe3.mdl                                                  |    models/smallbridge/hulls_dw/sbhulldwe3.mdl
 ------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------
-    models/smallbridge/SBcorridorEdw4/sbcorridoredw4.mdl                                        |    models/smallbridge/hulls_dw/sbhulldwe4.mdl
+    models/smallbridge/sbcorridoredw4/sbcorridoredw4.mdl                                        |    models/smallbridge/hulls_dw/sbhulldwe4.mdl
+    models/smallbridge/hulls,dw/sbhulldwe4.mdl                                                  |    models/smallbridge/hulls_dw/sbhulldwe4.mdl
 ------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------
-    models/smallbridge/SBcorridorEdw05/sbcorridoredw05.mdl                                      |    models/smallbridge/hulls_dw/sbhulldwe05.mdl
+    models/smallbridge/sbcorridoredw05/sbcorridoredw05.mdl                                      |    models/smallbridge/hulls_dw/sbhulldwe05.mdl
+    models/smallbridge/hulls,dw/sbhulldwe05.mdl                                                 |    models/smallbridge/hulls_dw/sbhulldwe05.mdl
 ------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------
-    models/smallbridge/SBcorridorFlipdw/sbcorridorflipdw.mdl                                    |    models/smallbridge/hulls_dw/sbhulldweflip.mdl
+    models/smallbridge/sbcorridorflipdw/sbcorridorflipdw.mdl                                    |    models/smallbridge/hulls_dw/sbhulldweflip.mdl
+    models/smallbridge/hulls,dw/sbhulldweflip.mdl                                               |    models/smallbridge/hulls_dw/sbhulldweflip.mdl
 ------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------
-    models/smallbridge/SBcorridorEdhdw/sbcorridoredhdw.mdl                                      |    models/smallbridge/hulls_dw/sbhulldwedh.mdl
+    models/smallbridge/sbcorridoredhdw/sbcorridoredhdw.mdl                                      |    models/smallbridge/hulls_dw/sbhulldwedh.mdl
+    models/smallbridge/hulls,dw/sbhulldwedh.mdl                                                 |    models/smallbridge/hulls_dw/sbhulldwedh.mdl
 ------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------
-    models/smallbridge/SBcorridorEdhdw2/sbcorridoredhdw2.mdl                                    |    models/smallbridge/hulls_dw/sbhulldwedh2.mdl
+    models/smallbridge/sbcorridoredhdw2/sbcorridoredhdw2.mdl                                    |    models/smallbridge/hulls_dw/sbhulldwedh2.mdl
+    models/smallbridge/hulls,dw/sbhulldwedh2.mdl                                                |    models/smallbridge/hulls_dw/sbhulldwedh2.mdl
 ------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------
-    models/smallbridge/SBcorridorEdhdw3/sbcorridoredhdw3.mdl                                    |    models/smallbridge/hulls_dw/sbhulldwedh3.mdl
+    models/smallbridge/sbcorridoredhdw3/sbcorridoredhdw3.mdl                                    |    models/smallbridge/hulls_dw/sbhulldwedh3.mdl
+    models/smallbridge/hulls,dw/sbhulldwedh3.mdl                                                |    models/smallbridge/hulls_dw/sbhulldwedh3.mdl
 ------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------
-    models/smallbridge/SBcorridorEdhdw4/sbcorridoredhdw4.mdl                                    |    models/smallbridge/hulls_dw/sbhulldwedh4.mdl
+    models/smallbridge/sbcorridoredhdw4/sbcorridoredhdw4.mdl                                    |    models/smallbridge/hulls_dw/sbhulldwedh4.mdl
+    models/smallbridge/hulls,dw/sbhulldwedh4.mdl                                                |    models/smallbridge/hulls_dw/sbhulldwedh4.mdl
 ------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------
-    models/smallbridge/SBcorridorEnddw/sbcorridorenddw.mdl                                      |    models/smallbridge/hulls_dw/sbhulldwend.mdl
+    models/smallbridge/sbcorridorenddw/sbcorridorenddw.mdl                                      |    models/smallbridge/hulls_dw/sbhulldwend.mdl
+    models/smallbridge/hulls,dw/sbhulldwend.mdl                                                 |    models/smallbridge/hulls_dw/sbhulldwend.mdl
 ------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------
-    models/smallbridge/SBcorridorEnddw2/sbcorridorenddw2.mdl                                    |    models/smallbridge/hulls_dw/sbhulldwend2.mdl
+    models/smallbridge/sbcorridorenddw2/sbcorridorenddw2.mdl                                    |    models/smallbridge/hulls_dw/sbhulldwend2.mdl
+    models/smallbridge/hulls,dw/sbhulldwend2.mdl                                                |    models/smallbridge/hulls_dw/sbhulldwend2.mdl
 ------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------
-    models/smallbridge/SBcorridorRdw/sbcorridorrdw.mdl                                          |    models/smallbridge/hulls_dw/sbhulldwr.mdl
+    models/smallbridge/sbcorridorrdw/sbcorridorrdw.mdl                                          |    models/smallbridge/hulls_dw/sbhulldwr.mdl
+    models/smallbridge/hulls,dw/sbhulldwr.mdl                                                   |    models/smallbridge/hulls_dw/sbhulldwr.mdl
 ------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------
-    models/smallbridge/SBcorridorTdw/sbcorridortdw.mdl                                          |    models/smallbridge/hulls_dw/sbhulldwt.mdl
+    models/smallbridge/sbcorridortdw/sbcorridortdw.mdl                                          |    models/smallbridge/hulls_dw/sbhulldwt.mdl
+    models/smallbridge/hulls,dw/sbhulldwt.mdl                                                   |    models/smallbridge/hulls_dw/sbhulldwt.mdl
 ------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------
-    models/smallbridge/SBcorridorTdwdl/sbcorridortdwdl.mdl                                      |    models/smallbridge/hulls_dw/sbhulldwtdl.mdl
+    models/smallbridge/sbcorridortdwdl/sbcorridortdwdl.mdl                                      |    models/smallbridge/hulls_dw/sbhulldwtdl.mdl
+    models/smallbridge/hulls,dw/sbhulldwtdl.mdl                                                 |    models/smallbridge/hulls_dw/sbhulldwtdl.mdl
 ------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------
-    models/smallbridge/SBcorridorTdwsl/sbcorridortdwsl.mdl                                      |    models/smallbridge/hulls_dw/sbhulldwtsl.mdl
+    models/smallbridge/sbcorridortdwsl/sbcorridortdwsl.mdl                                      |    models/smallbridge/hulls_dw/sbhulldwtsl.mdl
+    models/smallbridge/hulls,dw/sbhulldwtsl.mdl                                                 |    models/smallbridge/hulls_dw/sbhulldwtsl.mdl
 ------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------
-    models/smallbridge/SBcorridorXdw/sbcorridorxdw.mdl                                          |    models/smallbridge/hulls_dw/sbhulldwx.mdl
+    models/smallbridge/sbcorridorxdw/sbcorridorxdw.mdl                                          |    models/smallbridge/hulls_dw/sbhulldwx.mdl
+    models/smallbridge/hulls,dw/sbhulldwx.mdl                                                   |    models/smallbridge/hulls_dw/sbhulldwx.mdl
 ------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------
-    models/smallbridge/SBcorridorXdwdl/sbcorridorxdwdl.mdl                                      |    models/smallbridge/hulls_dw/sbhulldwxdl.mdl
+    models/smallbridge/sbcorridorxdwdl/sbcorridorxdwdl.mdl                                      |    models/smallbridge/hulls_dw/sbhulldwxdl.mdl
+    models/smallbridge/hulls,dw/sbhulldwxdl.mdl                                                 |    models/smallbridge/hulls_dw/sbhulldwxdl.mdl
 ------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------
 
             WALKWAYS
@@ -107,29 +156,29 @@
 ------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------
     models/smallbridge/sbwalkwaye2/sbwalkwaye2.mdl                                              |    models/smallbridge/walkways/sbwalkwaye2.mdl
 ------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------
-    models/smallbridge/SBwalkwayR/sbwalkwayr.mdl                                                |    models/smallbridge/walkways/sbwalkwayr.mdl
+    models/smallbridge/sbwalkwayr/sbwalkwayr.mdl                                                |    models/smallbridge/walkways/sbwalkwayr.mdl
 ------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------
-    models/smallbridge/SBwalkwayT/sbwalkwayt.mdl                                                |    models/smallbridge/walkways/sbwalkwayt.mdl
+    models/smallbridge/sbwalkwayt/sbwalkwayt.mdl                                                |    models/smallbridge/walkways/sbwalkwayt.mdl
 ------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------
-    models/smallbridge/SBwalkwayX/sbwalkwayx.mdl                                                |    models/smallbridge/walkways/sbwalkwayx.mdl
+    models/smallbridge/sbwalkwayx/sbwalkwayx.mdl                                                |    models/smallbridge/walkways/sbwalkwayx.mdl
 ------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------
 
             VEHICLES
 
 ------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------
-    models/smallbridge/SBchair/sbchair.mdl                                                      |    models/smallbridge/vehicles/sbvpchair.mdl
+    models/smallbridge/sbchair/sbchair.mdl                                                      |    models/smallbridge/vehicles/sbvpchair.mdl
 ------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------
-    models/smallbridge/SBdroppod1/sbdroppod1.mdl                                                |    models/smallbridge/vehicles/sbvdroppod1.mdl
+    models/smallbridge/sbdroppod1/sbdroppod1.mdl                                                |    models/smallbridge/vehicles/sbvdroppod1.mdl
 ------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------
 
             OTHER PARTS
 
 ------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------
-    models/smallbridge/SBconsole1s/sbconsole1s.mdl                                              |    models/smallbridge/other/sbconsole.mdl
+    models/smallbridge/sbconsole1s/sbconsole1s.mdl                                              |    models/smallbridge/other/sbconsole.mdl
 ------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------
-    models/smallbridge/SBconsole1low/sbconsole1low.mdl                                          |    models/smallbridge/other/sbconsolelow.mdl
+    models/smallbridge/sbconsole1low/sbconsole1low.mdl                                          |    models/smallbridge/other/sbconsolelow.mdl
 ------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------
-    models/smallbridge/SBconsoletop1/sbconsoletop1.mdl                                          |    models/smallbridge/other/sbconsoletop.mdl
+    models/smallbridge/sbconsoletop1/sbconsoletop1.mdl                                          |    models/smallbridge/other/sbconsoletop.mdl
 ------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------
 
             SENTS/ANIMATED PARTS
@@ -153,31 +202,31 @@
 ------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------
     models/smallbridge/sbdoorwide/sbdoorwide.mdl                                                |    models/smallbridge/panels/sbdoorwide.mdl
 ------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------
-    models/smallbridge/sbpanelSolidg/sbpanelsolidg.mdl                                          |    models/smallbridge/panels/sbpanelsolid.mdl
+    models/smallbridge/sbpanelsolidg/sbpanelsolidg.mdl                                          |    models/smallbridge/panels/sbpanelsolid.mdl
 ------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------
-    models/smallbridge/sbpanelSolidgdw/sbpanelsolidgdw.mdl                                      |    models/smallbridge/panels/sbpanelsoliddw.mdl
+    models/smallbridge/sbpanelsolidgdw/sbpanelsolidgdw.mdl                                      |    models/smallbridge/panels/sbpanelsoliddw.mdl
 ------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------
-    models/smallbridge/sbpanelDH/sbpaneldh.mdl                                                  |    models/smallbridge/panels/sbpaneldh.mdl
+    models/smallbridge/sbpaneldh/sbpaneldh.mdl                                                  |    models/smallbridge/panels/sbpaneldh.mdl
 ------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------
-    models/smallbridge/sbpanelDHDW/sbpaneldhdw.mdl                                              |    models/smallbridge/panels/sbpaneldhdw.mdl
+    models/smallbridge/sbpaneldhdw/sbpaneldhdw.mdl                                              |    models/smallbridge/panels/sbpaneldhdw.mdl
 ------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------
-    models/smallbridge/sbpanelDoor/sbpaneldoor.mdl                                              |    models/smallbridge/panels/sbpaneldoor.mdl
+    models/smallbridge/sbpaneldoor/sbpaneldoor.mdl                                              |    models/smallbridge/panels/sbpaneldoor.mdl
 ------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------
-    models/smallbridge/sbpanelDoordw/sbpaneldoordw.mdl                                          |    models/smallbridge/panels/sbpaneldoordw.mdl
+    models/smallbridge/sbpaneldoordw/sbpaneldoordw.mdl                                          |    models/smallbridge/panels/sbpaneldoordw.mdl
 ------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------
-    models/smallbridge/sbpanelDoor2dw/sbpaneldoor2dw.mdl                                        |    models/smallbridge/panels/sbpaneldoordw2.mdl
+    models/smallbridge/sbpaneldoor2dw/sbpaneldoor2dw.mdl                                        |    models/smallbridge/panels/sbpaneldoordw2.mdl
 ------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------
-    models/smallbridge/sbpanelSquareDoor/sbpanelsquaredoor.mdl                                  |    models/smallbridge/panels/sbpaneldoorsquare.mdl
+    models/smallbridge/sbpanelsquaredoor/sbpanelsquaredoor.mdl                                  |    models/smallbridge/panels/sbpaneldoorsquare.mdl
 ------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------
-    models/smallbridge/sbpanelSquareDoordw/sbpanelsquaredoordw.mdl                              |    models/smallbridge/panels/sbpaneldoorsquaredw.mdl
+    models/smallbridge/sbpanelsquaredoordw/sbpanelsquaredoordw.mdl                              |    models/smallbridge/panels/sbpaneldoorsquaredw.mdl
 ------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------
     models/smallbridge/sbdooriris2.mdl                                                          |    models/smallbridge/panels/sbpaneldooriris.mdl
 ------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------
-    models/smallbridge/sbpanelwideDoor/sbpanelwidedoor.mdl                                      |    models/smallbridge/panels/sbpaneldoorwide.mdl
+    models/smallbridge/sbpanelwidedoor/sbpanelwidedoor.mdl                                      |    models/smallbridge/panels/sbpaneldoorwide.mdl
 ------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------
-    models/smallbridge/sbpanelSquareDoordockin/sbpanelsquaredoordockin.mdl                      |    models/smallbridge/panels/sbpaneldockin.mdl
+    models/smallbridge/sbpanelsquaredoordockin/sbpanelsquaredoordockin.mdl                      |    models/smallbridge/panels/sbpaneldockin.mdl
 ------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------
-    models/smallbridge/sbpanelSquareDoordocko/sbpanelsquaredoordocko.mdl                        |    models/smallbridge/panels/sbpaneldockout.mdl
+    models/smallbridge/sbpanelsquaredoordocko/sbpanelsquaredoordocko.mdl                        |    models/smallbridge/panels/sbpaneldockout.mdl
 ------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------
 
             DROP BAY HANGARS
