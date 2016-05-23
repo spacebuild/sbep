@@ -60,7 +60,10 @@ function TOOL:LeftClick(trace)
 end
 
 function TOOL:RightClick(trace)
-	self.Owner:SelectWeapon( "sbep_part_assembler" )
+	
+	self:GetOwner():SelectWeapon( "sbep_part_assembler" )
+	return true	
+	
 end
 
 function TOOL:Reload(trace)
