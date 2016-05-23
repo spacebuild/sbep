@@ -60,7 +60,7 @@ function TOOL:LeftClick(trace)
 end
 
 function TOOL:RightClick(trace)
-    -- CC_GMOD_Tool(self:GetOwner(), "", { "sbep_part_assembler" })
+	self.Owner:SelectWeapon( "sbep_part_assembler" ))
 end
 
 function TOOL:Reload(trace)
