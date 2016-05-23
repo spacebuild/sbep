@@ -8,7 +8,7 @@ local SmallBridgeModels = list.Get("SBEP_SmallBridgeModels")
 if CLIENT then
     language.Add("Tool.sbep_part_spawner.name", "SBEP Part Spawner")
     language.Add("Tool.sbep_part_spawner.desc", "Spawn SBEP props.")
-    language.Add("Tool.sbep_part_spawner.0", "Left click to spawn a prop.")
+    language.Add("Tool.sbep_part_spawner.0", "Left click to spawn a prop. Right-click to switch to assembler.")
     language.Add("undone_SBEP Part", "Undone SBEP Part")
 end
 
