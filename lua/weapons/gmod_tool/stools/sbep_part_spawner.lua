@@ -61,7 +61,7 @@ end
 
 function TOOL:RightClick(trace)
 
-local ply = self:GetOwner()
+    local ply = self:GetOwner()
 
     ply:Give( "sbep_part_assembler" )
     ply:SelectWeapon( "sbep_part_assembler" )
