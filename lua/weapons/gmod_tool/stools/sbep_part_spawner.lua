@@ -60,14 +60,7 @@ function TOOL:LeftClick(trace)
 end
 
 function TOOL:RightClick(trace)
-
-    local ply = self:GetOwner()
-
-    ply:Give( "sbep_part_assembler" )
-    ply:SelectWeapon( "sbep_part_assembler" )
-
-    return true	
-	
+	self.Owner:ConCommand( "gmod_tool sbep_part_assembler" )
 end
 
 function TOOL:Reload(trace)
