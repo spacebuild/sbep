@@ -60,9 +60,13 @@ function TOOL:LeftClick(trace)
 end
 
 function TOOL:RightClick(trace)
-	
-	self:GetOwner():SelectWeapon( "sbep_part_assembler" )
-	return true	
+
+local ply = self:GetOwner()
+
+    ply:Give( "sbep_part_assembler" )
+    ply:SelectWeapon( "sbep_part_assembler" )
+
+    return true	
 	
 end
 
