@@ -364,12 +364,12 @@ for k, v in pairs(SMT) do
 end
 local SMT = {}
   SMT.ModBridge = {}
-  SMT.ModBridge["Other"] =
+  SMT.ModBridge["Other (MB)"] =
   {
     "models/cerus/modbridge/core/prefab/crew_331.mdl",
     "models/cerus/modbridge/core/cv-mb-smb.mdl"
   }
-  SMT.ModBridge["Ship parts"] =
+  SMT.ModBridge["Ship parts (MB)"] =
   {
     "models/cerus/modbridge/core/g-211s.mdl",
     "models/cerus/modbridge/core/g-221.mdl",
@@ -379,7 +379,7 @@ local SMT = {}
     "models/cerus/modbridge/core/g-231s.mdl",
     "models/cerus/modbridge/core/g-231w.mdl"
   }
-  SMT.ModBridge["Height transfer"] =
+  SMT.ModBridge["Height transfer (MB)"] =
   {
     "models/cerus/modbridge/core/rs-322.mdl",
     "models/cerus/modbridge/core/rs-332.mdl",
@@ -400,7 +400,7 @@ local SMT = {}
    
     "models/cerus/modbridge/core/r-312.mdl"
   }
-  SMT.ModBridge["Elevators"] =
+  SMT.ModBridge["Elevators (MB)"] =
   {
     "models/cerus/modbridge/core/s-331eb.mdl",
     "models/cerus/modbridge/core/s-331em.mdl",
@@ -430,7 +430,7 @@ local SMT = {}
     "models/cerus/modbridge/misc/elevator/etm113.mdl",
     "models/cerus/modbridge/misc/elevator/etm113g.mdl"
   }
-  SMT.ModBridge["Hulls"] =
+  SMT.ModBridge["Hulls (MB)"] =
   {
     "models/cerus/modbridge/core/cvw-11-31.mdl",
    
@@ -483,7 +483,7 @@ local SMT = {}
    
     "models/cerus/modbridge/core/tc-131.mdl"
   }
-  SMT.ModBridge["Spartan"] =
+  SMT.ModBridge["Spartan (MB)"] =
   {
     "models/cerus/modbridge/core/spartan/c-111.mdl",
     "models/cerus/modbridge/core/spartan/c-221.mdl",
