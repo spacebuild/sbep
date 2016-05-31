@@ -360,7 +360,7 @@ SMT.SmallBridge["Cohesion"] = {
 
 
 for k, v in pairs(SMT) do
-    list.Set("SBEP_SpawnerModels", k, v)
+    list.Set("SBEP_SmallBridgeModels", k, v)
 end
 local SMT = {}
   SMT.ModBridge = {}
@@ -500,7 +500,7 @@ local SMT = {}
   }
 
 for k,v in pairs( SMT ) do
-  list.Set( "SBEP_SpawnerModels", k , v )
+  list.Set( "SBEP_SmallBridgeModels", k , v )
 end
 local SMT = {}
   SMT.MedBridge = {}
@@ -566,5 +566,5 @@ local SMT = {}
  }
  
 for k,v in pairs( SMT ) do
-  list.Set( "SBEP_SpawnerModels", k , v )
+  list.Set( "SBEP_SmallBridgeModels", k , v )
 end
