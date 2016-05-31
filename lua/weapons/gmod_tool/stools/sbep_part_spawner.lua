@@ -4,7 +4,7 @@ TOOL.Name = "#Part Spawner"
 TOOL.Command = nil
 TOOL.ConfigName = ""
 
-local SmallBridgeModels = list.Get("SBEP_SmallBridgeModels")
+local SpawnerModels = list.Get("SBEP_SpawnerModels")
 
 if CLIENT then
     language.Add("Tool.sbep_part_spawner.name", "SBEP Part Spawner")
@@ -108,7 +108,7 @@ function TOOL.BuildCPanel(panel)
 	HabitableModuleButton:SetTextColor(Color(0,0,0,255))
 	HabitableModuleButton:SetConVar( "sbep_part_spawner_hab_mod" )
 	
-	for Tab,v  in pairs( SmallBridgeModels ) do
+	for Tab,v  in pairs( SpawnerModels ) do
 		for Category, models in pairs( v ) do
 			local catPanel = vgui.Create( "DCollapsibleCategory", panel )
 			catPanel:Dock( TOP )
