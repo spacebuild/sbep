@@ -3,7 +3,7 @@
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 local SMT = {}
 SMT.SmallBridge = {}
-SMT.SmallBridge["Hulls (SW)"] = {
+SMT.SmallBridge["Hulls (SW)"] = {l
     "models/smallbridge/hulls_sw/sbhullcurvel.mdl",
     "models/smallbridge/hulls_sw/sbhullcurvem.mdl",
     "models/smallbridge/hulls_sw/sbhullcurves.mdl",
@@ -360,7 +360,7 @@ SMT.SmallBridge["Cohesion"] = {
 
 
 for k, v in pairs(SMT) do
-    list.Set("SBEP_SmallBridgeModels", k, v)
+    list.Set("SBEP_SpawnerModels", k, v)
 end
 local SMT = {}
   SMT.ModBridge = {}
@@ -500,7 +500,7 @@ local SMT = {}
   }
 
 for k,v in pairs( SMT ) do
-  list.Set( "SBEP_SmallBridgeModels", k , v )
+  list.Set( "SBEP_SpawnerModels", k , v )
 end
 local SMT = {}
   SMT.MedBridge = {}
@@ -566,5 +566,5 @@ local SMT = {}
  }
  
 for k,v in pairs( SMT ) do
-  list.Set( "SBEP_SmallBridgeModels", k , v )
+  list.Set( "SBEP_SpawnerModels", k , v )
 end
