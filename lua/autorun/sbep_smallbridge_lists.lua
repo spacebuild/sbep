@@ -364,73 +364,7 @@ for k, v in pairs(SMT) do
 end
 local SMT = {}
   SMT.ModBridge = {}
-  SMT.ModBridge["Other (MB)"] =
-  {
-    "models/cerus/modbridge/core/prefab/crew_331.mdl",
-    "models/cerus/modbridge/core/cv-mb-smb.mdl"
-  }
-  SMT.ModBridge["Ship parts (MB)"] =
-  {
-    "models/cerus/modbridge/core/g-211s.mdl",
-    "models/cerus/modbridge/core/g-221.mdl",
-    "models/cerus/modbridge/core/g-111wd.mdl",
-    "models/cerus/modbridge/core/g-221s.mdl",
-    "models/cerus/modbridge/core/g-231r.mdl",
-    "models/cerus/modbridge/core/g-231s.mdl",
-    "models/cerus/modbridge/core/g-231w.mdl"
-  }
-  SMT.ModBridge["Height transfer (MB)"] =
-  {
-    "models/cerus/modbridge/core/rs-322.mdl",
-    "models/cerus/modbridge/core/rs-332.mdl",
-    "models/cerus/modbridge/core/rs-312.mdl",
-   
-    "models/cerus/modbridge/core/rso-322.mdl",
-    "models/cerus/modbridge/core/rso-332.mdl",
-    "models/cerus/modbridge/core/rso-312.mdl",
-    "models/cerus/modbridge/core/rso-332f.mdl",
-   
-    "models/cerus/modbridge/core/rst-312.mdl",
-    "models/cerus/modbridge/core/rst-322r.mdl",
-    "models/cerus/modbridge/core/rst-322l.mdl",
-    "models/cerus/modbridge/core/rst-332.mdl",
-    "models/cerus/modbridge/core/rst-332c.mdl",
-    "models/cerus/modbridge/core/rst-332cf.mdl",
-    "models/cerus/modbridge/core/rst-332f.mdl",
-   
-    "models/cerus/modbridge/core/r-312.mdl"
-  }
-  SMT.ModBridge["Elevators (MB)"] =
-  {
-    "models/cerus/modbridge/core/s-331eb.mdl",
-    "models/cerus/modbridge/core/s-331em.mdl",
-    "models/cerus/modbridge/core/s-331et.mdl",
-    "models/cerus/modbridge/core/s-332ep.mdl",
-    "models/cerus/modbridge/misc/elevator/se11f.mdl",
-   
-    "models/cerus/modbridge/misc/elevator/eb111.mdl",
-    "models/cerus/modbridge/misc/elevator/ecb111.mdl",
-    "models/cerus/modbridge/misc/elevator/ecm111.mdl",
-    "models/cerus/modbridge/misc/elevator/ect111.mdl",
-    "models/cerus/modbridge/misc/elevator/em111.mdl",
-    "models/cerus/modbridge/misc/elevator/et111.mdl",
-   
-    "models/cerus/modbridge/misc/elevator/elev_111.mdl",
-   
-    "models/cerus/modbridge/misc/elevator/eb332.mdl",
-    "models/cerus/modbridge/misc/elevator/em332.mdl",
-    "models/cerus/modbridge/misc/elevator/et332.mdl",
-   
-    "models/cerus/modbridge/misc/elevator/elev_332.mdl",
-    "models/cerus/modbridge/misc/elevator/elev_332b.mdl",
-   
-    "models/cerus/modbridge/misc/elevator/etm111.mdl",
-    "models/cerus/modbridge/misc/elevator/etm111g.mdl",
-    "models/cerus/modbridge/misc/elevator/etm112.mdl",
-    "models/cerus/modbridge/misc/elevator/etm113.mdl",
-    "models/cerus/modbridge/misc/elevator/etm113g.mdl"
-  }
-  SMT.ModBridge["Hulls (MB)"] =
+    SMT.ModBridge["Hulls (MoB)"] =
   {
     "models/cerus/modbridge/core/cvw-11-31.mdl",
    
@@ -483,7 +417,7 @@ local SMT = {}
    
     "models/cerus/modbridge/core/tc-131.mdl"
   }
-  SMT.ModBridge["Spartan (MB)"] =
+  SMT.ModBridge["Spartan (MoB)"] =
   {
     "models/cerus/modbridge/core/spartan/c-111.mdl",
     "models/cerus/modbridge/core/spartan/c-221.mdl",
@@ -498,6 +432,138 @@ local SMT = {}
     "models/cerus/modbridge/core/spartan/s-321.mdl",
     "models/cerus/modbridge/core/spartan/s-331.mdl"
   }
+    SMT.ModBridge["Ship parts (MoB)"] =
+  {
+    "models/cerus/modbridge/core/g-211s.mdl",
+    "models/cerus/modbridge/core/g-221.mdl",
+    "models/cerus/modbridge/core/g-111wd.mdl",
+    "models/cerus/modbridge/core/g-221s.mdl",
+    "models/cerus/modbridge/core/g-231r.mdl",
+    "models/cerus/modbridge/core/g-231s.mdl",
+    "models/cerus/modbridge/core/g-231w.mdl"
+  }
+    SMT.ModBridge["Height transfer (MoB)"] =
+  {
+    "models/cerus/modbridge/core/rs-322.mdl",
+    "models/cerus/modbridge/core/rs-332.mdl",
+    "models/cerus/modbridge/core/rs-312.mdl",
+   
+    "models/cerus/modbridge/core/rso-322.mdl",
+    "models/cerus/modbridge/core/rso-332.mdl",
+    "models/cerus/modbridge/core/rso-312.mdl",
+    "models/cerus/modbridge/core/rso-332f.mdl",
+   
+    "models/cerus/modbridge/core/rst-312.mdl",
+    "models/cerus/modbridge/core/rst-322r.mdl",
+    "models/cerus/modbridge/core/rst-322l.mdl",
+    "models/cerus/modbridge/core/rst-332.mdl",
+    "models/cerus/modbridge/core/rst-332c.mdl",
+    "models/cerus/modbridge/core/rst-332cf.mdl",
+    "models/cerus/modbridge/core/rst-332f.mdl",
+   
+    "models/cerus/modbridge/core/r-312.mdl"
+  }
+    SMT.ModBridge["Elevators (MoB)"] =
+  {
+    "models/cerus/modbridge/core/s-331eb.mdl",
+    "models/cerus/modbridge/core/s-331em.mdl",
+    "models/cerus/modbridge/core/s-331et.mdl",
+    "models/cerus/modbridge/core/s-332ep.mdl",
+    "models/cerus/modbridge/misc/elevator/se11f.mdl",
+   
+    "models/cerus/modbridge/misc/elevator/eb111.mdl",
+    "models/cerus/modbridge/misc/elevator/ecb111.mdl",
+    "models/cerus/modbridge/misc/elevator/ecm111.mdl",
+    "models/cerus/modbridge/misc/elevator/ect111.mdl",
+    "models/cerus/modbridge/misc/elevator/em111.mdl",
+    "models/cerus/modbridge/misc/elevator/et111.mdl",
+   
+    "models/cerus/modbridge/misc/elevator/elev_111.mdl",
+   
+    "models/cerus/modbridge/misc/elevator/eb332.mdl",
+    "models/cerus/modbridge/misc/elevator/em332.mdl",
+    "models/cerus/modbridge/misc/elevator/et332.mdl",
+   
+    "models/cerus/modbridge/misc/elevator/elev_332.mdl",
+    "models/cerus/modbridge/misc/elevator/elev_332b.mdl",
+   
+    "models/cerus/modbridge/misc/elevator/etm111.mdl",
+    "models/cerus/modbridge/misc/elevator/etm111g.mdl",
+    "models/cerus/modbridge/misc/elevator/etm112.mdl",
+    "models/cerus/modbridge/misc/elevator/etm113.mdl",
+    "models/cerus/modbridge/misc/elevator/etm113g.mdl"
+  }
+  SMT.ModBridge["Other (MoB)"] =
+  {
+    "models/cerus/modbridge/core/prefab/crew_331.mdl",
+    "models/cerus/modbridge/core/cv-mb-smb.mdl"
+  }
+
+for k,v in pairs( SMT ) do
+  list.Set( "SBEP_SmallBridgeModels", k , v )
+end
+local SMT = {}
+  SMT.MedBridge = {}
+  SMT.Medbridge["Medbridge Hulls"] =
+  {
+    "models/spacebuild/medbridge2_emptyhull.mdl",
+    "models/spacebuild/medbridge2_emptyhull_90.mdl",
+    "models/spacebuild/medbridge2_emptyhull_t.mdl",
+    "models/spacebuild/medbridge2_emptyhull_x.mdl",
+    "models/spacebuild/medbridge2_compflathull.mdl",
+    "models/spacebuild/medbridge2_fighterbay.mdl",
+    "models/spacebuild/medbridge2_fighterbay_noglass.mdl",
+    "models/spacebuild/medbridge2_fighterbay2.mdl",
+    "models/spacebuild/medbridge2_fighterbay2_noglass.mdl",
+    "models/spacebuild/medbridge2_enginehull.mdl",
+    "models/spacebuild/medbridge2_enginehull4.mdl",
+    "models/spacebuild/medbridge2_enginehull2.mdl",
+    "models/spacebuild/medbridge2_angularbridge.mdl",
+    "models/spacebuild/medbridge2_longbridge.mdl",
+    "models/spacebuild/medbridge2.mdl",
+    "models/spacebuild/medbridge2_midsectionbridge.mdl",
+    "models/spacebuild/medbridge2_fighterbay3transcap.mdl",
+    "models/spacebuild/medbridge2_fighterbay3.mdl",
+  }
+  SMT.Medbridge["Medbridge Hulls (Slyfo)"] = 
+  {
+    "models/slyfo/straighthull.mdl",
+    "models/slyfo/ljoint.mdl",
+    "models/slyfo/tjoint.mdl",
+    "models/slyfo/xjoint.mdl",
+    "models/slyfo/longlass.mdl",
+    "models/slyfo/longnoglass.mdl",
+    "models/slyfo/inversebay.mdl",
+    "models/slyfo/mcpdropbay.mdl",
+    "models/slyfo/mcpdropglass.mdl",
+    "models/slyfo/doublehatch.mdl",
+    "models/spacebuild/nova/hull_lift1.mdl",
+    "models/slyfo/gallant_class_engine6.mdl",
+    "models/slyfo/gallant_class_engine4.mdl",
+    "models/slyfo/gallant_class_engine3.mdl",
+    "models/slyfo/matthewengineshort.mdl",
+    "models/slyfo/matthewenginelong.mdl",
+    "models/slyfo/combat_cockpit_small.mdl",
+    "models/slyfo/cockpit_smround.mdl",
+    "models/slyfo/cruisercockpit.mdl",
+    "models/slyfo/slypaneldoor1.mdl",
+    "models/slyfo/hangar1.mdl",
+    "models/slyfo/minelayer.mdl",
+    "models/slyfo/doublesideopen.mdl",
+    "models/slyfo/longhangar.mdl",
+    "models/slyfo/doublehull.mdl",
+    "models/slyfo/doublehullramp.mdl",
+    "models/slyfo/tjointdouble.mdl",
+    "models/slyfo/xjointdouble.mdl",
+    "models/slyfo/gallant_class_engine2.mdl",
+    "models/slyfo/gallant_class_engine5.mdl",
+    "models/slyfo/fishfacemki.mdl",
+    "models/slyfo/inverter.mdl",
+    "models/slyfo/hangar2.mdl",
+    "models/slyfo/hangar3.mdl",
+    "models/spacebuild/nova/hull_lift_double.mdl",
+    "models/slyfo/gallant_class_engine1.mdl",
+ }
  
 for k,v in pairs( SMT ) do
   list.Set( "SBEP_SmallBridgeModels", k , v )
