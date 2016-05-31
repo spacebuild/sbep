@@ -3,7 +3,7 @@
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 local SMT = {}
 SMT.SmallBridge = {}
-SMT.SmallBridge["Hulls (SW)"] = {l
+SMT.SmallBridge["Hulls (SW)"] = {
     "models/smallbridge/hulls_sw/sbhullcurvel.mdl",
     "models/smallbridge/hulls_sw/sbhullcurvem.mdl",
     "models/smallbridge/hulls_sw/sbhullcurves.mdl",
