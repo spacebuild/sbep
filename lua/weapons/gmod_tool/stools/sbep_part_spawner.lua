@@ -4,7 +4,7 @@ TOOL.Name = "#Part Spawner"
 TOOL.Command = nil
 TOOL.ConfigName = ""
 
-local SmallBridgeModels = list.Get("SBEP_SmallBridgeModels")
+local SmallBridgeModels = table.sort(list.Get("SBEP_SmallBridgeModels"))
 
 if CLIENT then
     language.Add("Tool.sbep_part_spawner.name", "SBEP Part Spawner")
