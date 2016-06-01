@@ -1405,8 +1405,8 @@ are all one -orientation - only.Then open cl_init .lua and make a new entry in t
         ["models/slyfo/gallant_class_engine1.mdl"] = {
             { type = "MBSH", pos = Vector(419.0, 0, 128.0), dir = Angle(0, 0, 0) },
             { type = "MBSH", pos = Vector(419.0, 0, -128.0), dir = Angle(0, 0, 180) }
-        }
-      	-------------------------------------------------
+        },
+      -------------------------------------------------
 	--	Copper's Additions (Medbridge)     --
 	-------------------------------------------------
 	["models/punisher239/punisher239_bridge_zeppeline_end_noramp.mdl"] = {
@@ -1457,16 +1457,16 @@ are all one -orientation - only.Then open cl_init .lua and make a new entry in t
 	["models/slyfo/capturehull1.mdl"] = { { type = "MBSH", pos = Vector(-595,0,-25), dir = Angle(0,180,0) }, },
 	["models/slyfo/cockpit_lground.mdl"] = {
 		{ type = "MBSH", pos = Vector(-209,0,128), dir = Angle(0,180,0) },
-		{ type = "MBSH", pos = Vector(-209,0,-128), dir = Angle(0,180,0) },
+		{ type = "MBSH", pos = Vector(-209,0,-128), dir = Angle(0,180,0) }
 	},
 	["models/slyfo/cockpit_sideround.mdl"] = {
 		{ type = "MBSH", pos = Vector(-209,128,0), dir = Angle(0,180,90) },
-		{ type = "MBSH", pos = Vector(-209,-128,0), dir = Angle(0,180,90) },
+		{ type = "MBSH", pos = Vector(-209,-128,0), dir = Angle(0,180,90) }
 	},
 	["models/slyfo/doubleclamp.mdl"] = { { type = "MBSH", pos = Vector(235,0,35), dir = Angle(0,0,0) }, },
 	["models/slyfo/doubleclamp_x.mdl"] = {
 		{ type = "MBSH", pos = Vector(235,0,35), dir = Angle(0,0,0) },
-		{ type = "MBSH", pos = Vector(-235,0,35), dir = Angle(0,180,0) },
+		{ type = "MBSH", pos = Vector(-235,0,35), dir = Angle(0,180,0) }
 	},
         ----------------------------------------------------------------------------------------------------------------------------------------
         ----------------------------------------------------------------------------------------------------------------------------------------
