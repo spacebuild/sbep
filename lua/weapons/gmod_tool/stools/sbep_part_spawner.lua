@@ -61,6 +61,7 @@ function TOOL:LeftClick(trace)
 end
 
 function TOOL:RightClick(trace)
+        if CLIENT then return end
 	self.Owner:ConCommand( "gmod_tool sbep_part_assembler" )
 end
 
