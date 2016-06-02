@@ -60,9 +60,12 @@ function TOOL:LeftClick(trace)
     return true
 end
 
-function TOOL:RightClick(trace)
-        if CLIENT then return end
-	self.Owner:ConCommand( "gmod_tool sbep_part_assembler" )
+function TOOL:RightClick(trace)	
+	if CLIENT then return end
+	
+	self:GetOwner():SendLua('RunConsoleCommand("gmod_tool", "sbep_part_assembler")')
+	
+    return false	
 end
 
 function TOOL:Reload(trace)
