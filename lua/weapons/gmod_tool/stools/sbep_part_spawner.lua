@@ -67,10 +67,6 @@ end
 function TOOL:Reload(trace)
 end
 
-function TOOL:Think()
-	if (ModelGhost) then ModelGhost( self ) end
-end
-
 function TOOL.BuildCPanel(panel)
 
     panel:SetSpacing(10)
@@ -142,43 +138,5 @@ function TOOL.BuildCPanel(panel)
 			end
 			catPanel:SetExpanded( 0 )
 		end
-	end
-end
-if (game.SinglePlayer() and SERVER) or (!game.SinglePlayer() and CLIENT) then --server side in singleplayer, client side in multiplayer
-	function ModelGhost( tool, model, min, GetOffset, offset )
-		local model = model or tool:GetClientInfo('model')
-		if (model == '') then return end
-		
-		if (!tool.GhostEntity or !tool.GhostEntity:IsValid() or tool.GhostEntity:GetModel() ~= model) then
-			tool:MakeGhostEntity( model, Vector(0,0,0), Angle(0,0,0) )
-		end
-		
-		if ( !tool.GhostEntity ) then return end
-		if ( !tool.GhostEntity:IsValid() ) then return end
-		
-		local tr = util.GetPlayerTrace( tool:GetOwner(), tool:GetOwner():GetAimVector() )
-		local trace = util.TraceLine( tr )
-		if (!trace.Hit) then return end
-		
-		if ( trace.Entity:IsPlayer() ) then
-			tool.GhostEntity:SetNoDraw( true )
-			return
-		end
-		
-		local Ang = trace.HitNormal:Angle()
-		if (!min or min == "z") then
-			Ang.pitch = Ang.pitch + 90
-		end
-		tool.GhostEntity:SetAngles( Ang )
-		
-		local Pos = trace.HitPos
-		if (offset) then
-			Pos = Pos + GetOffset( trace.HitNormal:Angle(), offset )
-		else
-			Pos = Pos - trace.HitNormal * tool.GhostEntity:OBBMins()[ min or "z" ]
-		end
-		tool.GhostEntity:SetPos( Pos )
-		
-		tool.GhostEntity:SetNoDraw( false )
 	end
 end
