@@ -141,7 +141,7 @@ if CLIENT then
 
 	language.Add( "tool.sbep_part_assembler.name" , "Part Assembly Tool" )
 	language.Add( "tool.sbep_part_assembler.desc" , "Easily assemble SBEP parts. Tingle's Remake" )
-	language.Add( "tool.sbep_part_assembler.0"	  , "(1) Left-click an attachment point. Right-click to show/hide attachment points. Reload to hide all attachment points."						)
+	language.Add( "tool.sbep_part_assembler.0"	  , "(1) Left-click an attachment point. Right-click to show/hide attachment points. Reload to hide all attachment points. Shift + Right click to toggle between Part Spawner and Part Assembler Tool." )
 	language.Add( "tool.sbep_part_assembler.1"	  , "(2) Left-click another attachement point to connect to. Right-click to show/hide attachment points. Reload to cancel." )
 	language.Add( "undone_SBEP Part Assembly"	  , "Undone SBEP Part Assembly" )
 
@@ -298,6 +298,12 @@ if CLIENT then
 	net.Receive("SBEP_PA_LeftClick", ClLeftClick)
 	
 	local function ClRightClick( len )
+
+		if input.IsShiftDown() then
+			RunConsoleCommand("gmod_tool", "sbep_part_spawner")
+			return false
+		end
+
 		nToolStage = net.ReadInt(2)
 		local xEntity = LocalPlayer():GetEyeTrace().Entity
 		if( !IsValid( xEntity ) ) then return end

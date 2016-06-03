@@ -9,7 +9,7 @@ local SmallBridgeModels = list.Get("SBEP_SmallBridgeModels")
 if CLIENT then
     language.Add("Tool.sbep_part_spawner.name", "SBEP Part Spawner")
     language.Add("Tool.sbep_part_spawner.desc", "Spawn SBEP props.")
-    language.Add("Tool.sbep_part_spawner.0", "Left click to spawn a prop.")
+    language.Add("Tool.sbep_part_spawner.0", "Left click to spawn a prop. Shift + Right click to toggle between Part Spawner and Part Assembler Tool.")
     language.Add("undone_SBEP Part", "Undone SBEP Part")
 end
 
@@ -60,8 +60,10 @@ function TOOL:LeftClick(trace)
     return true
 end
 
-function TOOL:RightClick(trace)
-    -- CC_GMOD_Tool(self:GetOwner(), "", { "sbep_part_assembler" })
+function TOOL:RightClick(trace)	
+    if CLIENT then return end
+    self:GetOwner():SendLua('if input.IsShiftDown() then RunConsoleCommand("gmod_tool", "sbep_part_assembler") end')
+    return false
 end
 
 function TOOL:Reload(trace)
