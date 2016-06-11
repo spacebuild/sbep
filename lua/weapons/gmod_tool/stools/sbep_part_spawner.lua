@@ -17,7 +17,7 @@ TOOL.ClientConVar["model"] = "models/smallbridge/hulls_sw/sbhulle1.mdl"
 TOOL.ClientConVar["skin"] = 0
 TOOL.ClientConVar["glass"] = 0
 TOOL.ClientConVar["hab_mod"] = 0
-
+TOOL.ClientConVar["weld"] = 0
 function TOOL:LeftClick(trace)
 
     if CLIENT then return end
@@ -26,6 +26,7 @@ function TOOL:LeftClick(trace)
     local hab = self:GetClientNumber("hab_mod")
     local skin = self:GetClientNumber("skin")
     local glass = self:GetClientNumber("glass")
+    local weld = self:GetClientNumber("weld")
     local pos = trace.HitPos
 
     local SMBProp = nil
@@ -39,19 +40,24 @@ function TOOL:LeftClick(trace)
     SMBProp:SetModel(model)
 
     local skincount = SMBProp:SkinCount()
+	SMBProp:SetNWInt("Skin",skinnum)
     local skinnum = nil
     if skincount > 5 then
         skinnum = skin * 2 + glass
     else
         skinnum = skin
     end
-    SMBProp:SetSkin(skinnum)
 
+	SMBProp:SetNWInt("Skin", skinnum)
+
+    SMBProp:SetSkin(skinnum)
     SMBProp:SetPos(pos - Vector(0, 0, SMBProp:OBBMins().z))
 
     SMBProp:Spawn()
     SMBProp:Activate()
-
+	if weld == 1 and IsValid(trace.Entity) then
+		constraint.Weld( SMBProp, trace.Entity, 0, trace.PhysicsBone, 0, collision == 1, false )
+	end
     undo.Create("SBEP Part")
     undo.AddEntity(SMBProp)
     undo.SetPlayer(self:GetOwner())
@@ -59,6 +65,7 @@ function TOOL:LeftClick(trace)
 
     return true
 end
+
 
 function TOOL:RightClick(trace)	
     if CLIENT then return end
@@ -110,6 +117,14 @@ function TOOL.BuildCPanel(panel)
 	HabitableModuleButton:SetTextColor(Color(0,0,0,255))
 	HabitableModuleButton:SetConVar( "sbep_part_spawner_hab_mod" )
 	
+	local WeldButton = vgui.Create("DCheckBoxLabel", panel )
+	WeldButton:Dock(TOP)
+	WeldButton:DockMargin(2,2,2,2)
+	WeldButton:SetValue( GetConVar( "sbep_part_spawner_weld" ):GetBool() )
+	WeldButton:SetText( "Weld:" )
+	WeldButton:SetTextColor(Color(0,0,0,255))
+	WeldButton:SetConVar( "sbep_part_spawner_weld" )
+	
 	for Tab,v  in pairs( SmallBridgeModels ) do
 		for Category, models in pairs( v ) do
 			local catPanel = vgui.Create( "DCollapsibleCategory", panel )
@@ -141,4 +156,40 @@ function TOOL.BuildCPanel(panel)
 			catPanel:SetExpanded( 0 )
 		end
 	end
+end
+
+
+function TOOL:Think()
+ 	if ( !IsValid( self.GhostEntity ) || self.GhostEntity:GetModel() != self:GetClientInfo( "model" ) ) then
+		self:MakeGhostEntity( self:GetClientInfo( "model"), Vector( 0, 0, 0 ), Angle( 0, 0, 0 )) 
+	end
+	
+	self:UpdateGhostPart( self.GhostEntity, self:GetOwner())
+
+ end
+function TOOL:UpdateGhostPart( ent, pl )
+
+	if CLIENT then return end
+	if ( !IsValid( ent ) ) then return end
+
+	local tr = util.GetPlayerTrace( pl )
+	local trace	= util.TraceLine( tr )
+	if ( !trace.Hit ) then return end
+
+	if ( trace.Entity:IsPlayer()) then
+
+		ent:SetNoDraw( true )
+		return
+
+	end
+
+	local CurPos = ent:GetPos()
+	local NearestPoint = ent:NearestPoint( CurPos - ( trace.HitNormal * 512 ) )
+	local Offset = CurPos - NearestPoint
+
+	
+	ent:SetPos( trace.HitPos + Offset )
+
+	ent:SetNoDraw( false )
+
 end
