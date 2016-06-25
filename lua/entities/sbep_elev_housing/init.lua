@@ -35,7 +35,7 @@ LMT.S = {
 		[ "MV" 	 ] = { model = "models/smallbridge/station parts/sbbridgevisorm.mdl", ZUD =  65.1 	, ZDD =  65.1 	, AT = {0,0,0,0} , SD = { IsVisor = true , IsSpecial = true } },
 		[ "TV" 	 ] = { model = "models/smallbridge/station parts/sbbridgevisort.mdl", ZUD =  65.1 	, ZDD =  65.1 	, AT = {0,0,0,0} , SD = { IsVisor = true , IsSpecial = true } },
 
-		[ "H" 	 ] = { model = "models/smallbridge/station parts/sbhuble.mdl" 		, ZUD = 195.3 	, ZDD = 195.3 	, AT = {0,0,0,0} , SD = { IsHub = true , IsSpecial = true , MFT = { 0 , 130.2 , 260.4 } } }
+		[ "H" 	 ] = { model = "models/smallbridge/station parts/sbhuble.mdl" 		, ZUD = 195.3 	, ZDD = 195.3 	, AT = {0,0,0,0} , SD = { IsHub = true , IsSpecial = true , MultiFloorTable = { 0 , 130.2 , 260.4 } } }
 			}
 
 LMT.L = {
@@ -76,11 +76,11 @@ function ENT:Initialize()
 
 	self:SetUseType( SIMPLE_USE )
 	
-	self.PD 		= {} --Part Data
-	self.PD.HO		= 0
-	self.PD.Pitch	= 0
-	self.PD.Yaw		= 0
-	self.PD.Roll	= 0
+	self.PartData 		= {}
+	self.PartData.HO		= 0
+	self.PartData.Pitch	= 0
+	self.PartData.Yaw		= 0
+	self.PartData.Roll	= 0
 
 	self.Entity:PhysicsInitialize()
 
@@ -104,58 +104,58 @@ function ENT:MakeWire( bAdjust )
 	
 	if(not WireAddon) then return end
 
-	if self.PD.SD.MFT then
-		self.PD.WI = {} --Wire Inputs
-		for k,v in ipairs( self.PD.SD.MFT ) do
-			self.PD.WI[k] = "Call "..tostring( k )
+	if self.PartData.SD.MultiFloorTable then
+		self.PartData.WI = {} --Wire Inputs
+		for k,v in ipairs( self.PartData.SD.MultiFloorTable ) do
+			self.PartData.WI[k] = "Call "..tostring( k )
 		end
-	elseif !self.PD.SD.IsShaft then
-		self.PD.WI = { "Call" }
+	elseif !self.PartData.SD.IsShaft then
+		self.PartData.WI = { "Call" }
 	end
 
 	if bAdjust then
-		self.Inputs = Wire_AdjustInputs(self.Entity, self.PD.WI )
-		--Wire_AdjustInputs(self.Entity, self.PD.WI )
+		self.Inputs = Wire_AdjustInputs(self.Entity, self.PartData.WI )
+		--Wire_AdjustInputs(self.Entity, self.PartData.WI )
 	else
-		self.Inputs = Wire_CreateInputs(self.Entity, self.PD.WI )
-		--Wire_CreateInputs(self.Entity, self.PD.WI )
+		self.Inputs = Wire_CreateInputs(self.Entity, self.PartData.WI )
+		--Wire_CreateInputs(self.Entity, self.PartData.WI )
 	end
 end
 
 function ENT:TriggerInput(k,v)
-	if table.getn( self.PD.WI ) > 1 then
-		for m,n in ipairs( self.PD.WI ) do
+	if table.getn( self.PartData.WI ) > 1 then
+		for m,n in ipairs( self.PartData.WI ) do
 			if k == n and v == 1 then
-				if !self.PD.SD.MFT and self.Cont and self.Cont:IsValid() then
+				if !self.PartData.SD.MultiFloorTable and self.Cont and self.Cont:IsValid() then
 					self.Entity:CallLift( m )
 				end
 			end
 		end
 	elseif k == "Call" and v == 1 then
-		if !self.PD.SD.MFT and self.Cont and self.Cont:IsValid() then
+		if !self.PartData.SD.MultiFloorTable and self.Cont and self.Cont:IsValid() then
 			self.Entity:CallLift()
 		end
 	end
 end
 
 function ENT:SetPartType( type )
-	if self.PD.T == type then return end
+	if self.PartData.T == type then return end
 
 	local data = LMT[ self.Cont.Size[1] ][ type ]
 	if !data then return end
-	self.PD.SD 	= {}
-	self.PD 	= table.Merge( self.PD , data )
-	self.PD.T 	= type
-	self.PD.TC 	= string.Left( type , 1)
-	self.PD.TF 	= string.sub( type , 2)
-	self.PD.AT 	= table.Copy( self.PD.AT )
-	self.PD.Usable  = self.Cont.Usable and !self.PD.SD.IsShaft and !self.PD.SD.MFT
-	self.Entity:SetModel( self.PD.model )
+	self.PartData.SD 	= {}
+	self.PartData 	= table.Merge( self.PartData , data )
+	self.PartData.T 	= type
+	self.PartData.TC 	= string.Left( type , 1)
+	self.PartData.TF 	= string.sub( type , 2)
+	self.PartData.AT 	= table.Copy( self.PartData.AT )
+	self.PartData.Usable  = self.Cont.Usable and !self.PartData.SD.IsShaft and !self.PartData.SD.MultiFloorTable
+	self.Entity:SetModel( self.PartData.model )
 	self.Entity:CheckSkin( self.Cont.Skin )
 end
 
 function ENT:GetPartType()
-	return self.PD.T
+	return self.PartData.T
 end
 
 function ENT:SetPartClass( class )
@@ -166,7 +166,7 @@ function ENT:SetPartClass( class )
 end
 
 function ENT:GetPartClass()
-	return self.PD.TC
+	return self.PartData.TC
 end
 
 function ENT:SetPartForm( form )
@@ -177,20 +177,20 @@ function ENT:SetPartForm( form )
 end
 
 function ENT:GetPartForm()
-	return self.PD.TF
+	return self.PartData.TF
 end
 
 function ENT:UpdateHeightOffsets()
-	if self.PD.PN > 1 then
-		local P1 = self.Cont.PT[self.PD.PN - 1].PD
+	if self.PartData.PN > 1 then
+		local P1 = self.Cont.PartTable[self.PartData.PN - 1].PartData
 			local C1 = math.Clamp( P1.Roll , 0 , 1 )
 			local C2 = math.abs( C1 - 1 )
-		local P2 = self.PD
+		local P2 = self.PartData
 			local C3 = math.Clamp( P2.Roll , 0 , 1 )
 			local C4 = math.abs( C3 - 1 )
 		P2.HO = P1.HO + (C1*P1.ZDD + C2*P1.ZUD) + (C3*P2.ZUD + C4*P2.ZDD)
 	else
-		local P2 = self.PD
+		local P2 = self.PartData
 			local C3 = math.Clamp( P2.Roll , 0 , 1 )
 			local C4 = math.abs( C3 - 1 )
 		P2.HO = C3*( P2.ZUD - P2.ZDD )
@@ -199,31 +199,31 @@ function ENT:UpdateHeightOffsets()
 end
 
 function ENT:RefreshPos()
-	self.Entity:SetPos( self.Cont:LocalToWorld( Vector(0,0, self.PD.HO + 60.45 ) ) )
+	self.Entity:SetPos( self.Cont:LocalToWorld( Vector(0,0, self.PartData.HO + 60.45 ) ) )
 end
 
 function ENT:RefreshAng()
-	self.Entity:SetAngles( Angle( self.PD.Pitch , self.PD.Yaw , self.PD.Roll ) )
+	self.Entity:SetAngles( Angle( self.PartData.Pitch , self.PartData.Yaw , self.PartData.Roll ) )
 end
 
 function ENT:RotatePartPitch( pitch )
-	self.PD.Pitch = (self.PD.Pitch + pitch) % 360
+	self.PartData.Pitch = (self.PartData.Pitch + pitch) % 360
 	self.Entity:RefreshAng()
 end
 
 function ENT:RotatePartYaw( yaw )
-	self.PD.Yaw = (self.PD.Yaw + yaw) % 360
+	self.PartData.Yaw = (self.PartData.Yaw + yaw) % 360
 	self.Entity:RefreshAng()
 end
 
 function ENT:RotatePartRoll( roll )
-	self.PD.Roll = (self.PD.Roll + roll) % 360
+	self.PartData.Roll = (self.PartData.Roll + roll) % 360
 	self.Entity:RefreshAng()
 end
 
 function ENT:Invert()
-	self.PD.Roll = (self.PD.Roll + 180) % 360
-	self.PD.Inv = !self.PD.Inv
+	self.PartData.Roll = (self.PartData.Roll + 180) % 360
+	self.PartData.Inv = !self.PartData.Inv
 	self.Entity:RefreshAng()
 end
 
@@ -237,25 +237,25 @@ end
 
 function ENT:CallLift( m )
 	if m then
-		self.Cont:AddCallFloorNum( self.PD.FN[m] )
+		self.Cont:AddCallFloorNum( self.PartData.FN[m] )
 	else
-		self.Cont:AddCallFloorNum( self.PD.FN    )
+		self.Cont:AddCallFloorNum( self.PartData.FN    )
 	end
 end
 
 function ENT:Use()
-	if !self.PD.Usable or self.PD.SD.MFT or !self.Cont or !self.Cont:IsValid() then return end
+	if !self.PartData.Usable or self.PartData.SD.MultiFloorTable or !self.Cont or !self.Cont:IsValid() then return end
 	self.Entity:CallLift()
 end
 
 function ENT:PreEntityCopy()
 	local DI = {}
-		DI.PD	= self.PD
+		DI.PartData	= self.PartData
 		DI.Cont	= self.Cont:EntIndex()
-		if self.PD.FDT then
-			DI.FDT = {}
-			for n,D in ipairs( self.PD.FDT ) do
-				DI.FDT[n] = D:EntIndex()
+		if self.PartData.FloorDoorTable then
+			DI.FloorDoorTable = {}
+			for n,D in ipairs( self.PartData.FloorDoorTable ) do
+				DI.FloorDoorTable[n] = D:EntIndex()
 			end
 		end
 	if WireAddon then
@@ -267,11 +267,11 @@ duplicator.RegisterEntityModifier( "SBEPLP" , function() end)
 
 function ENT:PostEntityPaste(pl, Ent, CreatedEntities)
 	local DI = Ent.EntityMods.SBEPLP
-	self.PD		= DI.PD
+	self.PartData		= DI.PartData
 	self.Cont	= CreatedEntities[DI.Cont]
-	if DI.FDT then
-		for n,K in ipairs( DI.FDT ) do
-			self.PD.FDT[n] = CreatedEntities[K]
+	if DI.FloorDoorTable then
+		for n,K in ipairs( DI.FloorDoorTable ) do
+			self.PartData.FloorDoorTable[n] = CreatedEntities[K]
 		end
 	end
 	self:MakeWire()

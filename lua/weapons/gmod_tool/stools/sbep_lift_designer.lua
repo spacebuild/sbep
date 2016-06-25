@@ -534,10 +534,10 @@ util.AddNetworkString("SBEP_SetPHOffsetLiftDesignMenu_cl")
 	function SBEP_SetLiftPartType( ply , cmd , args )
 		local n = LiftSystem_SER[ply]:GetNWInt("ActivePart")
 		local type = tostring( args[1] )
-		if !LiftSystem_SER[ply].PT[n] then return end
+		if !LiftSystem_SER[ply].PartTable[n] then return end
 		
 		ply:ConCommand( "sbep_lift_designer_type "..type )
-		LiftSystem_SER[ply].PT[n]:SetPartType( type )
+		LiftSystem_SER[ply].PartTable[n]:SetPartType( type )
 		LiftSystem_SER[ply]:RefreshParts( n )
 		
 		ply:ConCommand( "SBEP_LiftGetCamHeight_ser" )
@@ -546,16 +546,16 @@ util.AddNetworkString("SBEP_SetPHOffsetLiftDesignMenu_cl")
 	
 	function SBEP_InvertLiftPart( ply , cmd , args )
 		local n = LiftSystem_SER[ply]:GetNWInt("ActivePart")
-			if !LiftSystem_SER[ply].PT[n] then return end
-		LiftSystem_SER[ply].PT[n]:Invert()
+			if !LiftSystem_SER[ply].PartTable[n] then return end
+		LiftSystem_SER[ply].PartTable[n]:Invert()
 		ply:ConCommand( "SBEP_LiftGetCamHeight_ser" )
 	end
 	concommand.Add( "SBEP_LiftSys_InvertLiftPart_ser" , SBEP_InvertLiftPart )	
 
 	function SBEP_SetLiftPartYaw( ply , cmd , args )
 		local n = LiftSystem_SER[ply]:GetNWInt("ActivePart")
-			if !LiftSystem_SER[ply].PT[n] then return end
-		LiftSystem_SER[ply].PT[n]:RotatePartYaw( tonumber( args[1] ) )
+			if !LiftSystem_SER[ply].PartTable[n] then return end
+		LiftSystem_SER[ply].PartTable[n]:RotatePartYaw( tonumber( args[1] ) )
 	end
 	concommand.Add( "SBEP_LiftSys_SetLiftPartYaw_ser" , SBEP_SetLiftPartYaw )	
 	
@@ -574,36 +574,36 @@ util.AddNetworkString("SBEP_SetPHOffsetLiftDesignMenu_cl")
 
 		local C = LiftSystem_SER[ply]:GetNWInt("SBEP_LiftPartCount")
 		net.Start( "SBEP_SetPHOffsetLiftDesignMenu_cl")
-			net.WriteFloat(LiftSystem_SER[ply].PT[ n ].PD.HO)
+			net.WriteFloat(LiftSystem_SER[ply].PartTable[ n ].PartData.HO)
 		net.Send(ply)
-		for k,v in ipairs( LiftSystem_SER[ply].PT ) do
+		for k,v in ipairs( LiftSystem_SER[ply].PartTable ) do
 			v:SetRenderMode( RENDERMODE_TRANSCOLOR )
 			v:SetColor( Color( 255 , 255 , 255 , 255 ))
 		end
 		if n == C then
-			LiftSystem_SER[ply].PT[ n ]:SetRenderMode( RENDERMODE_TRANSCOLOR )
-			LiftSystem_SER[ply].PT[ n ]:SetColor( Color( 255 , 255 , 255 , 180 ))
+			LiftSystem_SER[ply].PartTable[ n ]:SetRenderMode( RENDERMODE_TRANSCOLOR )
+			LiftSystem_SER[ply].PartTable[ n ]:SetColor( Color( 255 , 255 , 255 , 180 ))
 		else
-			LiftSystem_SER[ply].PT[ n ]:SetRenderMode( RENDERMODE_TRANSCOLOR )
-			LiftSystem_SER[ply].PT[ n ]:SetColor( Color( 200  , 255 , 200 , 255 ))
-			LiftSystem_SER[ply].PT[ C ]:SetRenderMode( RENDERMODE_TRANSCOLOR )
-			LiftSystem_SER[ply].PT[ C ]:SetColor( Color(255 , 255 , 255 ,  180  ))
+			LiftSystem_SER[ply].PartTable[ n ]:SetRenderMode( RENDERMODE_TRANSCOLOR )
+			LiftSystem_SER[ply].PartTable[ n ]:SetColor( Color( 200  , 255 , 200 , 255 ))
+			LiftSystem_SER[ply].PartTable[ C ]:SetRenderMode( RENDERMODE_TRANSCOLOR )
+			LiftSystem_SER[ply].PartTable[ C ]:SetColor( Color(255 , 255 , 255 ,  180  ))
 		end
 		
 		net.Start("SBEP_ReCalcViewAngles_LiftDesignMenu_cl")
-		net.WriteFloat(LiftSystem_SER[ply].PT[ n ]:OBBMaxs():Length())
+		net.WriteFloat(LiftSystem_SER[ply].PartTable[ n ]:OBBMaxs():Length())
 		net.Send(ply)
 		
 		LiftSystem_SER[ply].CanDown = false
 		if n == 1 and LiftSystem_SER[ply].MDB then
 			local tracedata = {}
-				tracedata.start = LiftSystem_SER[ply].PT[1]:GetPos()
-				if LiftSystem_SER[ply].PT[1].PD.Inv then
-					tracedata.endpos = tracedata.start + 200*LiftSystem_SER[ply].PT[1]:GetUp()
+				tracedata.start = LiftSystem_SER[ply].PartTable[1]:GetPos()
+				if LiftSystem_SER[ply].PartTable[1].PartData.Inv then
+					tracedata.endpos = tracedata.start + 200*LiftSystem_SER[ply].PartTable[1]:GetUp()
 				else
-					tracedata.endpos = tracedata.start - 200*LiftSystem_SER[ply].PT[1]:GetUp()
+					tracedata.endpos = tracedata.start - 200*LiftSystem_SER[ply].PartTable[1]:GetUp()
 				end
-				tracedata.filter = { LiftSystem_SER[ply] , LiftSystem_SER[ply].PT[1] }
+				tracedata.filter = { LiftSystem_SER[ply] , LiftSystem_SER[ply].PartTable[1] }
 			local trace = util.TraceHull(tracedata)
 			if !trace.Hit then LiftSystem_SER[ply].CanDown = true end
 		end
@@ -614,9 +614,9 @@ util.AddNetworkString("SBEP_SetPHOffsetLiftDesignMenu_cl")
 			net.WriteBit( 1 )
 		else net.WriteBit( 0 )
 		end
-		net.WriteString( LiftSystem_SER[ply].PT[1]:GetPartType())
-		if C > 1 then net.WriteString( LiftSystem_SER[ply].PT[2]:GetPartType()) end
-		if C > 2 then net.WriteString( LiftSystem_SER[ply].PT[C-1]:GetPartType() ) end
+		net.WriteString( LiftSystem_SER[ply].PartTable[1]:GetPartType())
+		if C > 1 then net.WriteString( LiftSystem_SER[ply].PartTable[2]:GetPartType()) end
+		if C > 2 then net.WriteString( LiftSystem_SER[ply].PartTable[C-1]:GetPartType() ) end
 		net.Send(ply)
 	end
 	concommand.Add( "SBEP_LiftGetCamHeight_ser" , SBEP_LiftGetCamHeight )	
@@ -655,7 +655,7 @@ util.AddNetworkString("SBEP_SetPHOffsetLiftDesignMenu_cl")
 	
 	function SBEP_LiftDeletePart( ply , cmd , args )
 		local n = LiftSystem_SER[ply]:GetNWInt("ActivePart")
-		if n == 1 and BEM[LiftSystem_SER[ply].PT[2]:GetPartType()] then return end
+		if n == 1 and BEM[LiftSystem_SER[ply].PartTable[2]:GetPartType()] then return end
 
 		LiftSystem_SER[ply]:RemovePartFromTable( n )
 		LiftSystem_SER[ply]:RefreshParts( 1 )
@@ -720,8 +720,8 @@ function TOOL:LeftClick( trace )
 		LiftSystem_SER[ply]:SetSystemSize( ply:GetInfoNum( "sbep_lift_designer_size", 1 ) )
 		
 		local hatchconvar = ply:GetInfoNum( "sbep_lift_designer_doors", 0 )
-		LiftSystem_SER[ply].ST.UseHatches = hatchconvar == 2
-		LiftSystem_SER[ply].ST.UseDoors   = hatchconvar == 3
+		LiftSystem_SER[ply].SystemTable.UseHatches = hatchconvar == 2
+		LiftSystem_SER[ply].SystemTable.UseDoors   = hatchconvar == 3
 		LiftSystem_SER[ply]:SetNWInt("ActivePart", 1 )
 			
 		local NP = LiftSystem_SER[ply]:CreatePart()
@@ -729,8 +729,8 @@ function TOOL:LeftClick( trace )
 			NP:SetPartType( "M" )
 		LiftSystem_SER[ply]:RefreshParts( 1 )
 		
-		LiftSystem_SER[ply].PT[ 1 ]:SetRenderMode( RENDERMODE_TRANSCOLOR )
-		LiftSystem_SER[ply].PT[ 1 ]:SetColor( Color( 255 , 255 , 255 , 180 ))
+		LiftSystem_SER[ply].PartTable[ 1 ]:SetRenderMode( RENDERMODE_TRANSCOLOR )
+		LiftSystem_SER[ply].PartTable[ 1 ]:SetColor( Color( 255 , 255 , 255 , 180 ))
 		
 		ply:ConCommand( "sbep_lift_designer_editing 1" )
 
