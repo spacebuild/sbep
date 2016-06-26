@@ -219,7 +219,11 @@ function ENT:UpdateHeightOffsets()
 end
 
 function ENT:RefreshPos()
-	self.Entity:SetPos( self.Cont:LocalToWorld( Vector(0,0, self.PartData.HO + 60.45 ) ) )
+	local offset = 0
+	if( self.Cont.Set == "SMALLBRIDGE" ) then
+		offset = 60.45
+	end
+	self.Entity:SetPos( self.Cont:LocalToWorld( Vector(0,0, self.PartData.HO + offset) ) )
 end
 
 function ENT:RefreshAng()

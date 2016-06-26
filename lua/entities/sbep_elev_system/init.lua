@@ -64,8 +64,15 @@ function ENT:Initialize()
 	
 	self.Index = tostring( self:EntIndex() )
 	
-	self.Increment = -60.45
-	self.TargetOffset = -60.45
+	self.Increment = 0
+	self.TargetOffset = 0
+	if self.Entity.Set=="SMALLBRIDGE" then
+		self.Increment = -60.45
+		self.TargetOffset = -60.45
+	elseif self.Entity.Set=="MODBRIDGE" then
+		self.Increment = 100
+		self.TargetOffset = 100
+	end
 	
 	self.SystemTable.AngleYawOffset = 90
 	
