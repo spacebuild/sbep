@@ -4,8 +4,8 @@ include( "shared.lua" )
 
 ENT.WireDebugName = "SBEP Elevator System"
 
-local PMT = {}
-PMT.S = {
+local PMT = {SMALLBRIDGE = {}, MODBRIDGE = {} }
+PMT.SMALLBRIDGE.S = {
 		"models/smallbridge/elevators_small/sbselevp0.mdl"	,
 		"models/smallbridge/elevators_small/sbselevp1.mdl"	,
 		"models/smallbridge/elevators_small/sbselevp2e.mdl"	,
@@ -13,12 +13,16 @@ PMT.S = {
 		"models/smallbridge/elevators_small/sbselevp3.mdl"
 			}
 
-PMT.L = {
+PMT.SMALLBRIDGE.L = {
 		"models/smallbridge/elevators_Large/sblelevp0.mdl"	,
 		"models/smallbridge/elevators_Large/sblelevp1.mdl"	,
 		"models/smallbridge/elevators_Large/sblelevp2e.mdl"	,
 		"models/smallbridge/elevators_Large/sblelevp2r.mdl"	,
 		"models/smallbridge/elevators_Large/sblelevp3.mdl"
+			}
+			
+PMT.MODBRIDGE.S = {
+		"models/cerus/modbridge/misc/elevator/se11f.mdl"
 			}
 			
 local DD = list.Get( "SBEP_DoorControllerModels" )
@@ -41,7 +45,7 @@ function ENT:Initialize()
 	
 	self.Entity:SetNetworkedInt( "ActivePart" , 1 )
 	self.Entity:SetNetworkedInt( "SBEP_LiftPartCount" , 0 )
-	--self:SetModel( PMT[self.Size[1]][5] ) 
+	--self:SetModel( PMT[self.Entity.Set][self.Size[1]][5] ) 
 	
 	self.LiftActive = false
 	
@@ -508,8 +512,7 @@ function ENT:CalcPanelModel( PartNum )
 	end
 	
 	self.SystemTable.MATSum = self.SystemTable.ModelAccessTable[1] + self.SystemTable.ModelAccessTable[2] + self.SystemTable.ModelAccessTable[3] + self.SystemTable.ModelAccessTable[4]
-	
-	DMT = PMT[self.Size[1]]
+	DMT = PMT[self.Entity.Set][self.Size[1]]
 	local function SetLiftModel( n )
 		self:SetModel( DMT[ n ] )
 	end
