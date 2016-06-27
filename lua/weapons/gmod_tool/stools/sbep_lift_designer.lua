@@ -111,48 +111,56 @@ if CLIENT then
 
 		LDT.PButtons = {}
 		LDT.PButtons.Part = {}
-		
+		local Set = string.lower( CL:GetInfo( "sbep_lift_designer_set" ) )
+
 		for k,v in ipairs(BMT) do
-			LDT.PButtons.Part[k] = vgui.Create("DImageButton", LDT.Frame )
-				LDT.PButtons.Part[k]:SetImage( "sbep_icons/"..v.type..".vmt" )
-				LDT.PButtons.Part[k]:SetPos( 5 + 80 * ((k - 1)%4) , 28 + 80 * math.floor((k - 1)/ 4))
-				LDT.PButtons.Part[k]:SetSize( 75 , 75 )
-				LDT.PButtons.Part[k].DoClick = function()
-														RunConsoleCommand( "SBEP_LiftSys_SetLiftPartType_ser" , v.type )
-													end
+			if file.Exists( "materials/sbep_icons/"..Set.."/"..v.type..".vmt", "GAME" ) then
+				LDT.PButtons.Part[k] = vgui.Create("DImageButton", LDT.Frame )
+					LDT.PButtons.Part[k]:SetImage( "sbep_icons/"..Set.."/"..v.type..".vmt" )
+					LDT.PButtons.Part[k]:SetPos( 5 + 80 * ((k - 1)%4) , 28 + 80 * math.floor((k - 1)/ 4))
+					LDT.PButtons.Part[k]:SetSize( 75 , 75 )
+					LDT.PButtons.Part[k].DoClick = function()
+															RunConsoleCommand( "SBEP_LiftSys_SetLiftPartType_ser" , v.type )
+														end
+			end
 		end
 		
 		LDT.PButtons.Special = {}
 		LDT.PButtons.Special.Part = {}
 		
-		LDT.PButtons.Special.B = vgui.Create("DImageButton", LDT.Frame )
-			LDT.PButtons.Special.B:SetPos( 165 , 188 )   
-			LDT.PButtons.Special.B:SetSize( 155 , 35 )
-			LDT.PButtons.Special.B:SetImage( "sbep_icons/special.vmt" )
-			LDT.PButtons.Special.B.DoClick = function()
-													LDT.SFrame.visible = !LDT.SFrame.visible 
-													LDT.SFrame:SetVisible( LDT.SFrame.visible )
-												end
-		
-		LDT.PButtons.Special.Part[1] = vgui.Create("DImageButton", LDT.SFrame )
-			LDT.PButtons.Special.Part[1]:SetImage( "sbep_icons/mv.vmt" )
-			LDT.PButtons.Special.Part[1]:SetPos( 5 , 5 )
-			LDT.PButtons.Special.Part[1]:SetSize( 75 , 75 )
-			LDT.PButtons.Special.Part[1].DoClick = function()
-													LDT.SFrame.visible = false
-													LDT.SFrame:SetVisible( LDT.SFrame.visible )
-													RunConsoleCommand( "SBEP_LiftSys_SetLiftPartType_ser" , SMT[1].type )
-												end
+		if file.Exists( "materials/sbep_icons/"..Set.."/mv.vmt", "GAME" ) or file.Exists( "materials/sbep_icons/"..Set.."/h.vmt", "GAME" ) then
+			LDT.PButtons.Special.B = vgui.Create("DImageButton", LDT.Frame )
+				LDT.PButtons.Special.B:SetPos( 165 , 188 )   
+				LDT.PButtons.Special.B:SetSize( 155 , 35 )
+				LDT.PButtons.Special.B:SetImage( "sbep_icons/special.vmt" )
+				LDT.PButtons.Special.B.DoClick = function()
+														LDT.SFrame.visible = !LDT.SFrame.visible 
+														LDT.SFrame:SetVisible( LDT.SFrame.visible )
+													end
+		end
 
-		LDT.PButtons.Special.Part[2] = vgui.Create("DImageButton", LDT.SFrame )
-			LDT.PButtons.Special.Part[2]:SetImage( "sbep_icons/h.vmt" )
-			LDT.PButtons.Special.Part[2]:SetPos( 85 , 5 )
-			LDT.PButtons.Special.Part[2]:SetSize( 75 , 75 )
-			LDT.PButtons.Special.Part[2].DoClick = function()
-													LDT.SFrame.visible = false
-													LDT.SFrame:SetVisible( LDT.SFrame.visible )
-													RunConsoleCommand( "SBEP_LiftSys_SetLiftPartType_ser" , SMT[2].type )
-												end
+		if file.Exists( "materials/sbep_icons/"..Set.."/mv.vmt", "GAME" ) then
+			LDT.PButtons.Special.Part[1] = vgui.Create("DImageButton", LDT.SFrame )
+				LDT.PButtons.Special.Part[1]:SetImage( "sbep_icons/"..Set.."/mv.vmt" )
+				LDT.PButtons.Special.Part[1]:SetPos( 5 , 5 )
+				LDT.PButtons.Special.Part[1]:SetSize( 75 , 75 )
+				LDT.PButtons.Special.Part[1].DoClick = function()
+														LDT.SFrame.visible = false
+														LDT.SFrame:SetVisible( LDT.SFrame.visible )
+														RunConsoleCommand( "SBEP_LiftSys_SetLiftPartType_ser" , SMT[1].type )
+		end											end
+
+		if file.Exists( "materials/sbep_icons/"..Set.."/h.vmt", "GAME" ) then
+			LDT.PButtons.Special.Part[2] = vgui.Create("DImageButton", LDT.SFrame )
+				LDT.PButtons.Special.Part[2]:SetImage( "sbep_icons/"..Set.."/h.vmt" )
+				LDT.PButtons.Special.Part[2]:SetPos( 85 , 5 )
+				LDT.PButtons.Special.Part[2]:SetSize( 75 , 75 )
+				LDT.PButtons.Special.Part[2].DoClick = function()
+														LDT.SFrame.visible = false
+														LDT.SFrame:SetVisible( LDT.SFrame.visible )
+														RunConsoleCommand( "SBEP_LiftSys_SetLiftPartType_ser" , SMT[2].type )
+													end
+		end
 
 		---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 		--					CONSTRUCTION CONTROLS
@@ -396,10 +404,10 @@ if CLIENT then
 			local type2 = net.ReadString()
 			local typeC = net.ReadString()
 
-			CL.LiftDes.SBEPLDDM.PButtons.Part[4]:SetDisabled( size == 2 )
-			CL.LiftDes.SBEPLDDM.PButtons.Special.B:SetDisabled( size == 2 )
-			CL.LiftDes.SBEPLDDM.PButtons.Part[8]:SetDisabled( pos == 1 )
-			CL.LiftDes.SBEPLDDM.PButtons.Special.Part[2]:SetDisabled( pos == 1 )
+			if CL.LiftDes.SBEPLDDM.PButtons.Part[4] then CL.LiftDes.SBEPLDDM.PButtons.Part[4]:SetDisabled( size == 2 ) end
+			if CL.LiftDes.SBEPLDDM.PButtons.Special.B then CL.LiftDes.SBEPLDDM.PButtons.Special.B:SetDisabled( size == 2 ) end
+			if CL.LiftDes.SBEPLDDM.PButtons.Part[8] then CL.LiftDes.SBEPLDDM.PButtons.Part[8]:SetDisabled( pos == 1 ) end
+			if CL.LiftDes.SBEPLDDM.PButtons.Special.Part[2] then CL.LiftDes.SBEPLDDM.PButtons.Special.Part[2]:SetDisabled( pos == 1 ) end
 			CL.LiftDes.SBEPLDDM.BButtons.Delete:SetDisabled( CL.LiftDes.PC == 1 or (pos == 1 and BEM[type2]) )
 			CL.LiftDes.SBEPLDDM.BButtons.down:SetDisabled( pos == 1 )
 			CL.LiftDes.SBEPLDDM.BButtons.up:SetDisabled( pos == CL.LiftDes.PC )
@@ -410,9 +418,9 @@ if CLIENT then
 
 		function LD.SBEPDisableButtonsFirstTime() --merge this into the other function somehow
 			local size	= GetConVarNumber( "sbep_lift_designer_size" )
-			CL.LiftDes.SBEPLDDM.PButtons.Part[4]:SetDisabled( size == 2 )
-			CL.LiftDes.SBEPLDDM.PButtons.Part[8]:SetDisabled( true )
-			CL.LiftDes.SBEPLDDM.PButtons.Special.B:SetDisabled( size == 2 )
+			if CL.LiftDes.SBEPLDDM.PButtons.Part[4] then CL.LiftDes.SBEPLDDM.PButtons.Part[4]:SetDisabled( size == 2 ) end
+			if CL.LiftDes.SBEPLDDM.PButtons.Part[8] then CL.LiftDes.SBEPLDDM.PButtons.Part[8]:SetDisabled( true ) end
+			if CL.LiftDes.SBEPLDDM.PButtons.Special.B then CL.LiftDes.SBEPLDDM.PButtons.Special.B:SetDisabled( size == 2 ) end
 			CL.LiftDes.SBEPLDDM.BButtons.Delete:SetDisabled( true )
 			CL.LiftDes.SBEPLDDM.BButtons.down:SetDisabled( true )
 			CL.LiftDes.SBEPLDDM.BButtons.up:SetDisabled( true )
