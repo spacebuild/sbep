@@ -220,8 +220,10 @@ end
 
 function ENT:RefreshPos()
 	local offset = 0
-	if( self.Cont.Set == "SMALLBRIDGE" ) then
+	if self.Cont.Set == "SMALLBRIDGE" then
 		offset = 60.45
+	elseif self.Cont.Set == "MODBRIDGE" and self.PartData.TF == "V" then
+		offset = 75
 	end
 	self.Entity:SetPos( self.Cont:LocalToWorld( Vector(0,0, self.PartData.HO + offset) ) )
 end

@@ -712,13 +712,19 @@ function TOOL:LeftClick( trace )
 	
 	if Editing == 0 then
 	
+		local Set = string.upper( ply:GetInfo( "sbep_lift_designer_set" ) )
 		local startpos = trace.HitPos
 			LiftSystem_SER[ply] = ents.Create( "sbep_elev_system" )
-			LiftSystem_SER[ply]:SetPos( startpos + Vector(0,0,4.65))
-			LiftSystem_SER[ply]:SetAngles( Angle(0,-90,0) )
+			if Set == "SMALLBRIDGE" then
+				LiftSystem_SER[ply]:SetPos( startpos + Vector(0,0,4.65))
+				LiftSystem_SER[ply]:SetAngles( Angle(0,-90,0) )
+			elseif Set == "MODBRIDGE" then
+				LiftSystem_SER[ply]:SetPos( startpos )
+				LiftSystem_SER[ply]:SetAngles( Angle(0,-180,0) )
+			end
 			LiftSystem_SER[ply]:SetModel( "models/smallbridge/elevators_small/sbselevp3.mdl" )
 			LiftSystem_SER[ply].Skin = ply:GetInfoNum( "sbep_lift_designer_skin", 0 )
-			LiftSystem_SER[ply].Set = string.upper( ply:GetInfo( "sbep_lift_designer_set" ) )
+			LiftSystem_SER[ply].Set = Set
 			LiftSystem_SER[ply]:SetNWBool( "Sendable" , true )
 			LiftSystem_SER[ply].PLY		= ply
 			LiftSystem_SER[ply]:SetOwner(ply)
