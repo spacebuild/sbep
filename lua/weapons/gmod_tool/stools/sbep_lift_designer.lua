@@ -413,6 +413,9 @@ if CLIENT then
 			CL.LiftDes.SBEPLDDM.BButtons.up:SetDisabled( pos == CL.LiftDes.PC )
 			CL.LiftDes.SBEPLDDM.BButtons.Construct:SetDisabled( pos ~= CL.LiftDes.PC )
 			CL.LiftDes.SBEPLDDM.SButtons.finish:SetDisabled( (CL.LiftDes.PC < 3) or BEM[type1] or BEM[typeC] )
+			CL.LiftDes.SBEPLDDM.BButtons.RotC:SetDisabled(pos == 1)
+			CL.LiftDes.SBEPLDDM.BButtons.RotAC:SetDisabled(pos == 1)
+			
 		end
 		net.Receive("SBEPDisableButtons_cl", LD.SBEPDisableButtons)
 
