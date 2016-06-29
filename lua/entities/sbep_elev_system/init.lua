@@ -20,11 +20,11 @@ PMT.SMALLBRIDGE.L = {
 		"models/smallbridge/elevators_Large/sblelevp2r.mdl"	,
 		"models/smallbridge/elevators_Large/sblelevp3.mdl"
 			}
-			
+PMT.SMALLBRIDGE.LIFTOFFSET = 4.65			
 PMT.MODBRIDGE.S = {
 		"models/cerus/modbridge/misc/elevator/se11f.mdl"
 			}
-			
+PMT.MODBRIDGE.LIFTOFFSET = 134.65			
 local DD = list.Get( "SBEP_DoorControllerModels" )
 
 function ENT:Initialize()
@@ -380,12 +380,12 @@ function ENT:FinishSystem()
 				Part.PartData.FloorOffset = {}
 				Part.PartData.FN = {}
 				for m,n in ipairs( Part.PartData.SD.MultiFloorTable ) do
-					Part.PartData.FloorOffset[m] = Part.PartData.HO - C3*Part.PartData.ZUD - C4*Part.PartData.ZDD + 4.65 + n
+					Part.PartData.FloorOffset[m] = Part.PartData.HO - C3*Part.PartData.ZUD - C4*Part.PartData.ZDD + PMT[self.Entity.Set].LIFTOFFSET + n
 					table.insert( self.FloorTable , Part.PartData.FloorOffset[m] )
 					Part.PartData.FN[m] = self:GetFloorCount()
 				end
 			else
-				Part.PartData.FloorOffset = Part.PartData.HO - C3*Part.PartData.ZUD - C4*Part.PartData.ZDD + 4.65 --Calculates floor offset, depending on part roll offset
+				Part.PartData.FloorOffset = Part.PartData.HO - C3*Part.PartData.ZUD - C4*Part.PartData.ZDD + PMT[self.Entity.Set].LIFTOFFSET --Calculates floor offset, depending on part roll offset
 				table.insert( self.FloorTable , Part.PartData.FloorOffset )
 				Part.PartData.FN = self:GetFloorCount()
 			end
