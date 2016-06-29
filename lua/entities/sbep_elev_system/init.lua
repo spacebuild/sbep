@@ -22,9 +22,13 @@ PMT.SMALLBRIDGE.L = {
 			}
 PMT.SMALLBRIDGE.LIFTOFFSET = 4.65			
 PMT.MODBRIDGE.S = {
-		"models/cerus/modbridge/misc/elevator/se11f.mdl"
+		"models/cerus/modbridge/misc/elevator/elev_111.mdl",
+		"models/cerus/modbridge/misc/elevator/elev_111.mdl",
+		"models/cerus/modbridge/misc/elevator/elev_111.mdl",
+		"models/cerus/modbridge/misc/elevator/elev_111.mdl",
+		"models/cerus/modbridge/misc/elevator/elev_111.mdl"
 			}
-PMT.MODBRIDGE.LIFTOFFSET = 134.65			
+PMT.MODBRIDGE.LIFTOFFSET = 81.65			
 local DD = list.Get( "SBEP_DoorControllerModels" )
 
 function ENT:Initialize()

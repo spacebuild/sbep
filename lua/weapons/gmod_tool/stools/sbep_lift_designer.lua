@@ -718,11 +718,12 @@ function TOOL:LeftClick( trace )
 			if Set == "SMALLBRIDGE" then
 				LiftSystem_SER[ply]:SetPos( startpos + Vector(0,0,4.65))
 				LiftSystem_SER[ply]:SetAngles( Angle(0,-90,0) )
+				LiftSystem_SER[ply]:SetModel( "models/smallbridge/elevators_small/sbselevp3.mdl" )
 			elseif Set == "MODBRIDGE" then
 				LiftSystem_SER[ply]:SetPos( startpos )
 				LiftSystem_SER[ply]:SetAngles( Angle(0,-180,0) )
+				LiftSystem_SER[ply]:SetModel( "models/cerus/modbridge/misc/elevator/elev_111.mdl" )
 			end
-			LiftSystem_SER[ply]:SetModel( "models/smallbridge/elevators_small/sbselevp3.mdl" )
 			LiftSystem_SER[ply].Skin = ply:GetInfoNum( "sbep_lift_designer_skin", 0 )
 			LiftSystem_SER[ply].Set = Set
 			LiftSystem_SER[ply]:SetNWBool( "Sendable" , true )

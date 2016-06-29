@@ -65,21 +65,21 @@ LMT.SMALLBRIDGE.L = {
 			}
 
 LMT.MODBRIDGE.S = {
-		[ "B" 	 ] = { model = "models/cerus/modbridge/misc/elevator/ecb111.mdl" 	, ZUD =  75 	, ZDD =  75 	, AT = {1,1,1,1} } ,
-		[ "BE" 	 ] = { model = "models/cerus/modbridge/misc/elevator/eb111.mdl" 	, ZUD =  75 	, ZDD =  75 	, AT = {1,1,1,1} } ,
+		[ "B" 	 ] = { model = "models/cerus/modbridge/misc/elevator/ecb111.mdl" 	, ZUD =  75 	, ZDD =  75 	, AT = {0,1,0,0} } ,
+		[ "BE" 	 ] = { model = "models/cerus/modbridge/misc/elevator/eb111.mdl" 	, ZUD =  75 	, ZDD =  75 	, AT = {0,1,0,1} } ,
 
-		[ "M" 	 ] = { model = "models/cerus/modbridge/misc/elevator/ecm111.mdl" 	, ZUD =  75 	, ZDD =  75 	, AT = {1,1,1,1} } ,
-		[ "ME" 	 ] = { model = "models/cerus/modbridge/misc/elevator/em111.mdl" 	, ZUD =  75 	, ZDD =  75 	, AT = {1,1,1,1} } ,
+		[ "M" 	 ] = { model = "models/cerus/modbridge/misc/elevator/ecm111.mdl" 	, ZUD =  75 	, ZDD =  75 	, AT = {0,1,0,0} } ,
+		[ "ME" 	 ] = { model = "models/cerus/modbridge/misc/elevator/em111.mdl" 	, ZUD =  75 	, ZDD =  75 	, AT = {0,1,0,1} } ,
 
-		[ "T" 	 ] = { model = "models/cerus/modbridge/misc/elevator/ect111.mdl" 	, ZUD =  75 	, ZDD =  75 	, AT = {1,1,1,1} } ,
-		[ "TE" 	 ] = { model = "models/cerus/modbridge/misc/elevator/et111.mdl" 	, ZUD =  75 	, ZDD =  75 	, AT = {1,1,1,1} } ,
+		[ "T" 	 ] = { model = "models/cerus/modbridge/misc/elevator/ect111.mdl" 	, ZUD =  75 	, ZDD =  75 	, AT = {0,1,0,0} } ,
+		[ "TE" 	 ] = { model = "models/cerus/modbridge/misc/elevator/et111.mdl" 	, ZUD =  75 	, ZDD =  75 	, AT = {0,1,0,1} } ,
 
-		[ "S" 	 ] = { model = "models/cerus/modbridge/misc/elevator/etm111.mdl" 	, ZUD =  75 	, ZDD =  75 	, AT = {1,1,1,1} , SD = { IsShaft = true } },
-		[ "S2" 	 ] = { model = "models/cerus/modbridge/misc/elevator/etm112.mdl" 	, ZUD =  75 	, ZDD =  75 	, AT = {1,1,1,1} , SD = { IsShaft = true } },
+		[ "S" 	 ] = { model = "models/cerus/modbridge/misc/elevator/etm111.mdl" 	, ZUD =  75 	, ZDD =  75 	, AT = {0,0,0,0} , SD = { IsShaft = true } },
+		[ "S2" 	 ] = { model = "models/cerus/modbridge/misc/elevator/etm112.mdl" 	, ZUD =  75 	, ZDD =  75 	, AT = {0,0,0,0} , SD = { IsShaft = true } },
 
-		[ "BV" 	 ] = { model = "models/cerus/modbridge/core/s-331eb.mdl", ZUD =  75 	, ZDD =  75 	, AT = {1,1,1,1} , SD = { IsVisor = true , IsSpecial = true } },
-		[ "MV" 	 ] = { model = "models/cerus/modbridge/core/s-331em.mdl", ZUD =  75 	, ZDD =  75 	, AT = {1,1,1,1} , SD = { IsVisor = true , IsSpecial = true } },
-		[ "TV" 	 ] = { model = "models/cerus/modbridge/core/s-331et.mdl", ZUD =  75 	, ZDD =  75 	, AT = {1,1,1,1} , SD = { IsVisor = true , IsSpecial = true } },
+		[ "BV" 	 ] = { model = "models/cerus/modbridge/core/s-331eb.mdl", ZUD =  75 	, ZDD =  75 	, AT = {0,0,0,0} , SD = { IsVisor = true , IsSpecial = true } },
+		[ "MV" 	 ] = { model = "models/cerus/modbridge/core/s-331em.mdl", ZUD =  75 	, ZDD =  75 	, AT = {0,0,0,0} , SD = { IsVisor = true , IsSpecial = true } },
+		[ "TV" 	 ] = { model = "models/cerus/modbridge/core/s-331et.mdl", ZUD =  75 	, ZDD =  75 	, AT = {0,0,0,0} , SD = { IsVisor = true , IsSpecial = true } },
 
 			}
 
