@@ -211,6 +211,7 @@ function ENT:Think()
 			if self.SystemTable.StopSound then
 				self.SystemTable.StopSound:Stop()
 				self.SystemTable.StopSound:Play()
+				util.ScreenShake( self:GetPos(), 5, 5, 2, 300 )
 			end
 			self:AddArriveDelay( 4 )
 		elseif self.SystemTable.UseDoors then	
@@ -607,6 +608,7 @@ function ENT:TriggerInput(k,v)
 			self.SystemTable.StopSound:Stop()
 			self.SystemTable.StopSound:Play()
 		end
+		util.ScreenShake( self:GetPos(), 5, 5, 2, 300 )	
 		self:AddHoldDelay( 4 )
 	end
 end
