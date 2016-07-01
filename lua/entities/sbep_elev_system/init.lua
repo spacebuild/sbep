@@ -4,37 +4,48 @@ include( "shared.lua" )
 
 ENT.WireDebugName = "SBEP Elevator System"
 
-local PMT = {SMALLBRIDGE = {}, MODBRIDGE = {} }
-PMT.SMALLBRIDGE.S = {
-		"models/smallbridge/elevators_small/sbselevp0.mdl"	,
-		"models/smallbridge/elevators_small/sbselevp1.mdl"	,
-		"models/smallbridge/elevators_small/sbselevp2e.mdl"	,
-		"models/smallbridge/elevators_small/sbselevp2r.mdl"	,
-		"models/smallbridge/elevators_small/sbselevp3.mdl"
-			}
+local PT = {SMALLBRIDGE = {}, MODBRIDGE = {} }
+PT.SMALLBRIDGE.S = {
+		Defaults = { LiftOffset = 4.65, Increment = -60.45, TargetOffset = -60.45 }, --each panel model uses these defaults
+		Panels = {
+			--order of models matters, it depends on ModelAccessTable and defines which model is being used for the different exits
+			{ Model = "models/smallbridge/elevators_small/sbselevp0.mdl" },
+			{ Model = "models/smallbridge/elevators_small/sbselevp1.mdl", LiftOffset = 4.65, Increment = -60.45, TargetOffset = -60.45 }, --defaults can be overridden based on panel model like this example shows
+			{ Model = "models/smallbridge/elevators_small/sbselevp2e.mdl" },
+			{ Model = "models/smallbridge/elevators_small/sbselevp2r.mdl" },
+			{ Model = "models/smallbridge/elevators_small/sbselevp3.mdl" }
+		}
+}
 
-PMT.SMALLBRIDGE.L = {
-		"models/smallbridge/elevators_Large/sblelevp0.mdl"	,
-		"models/smallbridge/elevators_Large/sblelevp1.mdl"	,
-		"models/smallbridge/elevators_Large/sblelevp2e.mdl"	,
-		"models/smallbridge/elevators_Large/sblelevp2r.mdl"	,
-		"models/smallbridge/elevators_Large/sblelevp3.mdl"
-			}
-PMT.SMALLBRIDGE.LIFTOFFSET = 4.65			
-PMT.MODBRIDGE.S = {
-		"models/cerus/modbridge/misc/elevator/elev_111.mdl",
-		"models/cerus/modbridge/misc/elevator/elev_111.mdl",
-		"models/cerus/modbridge/misc/elevator/elev_111.mdl",
-		"models/cerus/modbridge/misc/elevator/elev_111.mdl",
-		"models/cerus/modbridge/misc/elevator/elev_111.mdl"
-			}
-PMT.MODBRIDGE.LIFTOFFSET = 81.65			
+PT.SMALLBRIDGE.L = {
+	Defaults = { LiftOffset = 4.65, Increment = -60.45, TargetOffset = -60.45 },
+	Panels = {
+		{ Model = "models/smallbridge/elevators_Large/sblelevp0.mdl" },
+		{ Model = "models/smallbridge/elevators_Large/sblelevp1.mdl" },
+		{ Model = "models/smallbridge/elevators_Large/sblelevp2e.mdl" },
+		{ Model = "models/smallbridge/elevators_Large/sblelevp2r.mdl" },
+		{ Model = "models/smallbridge/elevators_Large/sblelevp3.mdl" }
+	}
+}
+
+PT.MODBRIDGE.S = {
+	Defaults = { LiftOffset = 81.65, Increment = 100, TargetOffset = 100 },
+	Panels = {
+		{ Model = "models/cerus/modbridge/misc/elevator/elev_111.mdl" },
+		{ Model = "models/cerus/modbridge/misc/elevator/elev_111.mdl" },
+		{ Model = "models/cerus/modbridge/misc/elevator/elev_111.mdl" },
+		{ Model = "models/cerus/modbridge/misc/elevator/elev_111.mdl" },
+		{ Model = "models/cerus/modbridge/misc/elevator/elev_111.mdl" }
+	}
+}
+
 local DD = list.Get( "SBEP_DoorControllerModels" )
 
 function ENT:Initialize()
 	
 	self.PartTable  = {}
 	self.SystemTable  = {}
+	self.SystemTable.Panel = {}
 	self.FloorTable  = {}
 	self.HatchTable  = {}
 	
@@ -49,7 +60,7 @@ function ENT:Initialize()
 	
 	self.Entity:SetNetworkedInt( "ActivePart" , 1 )
 	self.Entity:SetNetworkedInt( "SBEP_LiftPartCount" , 0 )
-	--self:SetModel( PMT[self.Entity.Set][self.Size[1]][5] ) 
+	--self:SetModel( PT[self.Entity.Set][self.Size[1]][5] ) 
 	
 	self.LiftActive = false
 	
@@ -64,19 +75,7 @@ function ENT:Initialize()
 	self.TimerHoldDelay = 0
 	self.TimerHoldStartTime = CurTime()
 	
-	
-	
 	self.Index = tostring( self:EntIndex() )
-	
-	self.Increment = 0
-	self.TargetOffset = 0
-	if self.Entity.Set=="SMALLBRIDGE" then
-		self.Increment = -60.45
-		self.TargetOffset = -60.45
-	elseif self.Entity.Set=="MODBRIDGE" then
-		self.Increment = 100
-		self.TargetOffset = 100
-	end
 	
 	self.SystemTable.AngleYawOffset = 90
 	
@@ -375,6 +374,11 @@ function ENT:FinishSystem()
 	
 	self.Entity:GetPhysicsObject():EnableMotion( true )
 	
+	self.Increment = self.SystemTable.Panel.Increment or PT[self.Entity.Set][self.Size[1]].Defaults.Increment or 0
+
+	self.TargetOffset = self.SystemTable.Panel.TargetOffset or PT[self.Entity.Set][self.Size[1]].Defaults.TargetOffset or 0
+	
+	self.LiftOffset = self.SystemTable.Panel.LiftOffset or PT[self.Entity.Set][self.Size[1]].Defaults.LiftOffset or 0
 	for n,Part in ipairs( self.PartTable ) do --Setting up the floors 
 		if !Part.PartData.SD.IsShaft then
 			Part:MakeWire()
@@ -384,12 +388,12 @@ function ENT:FinishSystem()
 				Part.PartData.FloorOffset = {}
 				Part.PartData.FN = {}
 				for m,n in ipairs( Part.PartData.SD.MultiFloorTable ) do
-					Part.PartData.FloorOffset[m] = Part.PartData.HO - C3*Part.PartData.ZUD - C4*Part.PartData.ZDD + PMT[self.Entity.Set].LIFTOFFSET + n
+					Part.PartData.FloorOffset[m] = Part.PartData.HO - C3*Part.PartData.ZUD - C4*Part.PartData.ZDD + self.LiftOffset + n
 					table.insert( self.FloorTable , Part.PartData.FloorOffset[m] )
 					Part.PartData.FN[m] = self:GetFloorCount()
 				end
 			else
-				Part.PartData.FloorOffset = Part.PartData.HO - C3*Part.PartData.ZUD - C4*Part.PartData.ZDD + PMT[self.Entity.Set].LIFTOFFSET --Calculates floor offset, depending on part roll offset
+				Part.PartData.FloorOffset = Part.PartData.HO - C3*Part.PartData.ZUD - C4*Part.PartData.ZDD + self.LiftOffset --Calculates floor offset, depending on part roll offset
 				table.insert( self.FloorTable , Part.PartData.FloorOffset )
 				Part.PartData.FN = self:GetFloorCount()
 			end
@@ -523,9 +527,10 @@ function ENT:CalcPanelModel( PartNum )
 	end
 	
 	self.SystemTable.MATSum = self.SystemTable.ModelAccessTable[1] + self.SystemTable.ModelAccessTable[2] + self.SystemTable.ModelAccessTable[3] + self.SystemTable.ModelAccessTable[4]
-	DMT = PMT[self.Entity.Set][self.Size[1]]
+	DMT = PT[self.Entity.Set][self.Size[1]].Panels
 	local function SetLiftModel( n )
-		self:SetModel( DMT[ n ] )
+		self.SystemTable.Panel = DMT[ n ]
+		self:SetModel( self.SystemTable.Panel.Model )
 	end
 	local S = self.SystemTable.MATSum
 	local T = self.SystemTable.ModelAccessTable
