@@ -580,6 +580,7 @@ function ENT:TriggerInput(k,v)
 end
 
 function ENT:AddCallFloorNum( FN )
+	FN = math.Clamp( math.Round( FN ), 1, self:GetFloorCount() )
 	if !self.CallFloorTable then self.CallFloorTable = {} end
 	if !table.HasValue( self.CallFloorTable , FN ) then
 		table.insert( self.CallFloorTable , FN )
