@@ -68,8 +68,8 @@ end
 
 
 function TOOL:RightClick(trace)	
-    if CLIENT then return end
-    self:GetOwner():SendLua('if input.IsShiftDown() then RunConsoleCommand("gmod_tool", "sbep_part_assembler") end')
+    if SERVER then return end
+    if input.IsShiftDown() then RunConsoleCommand("gmod_tool", "sbep_part_assembler") end
     return false
 end
 
