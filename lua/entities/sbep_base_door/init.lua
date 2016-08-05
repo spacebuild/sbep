@@ -373,6 +373,7 @@ end
 function ENT:PreEntityCopy()
 	local DI = {}
 	DI.type 	= self.type
+	DI.DClass = self.DClass
 	if self.Cont then
 		DI.Cont 	= self.Cont:EntIndex()
 	end
@@ -388,6 +389,7 @@ function ENT:PostEntityPaste(pl, Ent, CreatedEntities)
 	local DI = Ent.EntityMods.SBEPD
 
 	self.type 	= DI.type
+	self.DClass = DI.DClass or 1
 	self.D 		= DI.D
 	self.ATEnt	= CreatedEntities[ DI.ATEnt ]
 	self.VecOff	= DI.VecOff
@@ -400,3 +402,16 @@ function ENT:PostEntityPaste(pl, Ent, CreatedEntities)
 	self:GetSequenceData()
 	self:Close()
 end
+
+function MakeDoor( Player, Data )
+
+	local ent = ents.Create( Data.Class )
+	duplicator.DoGeneric( ent, Data )
+	ent:Spawn()
+
+	duplicator.DoGenericPhysics( ent, Player, Data )
+
+	return ent
+
+end
+duplicator.RegisterEntityClass( "sbep_base_door", MakeDoor, "Data" )
