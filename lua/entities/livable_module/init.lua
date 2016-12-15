@@ -18,7 +18,7 @@ function ENT:Initialize()
 	if not (WireAddon == nil) then
 		self.WireDebugName = self.PrintName
 		self.Inputs = Wire_CreateInputs(self, { "On", "Gravity", "Max O2 level" })
-		self.Outputs = Wire_CreateOutputs(self, { "On", "Oxygen-Level", "Temperature", "Gravity" })
+		self.Outputs = Wire_CreateOutputs(self, { "On", "Oxygen-Level", "Temperature", "Gravity", "Damaged" })
 	else
         self.Inputs = { { Name = "On" }, { Name = "Radius" }, { Name = "Gravity" }, { Name = "Max O2 level" } }
     end
@@ -513,6 +513,7 @@ function ENT:Climate_Control()
 		Wire_TriggerOutput(self, "Oxygen-Level", tonumber(self:GetO2Percentage()))
 		Wire_TriggerOutput(self, "Temperature", tonumber(self.sbenvironment.temperature))
 		Wire_TriggerOutput(self, "Gravity", tonumber(self.sbenvironment.gravity))
+		Wire_TriggerOutput(self, "Damaged", tonumber(self.damaged))
 	end
 end
 
