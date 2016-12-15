@@ -110,6 +110,40 @@ function ENT:OnRemove()
     self:StopSound("apc_engine_start")
 end
 
+function ENT:PreEntityCopy()
+	local LivableModule = {}
+	LivableModule.Active  = self.Active
+	LivableModule.damaged = self.damaged
+	if WireAddon then
+		duplicator.StoreEntityModifier(self,"WireDupeInfo",WireLib.BuildDupeInfo(self.Entity))
+	end
+	duplicator.StoreEntityModifier(self, "livable_module", LivableModule)
+end
+
+function ENT:PostEntityPaste(ply, ent, createdEnts)
+	if WireAddon then
+		local emods = ent.EntityMods
+		if emods and emods.WireDupeInfo then
+			WireLib.ApplyDupeInfo(ply, ent, emods.WireDupeInfo, function(id) return createdEnts[id] end)
+		end
+	end
+end
+
+function MakeLivableModule( Player, Data )
+	local ent = ents.Create( Data.Class )
+	duplicator.DoGeneric( ent, Data )
+	ent:Spawn()
+	duplicator.DoGenericPhysics( ent, Player, Data )
+	ent:SetPlayer(Player)
+	ent.damaged = Data.EntityMods.livable_module.damaged
+	if CPPI then ent:CPPISetOwner(Player) end
+	if Data.EntityMods.livable_module.Active == 1 then
+		ent:TurnOn()
+	end
+	return ent
+end
+duplicator.RegisterEntityClass( "livable_module", MakeLivableModule, "Data" )
+
 --[[
 function ENT:CreateEnvironment(gravity, atmosphere, pressure, temperature, o2, co2, n, h)
 	--Msg("CreateEnvironment: "..tostring(gravity).."\n")
