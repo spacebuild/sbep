@@ -711,7 +711,8 @@ function TOOL:LeftClick( trace )
 			LiftSystem_SER[ply].Skin = ply:GetInfoNum( "sbep_lift_designer_skin", 0 )
 			LiftSystem_SER[ply]:SetNWBool( "Sendable" , true )
 			LiftSystem_SER[ply].PLY		= ply
-			LiftSystem_SER[ply]:SetOwner(ply)
+			LiftSystem_SER[ply]:SetOwner( ply )
+			if CPPI and LiftSystem_SER[ply].CPPISetOwner then LiftSystem_SER[ply]:CPPISetOwner(ply) end
 			
 		LiftSystem_SER[ply].Usable = ply:GetInfoNum( "sbep_lift_designer_enableuse", 0 ) == 1
 		

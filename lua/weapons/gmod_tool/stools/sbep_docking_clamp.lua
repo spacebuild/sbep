@@ -53,12 +53,13 @@ function TOOL:LeftClick( tr )
 	local pos = tr.HitPos
 	
 	local DockEnt = ents.Create( "sbep_base_docking_clamp" )	
-		DockEnt.SPL = self:GetOwner()
+		DockEnt.SPL = ply
 		DockEnt:SetModel( model )
 		DockEnt:SetDockType( Data.ALType )
 	DockEnt:Spawn()
 	DockEnt:Initialize()
 	DockEnt:Activate()
+	if CPPI and DockEnt.CPPISetOwner and IsValid(ply) then DockEnt:CPPISetOwner(ply) end
 		
 	for n,P in pairs( Data.EfPoints ) do
 		DockEnt:SetNetworkedVector("EfVec"..n, P.vec)
@@ -89,6 +90,7 @@ function TOOL:RightClick( tr )
 	if !tr.Hit or !tr.Entity or !tr.Entity:IsValid() then return end
 	local dock = tr.Entity
 	local class = dock:GetClass()
+	local ply = self:GetOwner()
 	
 	if class == "sbep_base_docking_clamp" then
 		local type = dock.ALType
@@ -105,13 +107,14 @@ function TOOL:RightClick( tr )
 				local ang = dock:GetAngles()
 				
 				local DockEnt = ents.Create( "sbep_base_docking_clamp" )	
-					DockEnt.SPL = self:GetOwner()
+					DockEnt.SPL = ply
 					DockEnt:SetModel( model )
 					DockEnt:SetDockType( data.ALType )
 					DockEnt.Usable = dock.Usable
 				DockEnt:Spawn()
 				DockEnt:Initialize()
 				DockEnt:Activate()
+				if CPPI and DockEnt.CPPISetOwner and IsValid(ply) then DockEnt:CPPISetOwner(ply) end
 					
 				for n,P in pairs( data.EfPoints ) do
 					DockEnt:SetNetworkedVector("EfVec"..n, P.vec)
@@ -133,7 +136,7 @@ function TOOL:RightClick( tr )
 							undo.AddEntity( door )
 						end
 					end
-					undo.SetPlayer( self:GetOwner() )
+					undo.SetPlayer( ply )
 				undo.Finish()
 				
 				return true

@@ -55,6 +55,7 @@ function TOOL:LeftClick(trace)
 
     SMBProp:Spawn()
     SMBProp:Activate()
+	if CPPI and SMBProp.CPPISetOwner then SMBProp:CPPISetOwner( self:GetOwner() ) end
 	if weld == 1 and IsValid(trace.Entity) then
 		constraint.Weld( SMBProp, trace.Entity, 0, trace.PhysicsBone, 0, collision == 1, false )
 	end

@@ -100,6 +100,7 @@ function ENT:CreatePart()
 		NP:Spawn()
 		NP:SetRenderMode( 1 )
 		self.Entity:DeleteOnRemove( NP )
+		if CPPI and NP.CPPISetOwner then NP:CPPISetOwner( self.Entity:CPPIGetOwner() ) end
 	return NP
 end
 
@@ -411,8 +412,7 @@ function ENT:FinishSystem()
 	undo.Finish()
 
 	self:SetOwner(nil)
-	self:SetPlayer(ply)
-	self.Owner = ply
+	if CPPI and self.CPPISetOwner then self:CPPISetOwner(ply) end
 end
 
 function ENT:CreateHatches()		--Creating Hatches. Each Hatch is paired with the part below it, so the top part has no hatch associated.
@@ -434,6 +434,7 @@ function ENT:CreateHatches()		--Creating Hatches. Each Hatch is paired with the 
 				NH.HatchData.PO = C3*V.PartData.ZDD + C4*V.PartData.ZUD + S*4.65	--Offset from paired part
 				NH.HatchData.HO = V.PartData.HO + NH.HatchData.PO					--Offset from system origin
 			NH:Attach( V , Vector(0,0,NH.HatchData.PO) , V:GetAngles() )
+			if CPPI and NH.CPPISetOwner then NH:CPPISetOwner( self:CPPIGetOwner() ) end
 
 			table.insert( self.HatchTable , NH )
 		end
@@ -452,6 +453,7 @@ function ENT:CreateDoors()
 						ND:Initialize()
 						ND:SetDoorType( I.type )
 						ND:Attach( Part, I.V, I.A )
+						if CPPI and ND.CPPISetOwner then ND:CPPISetOwner( self:CPPIGetOwner() ) end
 					table.insert( Part.PartData.FloorDoorTable , ND )
 					self.Entity:DeleteOnRemove( ND )
 				end

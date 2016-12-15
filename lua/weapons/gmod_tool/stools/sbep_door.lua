@@ -83,6 +83,8 @@ function TOOL:LeftClick( tr )
 	DoorController:Activate()
 	
 	DoorController:SetPos( pos - Vector(0,0, DoorController:OBBMins().z ) )
+	
+	if CPPI then DoorController:CPPISetOwner(ply) end
 	DoorController:AddDoors()
 	
 	DoorController:MakeWire( ply:GetInfoNum( "sbep_door_wire", 1 ) == 1 )
