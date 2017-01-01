@@ -3,14 +3,31 @@ Spacebuild Enhancement Project
 
 [Garry's Mod][garrysmod] Spacebuild Enhancement Project for [Spacebuild][spacebuild]
 
-Facepunch Page: https://facepunch.com/showthread.php?t=1519499&p=50363396
-
+Facepunch Page: [Located Here][facepunch]
 
 Discord Server: [Located Here][discord]
 
+
+# Status
+
+Working on SB4!
+ 
+ 
+# Workshop Installation(OUTDATED)
+
 *Please do not upload to the workshop, we're creating an* **Official** *workshop version now and this repository will be synced with it.*
 
-*The SBEP workshop is currently outdated because of issues with the workshop, we're working to resolve this for the upcoming alpha of Bpacebuild 4*
+*The SBEP workshop is currently outdated because of issues with the workshop, we're working to resolve this for the upcoming alpha of Spacebuild 4*
+
+SBEP is available via the Steam Workshop! Go to [its Workshop page][workshop] and press `Subscribe`, and it will automatically appear in Garry's Mod.
+
+
+# Manual Installation(DO THIS!)
+
+Simply clone this repository into your `addons` folder:
+
+    cd "%programfiles(x86)%/Steam/SteamApps/common/GarrysMod/garrysmod/addons"
+    git clone https://github.com/spacebuild/spacebuild.git spacebuild
 
 Contributors
 ===========
@@ -24,28 +41,10 @@ Contributors
 If you would like to help just drop a pull request in with your changes! 
 Please try to keep your coding clean!
 
-Status
-===========
-
-Will be filled in when status is known xD
- 
- 
-If anyone that has forked the repository, has done any work that they would like to have merged in please make a pull request and we'll look over it.
-
-# Workshop Installation(OUTDATED)
-
-SBEP is available via the Steam Workshop! Go to [its Workshop page][workshop] and press `Subscribe`, and it will automatically appear in Garry's Mod.
-
-# Manual Installation(DO THIS!)
-
-Simply clone this repository into your `addons` folder:
-
-    cd "%programfiles(x86)%/Steam/SteamApps/common/GarrysMod/garrysmod/addons"
-    git clone https://github.com/spacebuild/spacebuild.git spacebuild
 
 # License
 
-Copyright 2009-2016 SB Dev Team
+Copyright 2009-2017 SB Dev Team
 
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at
 
