@@ -24,10 +24,13 @@ SBEP is available via the Steam Workshop! Go to [its Workshop page][workshop] an
 
 # Manual Installation(DO THIS!)
 
+How to Tortoise Git + Clone/Pull: http://steamcommunity.com/groups/spacebuild/discussions/0/144513670980243163/
+
 Simply clone this repository into your `addons` folder:
 
     cd "%programfiles(x86)%/Steam/SteamApps/common/GarrysMod/garrysmod/addons"
     git clone https://github.com/spacebuild/spacebuild.git spacebuild
+
 
 Contributors
 ===========
