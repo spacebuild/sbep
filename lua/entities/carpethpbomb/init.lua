@@ -7,6 +7,8 @@ util.PrecacheSound( "explode_9" )
 util.PrecacheSound( "explode_8" )
 util.PrecacheSound( "explode_5" )
 
+local SB = SPACEBUILD
+
 function ENT:Initialize()
 
 	self.Entity:SetModel( "models/Slyfo/how_explosiveround.mdl" )
@@ -50,7 +52,7 @@ function ENT:Splode()
 	if(!self.Exploded) then
 		--self.Exploded = true
 		util.BlastDamage(self.Entity, self.Entity, self.Entity:GetPos(), 100, 100)
-		cbt_hcgexplode( self.Entity:GetPos(), 100, math.random(50,100), 4)
+		SB.util.damage.doBlastDamage( self.Entity:GetPos(), 100, math.random(50,100), 4)
 		
 		self.Entity:EmitSound("explode_9")
 		

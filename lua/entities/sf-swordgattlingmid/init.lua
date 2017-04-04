@@ -4,6 +4,8 @@ AddCSLuaFile( "shared.lua" )
 include( 'shared.lua' )
 util.PrecacheSound( "SB/Gattling2.wav" )
 
+local SB = SPACEBUILD
+
 function ENT:Initialize()
 
 	self.Entity:SetModel( "models/Slyfo/swordgatmid.mdl" ) 
@@ -83,7 +85,7 @@ function ENT:Think()
 		Bullet.Callback = function (attacker, tr, dmginfo)
 			if (tr.Entity and tr.Entity:IsValid()) then
 				local  gdmg = math.random(10,20)
-				attack = cbt_dealdevhit(tr.Entity, gdmg, 5)
+				attack = SB.util.damage.doDamage(tr.Entity, gdmg, 5)
 				if (attack ~= nil) then
 					if (attack == 2) then
 						local wreck = ents.Create( "wreckedstuff" )

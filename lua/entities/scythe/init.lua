@@ -3,6 +3,8 @@ AddCSLuaFile( "cl_init.lua" )
 AddCSLuaFile( "shared.lua" )
 include( 'shared.lua' )
 
+local SB = SPACEBUILD
+
 function ENT:Initialize()
 
 	self.Entity:SetModel( "models/props_junk/PopCan01a.mdl" ) 
@@ -56,7 +58,7 @@ function ENT:Initialize()
 	self.Strafe = 0
 	self.DStrafe = 0
 	
-	gcombat.registerent( self.Entity, 500, 6 )
+	SB.util.damage.registerEnt( self.Entity, 500, 6 )
 		
 	self.EMount = true
 	self.HasHardpoints = true
@@ -139,7 +141,7 @@ function ENT:Initialize()
 		phys:EnableCollisions(true)
 		phys:SetMass( 1000 )
 	end
-	gcombat.registerent( Body, 300, 40 )
+	SB.util.damage.registerEnt( Body, 300, 40 )
 	
 	
 	
@@ -168,7 +170,7 @@ function ENT:Initialize()
 		phys:EnableCollisions(true)
 		phys:SetMass( 1 )
 	end
-	gcombat.registerent( Rear, 300, 40 )
+	SB.util.damage.registerEnt( Rear, 300, 40 )
 	
 	self:SetNetworkedEntity("Pod",Body,true)
 	self:SetNetworkedEntity("Rear",Rear,true)
@@ -194,7 +196,7 @@ function ENT:Initialize()
 		phys:EnableCollisions(true)
 		phys:SetMass( 1 )
 	end
-	gcombat.registerent( LWingE, 300, 40 )
+	SB.util.damage.registerEnt( LWingE, 300, 40 )
 	
 	
 	RWingE = ents.Create( "SF-VTOLJet" )
@@ -215,13 +217,13 @@ function ENT:Initialize()
 		phys:EnableCollisions(true)
 		phys:SetMass( 1 )
 	end
-	gcombat.registerent( RWingE, 300, 40 )
+	SB.util.damage.registerEnt( RWingE, 300, 40 )
 
 end
 
 function ENT:SpawnFunction( ply, tr )
 
-	if ( !tr.Hit ) then return end
+	if not tr.Hit  then return end
 	
 	local SpawnPos = tr.HitPos + tr.HitNormal * 16 + Vector(0,0,350)
 	
@@ -495,7 +497,7 @@ function ENT:PhysicsCollide( data, physobj )
 		if data.HitEntity:IsWorld() then
 			P = 1000
 		end
-		--gcombat.hcghit( self, data.Speed * 1, P, self:GetPos(), self:GetPos())
+		--SB.util.damage.doDamage( self, data.Speed * 1, P, self:GetPos(), self:GetPos())
 	end
 end
 

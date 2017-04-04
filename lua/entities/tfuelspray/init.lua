@@ -3,6 +3,8 @@ AddCSLuaFile( "cl_init.lua" )
 AddCSLuaFile( "shared.lua" )
 include( 'shared.lua' )
 
+local SB = SPACEBUILD
+
 function ENT:Initialize()
 
 	self.Entity:SetModel( "models/items/combine_rifle_ammo01.mdl" )
@@ -165,7 +167,7 @@ function ENT:Whomph()
 		if i:GetClass() == "prop_physics" then
 			local Force = i:GetPhysicsObject():GetMass() * (Power * 2)
 				i:GetPhysicsObject():ApplyForceOffset( Vector(500000,500000,500000), self.Entity:GetPos() )
-			gcombat.devhit( i, math.random(Power * 0.1,Power * 5), 4 )
+			SB.util.damage.doDamage( i, math.random(Power * 0.1,Power * 5), 4 )
 		elseif i:IsPlayer() or i:IsNPC() then
 			local Force = Power * 10
 			i:SetVelocity( Vector(500000,500000,500000) )
@@ -174,6 +176,6 @@ function ENT:Whomph()
 	
 	util.BlastDamage(self.Entity, self.Entity, self.Entity:GetPos(), 300, Power * 100)
 	util.BlastDamage(self.Entity, self.Entity, self.Entity:GetPos(), 600, Power * 10)
-	--cbt_hcgexplode( self.Entity:GetPos(), Power, math.random(Power * 0.1,Power * 5), 5)
+	--SB.util.damage.doBlastDamage( self.Entity:GetPos(), Power, math.random(Power * 0.1,Power * 5), 5)
 	
 end

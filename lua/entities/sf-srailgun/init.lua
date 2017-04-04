@@ -4,6 +4,8 @@ AddCSLuaFile( "shared.lua" )
 include( 'shared.lua' )
 util.PrecacheSound( "SB/RailGunSmall.wav" )
 
+local SB = SPACEBUILD
+
 function ENT:Initialize()
 
 	self.Entity:SetModel( "models/Slyfo_2/drone_railgun.mdl" ) 
@@ -91,7 +93,7 @@ function ENT:RGFire()
 				--Phys:ApplyForceCenter( self.Entity:GetForward() * (self.Charge * 200) )
 			end
 			local gdmg = math.random(self.Charge * 10,self.Charge * 20)
-			attack = cbt_dealdevhit(tr.Entity, gdmg, 5 + (self.Charge * 0.1))
+			attack = SB.util.damage.doDamage(tr.Entity, gdmg, 5 + (self.Charge * 0.1))
 			if (attack ~= nil) then
 				if (attack == 2) then
 					local wreck = ents.Create( "wreckedstuff" )

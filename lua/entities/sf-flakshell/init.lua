@@ -2,6 +2,8 @@ AddCSLuaFile( "cl_init.lua" )
 AddCSLuaFile( "shared.lua" )
 include( 'shared.lua' )
 
+local SB = SPACEBUILD
+
 function ENT:Initialize()
 
 	self.Entity:SetModel( "models/Items/AR2_Grenade.mdl" )
@@ -17,7 +19,7 @@ function ENT:Initialize()
 		phys:EnableDrag(true)
 		phys:EnableCollisions(true)
 	end
-	gcombat.registerent( self.Entity, 10, 4 )
+	SB.util.damage.registerEnt( self.Entity, 10, 4 )
 
     self.Entity:SetKeyValue("rendercolor", "0 0 0")
 	self.PhysObj = self.Entity:GetPhysicsObject()

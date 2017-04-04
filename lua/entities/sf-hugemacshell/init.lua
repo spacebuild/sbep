@@ -2,6 +2,8 @@ AddCSLuaFile( "cl_init.lua" )
 AddCSLuaFile( "shared.lua" )
 include( 'shared.lua' )
 
+local SB = SPACEBUILD
+
 function ENT:Initialize()
 
 	self.Entity:SetModel( "models/Slyfo/assault_pod.mdl" )
@@ -59,7 +61,7 @@ function ENT:Think()
 	if (self.DTimer == true) then
 		if (CurTime() >= self.DTime) then
 			util.BlastDamage(self.Entity, self.Entity, self.Entity:GetPos(), 1500, 500)
-			cbt_hcgexplode( self.Entity:GetPos(), 1200, math.random(4000,8000), 10)
+			SB.util.damage.doBlastDamage( self.Entity:GetPos(), 1200, math.random(4000,8000), 10)
  			local targets = ents.FindInSphere( self.Entity:GetPos(), 1000)
 		
 			for _,i in pairs(targets) do
@@ -115,7 +117,7 @@ function ENT:PhysicsCollide( data, physobj )
 		--self.Exploded = true
 		if (data.HitEntity:IsWorld() or data.HitEntity:IsPlayer() or data.HitEntity:IsNPC()) then
 			util.BlastDamage(self.Entity, self.Entity, self.Entity:GetPos(), 900, 500)
-			cbt_hcgexplode( self.Entity:GetPos(), 800, math.random(1500,2500), 8)
+			SB.util.damage.doBlastDamage( self.Entity:GetPos(), 800, math.random(1500,2500), 8)
 			local targets = ents.FindInSphere( self.Entity:GetPos(), 1000)
 		
 			for _,i in pairs(targets) do
@@ -144,11 +146,11 @@ function ENT:PhysicsCollide( data, physobj )
 			ShakeIt:Fire("kill", "", 6)
 		else	
 			if (data.HitEntity ~= self.LastHit) then
-				local attack = cbt_dealhcghit( data.HitEntity, 2500, self.PStr, self.Entity:GetPos() , self.Entity:GetPos())
+				local attack = SB.util.damage.doDamage( data.HitEntity, 2500, self.PStr, self.Entity:GetPos() , self.Entity:GetPos())
 				if (attack == 0) then
 					self.Exploded = true
 					util.BlastDamage(self.Entity, self.Entity, self.Entity:GetPos(), 900, 500)
-					cbt_hcgexplode( self.Entity:GetPos(), 800, math.random(1500,2500), 8)
+					SB.util.damage.doBlastDamage( self.Entity:GetPos(), 800, math.random(1500,2500), 8)
 					
 					local targets = ents.FindInSphere( self.Entity:GetPos(), 1000)
 		

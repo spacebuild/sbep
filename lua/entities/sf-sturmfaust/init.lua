@@ -6,6 +6,8 @@ util.PrecacheSound( "explode_9" )
 util.PrecacheSound( "explode_8" )
 util.PrecacheSound( "explode_5" )
 
+local SB = SPACEBUILD
+
 function ENT:Initialize()
 
 	self.Entity:SetModel( "models/Slyfo/missile_sturmfaustshot.mdl" )
@@ -25,7 +27,7 @@ function ENT:Initialize()
 		phys:SetMass( 1 )
 	end
 
-	gcombat.registerent( self.Entity, 10, 4 )
+	SB.util.damage.registerEnt( self.Entity, 10, 4 )
 	self.Armed = false
 	
     --self.Entity:SetKeyValue("rendercolor", "0 0 0")

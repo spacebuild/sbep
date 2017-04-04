@@ -5,6 +5,8 @@ include('entities/base_wire_entity/init.lua')
 include( 'shared.lua' )
 util.PrecacheSound( "SB/Gattling2.wav" )
 
+local SB = SPACEBUILD
+
 function ENT:Initialize()
 
 	self.Entity:SetModel( "models/Slyfo_2/mini_turret_shotgun.mdl" ) 
@@ -80,11 +82,11 @@ function ENT:Think()
 		Bullet.TracerName = "Tracer"
 		Bullet.Attacker = self.SPL
 		Bullet.Damage = 20
-		/*
+		--[[
 		Bullet.Callback = function (attacker, tr, dmginfo)
 			if (tr.Entity and tr.Entity:IsValid()) then
 				local  gdmg = math.random(5,10)
-				attack = cbt_dealdevhit(tr.Entity, gdmg, 5)
+				attack = SB.util.damage.doDamage(tr.Entity, gdmg, 5)
 				if (attack ~= nil) then
 					if (attack == 2) then
 						local wreck = ents.Create( "wreckedstuff" )
@@ -104,7 +106,7 @@ function ENT:Think()
 				end
 			end
 		end
-		*/
+		]]
 		
 		local effectdata = EffectData()
 		effectdata:SetOrigin(self:GetPos() + (self:GetForward() * 20) + (self:GetUp() * 2))

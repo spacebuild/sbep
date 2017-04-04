@@ -4,6 +4,8 @@ AddCSLuaFile( "shared.lua" )
 include( 'shared.lua' )
 util.PrecacheSound( "SB/Gattling2.wav" )
 
+local SB = SPACEBUILD
+
 function ENT:Initialize()
 
 	self.Entity:SetModel( "models/Slyfo/flakvierling_blasternorm.mdl" ) 
@@ -83,7 +85,7 @@ function ENT:Think()
 		Bullet.Damage = 100
 		Bullet.Callback = function (attacker, tr, dmginfo)
 			util.BlastDamage(self.Entity, self.Entity, tr.HitPos, 100, 100)
-			gcombat.hcgexplode( tr.HitPos, 100, math.Rand(150, 300), 8)
+			SB.util.damage.doBlastDamage( tr.HitPos, 100, math.Rand(150, 300), 8)
 			local effectdata = EffectData()
 			effectdata:SetOrigin(tr.HitPos)
 			effectdata:SetStart(tr.HitPos)

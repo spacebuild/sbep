@@ -2,6 +2,8 @@ AddCSLuaFile( "cl_init.lua" )
 AddCSLuaFile( "shared.lua" )
 include( 'shared.lua' )
 
+local SB = SPACEBUILD
+
 function ENT:Initialize()
 
 	self.Entity:SetModel( "models/Slyfo/sat_resourcetank.mdl" ) 
@@ -130,7 +132,7 @@ function ENT:Splode()
 	if(!self.Exploded) then
 		self.Exploded = true
 		--util.BlastDamage(self.Entity, self.Entity, self.Entity:GetPos(), 400, 400)
-		--cbt_hcgexplode( self.Entity:GetPos(), 400, math.random(400,600), 7)
+		--SB.util.damage.doBlastDamage( self.Entity:GetPos(), 400, math.random(400,600), 7)
 		FCount = math.floor(self.Fuel / 60)
 		--print(FCount)
 		if FCount >= 1 then

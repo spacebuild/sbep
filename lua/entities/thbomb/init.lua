@@ -15,7 +15,7 @@ function ENT:Initialize()
 	self.Entity:PhysicsInit( SOLID_VPHYSICS )
 	self.Entity:SetMoveType( MOVETYPE_VPHYSICS )
 	self.Entity:SetSolid( SOLID_VPHYSICS )
-	if !self.Armed then
+	if not self.Armed then
 		self.Inputs = Wire_CreateInputs( self.Entity, { "Arm", "Detonate" } )
 	end
 	
@@ -72,7 +72,7 @@ function ENT:Splode()
 	if(!self.Exploded) then
 		--self.Exploded = true
 		--util.BlastDamage(self.Entity, self.Entity, self.Entity:GetPos(), 400, 400)
-		--cbt_hcgexplode( self.Entity:GetPos(), 400, math.random(400,600), 7)
+		--SB.util.damage.doBlastDamage( self.Entity:GetPos(), 400, math.random(400,600), 7)
 		
 		local SSpeed = 10
 		local NewShell = nil

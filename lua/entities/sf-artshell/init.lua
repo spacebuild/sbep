@@ -2,6 +2,8 @@ AddCSLuaFile( "cl_init.lua" )
 AddCSLuaFile( "shared.lua" )
 include( 'shared.lua' )
 
+local SB = SPACEBUILD
+
 function ENT:Initialize()
 
 	self.Entity:SetModel( "models/Items/AR2_Grenade.mdl" )
@@ -61,7 +63,7 @@ function ENT:Think()
 	if (self.DTimer == true) then
 		if (CurTime() >= self.DTime) then
 			util.BlastDamage(self.Entity, self.Entity, self.Entity:GetPos(), 600, 50)
-			cbt_hcgexplode( self.Entity:GetPos(), 600, 1000, 2)
+			SB.util.damage.doBlastDamage( self.Entity:GetPos(), 600, 1000, 2)
  
 			local effectdata = EffectData()
 			effectdata:SetOrigin(self.Entity:GetPos())
@@ -101,11 +103,11 @@ function ENT:PhysicsCollide( data, physobj )
 			self.Exploded = true
 		else	
 			if (data.HitEntity ~= self.LastHit) then
-				local attack = cbt_dealhcghit( data.HitEntity, 300, self.PStr, self.Entity:GetPos() , self.Entity:GetPos())
+				local attack = SB.util.damage.doDamage( data.HitEntity, 300, self.PStr, self.Entity:GetPos() , self.Entity:GetPos())
 				if (attack == 0) then
 					self.Exploded = true
 					util.BlastDamage(self.Entity, self.Entity, self.Entity:GetPos(), 100, 50)
-					cbt_hcgexplode( self.Entity:GetPos(), 100, 300, 2)
+					SB.util.damage.doBlastDamage( self.Entity:GetPos(), 100, 300, 2)
 		 
 					local effectdata = EffectData()
 					effectdata:SetOrigin(self.Entity:GetPos())

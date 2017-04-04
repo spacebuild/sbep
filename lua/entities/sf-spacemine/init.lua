@@ -7,6 +7,8 @@ util.PrecacheSound( "explode_9" )
 util.PrecacheSound( "explode_8" )
 util.PrecacheSound( "explode_5" )
 
+local SB = SPACEBUILD
+
 function ENT:Initialize()
 
 	self.Entity:SetModel( "models/Slyfo/spacemine.mdl" )
@@ -160,7 +162,7 @@ function ENT:Splode()
 						
 			if trace.Entity == i then
 				local hitat = trace.HitPos
-				cbt_dealhcghit( i, math.random(4000,8000), 8, hitat, hitat)
+				SB.util.damage.doDamage( i, math.random(4000,8000), 8, hitat, hitat)
 			end
 		end
 		

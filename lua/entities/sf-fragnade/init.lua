@@ -3,6 +3,8 @@ AddCSLuaFile( "cl_init.lua" )
 AddCSLuaFile( "shared.lua" )
 include( 'shared.lua' )
 
+local SB = SPACEBUILD
+
 function ENT:Initialize()
 
 	self.Entity:SetModel( "models/Dts Stuff/BF2142 weapons/unl_grenade_frag_2.mdl" )
@@ -62,7 +64,7 @@ end
 function ENT:GoBang()
 	self.Exploded = true
 	util.BlastDamage(self.Entity, self.Entity, self.Entity:GetPos(), 300, 150)
-	gcombat.hcgexplode( self.Entity:GetPos(), 200, math.Rand(50, 100), 7)
+	SB.util.damage.doBlastDamage( self.Entity:GetPos(), 200, math.Rand(50, 100), 7)
 
 	self.Entity:EmitSound("explode_4")
 	

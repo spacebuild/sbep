@@ -2,6 +2,8 @@ AddCSLuaFile( "cl_init.lua" )
 AddCSLuaFile( "shared.lua" )
 include( 'shared.lua' )
 
+local SB = SPACEBUILD
+
 function ENT:Initialize()
 
 	self.Entity:SetModel( "models/Items/AR2_Grenade.mdl" )
@@ -98,7 +100,7 @@ end
 function ENT:GoBang()
 	self.Exploded = true
 	util.BlastDamage(self.Entity, self.Entity, self.Entity:GetPos(), 700, 75)
-	cbt_hcgexplode( self.Entity:GetPos(), 700, math.Rand(500, 1000), 6)
+	SB.util.damage.doBlastDamage( self.Entity:GetPos(), 700, math.Rand(500, 1000), 6)
 
 	local effectdata = EffectData()
 	effectdata:SetOrigin(self.Entity:GetPos())

@@ -7,6 +7,8 @@ util.PrecacheSound( "explode_9" )
 util.PrecacheSound( "explode_8" )
 util.PrecacheSound( "explode_5" )
 
+local SB = SPACEBUILD
+
 function ENT:Initialize()
 
 	self.Entity:SetModel( "models/Slyfo/torpedo.mdl" )
@@ -27,7 +29,7 @@ function ENT:Initialize()
 		phys:EnableCollisions(true)
 	end
 	
-	gcombat.registerent( self.Entity, 60, 6 )
+	SB.util.damage.registerEnt( self.Entity, 60, 6 )
 
     --self.Entity:SetKeyValue("rendercolor", "0 0 0")
 	self.PhysObj = self.Entity:GetPhysicsObject()
@@ -103,7 +105,7 @@ function ENT:OnTakeDamage( dmginfo )
 	if (!self.Exploded and self.Armed) then
 		--self:Explode()
 		if dmginfo:GetInflictor():GetClass() ~= self.Entity:GetClass() then
-			gcombat.devhit( self.Entity, dmginfo:GetDamage(), 50 )
+			SB.util.damage.doDamage( self.Entity, dmginfo:GetDamage(), 50 )
 		end
 	end
 	--self.Exploded=true

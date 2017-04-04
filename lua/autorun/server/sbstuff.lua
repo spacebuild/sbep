@@ -1,4 +1,6 @@
 --SpacebuildEnhancementProject function table
+local SB = SPACEBUILD
+
 SBEP = SBEP or {}
 
 -- This function basically deals with stuff that happens when a player hops out of a vehicle
@@ -139,7 +141,7 @@ function SBGCSplash( position, radius, damage, pierce, filter )
 					
 			if trace.Entity == i then
 				local hitat = trace.HitPos
-				cbt_dealhcghit( i, damage, pierce, hitat, hitat)
+				SB.util.damage.doDamage( i, damage, pierce, hitat, hitat)
 			end
 		end
 	end

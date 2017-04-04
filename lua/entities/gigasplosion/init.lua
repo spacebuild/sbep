@@ -3,6 +3,8 @@ AddCSLuaFile( "cl_init.lua" )
 AddCSLuaFile( "shared.lua" )
 include( 'shared.lua' )
 
+local SB = SPACEBUILD
+
 function ENT:Initialize()
 
 	self.Entity:SetModel( "models/props_junk/watermelon01.mdl" )
@@ -43,7 +45,7 @@ function ENT:Initialize()
 	self.NFT = 0
 end
 
-function ENT:gcbt_breakactions(damage, pierce)
+function ENT:gSB.util.damage.doDamagebreakactions(damage, pierce)
 	
 end
 
@@ -64,7 +66,7 @@ function ENT:Think()
 				local Dmg = (15000 - ZD) * 3
 				if Dmg > 0 then
 					e:TakeDamage( Dmg, self, self )
-					attack = cbt_dealdevhit(e, Dmg, 8)
+					attack = SB.util.damage.doDamage(e, Dmg, 8)
 					if (attack ~= nil) then
 						if (attack == 2) then
 							/*

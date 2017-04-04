@@ -7,6 +7,8 @@ util.PrecacheSound( "explode_9" )
 util.PrecacheSound( "explode_8" )
 util.PrecacheSound( "explode_5" )
 
+local SB = SPACEBUILD
+
 function ENT:Initialize()
 
 	self.Entity:SetModel( "models/Slyfo/missile_smallmissile.mdl" )
@@ -51,7 +53,7 @@ function ENT:Splode()
 	if(!self.Exploded) then
 		--self.Exploded = true
 		util.BlastDamage(self.Entity, self.Entity, self.Entity:GetPos(), 300, 300)
-		cbt_hcgexplode( self.Entity:GetPos(), 300, math.random(1000,1500), 6)
+		SB.util.damage.doBlastDamage( self.Entity:GetPos(), 300, math.random(1000,1500), 6)
 		local targets = ents.FindInSphere( self.Entity:GetPos(), 1000)
 	
 		for _,i in pairs(targets) do
