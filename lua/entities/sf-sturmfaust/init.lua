@@ -38,12 +38,12 @@ end
 function ENT:PhysicsUpdate()
 	if self.Armed then
 		local physi = self.Entity:GetPhysicsObject()
-		//physi:SetVelocity( self.Entity:GetForward() * 5000 )
+		--physi:SetVelocity( self.Entity:GetForward() * 5000 )
 	end
 end
 
 function ENT:PhysicsCollide( data, physobj )
-	if (!self.Exploded and self.Armed) then
+	if (not self.Exploded and self.Armed) then
 		self:Splode()
 	end
 end
@@ -66,7 +66,7 @@ function ENT:Think()
 end
 
 function ENT:Splode()
-	if(!self.Exploded) then
+	if(not self.Exploded) then
 		self.Exploded = true
 		util.BlastDamage(self.Entity, self.Entity, self.Entity:GetPos(), 100, 100)
 		SBGCSplash( self.Entity:GetPos(), 100, math.Rand(400, 700), 9, { self.Entity:GetClass() } )

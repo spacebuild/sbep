@@ -33,7 +33,7 @@ ENT.Mat = MatTab.SWSH[1]
 
 function ENT:Draw()
 	local type = self:GetNWString( "SBEPSpriteType" ) or "SWSH"
-	if !MatTab[ type ] then return end
+	if not MatTab[ type ] then return end
 	self.Mat = MatTab[ type ][1]
 	local dim1 = MatTab[ type ][2][1]
 	local dim2 = MatTab[ type ][2][2]

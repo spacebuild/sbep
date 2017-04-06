@@ -61,7 +61,7 @@ end
 function ENT:Think()
 	local Delta = CurTime() - self.LTT
 	-- THE FOLLOWING CODE WAS NICKED FROM THE LS3 LAMP. I TAKE NO CREDIT FOR IT! --
-	if self.Active and !self.flashlight then
+	if self.Active and not self.flashlight then
 		--local angForward = self.Entity:GetAngles() + Angle( 90, 0, 0 )
 		self.flashlight = ents.Create( "env_projectedtexture" )
 		self.flashlight:SetParent( self.Entity )
@@ -82,7 +82,7 @@ function ENT:Think()
 		self.flashlight:SetKeyValue( "lightcolor", "255 255 255" )
 		self.flashlight:Spawn()
 		self.flashlight:Input( "SpotlightTexture", NULL, NULL, "effects/flashlight001" )
-	elseif !self.Active and self.flashlight then
+	elseif not self.Active and self.flashlight then
 		SafeRemoveEntity( self.flashlight )
 		self.flashlight = nil
 	end
@@ -93,7 +93,7 @@ function ENT:Think()
 	
 	if self.Active then
 		if CurTime() >= self.ScanCD then
-			if !self.Target or !self.Target:IsValid() then
+			if not self.Target or not self.Target:IsValid() then
 				local T = ents.FindInCrappyCone(self:GetPos(),Vector(2000,.8,.8),self:GetAngles())
 				for k,e in pairs(T) do
 					--e:SetColor(Color(math.Rand(0,255),math.Rand(0,255),math.Rand(0,255),255)
@@ -108,7 +108,7 @@ function ENT:Think()
 						Wire_TriggerOutput(self.Entity, "Vector",Pos)
 					end
 				end
-				if !self.Target or !self.Target:IsValid() then
+				if not self.Target or not self.Target:IsValid() then
 					Wire_TriggerOutput(self.Entity, "TargetFound", 0)
 					Wire_TriggerOutput(self.Entity, "Target", WireLib.DT.ENTITY.Zero)
 				end
@@ -181,7 +181,7 @@ function ENT:Think()
 	
 	
 	
-	/*
+	--[[
 		if self.Target and self.Target:IsValid() then
 			local trace = {}
 			trace.start = self.Entity:GetPos() + self.Entity:GetForward() * 10
@@ -254,7 +254,7 @@ function ENT:Think()
 			end			
 		end
 		
-		*/
+		]]
 	else
 		Wire_TriggerOutput(self.Entity, "TargetFound", 0)
 		Wire_TriggerOutput(self.Entity, "Target", WireLib.DT.ENTITY.Zero)
@@ -289,7 +289,7 @@ end
 
 function ENT:SpawnFunction( ply, tr )
 
-	if ( !tr.Hit ) then return end
+	if ( not tr.Hit ) then return end
 	
 	local SpawnPos = tr.HitPos + tr.HitNormal * 16 + Vector(0,0,50)
 	
@@ -305,7 +305,7 @@ function ENT:SpawnFunction( ply, tr )
 end
 
 function ENT:Use( activator, caller )
-	self.Active = !self.Active
+	self.Active = not self.Active
 	self.dt.Active = self.Active
 end
 

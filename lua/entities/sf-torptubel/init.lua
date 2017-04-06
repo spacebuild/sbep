@@ -30,7 +30,7 @@ end
 
 function ENT:SpawnFunction( ply, tr )
 
-	if ( !tr.Hit ) then return end
+	if ( not tr.Hit ) then return end
 	
 	local ent = ents.Create( "SF-TorpTubeL" )
 	ent:SetPos( tr.HitPos + tr.HitNormal * 16 + Vector(0,0,50) )
@@ -50,7 +50,7 @@ function ENT:TriggerInput(iname, value)
 		
 	elseif (iname == "Reload") then	
 		if (value > 0) then
-			if !self.Loading then
+			if not self.Loading then
 				self.LTime = CurTime() + self.ReloadPeriod
 				self.Loading = true
 			end
@@ -60,9 +60,9 @@ function ENT:TriggerInput(iname, value)
 end
 
 function ENT:Think()
-	if CurTime() >= self.LTime and self.Loading and !self.Torp then
+	if CurTime() >= self.LTime and self.Loading and not self.Torp then
 		local Torp = ents.Create( "SF-TorpBig" )
-		if !Torp or !Torp:IsValid() then return end
+		if not Torp or not Torp:IsValid() then return end
 		Torp:SetPos( self.Entity:GetPos() + self.Entity:GetUp() * 63 + self.Entity:GetForward() * -50)
 		Torp:SetAngles( self.Entity:GetAngles() )
 		Torp:Spawn()
@@ -78,7 +78,7 @@ function ENT:Think()
 		self.Loading = false
 	end
 	local LPercent = 0
-	if self.LTime > CurTime() and !self.Loaded then
+	if self.LTime > CurTime() and not self.Loaded then
 		LPercent = ( ( self.ReloadPeriod - ( self.LTime - CurTime() ) ) / self.ReloadPeriod ) * 100
 	else
 		LPercent = 0
@@ -106,7 +106,7 @@ function ENT:OnTakeDamage( dmginfo )
 end
 
 function ENT:Touch( ent )
-	if (!self.Torp or !self.Torp:IsValid()) and ent:IsValid() and ent.BigTorp and !ent.Armed and !ent.Mounted then
+	if (not self.Torp or not self.Torp:IsValid()) and ent:IsValid() and ent.BigTorp and not ent.Armed and not ent.Mounted then
 		self.Torp = ent
 		ent:SetPos( self.Entity:GetPos() + self.Entity:GetUp() * 63 + self.Entity:GetForward() * -50)
 		ent:SetAngles( self.Entity:GetAngles() )
@@ -145,7 +145,7 @@ function ENT:HPFire()
 		--self.Torp.PhysObj:EnableGravity(false)
 		self.Torp = nil
 	end
-	if !self.Loading then
+	if not self.Loading then
 		self.LTime = CurTime() + self.ReloadPeriod
 		self.Loading = true
 	end

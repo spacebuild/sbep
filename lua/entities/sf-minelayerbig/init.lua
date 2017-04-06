@@ -44,7 +44,7 @@ end
 
 function ENT:SpawnFunction( ply, tr )
 
-	if ( !tr.Hit ) then return end
+	if ( not tr.Hit ) then return end
 	
 	local SpawnPos = tr.HitPos + tr.HitNormal * 16
 	
@@ -121,7 +121,7 @@ end
 
 function ENT:LaunchMine( CCD, Offset )
 	local NewShell = ents.Create( "SF-SpaceMine" )
-	if ( !NewShell:IsValid() ) then return end
+	if ( not NewShell:IsValid() ) then return end
 	NewShell:SetPos( self.Entity:LocalToWorld(Offset) )
 	--NewShell:SetAngles( self.Entity:GetForward():Angle() )
 	NewShell.SPL = self.SPL

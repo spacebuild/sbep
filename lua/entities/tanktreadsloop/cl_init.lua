@@ -3,7 +3,7 @@ killicon.AddFont("seeker_missile", "CSKillIcons", "C", Color(255,80,0,255))
 
 function ENT:Initialize()
 	local MVar = self.Entity:GetCSModel()
-	if !MVar then self.Entity:SetCSModel(0) end
+	if not MVar then self.Entity:SetCSModel(0) end
 	self.MTable = {}
 	self.MTable[0] = "models/Slyfo/rover_tread.mdl"
 	self.MTable[1] = "models/Slyfo/rover_tread2.mdl"
@@ -72,7 +72,7 @@ function ENT:Think()
 		RAngle = self.Entity:GetAngles()
 		
 		for i = 0 - ((self.ILock * Scale.x) * 0.25), self.Entity:GetLength() + ((self.ILock * Scale.x) * 0.25), Scale.x * self.ILock do
-			if self.LTable[RCount] == nil or !self.LTable[RCount]:IsValid() then
+			if self.LTable[RCount] == nil or not self.LTable[RCount]:IsValid() then
 				self.LTable[RCount] = ClientsideModel(RModel, RENDERGROUP_OPAQUE)
 			end
 			self.LTable[RCount]:SetPos( LowStrPos + (self.Entity:GetForward() * (self.Entity:GetLength() * 0.5)) + self.Entity:GetForward() * -i + self.Entity:GetForward() * SDist )
@@ -95,7 +95,7 @@ function ENT:Think()
 		RAngle = TAng
 		
 		for i = 0 - ((self.ILock * Scale.x) * 0.25), self.Entity:GetLength() + ((self.ILock * Scale.x) * 0.25), Scale.x * self.ILock do
-			if self.LTable[RCount] == nil or !self.LTable[RCount]:IsValid() then
+			if self.LTable[RCount] == nil or not self.LTable[RCount]:IsValid() then
 				self.LTable[RCount] = ClientsideModel(RModel, RENDERGROUP_OPAQUE)
 			end
 			self.LTable[RCount]:SetPos( UppStrPos + (self.Entity:GetForward() * (self.Entity:GetLength() * 0.5)) + self.Entity:GetForward() * -i + self.Entity:GetForward() * SDist )
@@ -119,7 +119,7 @@ function ENT:Think()
 		local SDist = -1 * math.fmod(self.Scroll * DegPI, Scale.x * self.ILock )
 		
 		for i = 0 + (((self.ILock * Scale.x) * DegPI) * 0.25), 180 - (((self.ILock * Scale.x) * DegPI) * 0.25), CircP do
-			if self.LTable[RCount] == nil or !self.LTable[RCount]:IsValid() then
+			if self.LTable[RCount] == nil or not self.LTable[RCount]:IsValid() then
 				self.LTable[RCount] = ClientsideModel(RModel, RENDERGROUP_OPAQUE)
 			end
 			local NAng = OAng - Angle( 0.01, 0.01, 0.01 )
@@ -148,7 +148,7 @@ function ENT:Think()
 		local SDist = -1 * math.fmod(self.Scroll * DegPI, Scale.x * self.ILock)
 		
 		for i = 180 + (((self.ILock * Scale.x) * DegPI) * 0.25), 359 - (((self.ILock * Scale.x) * DegPI) * 0.25), CircP do
-			if self.LTable[RCount] == nil or !self.LTable[RCount]:IsValid() then
+			if self.LTable[RCount] == nil or not self.LTable[RCount]:IsValid() then
 				self.LTable[RCount] = ClientsideModel(RModel, RENDERGROUP_OPAQUE)
 			end
 			local NAng = OAng - Angle( 0.01, 0.01, 0.01 )

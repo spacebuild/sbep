@@ -73,7 +73,7 @@ end
 
 function ENT:SpawnFunction( ply, tr )
 
-	if ( !tr.Hit ) then return end
+	if ( not tr.Hit ) then return end
 	
 	local SpawnPos = tr.HitPos + tr.HitNormal * 16
 	
@@ -94,7 +94,7 @@ function ENT:Use( ply, caller )
 		if self.Skin > 5 then
 			self.Skin = 1
 		end
-		//print(self.Skin)
+		--print(self.Skin)
 	else
 		if self.Entity:GetActive() then
 			self.Entity:SetActive(false)

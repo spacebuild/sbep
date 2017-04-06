@@ -80,13 +80,13 @@ function ENT:Think()
 end
 
 function ENT:PhysicsCollide( data, physobj )
-	if(!self.Exploded) then
+	if(not self.Exploded) then
 		self.Entity:GoBang()
 	end
 end
 
 function ENT:OnTakeDamage( dmginfo )
-	if(!self.Exploded) then
+	if(not self.Exploded) then
 		--self.Entity:GoBang()
 	end
 end

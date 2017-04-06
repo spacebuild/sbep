@@ -37,7 +37,7 @@ end
 
 function ENT:SpawnFunction( ply, tr )
 
-	if ( !tr.Hit ) then return end
+	if ( not tr.Hit ) then return end
 
 	local SpawnPos = tr.HitPos + tr.HitNormal * 16 + Vector(0,0,50)
 
@@ -70,9 +70,9 @@ function ENT:Think()
 	--self.Entity:SetColor(Color( 0, 0, 255, 255)
 	local Weap = self.HP[1]["Ent"]
 
-	if Weap && Weap:IsValid() then
+	if Weap and Weap:IsValid() then
 
-		if !Weap.Swivved then
+		if not Weap.Swivved then
 			local LPos = Vector(0,0,0)
 			constraint.RemoveConstraints( Weap, "Weld" )
 			Weap:SetParent()
@@ -91,15 +91,15 @@ function ENT:Think()
 			--Weap:SetColor(Color( 255, 0, 0, 255)
 		end
 
-		if self.Pod && self.Pod:IsValid() && self.Pod:IsVehicle() then
+		if self.Pod and self.Pod:IsValid() and self.Pod:IsVehicle() then
 			Weap.Pod = self.Pod
 			self.CPL = self.Pod:GetPassenger(1)
-			if (self.CPL && self.CPL:IsValid()) then
+			if (self.CPL and self.CPL:IsValid()) then
 
 				if (self.CPL:KeyDown( IN_ATTACK )) then
 					--for i = 1, self.HPC do
 					--	local HPC = self.CPL:GetInfo( "SBHP_"..i )
-					--	if self.HP[i]["Ent"] && self.HP[i]["Ent"]:IsValid() && (HPC == "1.00" || HPC == "1" || HPC == 1) then
+					--	if self.HP[i]["Ent"] and self.HP[i]["Ent"]:IsValid() and (HPC == "1.00" or HPC == "1" or HPC == 1) then
 					--		self.HP[1]["Ent"].Entity:HPFire()
 					--	end
 					--end
@@ -146,14 +146,14 @@ end
 
 function ENT:Touch( ent )
 	if ent.HasHardpoints then
-		if ent.Cont && ent.Cont:IsValid() then HPLink( ent.Cont, ent.Entity, self.Entity ) end
+		if ent.Cont and ent.Cont:IsValid() then HPLink( ent.Cont, ent.Entity, self.Entity ) end
 		self.Entity:GetPhysicsObject():EnableCollisions(true)
 		self.Entity:SetParent()
 	end
 end
 
 function ENT:HPFire()
-	if self.HP[1]["Ent"] && self.HP[1]["Ent"]:IsValid() then
+	if self.HP[1]["Ent"] and self.HP[1]["Ent"]:IsValid() then
 		self.HP[1]["Ent"]:HPFire()
 	end
 end

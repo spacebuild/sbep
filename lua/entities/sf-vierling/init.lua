@@ -68,7 +68,7 @@ end
 
 function ENT:SpawnFunction( ply, tr )
 
-	if ( !tr.Hit ) then return end
+	if ( not tr.Hit ) then return end
 
 	local SpawnPos = tr.HitPos + tr.HitNormal * 16 + Vector(0,0,70)
 
@@ -175,12 +175,12 @@ end
 
 function ENT:Think() -- Note to self: Redo this bit. It could do with a little reordering.
 	local TargPos = nil
-	if (!self.Active and self.Base2:IsValid()) then
+	if (not self.Active and self.Base2:IsValid()) then
 		TargPos = self.Base2:GetPos() + self.Base2:GetForward() * 200 + self.Base2:GetUp() * 60
 	end
-	if self.CPod && self.CPod:IsValid() then
+	if self.CPod and self.CPod:IsValid() then
 		self.CPL = self.CPod:GetPassenger(1)
-		if (self.CPL && self.CPL:IsValid()) then
+		if (self.CPL and self.CPL:IsValid()) then
 
 			if (self.CPL:KeyDown( IN_ATTACK )) then
 				self.Entity:HPFire()
@@ -242,10 +242,10 @@ function ENT:Think() -- Note to self: Redo this bit. It could do with a little r
 end
 
 function ENT:OnRemove( )
-	if self.Base && self.Base:IsValid() then
+	if self.Base and self.Base:IsValid() then
 		self.Base:Remove()
 	end
-	if self.Base2 && self.Base2:IsValid() then
+	if self.Base2 and self.Base2:IsValid() then
 		self.Base2:Remove()
 	end
 end
@@ -263,7 +263,7 @@ function ENT:Use( activator, caller )
 end
 
 function ENT:Touch( ent )
-	if ent && ent:IsValid() && ent:IsVehicle() then
+	if ent and ent:IsValid() and ent:IsVehicle() then
 		self.CPod = ent
 		if not table.HasValue(self.TraceMask,ent) then
 			table.insert(self.TraceMask,ent)
@@ -272,7 +272,7 @@ function ENT:Touch( ent )
 end
 
 function ENT:HPFire()
-	if self.HP[self.CHP]["Ent"] && self.HP[self.CHP]["Ent"]:IsValid() then
+	if self.HP[self.CHP]["Ent"] and self.HP[self.CHP]["Ent"]:IsValid() then
 		self.HP[self.CHP]["Ent"]:HPFire()
 	end
 end

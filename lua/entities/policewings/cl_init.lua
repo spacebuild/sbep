@@ -31,7 +31,7 @@ function ENT:Think()
 	
 	if self:GetActive() then
 		
-		if !self.Blipping then
+		if not self.Blipping then
 			if self.LBlip == 2 then
 				timer.Simple(0.5,function() 
 				self.Blip1 = 255 

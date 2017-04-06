@@ -1,5 +1,5 @@
 if SERVER then
-	function SyncNukeVars()
+	local function SyncNukeVars()
 		SetGlobalInt("nuke_yield", GetConVar("nuke_yield"):GetInt())
 		SetGlobalInt("nuke_waveresolution", GetConVar("nuke_waveresolution"):GetInt())
 		SetGlobalInt("nuke_ignoreragdoll", GetConVar("nuke_ignoreragdoll"):GetInt())

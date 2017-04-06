@@ -45,10 +45,6 @@ function ENT:Initialize()
 	self.NFT = 0
 end
 
-function ENT:gSB.util.damage.doDamagebreakactions(damage, pierce)
-	
-end
-
 function ENT:Think()
 	local T = CurTime() - self.STime
 	local Time = ( (CurTime() - self.STime - self.PreSplode) / (self.Time - self.PreSplode) )
@@ -69,14 +65,14 @@ function ENT:Think()
 					attack = SB.util.damage.doDamage(e, Dmg, 8)
 					if (attack ~= nil) then
 						if (attack == 2) then
-							/*
+							--[[
 							local wreck = ents.Create( "wreckedstuff" )
 							wreck:SetModel( e:GetModel() )
 							wreck:SetAngles( e:GetAngles() )
 							wreck:SetPos( e:GetPos() )
 							wreck:Spawn()
 							wreck:Activate()
-							*/
+							]]
 							e:Remove()
 							
 							local effectdata1 = EffectData()

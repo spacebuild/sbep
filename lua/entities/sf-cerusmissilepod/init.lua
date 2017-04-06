@@ -54,7 +54,7 @@ end
 
 function ENT:SpawnFunction( ply, tr )
 
-	if ( !tr.Hit ) then return end
+	if ( not tr.Hit ) then return end
 	
 	local SpawnPos = tr.HitPos + tr.HitNormal * 16 + Vector(0, 0, 40)
 	
@@ -124,7 +124,7 @@ function ENT:Think()
 		Wire_TriggerOutput(self.Entity, "CanFire", 0) 
 	end
 	
-	if self.Pod and self.Pod:IsValid() and !self.WireG and self.Pod.Trace then
+	if self.Pod and self.Pod:IsValid() and not self.WireG and self.Pod.Trace then
 		local HPos = self.Pod.Trace.HitPos
 		self.XCo = HPos.x
 		self.YCo = HPos.y
@@ -163,7 +163,7 @@ end
 
 function ENT:FFire( CCD )
 	local NewShell = ents.Create( "SF-HomingMissile" )
-	if ( !NewShell:IsValid() ) then return end
+	if ( not NewShell:IsValid() ) then return end
 	local CVel = self.Entity:GetPhysicsObject():GetVelocity():Length()
 	NewShell:SetPos( self.Entity:GetPos() + (self.Entity:GetUp() * 10) + (self.Entity:GetForward() * (115 + CVel)) )
 	NewShell:SetAngles( self.Entity:GetAngles() )

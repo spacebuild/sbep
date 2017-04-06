@@ -66,7 +66,7 @@ function ENT:Think()
 	trace.endpos = self.Entity:GetPos() + (self.Entity:GetForward() * 500)
 	trace.filter = self.Entity
 	local tr = util.TraceLine( trace )
-	if !tr.Hit then
+	if not tr.Hit then
 		self.Entity:SetPos(self.Entity:GetPos() + self.Entity:GetForward() * 500)
 	else
 		if tr.HitSky then
@@ -82,13 +82,13 @@ function ENT:Think()
 end
 
 function ENT:PhysicsCollide( data, physobj )
-	if(!self.Exploded) then
+	if(not self.Exploded) then
 		self.Entity:GoBang()
 	end
 end
 
 function ENT:OnTakeDamage( dmginfo )
-	if(!self.Exploded) then
+	if(not self.Exploded) then
 		self.Entity:GoBang()
 	end
 end

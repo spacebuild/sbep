@@ -39,7 +39,7 @@ end
 
 function ENT:SpawnFunction( ply, tr )
 
-	if ( !tr.Hit ) then return end
+	if ( not tr.Hit ) then return end
 	
 	local SpawnPos = tr.HitPos + tr.HitNormal * 16 + Vector(0,0,50)
 	
@@ -86,14 +86,14 @@ end
 
 function ENT:Touch( ent )
 	if ent.HasHardpoints then
-		if ent.Cont && ent.Cont:IsValid() then HPLink( ent.Cont, ent.Entity, self.Entity ) end
+		if ent.Cont and ent.Cont:IsValid() then HPLink( ent.Cont, ent.Entity, self.Entity ) end
 		self.Entity:GetPhysicsObject():EnableCollisions(true)
 		self.Entity:SetParent()
 	end
 end
 
 function ENT:HPFire()
-	if self.HP[1]["Ent"] && self.HP[1]["Ent"]:IsValid() then
+	if self.HP[1]["Ent"] and self.HP[1]["Ent"]:IsValid() then
 		self.HP[1]["Ent"]:HPFire()
 	end
 end
@@ -116,7 +116,7 @@ function ENT:ApplyDupeInfo(ply, ent, info, GetEntByID)
 	self.BaseClass.ApplyDupeInfo(self, ply, ent, info, GetEntByID)
 	if (info.Pod) then
 		self.Pod = GetEntByID(info.Pod)
-		if (!self.Pod) then
+		if (not self.Pod) then
 			self.Pod = ents.GetByIndex(info.Pod)
 		end
 	end
@@ -124,7 +124,7 @@ function ENT:ApplyDupeInfo(ply, ent, info, GetEntByID)
 		for k,v in pairs(info.guns) do
 			local gun = GetEntByID(v)
 			self.HP[k]["Ent"] = gun
-			if (!self.HP[k]["Ent"]) then
+			if (not self.HP[k]["Ent"]) then
 				gun = ents.GetByIndex(v)
 				self.HP[k]["Ent"] = gun
 			end

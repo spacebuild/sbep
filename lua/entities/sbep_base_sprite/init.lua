@@ -59,8 +59,8 @@ function ENT:Think()
 
 	if self.TD > 0 and CurTime() > self.TS + self.TD then self:Remove() return end
 
-	if !self.SEO or !self.SEO:IsValid() then
-		if !self.set then 
+	if not self.SEO or not self.SEO:IsValid() then
+		if not self.set then
 			self.TS = CurTime() 
 			self.set = true
 		end
@@ -70,7 +70,7 @@ function ENT:Think()
 		self.TD = 0
 	end
 	
-	if !self.Offset or !self.Dir then
+	if not self.Offset or not self.Dir then
 		self.Following = false 
 	end
 

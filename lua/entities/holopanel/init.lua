@@ -56,7 +56,7 @@ function ENT:Think()
 end
 
 function ENT:SpawnFunction( ply, tr )
-	if ( !tr.Hit ) then return end
+	if ( not tr.Hit ) then return end
 	
 	local ent = ents.Create( "HoloPanel" )
 		ent:Spawn()

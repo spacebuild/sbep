@@ -23,7 +23,7 @@ end
 
 function ENT:SpawnFunction( ply, tr )
 
-	if ( !tr.Hit ) then return end
+	if ( not tr.Hit ) then return end
 	
 	local SpawnPos = tr.HitPos + tr.HitNormal * 16 + Vector(0,0,150)
 	
@@ -39,7 +39,7 @@ function ENT:SpawnFunction( ply, tr )
 end
 
 function ENT:Think()
-	if (self.NPod1 == nil or !self.NPod1:IsValid() or self.NPod1.Active) then
+	if (self.NPod1 == nil or not self.NPod1:IsValid() or self.NPod1.Active) then
 		local ent = ents.Create( "BoardingPod" )
 		ent:SetPos( Vector( 100000,100000,100000 ) )
 		ent:Spawn()
@@ -68,7 +68,7 @@ function ENT:Think()
 		self.NPod1.Cont = ent
 	end
 	
-	if (self.NPod2 == nil or !self.NPod2:IsValid() or self.NPod2.Active) then
+	if (self.NPod2 == nil or not self.NPod2:IsValid() or self.NPod2.Active) then
 		local ent = ents.Create( "BoardingPod" )
 		ent:SetPos( Vector( 100000,100000,100000 ) )
 		ent:Spawn()
@@ -97,7 +97,7 @@ function ENT:Think()
 		self.NPod2.Cont = ent
 	end
 	
-	if (self.NPod3 == nil or !self.NPod3:IsValid() or self.NPod3.Active) then
+	if (self.NPod3 == nil or not self.NPod3:IsValid() or self.NPod3.Active) then
 		local ent = ents.Create( "BoardingPod" )
 		ent:SetPos( Vector( 100000,100000,100000 ) )
 		ent:Spawn()
@@ -126,7 +126,7 @@ function ENT:Think()
 		self.NPod3.Cont = ent
 	end
 	
-	if (self.NPod4 == nil or !self.NPod4:IsValid() or self.NPod4.Active) then
+	if (self.NPod4 == nil or not self.NPod4:IsValid() or self.NPod4.Active) then
 		local ent = ents.Create( "BoardingPod" )
 		ent:SetPos( Vector( 100000,100000,100000 ) )
 		ent:Spawn()

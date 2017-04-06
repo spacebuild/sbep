@@ -1,8 +1,7 @@
-
- /*--------------------------------------------------------- 
-    Initializes the effect. The data is a table of data  
-    which was passed from the server. 
- ---------------------------------------------------------*/ 
+--[[---------------------------------------------------------
+   Initializes the effect. The data is a table of data
+   which was passed from the server.
+---------------------------------------------------------]]
 function EFFECT:Init( data ) 
  	 
  	-- This is how long the spawn effect
@@ -47,13 +46,13 @@ function EFFECT:Init( data )
  	self.Entity:SetModel( "models/Combine_Helicopter/helicopter_bomb01.mdl" )
  	self.Entity:SetMaterial("models/alyx/emptool_glow")
  	self.Entity:SetPos( self.vOffset )  
-end 
-   
-   
- /*--------------------------------------------------------- 
-    THINK 
-    Returning false makes the entity die 
- ---------------------------------------------------------*/ 
+end
+
+
+--[[---------------------------------------------------------
+   THINK
+   Returning false makes the entity die
+---------------------------------------------------------]]
 function EFFECT:Think( )
 	--self.Entity:SetColor(Color(255,100,100,100)
 	--self.CScale = (self.CScale + (self.Magn * 0.1)) * (CurTime() - self.SpawnTime)
@@ -64,9 +63,9 @@ end
    
    
    
- /*--------------------------------------------------------- 
+ --[[---------------------------------------------------------
     Draw the effect 
- ---------------------------------------------------------*/ 
+ ---------------------------------------------------------]]
 function EFFECT:Render()
 	self.CScale = 2 * ((CurTime() - self.SpawnTime) / self.Time)
 	self.Entity:SetModelScale( self.CScale )

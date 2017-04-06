@@ -21,7 +21,7 @@ function ENT:Initialize()
 		phys:EnableDrag(true)
 		phys:EnableCollisions(true)
 	end
-	//self.Entity:InitDock()
+	--self.Entity:InitDock()
     self.Entity:SetKeyValue("rendercolor", "255 255 255")
 	if WireAddon then
 		SBEP.Hangar.MakeWire(self)
@@ -37,7 +37,7 @@ function ENT:SetLaunchSpeed(value)
 end
 
 function ENT:SetDisabled(bay,value)
-	if (value != 0) then
+	if (value ~= 0) then
 		bay.disabled = true
 	else
 		bay.disabled = false
@@ -45,7 +45,7 @@ function ENT:SetDisabled(bay,value)
 end
 
 function ENT:Eject(bay,value)
-	if (value != 0) then
+	if (value ~= 0) then
 		if bay.ship then
 			bay.ship.Cont.Launchy = true
 		end
@@ -69,7 +69,7 @@ function ENT:ApplyDupeInfo(ply, ent, info, GetEntByID)
 end
 
 function ENT:PreEntityCopy()
-	//build the DupeInfo table and save it as an entity mod
+	--build the DupeInfo table and save it as an entity mod
 	if WireAddon then
 		local DupeInfo = self:BuildDupeInfo()
 		if(DupeInfo) then
@@ -91,7 +91,7 @@ function ENT:PreEntityCopy()
 end
 
 function ENT:PostEntityPaste(Player,Ent,CreatedEntities)
-	//apply the DupeInfo
+	--apply the DupeInfo
 	if(Ent.EntityMods) then
 		if (Ent.EntityMods.WireDupeInfo) then
 			Ent:ApplyDupeInfo(Player, Ent, Ent.EntityMods.WireDupeInfo, function(id) return CreatedEntities[id] end)
@@ -100,14 +100,14 @@ function ENT:PostEntityPaste(Player,Ent,CreatedEntities)
 			--PrintTable(Ent.EntityMods.HangarDupeInfo)
 			for k, v in pairs(Ent.EntityMods.HangarDupeInfo.ships) do
 				self.Bay[k]["ship"] = CreatedEntities[v]
-				if (!self.Bay[k]["ship"]) then
+				if (not self.Bay[k]["ship"]) then
 					self.Bay[k]["ship"] = ents.GetByIndex(v)
 				end
 				--PrintTable(self.Bay)
 			end
 			for k, v in pairs(Ent.EntityMods.HangarDupeInfo.EPs) do
 				self.Bay[k]["EP"] = CreatedEntities[v]
-				if (!self.Bay[k]["EP"]) then
+				if (not self.Bay[k]["EP"]) then
 					self.Bay[k]["EP"] = ents.GetByIndex(v)
 				end
 			end

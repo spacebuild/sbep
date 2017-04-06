@@ -35,7 +35,7 @@ end
 
 function ENT:SpawnFunction( ply, tr )
 
-	if ( !tr.Hit ) then return end
+	if ( not tr.Hit ) then return end
 	
 	local SpawnPos = tr.HitPos + tr.HitNormal * 16
 	
@@ -74,7 +74,7 @@ function ENT:Think()
 						e.GravCon.GravMode = 1
 						e.GravCon.GravGen = self
 					else
-						if !(e:GetVehicle() and e:GetVehicle():IsValid()) and e:GetMoveType() ~= 8 then
+						if not (e:GetVehicle() and e:GetVehicle():IsValid()) and e:GetMoveType() ~= 8 then
 							local NGrav = ents.Create( "GravRotator" )
 							NGrav:SetPos( e:GetPos() )
 							NGrav:Spawn()

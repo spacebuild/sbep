@@ -97,7 +97,7 @@ function ENT:Think()
 		trace.endpos = self.Entity:GetPos() + (self.Entity:GetForward() * 600)
 		trace.filter = self.Entity
 		local tr = util.TraceLine( trace )
-		if !tr.Hit then
+		if not tr.Hit then
 			self.Entity:SetPos(self.Entity:GetPos() + self.Entity:GetForward() * 600)
 		else
 			if tr.HitSky then
@@ -113,7 +113,7 @@ function ENT:Think()
 end
 
 function ENT:PhysicsCollide( data, physobj )
-	if(!self.Exploded) then
+	if(not self.Exploded) then
 		--self.Exploded = true
 		if (data.HitEntity:IsWorld() or data.HitEntity:IsPlayer() or data.HitEntity:IsNPC()) then
 			util.BlastDamage(self.Entity, self.Entity, self.Entity:GetPos(), 600, 100)
@@ -248,7 +248,7 @@ function ENT:PhysicsCollide( data, physobj )
 end
 
 function ENT:OnTakeDamage( dmginfo )
-	/*
+	--[[
 	if(!self.Exploded) then
 		local expl=ents.Create("env_explosion")
 		expl:SetPos(self.Entity:GetPos())
@@ -263,7 +263,7 @@ function ENT:OnTakeDamage( dmginfo )
 		expl:Fire("kill","",0)
 		self.Exploded = true
 	end	
-	*/
+	]]
 end
 
 function ENT:Use( activator, caller )

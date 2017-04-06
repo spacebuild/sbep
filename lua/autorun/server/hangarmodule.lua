@@ -6,7 +6,7 @@ local function InFighterTable(hangar,fighter)
 	local name = string.lower(fighter.Cont:GetName())
 	if Fighters[name] then
 		local docklist = Fighters[name]["Docklist"]
-		return (Fighters[name] && table.HasValue(docklist, string.lower(hangar:GetName())))
+		return (Fighters[name] and table.HasValue(docklist, string.lower(hangar:GetName())))
 	else
 		return false
 	end
@@ -34,13 +34,13 @@ function SBEP.Hangar.Touch(self,ent)
 			ent:SetAngles( self.Entity:LocalToWorldAngles(dockAng) )
 			dock.ship = ent
 			dock.weld = constraint.Weld(self.Entity, ent, 0, 0, 0, true)
-			if (dock.EP && !ent.ExitPoint) then
+			if (dock.EP and !ent.ExitPoint) then
 				ent.ExitPoint = dock.EP
 				dock.EP.Vec = ent
 			end
 			local pilot = ent.Pod:GetPassenger()
 			if (pilot:IsPlayer()) then
-				if (dock.pexit && !ent.ExitPoint) then
+				if (dock.pexit and !ent.ExitPoint) then
 					pilot:ExitVehicle()
 					pilot:SetPos( self.Entity:LocalToWorld(dock.pexit) )
 				elseif ent.ExitPoint then
@@ -62,7 +62,7 @@ function SBEP.Hangar.Think(self)
 			--for all the welds of the hangar
 			for l,w in pairs(constraint.FindConstraints( self.Entity, "Weld" )) do
 				--if the weld is also constrained to the ship
-				if (w.Ent1 == v.ship || w.Ent2 == v.ship) then
+				if (w.Ent1 == v.ship or w.Ent2 == v.ship) then
 					--re-reference the weld
 					v.weld = w.Constraint
 				end
@@ -71,7 +71,7 @@ function SBEP.Hangar.Think(self)
 		end
 		--Launch procedure
 		--If the ship is activated
-		if ( v.ship && v.ship.Cont && v.ship.Cont.Launchy ) then
+		if ( v.ship and v.ship.Cont and v.ship.Cont.Launchy ) then
 			--unweld and launch
 			if (v.weld and v.weld:IsValid()) then
 				v.weld:Remove()
@@ -154,7 +154,7 @@ function SBEP.NearestAng(self,ang,angTable)
 			return false
 		end
 		local tadif = SBEP.AngleDifference(ang,self.Entity:LocalToWorldAngles(dang))
-		if (!adif || tadif < adif) then
+		if (!adif or tadif < adif) then
 			--record the difference and the angle
 			adif = tadif
 			--angle = tangle
@@ -178,7 +178,7 @@ function SBEP.Hangar.NearestDock(dock,fighter)
 	for id, bay in pairs(dock.Bay) do
 		if (bay.ship == nil) and not bay.disabled then
 			local tdis = pos:Distance(dock:LocalToWorld(bay.pos))
-			if (!dis || tdis < dis) then
+			if (!dis or tdis < dis) then
 				dis = tdis
 				closest = id
 			end

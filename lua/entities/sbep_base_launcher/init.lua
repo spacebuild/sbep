@@ -95,7 +95,7 @@ function ENT:Initialize()
 	
 	self.LTime = 0
 end
-/*
+--[[
 function ENT:SpawnFunction( ply, tr )
 
 	if ( !tr.Hit ) then return end
@@ -111,7 +111,7 @@ function ENT:SpawnFunction( ply, tr )
 	return ent
 	
 end
-*/
+]]
 function ENT:TriggerInput(iname, value)		
 	if (iname == "Fire") then
 		if (value > 0) then
@@ -190,7 +190,7 @@ function ENT:Think()
 		Wire_TriggerOutput(self.Entity, "CanFire", 0) 
 	end
 	
-	if self.Pod and self.Pod:IsValid() and !self.WireG and self.Pod.Trace then
+	if self.Pod and self.Pod:IsValid() and not self.WireG and self.Pod.Trace then
 		local HPos = self.Pod.Trace.HitPos
 		self.XCo = HPos.x
 		self.YCo = HPos.y
@@ -243,7 +243,7 @@ end
 
 function ENT:FFire( CCD )
 	local NewShell = ents.Create( "SF-HomingMissile" )
-	if ( !NewShell:IsValid() ) then return end
+	if ( not NewShell:IsValid() ) then return end
 	local CVel = self.Entity:GetPhysicsObject():GetVelocity()
 	local Row = table.Random(self.Rows)
 	local Col = table.Random(self.Cols)
@@ -278,16 +278,16 @@ function ENT:FFire( CCD )
 	NewShell.ZCo = self.ZCo
 	NewShell.GType = self.GType
 	NewShell.LTime = self.LTime
-	/*
+	--[[
 	local RockTrail = ents.Create("env_rockettrail")
 	RockTrail:SetAngles( NewShell:GetAngles()  )
 	RockTrail:SetPos( NewShell:GetPos() + NewShell:GetForward() * -7 )
 	RockTrail:SetParent(NewShell)
 	RockTrail:Spawn()
 	RockTrail:Activate()
-	*/
+	]]
 	
-	if !self.Primary or !self.Primary:IsValid() then
+	if not self.Primary or not self.Primary:IsValid() then
 		self.Primary = NewShell
 	end
 	--RD_ConsumeResource(self, "Munitions", 1000)

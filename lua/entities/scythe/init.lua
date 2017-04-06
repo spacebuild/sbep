@@ -462,7 +462,7 @@ function ENT:Think()
 	end
 	
 	
-	if !self.Tail or !self.Tail:IsValid() then
+	if not self.Tail or not self.Tail:IsValid() then
 		if self.TREng and self.TREng:IsValid() then
 			self.TREng:Remove()
 		end
@@ -479,13 +479,13 @@ function ENT:Think()
 	Phys:AddAngleVelocity(Phys:GetAngleVelocity() * -0.1)
 	
 	
-	/*
+	--[[
 	local CPos = self:GetPos() + self:GetUp() * 120 + self:GetForward() * -150
 	Wire_TriggerOutput(self.Entity, "CPos", CPos )
 	Wire_TriggerOutput(self.Entity, "Pos", self:GetPos() )
 	Wire_TriggerOutput(self.Entity, "Ang", self:GetAngles())
 	Wire_TriggerOutput(self.Entity, "Vel", self:GetPhysicsObject():GetVelocity())
-	*/
+	]]
 	
 	self.Entity:NextThink( CurTime() + 0.01 ) 
 	return true	

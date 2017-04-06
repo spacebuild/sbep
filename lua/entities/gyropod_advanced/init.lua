@@ -266,7 +266,7 @@ function ENT:Think()
 	local speedmph = round(localentorparvel:Length() / 17.6) 
 
 	if self.FreezeOn then  --convert toggled to non-toggled for freezing
-		if !self.freezetrigger then
+		if not self.freezetrigger then
 			self.entorpod:EmitSound( "buttons/lever7.wav" )
 			self:FreezeMotion()
 		end
@@ -282,7 +282,7 @@ function ENT:Think()
 	
 	if self.AimModeOn then  
 		self.ModeOut = 1
-		if !self.AimSound then
+		if not self.AimSound then
 			self.entorpod:EmitSound( "buttons/combine_button3.wav" )
 			self.AimSound = true
 		end
@@ -319,7 +319,7 @@ function ENT:Think()
 			-- self:Gravity()
 			-- self.GravTrigger = false
 		-- end
-		if !self.gyroenginesound then
+		if not self.gyroenginesound then
 			self.AllGyroConstraints = constraint.GetAllConstrainedEntities( self )
 			if self.HighEngineSound or self.LowDroneSound then
 				self.HighEngineSound:Stop()
@@ -333,7 +333,7 @@ function ENT:Think()
 			self.gyroenginesound = true
 		end
 		
-		if !self.weighttrigger then
+		if not self.weighttrigger then
 			self:GyroWeight()
 		end	
 		
@@ -600,7 +600,7 @@ function ENT:GyroWeight()
 	local gyroleft = GyroPos + (self:GetRight() * -5000)
 	if self.SystemOn then
 		for _, ents in pairs( self.AllGyroConstraints ) do
-			if (!IsValid(ents)) then return end
+			if (not IsValid(ents)) then return end
 			local linkphys = ents:GetPhysicsObject()
 			local mass = linkphys:GetMass()
 			local entspos = ents:GetPos()
@@ -656,10 +656,10 @@ end
 function ENT:Gravity()  --Turns on/off gravity for all constrained entities
 	local constrained = self.AllGyroConstraints
 	for _, ents in pairs( constrained ) do
-		if (!IsValid(ents)) then return end
+		if (not IsValid(ents)) then return end
 		local linkphys = ents:GetPhysicsObject()
 		linkphys:EnableDrag(false)
-		if self.SystemOn or !self.OnPlanet then
+		if self.SystemOn or not self.OnPlanet then
 			linkphys:EnableGravity(false)
 		else 
 			linkphys:EnableGravity(true)
@@ -671,7 +671,7 @@ end
 function ENT:FreezeMotion()  --Freezes all constrained entities
 	local constrainedents = constraint.GetAllConstrainedEntities( self )
 	for _, ents in pairs( constrainedents ) do
-		if (!IsValid(ents))then return end
+		if (not IsValid(ents))then return end
 		if self.FreezeOn then
 			local physobj = ents:GetPhysicsObject()
 			physobj:EnableMotion(false)
@@ -687,7 +687,7 @@ function ENT:FreezeMotion()  --Freezes all constrained entities
 end
 
 function ENT:Link(pod)
-	if !pod then return false end
+	if not pod then return false end
 	self.Pod = pod
 	return true
 end
@@ -699,7 +699,7 @@ function ENT:OnRemove()
 	end	
 	local constrained = self.AllGyroConstraints
 	for _, ents in pairs( constrained ) do
-		if (!IsValid(ents)) then return end
+		if (not IsValid(ents)) then return end
 		local linkphys = ents:GetPhysicsObject()
 		if IsValid(linkphys) then
 			linkphys:EnableDrag(true)
@@ -728,9 +728,9 @@ function ENT:PostEntityPaste(pl, Ent, CreatedEntities)
 	
 	if (DI.Pod) then
 		self.Pod = CreatedEntities[ DI.Pod ]
-		/*if (!self.Pod) then
+		--[[if (!self.Pod) then
 			self.Pod = ents.GetByIndex(DI.Pod)
-		end*/
+		end]]
 	end
 	
 	if(Ent.EntityMods and Ent.EntityMods.SBEPGyroAdv.WireData) then

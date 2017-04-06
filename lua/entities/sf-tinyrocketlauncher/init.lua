@@ -57,7 +57,7 @@ end
 
 function ENT:SpawnFunction( ply, tr )
 
-	if ( !tr.Hit ) then return end
+	if ( not tr.Hit ) then return end
 	
 	local SpawnPos = tr.HitPos + tr.HitNormal * 16
 	
@@ -134,7 +134,7 @@ end
 
 function ENT:FFire( CCD )
 	local NewShell = ents.Create( "SF-MicroRocket" )
-	if ( !NewShell:IsValid() ) then return end
+	if ( not NewShell:IsValid() ) then return end
 	NewShell:SetPos( self.Entity:GetPos() + (self.Entity:GetUp() * math.random(-5,5)) + (self.Entity:GetRight() * math.random(-5,5)) + (self.Entity:GetForward() * (20 + math.random(0,30))) )
 	NewShell:SetAngles( self.Entity:GetAngles() + Angle(math.random(-self.Recoil * 0.1,self.Recoil * 0.1),math.random(-self.Recoil * 0.1,self.Recoil * 0.1),0) )
 	NewShell.SPL = self.SPL

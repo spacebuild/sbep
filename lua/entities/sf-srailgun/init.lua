@@ -45,7 +45,7 @@ end
 
 function ENT:SpawnFunction( ply, tr )
 
-	if ( !tr.Hit ) then return end
+	if ( not tr.Hit ) then return end
 	
 	local SpawnPos = tr.HitPos + tr.HitNormal * 16 + Vector(0,0,50)
 	
@@ -76,7 +76,7 @@ function ENT:RGFire()
 	trace.endpos = self.Entity:GetPos() + (self.Entity:GetForward() * 10000)
 	trace.filter = self.Entity
 	local tr = util.TraceLine( trace )
-	if tr.Hit and !tr.HitSky then
+	if tr.Hit and not tr.HitSky then
 		util.BlastDamage(self.Entity, self.Entity, tr.HitPos, self.Charge * 2.5, self.Charge * 5)
 		util.BlastDamage(self.Entity, self.Entity, tr.HitPos, self.Charge, self.Charge * 100)
 		local effectdata = EffectData()
@@ -154,7 +154,7 @@ function ENT:Think()
 		self.Charge = 0
 	end
 	if self.Charge > 0 then
-		if !self.ChSPlaying then
+		if not self.ChSPlaying then
 			self.ChSound:PlayEx(1,100)
 			self.ChSPlaying = true
 		end

@@ -34,7 +34,7 @@ end
 
 function ENT:SpawnFunction( ply, tr )
 
-	if ( !tr.Hit ) then return end
+	if ( not tr.Hit ) then return end
 	
 	local SpawnPos = tr.HitPos + tr.HitNormal * 16
 	
@@ -51,7 +51,7 @@ end
 function ENT:TriggerInput(iname, value)		
 	if (iname == "Fire") then
 		if (value > 0) then
-			if !(self.Active == true or self.FTime > CurTime()) then
+			if not (self.Active == true or self.FTime > CurTime()) then
 				self.NFTime = CurTime() + math.Rand(0,0.1)
 			end
 			self.Active = true
@@ -70,7 +70,7 @@ function ENT:Think()
 	if ((self.Active == true or self.FTime > CurTime()) and CurTime() >= self.NFTime ) then
 	
 		local NewShell = ents.Create( "SF-TinyPulseShot" )
-		if ( !NewShell:IsValid() ) then return end
+		if ( not NewShell:IsValid() ) then return end
 		NewShell:SetPos( self.Entity:GetPos() + (self.Entity:GetForward() * 60 ) )
 		NewShell:SetAngles( self.Entity:GetForward():Angle() )
 		NewShell.SPL = self.SPL
@@ -108,7 +108,7 @@ function ENT:Touch( ent )
 end
 
 function ENT:HPFire()
-	if !(self.Active == true or self.FTime > CurTime()) then
+	if not (self.Active == true or self.FTime > CurTime()) then
 		self.NFTime = CurTime() + math.Rand(0,0.1)
 	end
 	self.FTime = CurTime() + 0.1

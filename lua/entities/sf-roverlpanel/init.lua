@@ -11,7 +11,7 @@ function ENT:Initialize()
 	self.Entity:PhysicsInit( SOLID_VPHYSICS )
 	self.Entity:SetMoveType( MOVETYPE_VPHYSICS )
 	self.Entity:SetSolid( SOLID_VPHYSICS )
-	//self.Inputs = Wire_CreateInputs( self.Entity, { "Fire" } )
+	--self.Inputs = Wire_CreateInputs( self.Entity, { "Fire" } )
 	
 	local phys = self.Entity:GetPhysicsObject()
 	if (phys:IsValid()) then
@@ -38,7 +38,7 @@ end
 
 function ENT:SpawnFunction( ply, tr )
 
-	if ( !tr.Hit ) then return end
+	if ( not tr.Hit ) then return end
 	
 	local SpawnPos = tr.HitPos + tr.HitNormal * 16 + Vector(0,0,50)
 	
@@ -53,14 +53,14 @@ function ENT:SpawnFunction( ply, tr )
 end
 
 function ENT:TriggerInput(iname, value)		
-	//if (iname == "Fire") then
-	//	if (value > 0) then
-		//	self.Active = true
-		//else
-			//self.Active = false
-		//end
+	--if (iname == "Fire") then
+	--	if (value > 0) then
+		--	self.Active = true
+		--else
+			--self.Active = false
+		--end
 			
-	//end
+	--end
 end
 
 function ENT:PhysicsUpdate()
@@ -85,12 +85,12 @@ end
 
 function ENT:Touch( ent )
 	if ent.HasHardpoints then
-		if ent.Cont && ent.Cont:IsValid() then HPLink( ent.Cont, ent.Entity, self.Entity ) end
+		if ent.Cont and ent.Cont:IsValid() then HPLink( ent.Cont, ent.Entity, self.Entity ) end
 	end
 end
 
 function ENT:HPFire()
-	if self.HP[1]["Ent"] && self.HP[1]["Ent"]:IsValid() then
+	if self.HP[1]["Ent"] and self.HP[1]["Ent"]:IsValid() then
 		self.HP[1]["Ent"]:HPFire()
 	end
 end

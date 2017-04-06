@@ -54,7 +54,7 @@ function TOOL:LeftClick( tr )
 		HP:SetAngles( tr.HitNormal:Angle() )
 		HP:SetAngles( HP:LocalToWorldAngles( Angle(0,90,90) ) )
 		
-		/*local B = self:GetClientNumber( "bright" )
+		--[[local B = self:GetClientNumber( "bright" )
 		local r = self:GetClientNumber( "R" ) * B/255
 		local g = self:GetClientNumber( "G" ) * B/255
 		local b = self:GetClientNumber( "B" ) * B/255
@@ -70,7 +70,7 @@ function TOOL:LeftClick( tr )
 			umsg.Bool( self:GetClientNumber( "encrypt" ) == 1 )
 			umsg.Bool( self:GetClientNumber( "persist" ) == 1 )
 			umsg.Bool( self:GetClientNumber( "perma" ) == 1 )
-		umsg.End()*/
+		umsg.End()]]
 		
 	undo.Create("SBEP HoloPanel")
 		undo.AddEntity( HP )
@@ -100,7 +100,7 @@ function TOOL.BuildCPanel( panel )
 	----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	
-	/*local DCC = vgui.Create( "DColorCircle" )
+	--[[local DCC = vgui.Create( "DColorCircle" )
 		DCC:SetSize( W , W )
 		DCC.TranslateValues = function( self, x, y )
 									x = x - 0.5
@@ -133,7 +133,7 @@ function TOOL.BuildCPanel( panel )
 		BNS:SetConVar( TName.."_bright" )
 	panel:AddItem( BNS )
 	
-	----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+	----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------]]
 	----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	
 	local Ta = vgui.Create( "HPDTablet" )

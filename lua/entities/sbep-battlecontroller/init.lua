@@ -31,7 +31,7 @@ end
 
 function ENT:SpawnFunction( ply, tr )
 
-	if ( !tr.Hit ) then return end
+	if ( not tr.Hit ) then return end
 	
 	local SpawnPos = tr.HitPos + tr.HitNormal * 16
 	
@@ -75,7 +75,7 @@ function ENT:Think()
 			end		
 			
 			if (self.CPL:KeyDown( IN_JUMP )) then
-				if !self.ATog then
+				if not self.ATog then
 					if self.Active then
 						self.Active = false
 						self.Entity:SetNetworkedBool( "BattleComputerActive", false )

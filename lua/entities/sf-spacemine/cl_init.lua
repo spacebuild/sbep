@@ -23,7 +23,7 @@ function ENT:Think()
 	
 	if self:GetTracking() then
 		
-		if !self.Blipping then
+		if not self.Blipping then
 			timer.Simple(1.5,function() 
 			self.Blip = true 
 			timer.Simple(0.1,function() self.Blip = false 

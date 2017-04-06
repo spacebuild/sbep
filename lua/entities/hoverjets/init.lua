@@ -38,7 +38,7 @@ end
 
 function ENT:SpawnFunction( ply, tr )
 
-	if ( !tr.Hit ) then return end
+	if ( not tr.Hit ) then return end
 	
 	local SpawnPos = tr.HitPos + tr.HitNormal * 16
 	
@@ -186,14 +186,14 @@ function ENT:Use( activator, caller )
 end
 
 function ENT:Touch( ent )
-	if ent.HasWheels and !self.Mounted then
+	if ent.HasWheels and not self.Mounted then
 		if ent.Cont and ent.Cont:IsValid() then self.Entity:WLink( ent.Cont, ent.Entity ) end
 	end
 end
 
 function ENT:WLink( Cont, Pod )
 	for i = 1, Cont.WhC do
-		if !Cont.Wh[i]["Ent"] or !Cont.Wh[i]["Ent"]:IsValid() then
+		if not Cont.Wh[i]["Ent"] or not Cont.Wh[i]["Ent"]:IsValid() then
 			local Offset = 0
 			if Cont.Wh[i]["Side"] == "Left" then
 				Offset = 10
@@ -216,16 +216,16 @@ end
 
 function ENT:PhysicsSimulate( phys, deltatime )
 
-	if !self.Hovering then return SIM_NOTHING end
+	if not self.Hovering then return SIM_NOTHING end
 	
-	/*
+	--[[
 	if ( self.ZVelocity ~= 0 ) then
 	
 		self.TargetZ = self.TargetZ + (self.ZVelocity * deltatime * self.HSpeed)
 		self.Entity:GetPhysicsObject():Wake()
 	
 	end
-	*/
+	]]
 	phys:Wake()
 	
 	local Pos = phys:GetPos()
@@ -292,15 +292,15 @@ function ENT:PostEntityPaste(pl, Ent, CreatedEntities)
 
 	if (DI.Cont) then
 		self.Cont = CreatedEntities[ DI.Cont ]
-		/*if (!self.Cont) then
+		--[[if (!self.Cont) then
 			self.Cont = ents.GetByIndex(DI.Cont)
-		end*/
+		end]]
 	end
 	if (DI.Pod) then
 		self.Pod = CreatedEntities[ DI.Pod ]
-		/*if (!self.Pod) then
+		--[[if (!self.Pod) then
 			self.Pod = ents.GetByIndex(DI.Pod)
-		end*/
+		end]]
 	end
 	if (DI.Mounted) then
 		self.Mounted = DI.Mounted

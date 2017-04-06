@@ -42,7 +42,7 @@ end
 
 function ENT:SpawnFunction( ply, tr )
 
-	if ( !tr.Hit ) then return end
+	if ( not tr.Hit ) then return end
 	
 	local SpawnPos = tr.HitPos + tr.HitNormal * 16
 	
@@ -65,7 +65,7 @@ function ENT:Think()
 	if self.Pod and self.Pod:IsValid() then
 		CPL = self.Pod:GetPassenger(1)
 		if CPL and CPL:IsValid() then
-			if !CPL.CamCon then
+			if not CPL.CamCon then
 				CPL.CamCon = true
 				CPL:SetViewEntity( self )
 			end
@@ -109,7 +109,7 @@ function ENT:Think()
 	end
 	
 	self.Speed = math.Approach(self.Speed, (self.W + self.S) * self.AThrust, self.AThrust + (self.Speed * 0.01) + 5)
-	 //if CPL and CPL:IsValid() then CPL:PrintMessage( HUD_PRINTCENTER, ""..self.Speed..", "..self.AThrust ) end
+	 --if CPL and CPL:IsValid() then CPL:PrintMessage( HUD_PRINTCENTER, ""..self.Speed..", "..self.AThrust ) end
 	--print(self.Speed)
 	
 	local Phys = self:GetPhysicsObject()
@@ -157,7 +157,7 @@ function ENT:ApplyDupeInfo(ply, ent, info, GetEntByID)
 end
 
 function ENT:BuildClientModel(Scale)
-	if !self.Building then
+	if not self.Building then
 		--self.Building = true
 		local CEnts = constraint.GetAllConstrainedEntities( self.Entity )
 		for k,e in pairs(CEnts) do

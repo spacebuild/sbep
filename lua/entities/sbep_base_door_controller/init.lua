@@ -22,7 +22,7 @@ end
 function ENT:MakeWire( bWire , bAdjust )
 
 	self.EnableWire = bWire
-	if !self.DT then return end
+	if not self.DT then return end
 
 	self.SBEPWireInputs = {}
 	self.SBEPWireOutputs = {}
@@ -54,7 +54,7 @@ end
 
 function ENT:AddDoors()
 	local doors = MST[ string.lower(self:GetModel()) ]
-	if !doors then return false end
+	if not doors then return false end
 	self.DT = {}
 	for n,Data in ipairs( doors ) do
 		local D = ents.Create( "sbep_base_door" )
@@ -68,11 +68,11 @@ function ENT:AddDoors()
 	end
 end
 function ENT:Trigger()
-	if !self.EnableUse or self.DisableUse then return end
+	if not self.EnableUse or self.DisableUse then return end
 
 	for k,v in pairs( self.DT ) do
-		if !v.Locked then
-			v.OpenTrigger = !v.OpenTrigger
+		if not v.Locked then
+			v.OpenTrigger = not v.OpenTrigger
 		end
 	end
 end
@@ -115,7 +115,7 @@ function ENT:TriggerInput(k,v)
 		end
 		
 		if k == "Open_"..tostring(m) then
-			if !n.Locked then
+			if not n.Locked then
 				if v > 0 then
 					n.OpenTrigger = true
 				else

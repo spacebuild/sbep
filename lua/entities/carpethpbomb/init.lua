@@ -37,7 +37,7 @@ function ENT:Think()
 end
 
 function ENT:PhysicsCollide( data, physobj )
-	if (!self.Exploded) then
+	if (not self.Exploded) then
 		self:Splode()
 	end
 end
@@ -49,7 +49,7 @@ function ENT:PhysicsUpdate( phys )
 end
 
 function ENT:Splode()
-	if(!self.Exploded) then
+	if(not self.Exploded) then
 		--self.Exploded = true
 		util.BlastDamage(self.Entity, self.Entity, self.Entity:GetPos(), 100, 100)
 		SB.util.damage.doBlastDamage( self.Entity:GetPos(), 100, math.random(50,100), 4)

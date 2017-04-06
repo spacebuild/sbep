@@ -58,7 +58,7 @@ end
 
 function ENT:SpawnFunction( ply, tr )
 
-	if ( !tr.Hit ) then return end
+	if ( not tr.Hit ) then return end
 	
 	local SpawnPos = tr.HitPos + tr.HitNormal * 16 + Vector(0,0,60)
 	
@@ -82,7 +82,7 @@ function ENT:Think()
 					local IMass = self.Target:GetPhysicsObject():GetMass()
 					local IDist = (self.Entity:GetPos() - self.Target:GetPos()):Length()
 					local TVal = (IMass * 3) - IDist				
-					if !self.Entity:GetTracking() then self.Entity:SetTracking( true ) end
+					if not self.Entity:GetTracking() then self.Entity:SetTracking( true ) end
 					local DVec = self.Target:GetPos() - self.Entity:GetPos()
 					--phy:SetVelocity( ((DVec:Normalize() * ((self.Target:GetPhysicsObject():GetVelocity():Length() * 0.1) + (TVal * 0.01) )) + phy:GetVelocity()) )
 					--phy:ApplyForceCenter( DVec:Normalize() * ((self.Target:GetPhysicsObject():GetVelocity():Length() * 100) + (TVal * 2000 ) )
@@ -98,7 +98,7 @@ function ENT:Think()
 				local CT = nil
 							
 				for _,i in pairs(targets) do
-					if i:GetPhysicsObject() and i:GetPhysicsObject():IsValid() and !i.MineProof and !i:IsPlayer() then
+					if i:GetPhysicsObject() and i:GetPhysicsObject():IsValid() and not i.MineProof and not i:IsPlayer() then
 						local IMass = i:GetPhysicsObject():GetMass()
 						local IDist = (self.Entity:GetPos() - i:GetPos()):Length()
 						local TVal = (IMass * 3) - IDist
@@ -119,13 +119,13 @@ function ENT:Think()
 end
 
 function ENT:PhysicsCollide( data, physobj )
-	if (!self.Exploded and self.Armed) then
+	if (not self.Exploded and self.Armed) then
 		self:Splode()
 	end
 end
 
 function ENT:OnTakeDamage( dmginfo )
-	if (!self.Exploded and self.Armed) then
+	if (not self.Exploded and self.Armed) then
 		--self:Explode()
 	end
 	--self.Exploded=true
@@ -144,7 +144,7 @@ function ENT:Arm()
 end
 
 function ENT:Splode()
-	if(!self.Exploded) then
+	if(not self.Exploded) then
 		--self.Exploded = true
 		util.BlastDamage(self.Entity, self.Entity, self.Entity:GetPos(), 750, 750)
 		local targets = ents.FindInSphere( self.Entity:GetPos(), 500)
@@ -169,7 +169,7 @@ function ENT:Splode()
 		targets = ents.FindInSphere( self.Entity:GetPos(), 2000)
 	
 		for _,i in pairs(targets) do
-			if i:GetPhysicsObject() and i:GetPhysicsObject():IsValid() and !i.MineProof and !i:IsPlayer() then
+			if i:GetPhysicsObject() and i:GetPhysicsObject():IsValid() and not i.MineProof and not i:IsPlayer() then
 				i:GetPhysicsObject():ApplyForceOffset( Vector(500000,500000,500000), self.Entity:GetPos() )
 			end
 		end
@@ -200,7 +200,7 @@ function ENT:Splode()
 end
 
 function ENT:Touch( ent )
-	if ent.HasHardpoints and !self.Armed then
+	if ent.HasHardpoints and not self.Armed then
 		--if ent.Cont and ent.Cont:IsValid() then HPLink( ent.Cont, ent.Entity, self.Entity ) end
 	end
 end

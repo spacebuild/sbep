@@ -129,7 +129,7 @@ if CLIENT then
 			LDT.PButtons.Special.B:SetSize( 155 , 35 )
 			LDT.PButtons.Special.B:SetImage( "sbep_icons/special.vmt" )
 			LDT.PButtons.Special.B.DoClick = function()
-													LDT.SFrame.visible = !LDT.SFrame.visible 
+													LDT.SFrame.visible = not LDT.SFrame.visible
 													LDT.SFrame:SetVisible( LDT.SFrame.visible )
 												end
 		
@@ -488,7 +488,7 @@ if CLIENT then
 		
 		local function CLDelayLift( entLift )
 			timer.Simple( 0.1 , function() timerFunc(entLift)
-									if !CLSendLift( entLift ) then
+									if not CLSendLift( entLift ) then
 										CLDelayLift( entLift )
 									end
 								end)
@@ -531,10 +531,10 @@ util.AddNetworkString("SBEPDisableButtons_cl")
 util.AddNetworkString("SBEP_ReCalcViewAngles_LiftDesignMenu_cl")
 util.AddNetworkString("SBEP_SetPHOffsetLiftDesignMenu_cl")
 
-	function SBEP_SetLiftPartType( ply , cmd , args )
+	local function SBEP_SetLiftPartType( ply , cmd , args )
 		local n = LiftSystem_SER[ply]:GetNWInt("ActivePart")
 		local type = tostring( args[1] )
-		if !LiftSystem_SER[ply].PartTable[n] then return end
+		if not LiftSystem_SER[ply].PartTable[n] then return end
 		
 		ply:ConCommand( "sbep_lift_designer_type "..type )
 		LiftSystem_SER[ply].PartTable[n]:SetPartType( type )
@@ -544,28 +544,28 @@ util.AddNetworkString("SBEP_SetPHOffsetLiftDesignMenu_cl")
 	end
 	concommand.Add( "SBEP_LiftSys_SetLiftPartType_ser" , SBEP_SetLiftPartType )
 	
-	function SBEP_InvertLiftPart( ply , cmd , args )
+	local function SBEP_InvertLiftPart( ply , cmd , args )
 		local n = LiftSystem_SER[ply]:GetNWInt("ActivePart")
-			if !LiftSystem_SER[ply].PartTable[n] then return end
+			if not LiftSystem_SER[ply].PartTable[n] then return end
 		LiftSystem_SER[ply].PartTable[n]:Invert()
 		ply:ConCommand( "SBEP_LiftGetCamHeight_ser" )
 	end
 	concommand.Add( "SBEP_LiftSys_InvertLiftPart_ser" , SBEP_InvertLiftPart )	
 
-	function SBEP_SetLiftPartYaw( ply , cmd , args )
+	local function SBEP_SetLiftPartYaw( ply , cmd , args )
 		local n = LiftSystem_SER[ply]:GetNWInt("ActivePart")
-			if !LiftSystem_SER[ply].PartTable[n] then return end
+			if not LiftSystem_SER[ply].PartTable[n] then return end
 		LiftSystem_SER[ply].PartTable[n]:RotatePartYaw( tonumber( args[1] ) )
 	end
 	concommand.Add( "SBEP_LiftSys_SetLiftPartYaw_ser" , SBEP_SetLiftPartYaw )	
 	
-	function SBEP_LiftCancelMenu( ply , cmd , args )
+	local function SBEP_LiftCancelMenu( ply , cmd , args )
 		LiftSystem_SER[ply]:Remove()
 		ply:ConCommand( "sbep_lift_designer_editing 0" )
 	end
 	concommand.Add( "SBEP_LiftCancelMenu_ser" , SBEP_LiftCancelMenu )	
 	
-	function SBEP_LiftGetCamHeight( ply , cmd , args )
+	local function SBEP_LiftGetCamHeight( ply , cmd , args )
 		local n = tonumber(args[1])
 		if not n then
 			n = LiftSystem_SER[ply]:GetNWInt("ActivePart")
@@ -605,7 +605,7 @@ util.AddNetworkString("SBEP_SetPHOffsetLiftDesignMenu_cl")
 				end
 				tracedata.filter = { LiftSystem_SER[ply] , LiftSystem_SER[ply].PartTable[1] }
 			local trace = util.TraceHull(tracedata)
-			if !trace.Hit then LiftSystem_SER[ply].CanDown = true end
+			if not trace.Hit then LiftSystem_SER[ply].CanDown = true end
 		end
 		net.Start("SBEPDisableButtons_cl")
 		net.WriteInt( n, 16 )
@@ -621,7 +621,7 @@ util.AddNetworkString("SBEP_SetPHOffsetLiftDesignMenu_cl")
 	end
 	concommand.Add( "SBEP_LiftGetCamHeight_ser" , SBEP_LiftGetCamHeight )	
 	
-	function SBEP_LiftConstructPart( ply , cmd , args )
+	local function SBEP_LiftConstructPart( ply , cmd , args )
 		local type = ply:GetInfo( "sbep_lift_designer_type" )
 		local n = tonumber( args[1] )
 		local D = args[2]
@@ -641,7 +641,7 @@ util.AddNetworkString("SBEP_SetPHOffsetLiftDesignMenu_cl")
 	end
 	concommand.Add( "SBEP_LiftConstructPart_ser" , SBEP_LiftConstructPart )
 	
-	function SBEP_LiftFinishSystem( ply , cmd , args )
+	local function SBEP_LiftFinishSystem( ply , cmd , args )
 		net.Start("SBEP_CloseLiftDesignMenu_cl")
 		net.Send(ply)
 		if LiftSystem_SER[ply]:GetPartCount() > 1 then
@@ -653,7 +653,7 @@ util.AddNetworkString("SBEP_SetPHOffsetLiftDesignMenu_cl")
 	end
 	concommand.Add( "SBEP_LiftFinishSystem_ser" , SBEP_LiftFinishSystem )
 	
-	function SBEP_LiftDeletePart( ply , cmd , args )
+	local function SBEP_LiftDeletePart( ply , cmd , args )
 		local n = LiftSystem_SER[ply]:GetNWInt("ActivePart")
 		if n == 1 and BEM[LiftSystem_SER[ply].PartTable[2]:GetPartType()] then return end
 
@@ -668,7 +668,7 @@ util.AddNetworkString("SBEP_SetPHOffsetLiftDesignMenu_cl")
 	end
 	concommand.Add( "SBEP_LiftDeletePart_ser" , SBEP_LiftDeletePart )
 
-	function MakeLift( Player, Data )
+	local function MakeLift( Player, Data )
 
 		local ent = ents.Create( Data.Class )
 		duplicator.DoGeneric( ent, Data )
@@ -687,10 +687,10 @@ util.AddNetworkString("SBEP_SetPHOffsetLiftDesignMenu_cl")
 		LiftSystem_SER[ply] = nil
 	end)
 	
-	/*reset convars to defaults on load
+	--[[reset convars to defaults on load
 	for k,v in pairs( ConVars ) do
 	ply:ConCommand( "sbep_lift_designer_"..k , v )
-	end*/
+	end]]
 
 end
 

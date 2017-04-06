@@ -24,7 +24,7 @@ function ENT:Think()
 			local dlight = DynamicLight( self:EntIndex() )
 			if ( dlight ) then
 				--local r, g, b, a = self:GetColor()
-				dlight.Pos = self:GetPos() //+ self:GetForward() * 10
+				dlight.Pos = self:GetPos() --+ self:GetForward() * 10
 				dlight.r = 180
 				dlight.g = 180
 				dlight.b = 220

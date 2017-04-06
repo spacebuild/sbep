@@ -84,7 +84,7 @@ end
 
 function ENT:SpawnFunction( ply, tr )
 
-	if ( !tr.Hit ) then return end
+	if ( not tr.Hit ) then return end
 	
 	local SpawnPos = tr.HitPos + tr.HitNormal * 16 + Vector(0,0,50)
 	
@@ -118,14 +118,14 @@ function ENT:Touch( ent )
 end
 
 function ENT:HPFire()
-	if !self.Rotating then
+	if not self.Rotating then
 		self:MainFire()
 	else
 		if self.FreeSpin then
 			self.Prefire = true
 		end
 	end
-	if !self.FreeSpin and self.CRS < 1 then
+	if not self.FreeSpin and self.CRS < 1 then
 		self.CRS = 1
 	end
 end
@@ -159,7 +159,7 @@ end
 
 function ENT:Think()
 	local Delta = CurTime() - self.LTT
-	if !self.Barrel or !self.Barrel:IsValid() then
+	if not self.Barrel or not self.Barrel:IsValid() then
 		local ent = ents.Create( "Prop_Physics" )
 		ent:SetModel("models/Slyfo/sat_rfg.mdl")
 		ent:SetPos(self:GetPos())
@@ -173,7 +173,7 @@ function ENT:Think()
 		self.Barrel = ent
 	end
 	
-	if !self.FClip or !self.FClip:IsValid() then
+	if not self.FClip or not self.FClip:IsValid() then
 		local ent = ents.Create( "Prop_Physics" )
 		ent:SetModel("models/Slyfo/sat_grappler.mdl")
 		ent:SetPos(self:GetPos())
@@ -221,15 +221,15 @@ function ENT:Think()
 		self.Accel = true
 	end
 		
-	if self.FreeSpin and !self.Prefire then
+	if self.FreeSpin and not self.Prefire then
 		self.CRA = math.fmod(self.CRA + self.CRS,360)
 		print(self.CRA / (360 / TGuns))
 		self.CGun = math.floor(self.CRA / (360 / TGuns)) + 1
-		if !self.ACyc then
+		if not self.ACyc then
 			self.Accel = false
 		end
 		--print(self.Accel, self.CRS)
-		if !self.Accel and self.CRS <= 0.3 then
+		if not self.Accel and self.CRS <= 0.3 then
 			local CTrg = (360 / TGuns) * (self.CGun - 1)
 			print(CTrg,self.CGun,self.CRA)
 			self.CRS = 0.3
@@ -247,7 +247,7 @@ function ENT:Think()
 			--print(math.AngleDifference(self.CRA,CTrg))
 			if math.AngleDifference(self.CRA,CTrg) >= self.CRS then
 				self.CRA = CTrg
-				if !self.FreeSpin or self.CRS <= 0.1 then
+				if not self.FreeSpin or self.CRS <= 0.1 then
 					self.CRS = 0
 					self.Rotating = false
 				else

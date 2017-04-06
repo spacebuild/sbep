@@ -95,7 +95,7 @@ function ENT:Think()
 				local CT = nil
 							
 				for _,i in pairs(targets) do
-					if i:GetPhysicsObject() and i:GetPhysicsObject():IsValid() and !i.Autospawned then
+					if i:GetPhysicsObject() and i:GetPhysicsObject():IsValid() and not i.Autospawned then
 						local IMass = i:GetPhysicsObject():GetMass()
 						local IDist = (self.Entity:GetPos() - i:GetPos()):Length()
 						if i.IsFlare == true then IMass = 5000 end
@@ -180,14 +180,14 @@ function ENT:Think()
 end
 
 function ENT:PhysicsCollide( data, physobj )
-	if (!self.Exploded and self.Armed) then
+	if (not self.Exploded and self.Armed) then
 		self:Splode()
 	end
 	self.Exploded = true
 end
 
 function ENT:OnTakeDamage( dmginfo )
-	if (!self.Exploded and self.Armed) then
+	if (not self.Exploded and self.Armed) then
 		--self:Splode()
 	end
 	--self.Exploded = true
@@ -198,7 +198,7 @@ function ENT:Use( activator, caller )
 end
 
 function ENT:Splode()
-	if(!self.Exploded) then
+	if(not self.Exploded) then
 		self.Exploded = true
 		util.BlastDamage(self.Entity, self.Entity, self.Entity:GetPos(), 150, 150)
 		SBGCSplash( self.Entity:GetPos(), 100, math.Rand(200, 500), 6, { self.Entity:GetClass() } )
@@ -231,7 +231,7 @@ function ENT:Splode()
 end
 
 function ENT:Touch( ent )
-	if ent.HasHardpoints and !self.Armed then
+	if ent.HasHardpoints and not self.Armed then
 		--if ent.Cont and ent.Cont:IsValid() then HPLink( ent.Cont, ent.Entity, self.Entity ) end
 	end
 end
@@ -241,7 +241,7 @@ function ENT:OnRemove()
 end
 
 function ENT:gcbt_breakactions( damage, pierce )
-	if !self.Exploded then
+	if not self.Exploded then
 		self.Entity:Splode()
 	end
 	self.Exploded = true

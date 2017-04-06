@@ -109,7 +109,7 @@ function ENT:MakeWire( bAdjust )
 		for k,v in ipairs( self.PartData.SD.MultiFloorTable ) do
 			self.PartData.WI[k] = "Call "..tostring( k )
 		end
-	elseif !self.PartData.SD.IsShaft then
+	elseif not self.PartData.SD.IsShaft then
 		self.PartData.WI = { "Call" }
 	end
 
@@ -126,13 +126,13 @@ function ENT:TriggerInput(k,v)
 	if table.getn( self.PartData.WI ) > 1 then
 		for m,n in ipairs( self.PartData.WI ) do
 			if k == n and v == 1 then
-				if !self.PartData.SD.MultiFloorTable and self.Cont and self.Cont:IsValid() then
+				if not self.PartData.SD.MultiFloorTable and self.Cont and self.Cont:IsValid() then
 					self.Entity:CallLift( m )
 				end
 			end
 		end
 	elseif k == "Call" and v == 1 then
-		if !self.PartData.SD.MultiFloorTable and self.Cont and self.Cont:IsValid() then
+		if not self.PartData.SD.MultiFloorTable and self.Cont and self.Cont:IsValid() then
 			self.Entity:CallLift()
 		end
 	end
@@ -142,14 +142,14 @@ function ENT:SetPartType( type )
 	if self.PartData.T == type then return end
 
 	local data = LMT[ self.Cont.Size[1] ][ type ]
-	if !data then return end
+	if not data then return end
 	self.PartData.SD 	= {}
 	self.PartData 	= table.Merge( self.PartData , data )
 	self.PartData.T 	= type
 	self.PartData.TC 	= string.Left( type , 1)
 	self.PartData.TF 	= string.sub( type , 2)
 	self.PartData.AT 	= table.Copy( self.PartData.AT )
-	self.PartData.Usable  = self.Cont.Usable and !self.PartData.SD.IsShaft and !self.PartData.SD.MultiFloorTable
+	self.PartData.Usable  = self.Cont.Usable and not self.PartData.SD.IsShaft and not self.PartData.SD.MultiFloorTable
 	self.Entity:SetModel( self.PartData.model )
 	self.Entity:CheckSkin( self.Cont.Skin )
 end
@@ -223,7 +223,7 @@ end
 
 function ENT:Invert()
 	self.PartData.Roll = (self.PartData.Roll + 180) % 360
-	self.PartData.Inv = !self.PartData.Inv
+	self.PartData.Inv = not self.PartData.Inv
 	self.Entity:RefreshAng()
 end
 
@@ -244,7 +244,7 @@ function ENT:CallLift( m )
 end
 
 function ENT:Use()
-	if !self.PartData.Usable or self.PartData.SD.MultiFloorTable or !self.Cont or !self.Cont:IsValid() then return end
+	if not self.PartData.Usable or self.PartData.SD.MultiFloorTable or not self.Cont or not self.Cont:IsValid() then return end
 	self.Entity:CallLift()
 end
 

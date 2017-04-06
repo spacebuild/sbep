@@ -34,7 +34,7 @@ end
 
 function ENT:SpawnFunction( ply, tr )
 
-	if ( !tr.Hit ) then return end
+	if ( not tr.Hit ) then return end
 	
 	local SpawnPos = tr.HitPos + tr.HitNormal * 16 + Vector(0,0,50)
 	
@@ -51,7 +51,7 @@ end
 function ENT:TriggerInput(iname, value)		
 	if (iname == "Fire") then
 		if (value > 0) then
-			if !(self.Active == true or self.FTime > CurTime()) then
+			if not (self.Active == true or self.FTime > CurTime()) then
 				self.NFTime = CurTime() + math.Rand(0,0.6)
 			end
 			self.Active = true
@@ -143,7 +143,7 @@ function ENT:Touch( ent )
 end
 
 function ENT:HPFire()
-	if !(self.Active == true or self.FTime > CurTime()) then
+	if not (self.Active == true or self.FTime > CurTime()) then
 		self.NFTime = CurTime() + math.Rand(0,0.6)
 	end
 	self.FTime = CurTime() + 0.1

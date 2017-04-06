@@ -30,7 +30,7 @@ end
 
 function ENT:SpawnFunction( ply, tr )
 
-	if ( !tr.Hit ) then return end
+	if ( not tr.Hit ) then return end
 
 	local SpawnPos = tr.HitPos + tr.HitNormal * 16 + Vector(0,0,50)
 
@@ -136,15 +136,15 @@ end
 function ENT:Think()
 	--self.Entity:SetColor(Color( 0, 0, 255, 255)
 
-	if self.Pod2 && self.Pod2:IsValid() && self.Pod2:IsVehicle() then
+	if self.Pod2 and self.Pod2:IsValid() and self.Pod2:IsVehicle() then
 		for i = 1, self.Pod2.HPC do
-			if self.Pod2.HP[i]["Ent"] && self.Pod2.HP[i]["Ent"]:IsValid() then
+			if self.Pod2.HP[i]["Ent"] and self.Pod2.HP[i]["Ent"]:IsValid() then
 				self.Pod2.HP[i]["Ent"]:GetPhysicsObject():SetMass(1)
 			end
 		end
 
 		self.CPL = self.Pod2:GetPassenger(1)
-		if (self.CPL && self.CPL:IsValid()) then
+		if (self.CPL and self.CPL:IsValid()) then
 
 			self.CPL:CrosshairEnable()
 
@@ -153,7 +153,7 @@ function ENT:Think()
 			local BDist = PRel:Distance( self.Pod2:GetPos() + self.Pod2:GetUp() * -45 )
 			local GAng = FDist - BDist
 			for i = 1, self.Pod2.HPC do
-				if self.Pod2.HP[i]["Ent"] && self.Pod2.HP[i]["Ent"]:IsValid() then
+				if self.Pod2.HP[i]["Ent"] and self.Pod2.HP[i]["Ent"]:IsValid() then
 					self.Pod2.HP[i]["Ent"]:SetLocalAngles( Angle(GAng,0,0) )
 				end
 			end
@@ -167,11 +167,11 @@ function ENT:Think()
 			physi1:AddAngleVelocity((physi1:GetAngleVelocity() * -1) + Vector(0,0,-Yaw))
 
 			if ( self.CPL:KeyDown( IN_ATTACK ) ) then
-				if self.Pod2.HPC && self.Pod2.HPC > 0 then
+				if self.Pod2.HPC and self.Pod2.HPC > 0 then
 					for i = 1, self.Pod2.HPC do
 						local HPC = self.CPL:GetInfo( "SBHP_"..i )
-						if self.Pod2.HP[i]["Ent"] && self.Pod2.HP[i]["Ent"]:IsValid() && (string.byte(HPC) == 49) then
-							if self.Pod2.HP[i]["Ent"].Cont && self.Pod2.HP[i]["Ent"].Cont:IsValid() then
+						if self.Pod2.HP[i]["Ent"] and self.Pod2.HP[i]["Ent"]:IsValid() and (string.byte(HPC) == 49) then
+							if self.Pod2.HP[i]["Ent"].Cont and self.Pod2.HP[i]["Ent"].Cont:IsValid() then
 								self.Pod2.HP[i]["Ent"].Cont:HPFire()
 							else
 								self.Pod2.HP[i]["Ent"].Entity:HPFire()
@@ -182,11 +182,11 @@ function ENT:Think()
 			end
 
 			if (self.CPL:KeyDown( IN_ATTACK2 ) ) then
-				if self.Pod2.HPC && self.Pod2.HPC > 0 then
+				if self.Pod2.HPC and self.Pod2.HPC > 0 then
 					for i = 1, self.Pod2.HPC do
 						local HPC = self.CPL:GetInfo( "SBHP_"..i.."a" )
-						if self.Pod2.HP[i]["Ent"] && self.Pod2.HP[i]["Ent"]:IsValid() && (string.byte(HPC) == 49) then
-							if self.Pod2.HP[i]["Ent"].Cont && self.Pod2.HP[i]["Ent"].Cont:IsValid() then
+						if self.Pod2.HP[i]["Ent"] and self.Pod2.HP[i]["Ent"]:IsValid() and (string.byte(HPC) == 49) then
+							if self.Pod2.HP[i]["Ent"].Cont and self.Pod2.HP[i]["Ent"].Cont:IsValid() then
 								self.Pod2.HP[i]["Ent"].Cont:HPFire()
 							else
 								self.Pod2.HP[i]["Ent"].Entity:HPFire()
@@ -208,7 +208,7 @@ function ENT:Think()
 			physi1:AddAngleVelocity((physi1:GetAngleVelocity() * -1) + Vector(0,0,-Yaw))
 
 			for i = 1, self.Pod2.HPC do
-				if self.Pod2.HP[i]["Ent"] && self.Pod2.HP[i]["Ent"]:IsValid() then
+				if self.Pod2.HP[i]["Ent"] and self.Pod2.HP[i]["Ent"]:IsValid() then
 					self.Pod2.HP[i]["Ent"]:SetLocalAngles( Angle(0,0,0) )
 				end
 			end
@@ -234,17 +234,17 @@ end
 
 function ENT:Touch( ent )
 	if ent.HasHardpoints then
-		if ent.Cont && ent.Cont:IsValid() then HPLink( ent.Cont, ent.Entity, self.Entity ) end
+		if ent.Cont and ent.Cont:IsValid() then HPLink( ent.Cont, ent.Entity, self.Entity ) end
 		self.Entity:GetPhysicsObject():EnableCollisions(true)
 		self.Entity:SetParent()
 	end
 end
 
 function ENT:HPFire()
-	if self.Bar.HP[1]["Ent"] && self.Bar.HP[1]["Ent"]:IsValid() then
+	if self.Bar.HP[1]["Ent"] and self.Bar.HP[1]["Ent"]:IsValid() then
 		self.Bar.HP[1]["Ent"]:HPFire()
 	end
-	if self.Bar.HP[2]["Ent"] && self.Bar.HP[2]["Ent"]:IsValid() then
+	if self.Bar.HP[2]["Ent"] and self.Bar.HP[2]["Ent"]:IsValid() then
 		self.Bar.HP[2]["Ent"]:HPFire()
 	end
 end

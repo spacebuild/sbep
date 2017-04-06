@@ -34,7 +34,7 @@ end
 
 function ENT:SpawnFunction( ply, tr )
 
-	if ( !tr.Hit ) then return end
+	if ( not tr.Hit ) then return end
 	
 	local SpawnPos = tr.HitPos + tr.HitNormal * 16 + Vector(0,0,300)
 	
@@ -173,7 +173,7 @@ end
 function ENT:MACFire()
 --if (self.val1 >= 1000) then
 	local NewShell = ents.Create( "SF-MACLightShell" )
-	if ( !NewShell:IsValid() ) then return end
+	if ( not NewShell:IsValid() ) then return end
 	NewShell:SetPos( self.Entity:GetPos() + (self.Entity:GetForward() * 165) )
 	NewShell:SetAngles( self.Entity:GetAngles() )
 	NewShell.SPL = self.SPL

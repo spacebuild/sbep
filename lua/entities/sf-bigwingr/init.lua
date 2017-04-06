@@ -83,12 +83,12 @@ end
 
 function ENT:SpawnFunction( ply, tr )
 	
-	if !fintool or type(fintool) ~= "table" then
+	if not fintool or type(fintool) ~= "table" then
 		ply:PrintMessage( HUD_PRINTCENTER, "You need the fin tool installed" )	
 		return nil
 	end
 	
-	if ( !tr.Hit ) then return end
+	if ( not tr.Hit ) then return end
 	
 	local SpawnPos = tr.HitPos + tr.HitNormal * 16 + Vector(0,0,50)
 	

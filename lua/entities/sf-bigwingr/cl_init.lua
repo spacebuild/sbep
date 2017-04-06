@@ -6,13 +6,13 @@ end
 
 function ENT:Draw()
 	--Draw the middle wing
-		/*
+		--[[
 		You have to modify the model in some way before the engine is willing to redraw it in the same frame. 
 		In this case, we're just setting the model scale. Note that you don't actually have to actually change the 
 		scale, setting it to the default setting is enough to force a redraw. Even though this is the first time the 
 		model is being drawn this frame, it still needs to have the scale set, otherwise the next redraw will overwrite the original.
 		Be careful about how many times a model is drawn per frame. Too many can cause serious lag. I learned that to my regret when I made the tank treads.
-		*/
+		]]
 	self.Entity:SetModelScale(1)
 	self.Entity:SetModel( "models/SmallBridge/Wings/SBwingC1R.mdl" ) 
 	self.Entity:DrawModel()

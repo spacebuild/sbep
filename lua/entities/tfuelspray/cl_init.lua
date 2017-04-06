@@ -52,7 +52,7 @@ function ENT:Think()
 			particle:SetCollide( true )
 		end
 		
-		/*
+		--[[
 		local Vec = Vector(math.Rand(-50,50),math.Rand(-50,50),math.Rand(-50,50))
 		local particle = self.Emitter:Add( "particles/smokey", self.Entity:GetPos() + Vec )
 		if (particle) then
@@ -68,8 +68,8 @@ function ENT:Think()
 			particle:SetColor(Color( 220 , 220 , 180 ) )
 			particle:SetCollide( true )
 		end
-		*/
-	elseif !self.Entity:IsPuddle() then
+		]]
+	elseif not self.Entity:IsPuddle() then
 		if self.NSTime < CurTime() then
 			local scount = math.random(1,2)
 			for i = 1, scount do

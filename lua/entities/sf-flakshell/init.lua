@@ -67,7 +67,7 @@ function ENT:Think()
 	trace.endpos = self.Entity:GetPos() + (self.Entity:GetForward() * 200)
 	trace.filter = self.Entity
 	local tr = util.TraceLine( trace )
-	if !tr.Hit then
+	if not tr.Hit then
 		self.Entity:SetPos(self.Entity:GetPos() + self.Entity:GetForward() * 200)
 	else
 		if tr.HitSky then
@@ -98,14 +98,14 @@ function ENT:Think()
 end
 
 function ENT:PhysicsCollide( data, physobj )
-	if(!self.Exploded) then
+	if(not self.Exploded) then
 		self.Entity:GoBang()
 	end
 	self.Exploded = true
 end
 
 function ENT:OnTakeDamage( dmginfo )
-	if(!self.Exploded) then
+	if(not self.Exploded) then
 		--self.Entity:GoBang()
 	end
 	--self.Exploded = true
@@ -116,7 +116,7 @@ function ENT:Use( activator, caller )
 end
 
 function ENT:GoBang()
-	if !self.Exploded then
+	if not self.Exploded then
 		self.Exploded = true
 		util.BlastDamage(self.Entity, self.Entity, self.Entity:GetPos(), 500, 75)
 		SBGCSplash( self.Entity:GetPos(), 500, math.Rand(100, 200), 6, { self.Entity:GetClass() } )
@@ -129,7 +129,7 @@ function ENT:GoBang()
 end
 
 function ENT:gcbt_breakactions( damage, pierce )
-	if !self.Exploded then
+	if not self.Exploded then
 		self.Entity:GoBang()
 	end
 	self.Exploded = true

@@ -46,7 +46,7 @@ end
 
 function ENT:SpawnFunction( ply, tr )
 
-	if ( !tr.Hit ) then return end
+	if ( not tr.Hit ) then return end
 	
 	local SpawnPos = tr.HitPos + tr.HitNormal * 16 + Vector(0,0,50)
 	
@@ -63,7 +63,7 @@ end
 function ENT:TriggerInput(iname, value)		
 	if (iname == "Open") then
 		if (value > 0) then
-			if !self.COp then
+			if not self.COp then
 				self.Entity:Open(self.Mode)
 			end
 		else
@@ -119,7 +119,7 @@ function ENT:Think()
 		end
 	end
 	
-	if self.Panel and self.Panel:IsValid() and !self.Panel.Blasted then
+	if self.Panel and self.Panel:IsValid() and not self.Panel.Blasted then
 		self.Panel:GetPhysicsObject():SetVelocity(self.Entity:GetRight() * self.X + self.Entity:GetForward() * self.Y + self.Entity:GetUp() * self.Z)
 		self.Panel.Blasted = true
 	end

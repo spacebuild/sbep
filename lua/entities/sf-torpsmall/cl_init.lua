@@ -12,7 +12,7 @@ function ENT:Draw()
 	render.SetMaterial( self.Matt )	
 	local color = Color( 200, 200, 60, 200 )
 	if self:GetArmed() then
-		//render.DrawSprite( self.Entity:GetPos() + (LocalPlayer():GetPos() - self.Entity:GetPos()):GetNormal() * 30, 400, 400, color )
+		--render.DrawSprite( self.Entity:GetPos() + (LocalPlayer():GetPos() - self.Entity:GetPos()):GetNormal() * 30, 400, 400, color )
 	end
 
 end

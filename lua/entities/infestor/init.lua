@@ -4,7 +4,7 @@
      
     local MaxInfestorLimit = 200
      
-    /*
+    --[[
     Types:
     0 = Seedling
     1 = Spreader
@@ -22,7 +22,7 @@
     40 = Ripper
      
     50 = SporeCannon
-    */
+    ]]
      
     function ENT:Initialize()
            
@@ -68,7 +68,7 @@
      
     function ENT:SpawnFunction( ply, tr )
      
-            if ( !tr.Hit ) then return end
+            if ( not tr.Hit ) then return end
            
             local SpawnPos = tr.HitPos + tr.HitNormal * 2
            
@@ -82,7 +82,7 @@
             ent:Activate()
             ent.SPL = ply
             ent.Weld = constraint.Weld(ent,tr.Entity)
-            if !tr.Entity:IsWorld() then
+            if not tr.Entity:IsWorld() then
                     --ent:SetParent(tr.Entity)
                     ent.Perch = tr.Entity
             end
@@ -111,12 +111,12 @@
             --self.dt.Energy = self.dt.Energy + Delta
             --self.LTT = CurTime()
             if self.dt.Mutation == 10 then
-                    if !(self.Sire and self.Sire:IsValid()) then
+                    if not (self.Sire and self.Sire:IsValid()) then
                             self:Remove()
                             return
                     end
            
-                    if !self.Sire.CurrentTarget or !self.Sire.CurrentTarget:IsValid() then
+                    if not self.Sire.CurrentTarget or not self.Sire.CurrentTarget:IsValid() then
                            
                             local Vec,Ang = WorldToLocal(self:GetPos(),self:GetAngles(),self.Sire:GetPos(),self.Sire:GetAngles())
                             local r = math.fmod((math.deg(math.atan2( Vec.z, Vec.y )) + 180) + 99,360)
@@ -176,12 +176,12 @@
             elseif self.dt.Energy < self.MaxEnergy * 0.5 then
                     self:RequestResources()
             end
-            if !self.Sire then
+            if not self.Sire then
                     --player.GetByID( 1 ):PrintMessage( HUD_PRINTCENTER, " "..self.dt.Energy..", "..self:CCount() )
             end
             if self.CurrentTarget then
                     self.TargetLength = math.Approach(self.TargetLength,0,Delta)
-                    if self.TargetLength <= 0 or !self.CurrentTarget:IsValid() or self.CurrentTarget:Health() <= 0 then
+                    if self.TargetLength <= 0 or not self.CurrentTarget:IsValid() or self.CurrentTarget:Health() <= 0 then
                             self.CurrentTarget = nil
                     end
                     if self.dt.Deploy == false then
@@ -227,7 +227,7 @@
                            
                             if self.dt.Energy >= 15 and T < MaxInfestorLimit and self.ChildCount <= 5 then self:Reproduce() end
                            
-                            if !(self.Sire and self.Sire:IsValid()) and self:CCount() >= 10 and self.dt.Energy >= self.MaxEnergy * .7 then
+                            if not (self.Sire and self.Sire:IsValid()) and self:CCount() >= 10 and self.dt.Energy >= self.MaxEnergy * .7 then
                                     --self.dt.Energy = 0
                                     self.dt.Mutation = 3
                             end
@@ -243,7 +243,7 @@
                                     self:Reproduce()
                             end
                                            
-                            if !(self.Sire and self.Sire:IsValid()) and self:CCount() >= 25 and self.dt.Energy >= self.MaxEnergy * .8 then
+                            if not (self.Sire and self.Sire:IsValid()) and self:CCount() >= 25 and self.dt.Energy >= self.MaxEnergy * .8 then
                                     --self.dt.Energy = 0
                                     self.dt.Mutation = 4
                                     self:AddEn(-100)
@@ -312,7 +312,7 @@
                                     local Dmg = self.dt.Energy * 0.1
                                     local Dir = self.dt.Target - self:GetPos()
                                    
-                                    /*
+                                    --[[
                                     local bullet = {}
                                     bullet.Src                      = self:GetPos() + self:GetForward() * 10
                                     bullet.Attacker         = self
@@ -324,7 +324,7 @@
                                     bullet.Tracer           = 1    
                                     bullet.TracerName       = "None"--"AR2Tracer"
                                     self:FireBullets(bullet)
-                                    */
+                                    ]]
                                    
                                     local ent = ents.Create( "grenade_spit" )
                                     ent:SetPos( self:GetPos() + self:GetForward() * (self.dt.Energy * 0.9) )
@@ -393,9 +393,9 @@
             local tr = util.TraceLine( trace )
             if tr.Hit then
                     --print("First time lucky!")
-                    if !tr.HitWorld and tr.Entity:GetClass() ~= "Infestor" then return end
+                    if not tr.HitWorld and tr.Entity:GetClass() ~= "Infestor" then return end
                     --print("We hit either the world or something infestable...")
-                    if !ZoneCheck(tr.HitPos,100) then return end
+                    if not ZoneCheck(tr.HitPos,100) then return end
                     --print("Area seems clear...")
                     self:Generate(tr.HitPos,tr.HitNormal,tr.Entity)
             else
@@ -407,9 +407,9 @@
                     local tr2 = util.TraceLine( trace2 )
                     if tr2.Hit then
                     --      print("Second trace landed...")
-                            if !tr2.HitWorld and !tr2.Entity:GetClass() == "Infestor" then return end
+                            if not tr2.HitWorld and not tr2.Entity:GetClass() == "Infestor" then return end
                     --      print("We hit either the world or something infestable...")
-                            if !ZoneCheck(tr2.HitPos,100) then return end
+                            if not ZoneCheck(tr2.HitPos,100) then return end
                     --      print("Area seems clear...")
                             self:Generate(tr2.HitPos,tr2.HitNormal,tr2.Entity)
                            
@@ -439,7 +439,7 @@
             table.insert(self.Children,ent)
             --ent:NextThink(CurTime() + math.Rand(5,10))
             ent.Weld = constraint.Weld(ent,HEnt)
-            if !HEnt:IsWorld() then
+            if not HEnt:IsWorld() then
                     ent:SetParent(HEnt)
                     ent.Perch = HEnt
             end
@@ -525,7 +525,7 @@
     function ENT:CCount()
             local Count = 0
             for k,e in pairs(self.Children) do
-                    if !e:IsValid() or e == self then
+                    if not e:IsValid() or e == self then
                             table.remove(self.Children,k)
                             --print("It's dead. Removing from our list...")
                     else
@@ -550,7 +550,7 @@
     function ENT:SCount()
             local Count = 0
             for k,e in pairs(self.Spawnlings) do
-                    if !e:IsValid() then
+                    if not e:IsValid() then
                             table.remove(self.Spawnlings,k)
                             --print("It's dead. Removing from our list...")
                     else

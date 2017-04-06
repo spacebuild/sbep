@@ -83,7 +83,7 @@ function EFFECT:Think()
 		--self.PSS:Stop()
 	end
 	
-	if T > 1.03 and !self.ExpPlayed then
+	if T > 1.03 and not self.ExpPlayed then
 		self.ExpPlayed = true
 		sound.Play( "ambient/explosions/explode_5.wav", self.vOffset,  160,  100 )
 		sound.Play( "ambient/explosions/explode_6.wav", self.vOffset,  160,  100 )
@@ -96,9 +96,9 @@ end
    
    
    
- /*--------------------------------------------------------- 
+ --[[---------------------------------------------------------
     Draw the effect 
- ---------------------------------------------------------*/ 
+ ---------------------------------------------------------]]
 function EFFECT:Render()
 	local Time = ( (CurTime() - self.STime - self.PreSplode) / (self.Time - self.PreSplode) )
 --	print(Time)
@@ -186,7 +186,7 @@ function EFFECT:Render()
 end
 
 local Entity = FindMetaTable("Entity")
-if !Entity then return end
+if not Entity then return end
 
 function Entity:OldSetModelScale(scale)
 	local mat = Matrix()

@@ -51,7 +51,7 @@ end
 
 function ENT:PhysicsSimulate( phys, deltatime )
 	
-	if self.PasteDelay or !self.Controller or !self.Controller:IsValid() or self.Controller.Disabled then return SIM_NOTHING end
+	if self.PasteDelay or not self.Controller or not self.Controller:IsValid() or self.Controller.Disabled then return SIM_NOTHING end
 	
 	phys:Wake()
 	local Ang = Angle(0,0,0)
@@ -85,7 +85,7 @@ function ENT:Think()
 		
 	if self.PasteDelay or self.Controller.Disabled then return end
 	
-	if !self.Controller or !self.Controller:IsValid() then
+	if not self.Controller or not self.Controller:IsValid() then
 		self.Entity:Remove()
 		return
 	end
@@ -109,14 +109,14 @@ end
 
 function ENT:Use( activator, caller )
 	self.PasteDelay = false
-	/*
+	--[[
 	if !self.Socked then
 		--Vector( self.Controller.FulX , self.Controller.FulY , self.Controller.FulZ )
 		local LPos = Vector(0,0,0)--self.Controller:WorldToLocal(self:GetPos() + self:GetRight() * self.Controller.FulX + self:GetForward() * self.Controller.FulY + self:GetUp() * self.Controller.FulZ)
 		local Cons = constraint.Ballsocket( self, self.Controller, 0, 0, LPos, 0, 0, 1)
 		self.Socked = true
 	end
-	*/
+	]]
 end
 
 function ENT:PreEntityCopy()
@@ -139,9 +139,9 @@ function ENT:PostEntityPaste(pl, Ent, CreatedEntities)
 
 	if (DI.Controller) then
 		self.Controller = CreatedEntities[ DI.Controller ]
-		/*if (!self.Controller) then
+		--[[if (!self.Controller) then
 			self.Controller = ents.GetByIndex(DI.Controller)
-		end*/
+		end]]
 	end
 	
 	if(Ent.EntityMods and Ent.EntityMods.SBEPMobPlat.WireData) then

@@ -42,7 +42,7 @@ end
 
 function ENT:Think()
 	self.PhysObj:SetVelocity(self.PhysObj:GetVelocity() * 0.90)
-	if !self.Ignited then
+	if not self.Ignited then
 		local targets = ents.FindInSphere( self.Entity:GetPos(), 50)
 		for _,i in pairs(targets) do
 			if i:GetClass() == self.Entity:GetClass() then
@@ -60,7 +60,7 @@ function ENT:Think()
 		local targets = ents.FindInSphere( self.Entity:GetPos(), 400)
 		for _,i in pairs(targets) do
 			if i:GetClass() == self.Entity:GetClass() then
-				if !self:IsPuddle() then
+				if not self:IsPuddle() then
 					Power = Power + 40
 				else
 					Power = Power + 1
@@ -70,11 +70,11 @@ function ENT:Think()
 			end
 		end
 		for _,i in pairs(targets) do
-			if i:GetClass() == self.Entity:GetClass() and !i:IsPuddle() then
+			if i:GetClass() == self.Entity:GetClass() and not i:IsPuddle() then
 				i:GetPhysicsObject():ApplyForceCenter((i:GetPos() - self.Entity:GetPos()):GetNormal() * Power)
 			end
 		end
-		if !self.Entity:IsPuddle() then
+		if not self.Entity:IsPuddle() then
 			util.BlastDamage(self.Entity, self.Entity, self.Entity:GetPos(), 200, Power * 100)
 		end
 		util.BlastDamage(self.Entity, self.Entity, self.Entity:GetPos(), 400, Power * 10)
@@ -96,7 +96,7 @@ function ENT:Think()
 end
 
 function ENT:PhysicsCollide( data, phys )
-	if !self.Entity:IsPuddle() and !self.Ignition and !self.Ignited and self.CanPuddle then
+	if not self.Entity:IsPuddle() and not self.Ignition and not self.Ignited and self.CanPuddle then
 		self.PuddlePrep = true
 		self.PudNorm = data.HitNormal * -1
 		self.PudEnt = data.HitEntity
@@ -110,7 +110,7 @@ end
 
 function ENT:SpawnFunction( ply, tr )
 
-	if ( !tr.Hit ) then return end
+	if ( not tr.Hit ) then return end
 	
 	local SpawnPos = tr.HitPos + tr.HitNormal * 16 + Vector(0,0,50)
 	
@@ -135,7 +135,7 @@ end
 
 function ENT:PreIgnite( T )
 	T = T or 0
-	if !self.Ignition then
+	if not self.Ignition then
 		local IgT = math.Rand(0.1 + T, 0.5 + T) -- Best to add a small delay, just so it doesn't nuke the computer by generating several hundred effects in the same frame or something.
 		local T = timer.Simple(IgT,function()
 			if self:IsValid() then

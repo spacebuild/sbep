@@ -161,7 +161,7 @@ end
 
 
 function TOOL:Think()
- 	if ( !IsValid( self.GhostEntity ) || self.GhostEntity:GetModel() != self:GetClientInfo( "model" ) ) then
+ 	if ( not IsValid( self.GhostEntity ) or self.GhostEntity:GetModel() ~= self:GetClientInfo( "model" ) ) then
 		self:MakeGhostEntity( self:GetClientInfo( "model"), Vector( 0, 0, 0 ), Angle( 0, 0, 0 )) 
 	end
 	
@@ -171,11 +171,11 @@ function TOOL:Think()
 function TOOL:UpdateGhostPart( ent, pl )
 
 	if CLIENT then return end
-	if ( !IsValid( ent ) ) then return end
+	if ( not IsValid( ent ) ) then return end
 
 	local tr = util.GetPlayerTrace( pl )
 	local trace	= util.TraceLine( tr )
-	if ( !trace.Hit ) then return end
+	if ( not trace.Hit ) then return end
 
 	if ( trace.Entity:IsPlayer()) then
 

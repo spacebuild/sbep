@@ -94,7 +94,7 @@ function TOOL.BuildCPanel( panel )
 											n[1]:Toggle()
 										end
 									end
-									if !v[1]:GetExpanded() then
+									if not v[1]:GetExpanded() then
 										v[1]:Toggle()
 									end
 									RunConsoleCommand( "sbep_hangar_activecat", k )

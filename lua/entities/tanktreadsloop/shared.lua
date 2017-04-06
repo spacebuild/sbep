@@ -22,14 +22,14 @@ function ENT:GetSegSize()
 	return self:GetNetworkedVector( "SLength" )
 end
 
-/*
+--[[
 function ENT:SetCurved( val )
 	self:SetNetworkedBool( "Curvy", val )
 end
 function ENT:GetCurved()
 	return self:GetNetworkedBool( "Curvy" )
 end
-*/
+]]
 
 function ENT:SetRadius( val )
 	self:SetNetworkedInt( "Radius", val )

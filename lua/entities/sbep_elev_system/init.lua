@@ -177,7 +177,7 @@ end
 
 function ENT:Think()
 
-	if !self.LiftActive then	
+	if not self.LiftActive then
 		self.Entity:NextThink( CurTime() + 0.05 )
 		return true
 	end
@@ -258,7 +258,7 @@ end
 
 function ENT:PhysicsSimulate( phys, deltatime )
 
-	if !self.LiftActive or !self.PartTable or !IsValid(self.PartTable[1]) or !IsValid(self.PartTable[self:GetPartCount()]) then return SIM_NOTHING end
+	if not self.LiftActive or not self.PartTable or not IsValid(self.PartTable[1]) or not IsValid(self.PartTable[self:GetPartCount()]) then return SIM_NOTHING end
 
 	local Pos1 = self.PartTable[1]:GetPos()
 	local Pos2 = self.PartTable[self:GetPartCount()]:GetPos()
@@ -285,10 +285,10 @@ function ENT:PhysicsSimulate( phys, deltatime )
 end
 
 function ENT:CheckHatchStatus()
-	if 	!self.SystemTable.UseHatches 	 or
-		!self.LiftActive 		 or
+	if 	not self.SystemTable.UseHatches 	 or
+		not self.LiftActive 		 or
 		self.ATL 				 or
-		!self.HatchTable then return end
+		not self.HatchTable then return end
 
 	for k,V in ipairs( self.HatchTable ) do
 		if self.Direction == 1 then
@@ -308,13 +308,13 @@ function ENT:CheckHatchStatus()
 end
 
 function ENT:CheckDoorStatus()
-	if (!self.SystemTable.UseDoors) or (!self.LiftActive) or !self.PartTable then return end
+	if (not self.SystemTable.UseDoors) or (not self.LiftActive) or not self.PartTable then return end
 
 	if self.ATL then
 		for k,V in ipairs( self.PartTable[ self:FloorToPartNum( self:GetFloorNum() ) ].PartData.FloorDoorTable ) do
 			V.OpenTrigger = true
 		end
-	elseif !self.IsHolding then
+	elseif not self.IsHolding then
 		for k,V in ipairs( self.PartTable ) do
 			for m,D in ipairs( V.PartData.FloorDoorTable ) do
 				D.OpenTrigger = false
@@ -362,7 +362,7 @@ function ENT:FinishSystem()
 	self.Entity:GetPhysicsObject():EnableMotion( true )
 	
 	for n,Part in ipairs( self.PartTable ) do --Setting up the floors 
-		if !Part.PartData.SD.IsShaft then
+		if not Part.PartData.SD.IsShaft then
 			Part:MakeWire()
 			local C3 = math.Clamp( Part.PartData.Roll , 0 , 1 )
 			local C4 = math.abs( C3 - 1 )
@@ -419,7 +419,7 @@ function ENT:CreateHatches()		--Creating Hatches. Each Hatch is paired with the 
 	--print( "Making Hatches" )
 	for k,V in ipairs(self.PartTable) do
 		local V1 = self.PartTable[k + 1]
-		if !(k == self:GetPartCount()) and !(V.PartData.SD.IsShaft and V1.PartData.SD.IsShaft) then
+		if not (k == self:GetPartCount()) and not (V.PartData.SD.IsShaft and V1.PartData.SD.IsShaft) then
 			local NH = ents.Create( "sbep_base_door" )
 				--print( "Made Hatch" )
 				NH:Spawn()
@@ -447,7 +447,7 @@ function ENT:CreateDoors()
 		local data = DD[ string.lower( Part.PartData.model ) ]
 		if data then
 			for n,I in ipairs( data ) do
-				if !(I.type == "Door_ElevHatch_S" or I.type == "Door_ElevHatch_L") then
+				if not (I.type == "Door_ElevHatch_S" or I.type == "Door_ElevHatch_L") then
 					local ND = ents.Create( "sbep_base_door" )
 						ND:Spawn()
 						ND:Initialize()
@@ -583,8 +583,8 @@ end
 
 function ENT:AddCallFloorNum( FN )
 	FN = math.Clamp( math.Round( FN ), 1, self:GetFloorCount() )
-	if !self.CallFloorTable then self.CallFloorTable = {} end
-	if !table.HasValue( self.CallFloorTable , FN ) then
+	if not self.CallFloorTable then self.CallFloorTable = {} end
+	if not table.HasValue( self.CallFloorTable , FN ) then
 		table.insert( self.CallFloorTable , FN )
 	end
 end

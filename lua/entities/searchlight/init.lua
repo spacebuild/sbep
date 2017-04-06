@@ -55,7 +55,7 @@ end
 
 function ENT:Think()
 	-- THE FOLLOWING CODE WAS NICKED FROM THE LS3 LAMP. I TAKE NO CREDIT FOR IT! --
-	if self.Active and !self.flashlight then
+	if self.Active and not self.flashlight then
 		--local angForward = self.Entity:GetAngles() + Angle( 90, 0, 0 )
 		self.flashlight = ents.Create( "env_projectedtexture" )
 		self.flashlight:SetParent( self.Entity )
@@ -76,7 +76,7 @@ function ENT:Think()
 		self.flashlight:SetKeyValue( "lightcolor", "255 255 255" )
 		self.flashlight:Spawn()
 		self.flashlight:Input( "SpotlightTexture", NULL, NULL, "effects/flashlight001" )
-	elseif !self.Active and self.flashlight then
+	elseif not self.Active and self.flashlight then
 		SafeRemoveEntity( self.flashlight )
 		self.flashlight = nil
 	end
@@ -168,7 +168,7 @@ end
 
 function ENT:SpawnFunction( ply, tr )
 
-	if ( !tr.Hit ) then return end
+	if ( not tr.Hit ) then return end
 	
 	local SpawnPos = tr.HitPos + tr.HitNormal * 16 + Vector(0,0,50)
 	

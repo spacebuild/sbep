@@ -28,7 +28,7 @@ end
 
 function ENT:SpawnFunction( ply, tr )
 
-	if ( !tr.Hit ) then return end
+	if ( not tr.Hit ) then return end
 	
 	local SpawnPos = tr.HitPos + tr.HitNormal * 16 + Vector(0,0,10)
 	
@@ -95,7 +95,7 @@ function ENT:Launch( )
 			local Ply = self.Vec:GetPassenger(1)
 			if Ply and Ply:IsValid() then
 				local NPod = ents.Create( "prop_vehicle_prisoner_pod" )
-				if ( !NPod:IsValid() ) then return end
+				if ( not NPod:IsValid() ) then return end
 				NPod:SetModel( "models/SmallBridge/Vehicles/SBVdroppod1.mdl" )
 				NPod:SetKeyValue("vehiclescript", "scripts/vehicles/prisoner_pod.txt")
 				NPod:SetKeyValue("limitview", 0)
@@ -156,9 +156,9 @@ function ENT:PostEntityPaste(pl, Ent, CreatedEntities)
 
 	if (DI.Vec) then
 		self.Vec = CreatedEntities[ DI.Vec ]
-		/*if (!self.Vec) then
+		--[[if (!self.Vec) then
 			self.Vec = ents.GetByIndex(DI.Vec)
-		end*/
+		end]]
 	end
 	
 	if(Ent.EntityMods and Ent.EntityMods.SBEPEjecP.WireData) then

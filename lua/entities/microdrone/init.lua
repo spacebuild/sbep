@@ -90,7 +90,7 @@ end
 
 function ENT:SpawnFunction( ply, tr )
 
-	if ( !tr.Hit ) then return end
+	if ( not tr.Hit ) then return end
 	
 	local SpawnPos = tr.HitPos + tr.HitNormal * 16
 	
@@ -170,7 +170,7 @@ function ENT:Think()
 ---																Script for finding crap to shoot at														 ---
 ------------------------------------------------------------------------------------------------------------------------------------------------------------
 	--print(self.Squad,self.Squad:IsValid())
-	if !self.Squad or !self.Squad:IsValid() then
+	if not self.Squad or not self.Squad:IsValid() then
 		--print("Making a new squad")
 		self.Squad = self:MakeSquad()
 		--print("Our squad is now "..tostring(self.Squad))
@@ -304,7 +304,7 @@ function ENT:Think()
 ---																Script for finding the next direction											 		 ---
 ------------------------------------------------------------------------------------------------------------------------------------------------------------
 	if self.Stance > 0 then --Dear god, this is a mess... I must remember to organize this function better.
-		if (self.Stance < 3) or (self.Stance == 3 and !self.TFound) then
+		if (self.Stance < 3) or (self.Stance == 3 and not self.TFound) then
 			if self.MVec ~= Vector(0,0,0) then
 				local MDist = self.Entity:GetPos():Distance(self.MVec)
 				if MDist < self.WPRad then
@@ -419,7 +419,7 @@ function ENT:Think()
 						end
 					end
 					
-					if !Aiming then
+					if not Aiming then
 						if Weap.APAng then
 							Weap:SetLocalAngles(Weap.APAng)
 						else

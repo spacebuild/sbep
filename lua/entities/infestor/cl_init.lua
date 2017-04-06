@@ -88,7 +88,7 @@ function ENT:Think()
                 self:SetModelScale(Size + W * 0.8)
                 self:SetModel( "models/Weapons/w_bugbait.mdl" )
                 self:SetMaterial()
-                if !self.Accs[0] then
+                if not self.Accs[0] then
                         --print("Making the model...")
                         self.Accs[0] = ClientsideModel("models/Gibs/Antlion_gib_medium_3a.mdl", RENDERGROUP_OPAQUE)
                         self.AccIn = 0
@@ -106,7 +106,7 @@ function ENT:Think()
                         Horn:SetModelScale(Size*HScale)
                 end
                
-                if !self.Accs[1] then
+                if not self.Accs[1] then
                         --print("Making the model...")
                         self.Accs[1] = ClientsideModel("models/Gibs/Antlion_gib_medium_3a.mdl", RENDERGROUP_OPAQUE)
                         self.AccIn = 0
@@ -131,7 +131,7 @@ function ENT:Think()
                 self:SetModelScale(Size - W * 0.8)
                 self:SetModel( "models/Weapons/w_bugbait.mdl" )
                 self:SetMaterial()
-                if !self.Accs[0] then
+                if not self.Accs[0] then
                         --print("Making the model...")
                         self.Accs[0] = ClientsideModel("models/Gibs/Antlion_gib_medium_3a.mdl", RENDERGROUP_OPAQUE)
                 else
@@ -147,7 +147,7 @@ function ENT:Think()
                         Horn:SetModelScale(Size*HScale)
                 end
                
-                if !self.Accs[1] then
+                if not self.Accs[1] then
                         --print("Making the model...")
                         self.Accs[1] = ClientsideModel("models/Gibs/Antlion_gib_medium_3a.mdl", RENDERGROUP_OPAQUE)
                         self.AccIn = 0
@@ -164,7 +164,7 @@ function ENT:Think()
                         Horn:SetModelScale(Size*HScale)
                 end
                
-                if !self.Accs[2] then
+                if not self.Accs[2] then
                         --print("Making the model...")
                         self.Accs[2] = ClientsideModel("models/Gibs/gunship_gibs_sensorarray.mdl", RENDERGROUP_OPAQUE)
                         self.AccIn = 0
@@ -211,7 +211,7 @@ function ENT:Think()
                         self.DeployTime = math.Approach(self.DeployTime,0,2 * Delta)
                 end
                
-                if !self.Accs[0] then
+                if not self.Accs[0] then
                         --print("Making the model...")
                         --self.Accs[0] = ClientsideModel("models/Weapons/w_physics.mdl", RENDERGROUP_OPAQUE)
                         self.Accs[0] = ClientsideModel("models/Weapons/w_portalgun.mdl", RENDERGROUP_OPAQUE)
@@ -251,7 +251,7 @@ function ENT:Think()
                                 effectdata:SetScale( Size * 0.1 )
                                 util.Effect( "StriderBlood", effectdata )
                                
-                                /*
+                                --[[
                                 local effectdata = EffectData()
                                 local RVec = Vector(math.Rand(-10,10),math.Rand(-10,10),math.Rand(-10,10))
                                 local Vec = ((self.dt.Target + RVec) - MPos)
@@ -260,10 +260,10 @@ function ENT:Think()
                                 --effectdata:SetNormal( (self.dt.Target - self:GetPos()) * 0.5 )
                                 effectdata:SetScale( 1000 )
                                 util.Effect( "AR2Tracer", effectdata )
-                                */
+                                ]]
                         end
                        
-                        if !self.Accs[1] then
+                        if not self.Accs[1] then
                                 --print("Making the model...")
                                 --self.Accs[0] = ClientsideModel("models/Weapons/w_physics.mdl", RENDERGROUP_OPAQUE)
                                 self.Accs[1] = ClientsideModel("models/weapons/w_models/w_bat.mdl", RENDERGROUP_OPAQUE)

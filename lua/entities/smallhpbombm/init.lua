@@ -48,7 +48,7 @@ end
 
 function ENT:SpawnFunction( ply, tr )
 
-	if ( !tr.Hit ) then return end
+	if ( not tr.Hit ) then return end
 	
 	local SpawnPos = tr.HitPos + tr.HitNormal * 16 + Vector(0,0,50)
 	
@@ -64,7 +64,7 @@ function ENT:SpawnFunction( ply, tr )
 end
 
 function ENT:Think()
-	if !self.Ready then
+	if not self.Ready then
 		if CurTime() > self.MCDown then
 			self.Ready = true
 			self.Entity:EmitSound("Buttons.snd26")
@@ -109,7 +109,7 @@ end
 
 function ENT:BombDrop()
 	local NewShell = ents.Create( "SmallHPBomb" )
-	if ( !NewShell:IsValid() ) then return end
+	if ( not NewShell:IsValid() ) then return end
 	NewShell:SetPos( self.Entity:GetPos() + (self.Entity:GetUp() * -60 ) )
 	NewShell:SetAngles( self.Entity:GetAngles() )
 	NewShell.SPL = self.SPL

@@ -68,7 +68,7 @@ function ENT:Think()
 		self.CAng = self.Entity:GetAngles()
 	end
 	
-	/*
+	--[[
 	local trace = {}
 	trace.start = self.Entity:GetPos()
 	trace.endpos = self.Entity:GetPos() + (self.Entity:GetForward() * 300)
@@ -83,20 +83,20 @@ function ENT:Think()
 			self.PhysObj:SetVelocity(self.Entity:GetForward()*3100)
 		end
 	end
-	*/
+	]]
 
 	--self.Entity:NextThink( CurTime() + 0.01 )
 	--return true
 end
 
 function ENT:PhysicsCollide( data, physobj )
-	if(!self.Exploded) then
+	if(not self.Exploded) then
 		self.Entity:GoBang()
 	end
 end
 
 function ENT:OnTakeDamage( dmginfo )
-	if(!self.Exploded) then
+	if(not self.Exploded) then
 		--self.Entity:GoBang()
 	end
 end

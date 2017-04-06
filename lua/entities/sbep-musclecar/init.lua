@@ -74,7 +74,7 @@ end
 
 function ENT:SpawnFunction( ply, tr )
 
-	if ( !tr.Hit ) then return end
+	if ( not tr.Hit ) then return end
 	
 	
 	local ent = ents.Create( "SBEP-MuscleCar" )
@@ -184,7 +184,7 @@ function ENT:Think()
 			self.Pod.Trace = nil
 		end
 		
-		if !self.Pod.Mounted and CurTime() > self.MCDown then
+		if not self.Pod.Mounted and CurTime() > self.MCDown then
 			local mn, mx = self.Pod:WorldSpaceAABB()
 			mn = mn - Vector(2, 2, 2)
 			mx = mx + Vector(2, 2, 2)
@@ -245,13 +245,13 @@ function ENT:OnRemove()
 end
 
 function ENT:HPFire()
-	if !self.CPL or !self.CPL:IsValid() then
+	if not self.CPL or not self.CPL:IsValid() then
 		local ECPL = self.Pod.Pod:GetPassenger(1)
 		if ECPL and ECPL:IsValid() then
 			ECPL:ExitVehicle()
 			ECPL:EnterVehicle( self.Pod )	
 		end
-	elseif !self.CPL2 or !self.CPL2:IsValid() then
+	elseif not self.CPL2 or not self.CPL2:IsValid() then
 		local ECPL = self.Pod.Pod:GetPassenger(1)
 		if ECPL and ECPL:IsValid() then
 			ECPL:ExitVehicle()

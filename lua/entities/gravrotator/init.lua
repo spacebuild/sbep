@@ -35,7 +35,7 @@ end
 
 function ENT:SpawnFunction( ply, tr )
 
-	if ( !tr.Hit ) then return end
+	if ( not tr.Hit ) then return end
 	
 	local SpawnPos = tr.HitPos + tr.HitNormal * 16
 	
@@ -84,7 +84,7 @@ function ENT:Think()
 		trace.filter = { self.Entity, self.CPL }
 		local tr = util.TraceEntity( trace, self )
 		local OnGround = false
-		if tr.Hit and !tr.HitSky then
+		if tr.Hit and not tr.HitSky then
 			OnGround = true
 		end
 		if self.GravMode == 1 then
@@ -121,7 +121,7 @@ function ENT:Think()
 		AAng:RotateAroundAxis(self:GetUp(),PAng.y)
 		if OnGround then
 			local OVel = self:GetPhysicsObject():GetVelocity()
-			if !self.Jumping then
+			if not self.Jumping then
 				--self:SetPos(tr.HitPos + tr.HitNormal * 10)
 			end
 			local GravDir = nil
@@ -192,7 +192,7 @@ function ENT:Use( activator, caller )
 end
 
 function ENT:Touch( ent )
-	if !self.Linked and ent:IsPlayer() then
+	if not self.Linked and ent:IsPlayer() then
 		self.CPL = ent
 		self.CPL.GravCon = self
 		self.Linked = true

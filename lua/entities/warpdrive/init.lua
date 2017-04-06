@@ -12,9 +12,9 @@ function ENT:SpawnFunction( ply, tr )
 	return ent 									-- You need to return the entity to make it work
 end 
 
-/*---------------------------------------------------------
+--[[---------------------------------------------------------
    Name: Initialize
----------------------------------------------------------*/
+---------------------------------------------------------]]
 function ENT:Initialize()
 
 	util.PrecacheModel( "models/props_c17/consolebox03a.mdl" )
@@ -71,7 +71,7 @@ function ENT:TriggerInput(iname, value)
 			self.JumpCoords.Dest = self.JumpCoords.Vec
 		end
 	--[[	print( timer.IsTimer( "warpdrivewaittime" ) ) ]]
-		if (CurTime()-self.NTime)>7 and !timer.Exists( "warpdrivewaittime" ) and self.JumpCoords.Dest~=self.Entity:GetPos() and util.IsInWorld(self.JumpCoords.Dest) then
+		if (CurTime()-self.NTime)>7 and not timer.Exists( "warpdrivewaittime" ) and self.JumpCoords.Dest~=self.Entity:GetPos() and util.IsInWorld(self.JumpCoords.Dest) then
 			self.NTime=CurTime()
 			self.Entity:EmitSound("WarpDrive/warp.wav", 450, 70)
 			timer.Create( "warpdrivewaittime", 1, 1, function() self.Entity:Go() timer.Destroy("warpdrivewaittime") end, self )
@@ -109,10 +109,10 @@ function ENT:Go()
 		self.DoneList = {}
 		self.ConstrainedEnts = ents.FindInSphere( self.Entity:GetPos() , self.SearchRadius)
 		for _, v in pairs(self.ConstrainedEnts) do
-			if v:IsValid() and !self.DoneList[v] then
+			if v:IsValid() and not self.DoneList[v] then
 				self.ToTele = constraint.GetAllConstrainedEntities(v)
 				for ent,_ in pairs(self.ToTele)do
-				//PrintTable(self.ToTele)
+				--PrintTable(self.ToTele)
 					if not (ent.BaseClass and ent.BaseClass.ClassName=="stargate_base" and ent:OnGround()) then
 						if ent:IsValid() and ( ent:GetMoveType()==6 or ent:IsPlayer() or ent:IsNPC() ) then
 							self.DoneList[ent]=ent
@@ -141,9 +141,9 @@ end
 function ENT:SharedJump(ent)
 local WarpDrivePos = self.Entity:GetPos()
 	local phys = ent:GetPhysicsObject()
-	if !(ent:IsPlayer() or ent:IsNPC()) then DoPropSpawnedEffect( ent ) ent=phys end
+	if not (ent:IsPlayer() or ent:IsNPC()) then DoPropSpawnedEffect( ent ) ent=phys end
 	ent:SetPos(self.JumpCoords.Dest + (ent:GetPos() - WarpDrivePos) + Vector(0,0,10))
-	if(!phys:IsMoveable())then
+	if(not phys:IsMoveable())then
 		phys:EnableMotion(true)
 		phys:EnableMotion(false)
 	end 

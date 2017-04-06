@@ -28,7 +28,7 @@ end
 
 function ENT:SpawnFunction( ply, tr )
 
-	if ( !tr.Hit ) then return end
+	if ( not tr.Hit ) then return end
 	
 	local SpawnPos = tr.HitPos + tr.HitNormal * 16
 	
@@ -119,14 +119,14 @@ function ENT:Use( activator, caller )
 end
 
 function ENT:Touch( ent )
-	if ent.HasWheels and !self.Mounted then
+	if ent.HasWheels and not self.Mounted then
 		if ent.Cont and ent.Cont:IsValid() then self.Entity:WLink( ent.Cont, ent.Entity ) end
 	end
 end
 
 function ENT:WLink( Cont, Pod )
 	for i = 1, Cont.WhC do
-		if !Cont.Wh[i]["Ent"] or !Cont.Wh[i]["Ent"]:IsValid() then
+		if not Cont.Wh[i]["Ent"] or not Cont.Wh[i]["Ent"]:IsValid() then
 			local Offset = {0, 0, 10}
 			local AOffset = 0
 			local ZVecAngle = Angle(0, 90, 0)

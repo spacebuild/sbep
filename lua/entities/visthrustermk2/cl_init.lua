@@ -54,7 +54,7 @@ function ENT:Draw()
 		--NAng:RotateAroundAxis(NAng:Right(),90)
 		NAng:RotateAroundAxis(Ang:Up(),-self.Spin)
 		
-		/*
+		--[[
 		if !self.Vort then self.Vort = ClientsideModel("models/props_combine/stasisvortex.mdl", RENDERGROUP_OPAQUE) end
 		self.Vort:SetModelScale(Vector(Width * 0.05 + (Speed * 0.1),Width * 0.05 + (Speed * 0.1),Width * 0.05 + (Speed * 0.1)))
 		self.Vort:SetModel( "models/props_combine/stasisvortex.mdl" )
@@ -62,7 +62,7 @@ function ENT:Draw()
 		self.Vort:SetMaterial("")
 		self.Vort:SetPos( Pos )
 		self.Vort:SetAngles( NAng )
-		*/
+		]]
 		
 		self.Entity:SetModelScale(Speed * 0.05 + (Width * 0.05) * Length)
 		--self.Entity:SetColor(Color(255,255,255,255)
@@ -71,7 +71,7 @@ function ENT:Draw()
 		self.Entity:SetModel( "models/Effects/vol_light128x512.mdl" )
 		self.Entity:DrawModel()
 		
-		/*
+		--[[
 		render.UpdateRefractTexture()
 		--self.Heat:SetMaterialFloat( "$refractamount", 0.02 + math.sin(math.rad((CurTime() - self.STime) * 0.01 )) )
 		self.Entity:SetModel( "models/Effects/combineball.mdl" )
@@ -87,7 +87,7 @@ function ENT:Draw()
 		self.Entity:SetMaterial("")
 		self.Entity:SetModelScale(Vector(Width * 0.2 + (Speed * 0.2),Width * 0.2 + (Speed * 0.2),Width * 0.2 + (Speed * 0.2)))
 		self.Entity:DrawModel()
-		*/
+		]]
 		--self.Entity:SetAngles( Ang )
 		render.UpdateRefractTexture()
 		render.SetMaterial( self.Heat )

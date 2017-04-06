@@ -28,7 +28,7 @@ end
 
 function ENT:SpawnFunction( ply, tr )
 
-	if ( !tr.Hit ) then return end
+	if ( not tr.Hit ) then return end
 	
 	local SpawnPos = tr.HitPos + tr.HitNormal * 16
 	
@@ -46,7 +46,7 @@ function ENT:TriggerInput(iname, value)
 	if (iname == "Launch") then
 		if (value > 0) then
 			local Flare = ents.Create( "prop_physics" )
-			if ( !Flare:IsValid() ) then return end
+			if ( not Flare:IsValid() ) then return end
 			Flare:SetModel( "models/Slyfo_2/acc_food_stridernugsml.mdl" )
 			Flare:SetPos( self.Entity:GetPos() + (self.Entity:GetUp() * 5) )
 			Flare:SetAngles( self.Entity:GetAngles() )
@@ -81,7 +81,7 @@ end
 function ENT:Think()
 	if (self.Launched == 1) then
 		local Flare = ents.Create( "prop_physics" )
-		if ( !Flare:IsValid() ) then return end
+		if ( not Flare:IsValid() ) then return end
 		Flare:SetModel( "models/Slyfo_2/acc_food_stridernugsml.mdl" )
 		Flare:SetPos( self.Entity:GetPos() + (self.Entity:GetUp() * 5) )
 		Flare:SetAngles( self.Entity:GetAngles() )

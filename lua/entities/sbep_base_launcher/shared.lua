@@ -34,7 +34,7 @@ scripted_ents.Register({
 	Instructions	= "The guidance system for the missiles can be configured by wired inputs. 0 = Unguided, 1 = Non-Tracking, 2 = Tracking, 3 = Homing, 4 = Seeking, 5 = Optical. For more information, visit the thread.",
 
 	SpawnFunction = function( ent, ply, tr )
-		if ( !tr.Hit ) then return end
+		if ( not tr.Hit ) then return end
 	
 		local SpawnPos = tr.HitPos + tr.HitNormal * 16
 		
@@ -61,7 +61,7 @@ scripted_ents.Register({
 	Instructions	= "The guidance system for the missiles can be configured by wired inputs. 0 = Unguided, 1 = Non-Tracking, 2 = Tracking, 3 = Homing, 4 = Seeking, 5 = Optical. For more information, visit the thread.",
 
 	SpawnFunction = function( ent, ply, tr )
-		if ( !tr.Hit ) then return end
+		if ( not tr.Hit ) then return end
 	
 		local SpawnPos = tr.HitPos + tr.HitNormal * 16
 		
@@ -87,7 +87,7 @@ scripted_ents.Register({
 	Instructions	= "The guidance system for the missiles can be configured by wired inputs. 0 = Unguided, 1 = Non-Tracking, 2 = Tracking, 3 = Homing, 4 = Seeking, 5 = Optical. For more information, visit the thread.",
 
 	SpawnFunction = function( ent, ply, tr )
-		if ( !tr.Hit ) then return end
+		if ( not tr.Hit ) then return end
 	
 		local SpawnPos = tr.HitPos + tr.HitNormal * 16
 		

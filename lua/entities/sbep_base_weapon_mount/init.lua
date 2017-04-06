@@ -110,7 +110,7 @@ function ENT:PostEntityPaste(pl, Ent, CreatedEntities)
 
 	if (Ent.EntityMods.SBEPWeaponMountDupeInfo.Pod) then
 		self.Pod = GetEntByID(Ent.EntityMods.SBEPWeaponMountDupeInfo.Pod)
-		if (!self.Pod) then
+		if (not self.Pod) then
 			self.Pod = ents.GetByIndex(Ent.EntityMods.SBEPWeaponMountDupeInfo.Pod)
 		end
 	end
@@ -118,7 +118,7 @@ function ENT:PostEntityPaste(pl, Ent, CreatedEntities)
 		for k,v in pairs(Ent.EntityMods.SBEPWeaponMountDupeInfo.guns) do
 			local gun = GetEntByID(v)
 			self.HP[k]["Ent"] = gun
-			if (!self.HP[k]["Ent"]) then
+			if (not self.HP[k]["Ent"]) then
 				gun = ents.GetByIndex(v)
 				self.HP[k]["Ent"] = gun
 			end

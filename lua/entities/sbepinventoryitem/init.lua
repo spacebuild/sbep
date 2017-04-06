@@ -34,7 +34,7 @@ end
 
 function ENT:SpawnFunction( ply, tr )
 
-	if ( !tr.Hit ) then return end
+	if ( not tr.Hit ) then return end
 	
 	local SpawnPos = tr.HitPos + tr.HitNormal * 16 + Vector(0,0,70)
 	
@@ -54,7 +54,7 @@ end
 
 function ENT:Think()
 	Data = SWEPData[ self.ItemType ]
-	if !Data then
+	if not Data then
 		print("No data. Removing.")
 		self:Remove()
 	end

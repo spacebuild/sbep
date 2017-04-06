@@ -42,7 +42,7 @@ end
 
 function ENT:SpawnFunction( ply, tr )
 
-	if ( !tr.Hit ) then return end
+	if ( not tr.Hit ) then return end
 	
 	local SpawnPos = tr.HitPos + tr.HitNormal * 16
 	
@@ -141,7 +141,7 @@ end
 
 function ENT:Touch( ent )
 	--print("Touching")
-	if ent.IsShipController and (!self.Master or !self.Master:IsValid()) then
+	if ent.IsShipController and (not self.Master or not self.Master:IsValid()) then
 		table.insert(ent.Weaponry,self.Entity)
 		self.Master = ent
 		--print("Linking")
@@ -170,9 +170,9 @@ function ENT:PostEntityPaste(pl, Ent, CreatedEntities)
 
 	if DI.master then
 		self.Master = CreatedEntities[ DI.master ]
-		/*if (!self.Master) then
+		--[[if (!self.Master) then
 			self.Master = ents.GetByIndex(DI.master)
-		end*/
+		end]]
 	end
 	if(Ent.EntityMods and Ent.EntityMods.SBEPWepMon.WireData) then
 		WireLib.ApplyDupeInfo( pl, Ent, Ent.EntityMods.SBEPWepMon.WireData, function(id) return CreatedEntities[id] end)

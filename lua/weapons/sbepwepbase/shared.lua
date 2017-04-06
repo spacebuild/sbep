@@ -71,12 +71,12 @@ end
 
 local SWEPData = list.Get( "SBEP_SWeaponry" )
 
-/*---------------------------------------------------------
+--[[---------------------------------------------------------
 							Reload
----------------------------------------------------------*/
+---------------------------------------------------------]]
 function SWEP:Reload()
 	print("Reloading")
-	if !self.PReloading and !self.SReloading and (self:Ammo1() > 0 or self:Ammo2() > 0) and (self:Clip1() < self.Primary.ClipSize or self:Clip2() < self.Secondary.ClipSize) then
+	if not self.PReloading and not self.SReloading and (self:Ammo1() > 0 or self:Ammo2() > 0) and (self:Clip1() < self.Primary.ClipSize or self:Clip2() < self.Secondary.ClipSize) then
 		print("Can Reload")
 		if self.Primary.ClipSize > 0 then
 			if self.Secondary.ClipSize > 0 then
@@ -100,7 +100,7 @@ function SWEP:Reload()
 end
 
 function SWEP:PReload()
-	if !self.PReloading and !self.SReloading then
+	if not self.PReloading and not self.SReloading then
 		self:SetNetworkedFloat( "PRTime", CurTime(), true )
 		self.PReloading = true
 		self.PRTime = CurTime()
@@ -109,7 +109,7 @@ function SWEP:PReload()
 end
 
 function SWEP:SReload()
-	if !self.PReloading and !self.SReloading then
+	if not self.PReloading and not self.SReloading then
 		self:SetNetworkedFloat( "SRTime", CurTime(), true )
 		self.SReloading = true
 		self.SRTime = CurTime()
@@ -117,13 +117,13 @@ function SWEP:SReload()
 	end
 end
 
-/*---------------------------------------------------------
+--[[---------------------------------------------------------
 							Think
----------------------------------------------------------*/
+---------------------------------------------------------]]
 function SWEP:Think()
 		
 	if SERVER then
-		if !self.Init then
+		if not self.Init then
 			--self:SetNetworkedInt( "SGun", 1 )
 			--self:SetNetworkedInt( "PGun", 1 )
 			--self.PGun = 1
@@ -151,17 +151,17 @@ function SWEP:Think()
 		--print(self.Owner.Inventory[ self.Owner.Slots.Primary[self.Owner.CSlot] ].Type)
 		if self.Owner.Inventory[ self.Owner.Slots.Primary[self.Owner.CSlot] ] then
 			self.PData = SWEPData[ self.Owner.Inventory[ self.Owner.Slots.Primary[self.Owner.CSlot] ].Type ]
-			if !self.PData then
+			if  not self.PData then
 				self.PData = SWEPData[ "Empty" ]
 			end
 		end
 		if self.Owner.Inventory[ self.Owner.Slots.Secondary[self.Owner.CSlot] ] then
 			self.SData = SWEPData[ self.Owner.Inventory[ self.Owner.Slots.Secondary[self.Owner.CSlot] ].Type ]
-			if !self.SData then
+			if  not self.SData then
 				self.SData = SWEPData[ "Empty" ]
 			end
 		end
-		if !self.PData or !self.SData then return end
+		if  not self.PData or  not self.SData then return end
 		--PrintTable(self.PData)
 		self.Primary.ClipSize		= self.PData.ClipSize
 		self.Primary.Automatic		= self.PData.Auto
@@ -249,7 +249,7 @@ function SWEP:Think()
 	
 	if CLIENT then
 	
-		if !self.Init then
+		if  not self.Init then
 			--self:SetNetworkedInt( "SGun", 1 )
 			--self:SetNetworkedInt( "PGun", 1 )
 			--self.PGun = 1
@@ -288,9 +288,9 @@ function SWEP:Think()
 			--print("Client", self.Owner.CRecoil)
 		end
 		
-		/*
+		--[[
 		if( input.IsKeyDown(KEY_I)) then
-			if !self.NTog then
+			if  not self.NTog then
 				if self.Owner.InventoryDisplay then
 					self.Owner.InventoryDisplay:Remove()
 					self.Owner.InventoryDisplay = nil
@@ -310,11 +310,11 @@ function SWEP:Think()
 		else
 			self.NTog = false
 		end
-		*/
+		]]
 		
 		if( input.IsKeyDown(KEY_I)) then
-			if !self.NTog then
-				if !self.Owner.InventoryDisplay then
+			if  not self.NTog then
+				if  not self.Owner.InventoryDisplay then
 					self:CreateInventory()
 					gui.EnableScreenClicker(true)
 					print("Creating")
@@ -346,7 +346,7 @@ function SWEP:Think()
 			end
 		end
 		if NSlot > 0 then
-			if !self.WSTog and NSlot ~= self.Owner.CSlot and ( self.Owner.Slots.Primary[NSlot].Inv > 0 or self.Owner.Slots.Secondary[NSlot].Inv > 0  ) then
+			if  not self.WSTog and NSlot ~= self.Owner.CSlot and ( self.Owner.Slots.Primary[NSlot].Inv > 0 or self.Owner.Slots.Secondary[NSlot].Inv > 0  ) then
 				self.Owner:ConCommand("SBEPChangeSlot "..NSlot)
 				self.WSTog = true
 			end
@@ -373,9 +373,9 @@ function SWEP:Think()
 	
 end
 
-/*---------------------------------------------------------
+--[[---------------------------------------------------------
 	PrimaryAttack
----------------------------------------------------------*/
+---------------------------------------------------------]]
 function SWEP:PrimaryAttack()
 	if CLIENT then return end
 	local ply = self.Owner
@@ -385,7 +385,7 @@ function SWEP:PrimaryAttack()
 			if type(self.PData.CustomPrimary) == "function" then
 				self.PData.CustomPrimary(self,self.Owner,true,self.PData)
 			else
-				if self:Clip1() ~= 0 and !self.PReloading then
+				if self:Clip1() ~= 0 and  not self.PReloading then
 					
 					self:EmitSound(self.PData.Sound)
 						
@@ -441,9 +441,9 @@ function SWEP:PrimaryAttack()
 	return true
 end
 
-/*---------------------------------------------------------
+--[[---------------------------------------------------------
 	SecondaryAttack
----------------------------------------------------------*/
+---------------------------------------------------------]]
 function SWEP:SecondaryAttack()
 	if CLIENT then return end
 	local ply = self.Owner
@@ -453,7 +453,7 @@ function SWEP:SecondaryAttack()
 			if type(self.SData.CustomPrimary) == "function" then
 				self.SData.CustomPrimary(self,self.Owner,false,self.SData)
 			else
-				if self:Clip2() > 0 and !self.SReloading then
+				if self:Clip2() > 0 and  not self.SReloading then
 					self:EmitSound(self.SData.Sound)
 												
 					if self.SData.Bullets > 0 then
@@ -534,7 +534,7 @@ function SWEP:StandardMuzzleFlash(Prime)
 end
 
 function SWEP:FireCheck(Prime)
-	if !((self.PReloading or self:Clip1() == 0) and Prime) and !((self.SReloading or self:Clip2() == 0) and !Prime) then
+	if  not ((self.PReloading or self:Clip1() == 0) and Prime) and  not ((self.SReloading or self:Clip2() == 0) and  not Prime) then
 		return true
 	else
 		return false
@@ -568,7 +568,7 @@ function SWEP:GetViewModelPosition( pos, ang )
 	--This bit is utterly monsterous. Do not atempt to analyse while sober.
 	if self.Owner.Inventory[ self.Owner.Slots.Primary[self.Owner.CSlot].Inv ] then
 		self.PData = SWEPData[ self.Owner.Inventory[ self.Owner.Slots.Primary[self.Owner.CSlot].Inv ].Type ]
-		if !self.PData then
+		if  not self.PData then
 			self.PData = SWEPData[ "Empty" ]
 		end
 	else
@@ -576,14 +576,14 @@ function SWEP:GetViewModelPosition( pos, ang )
 	end
 	if self.Owner.Inventory[ self.Owner.Slots.Secondary[self.Owner.CSlot].Inv ] then
 		self.SData = SWEPData[ self.Owner.Inventory[ self.Owner.Slots.Secondary[self.Owner.CSlot].Inv ].Type ]
-		if !self.SData then
+		if  not self.SData then
 			self.SData = SWEPData[ "Empty" ]
 		end
 	else
 		self.SData = SWEPData[ "Empty" ]
 	end
 	
-	if !self.PData or !self.SData then return end
+	if  not self.PData or  not self.SData then return end
 	
 	if self.OPModel ~= self.PData.Model then
 		--print("New Primary")
@@ -604,7 +604,7 @@ function SWEP:GetViewModelPosition( pos, ang )
 		self:SetNetworkedFloat( "SRTime", CurTime() - (self.SData.ReloadLength * .5), true )
 	end
 	
-	/*
+	--[[
 	if type(self.PData.CustomDraw) == "function" then
 		self.PData.CustomDraw(self,self.Owner,true,self.PData)
 		--print("Calling Primary")
@@ -614,9 +614,9 @@ function SWEP:GetViewModelPosition( pos, ang )
 		self.SData.CustomDraw(self,self.Owner,false,self.SData)
 		--print("Calling Secondary")
 	end
-	*/
+	]]
 	
-	if !self.PModel then
+	if  not self.PModel then
 		self.PModel = ClientsideModel(self.PData.Model, RENDERGROUP_OPAQUE)
 		self.Owner.PModel = self.PModel
 	end
@@ -689,7 +689,7 @@ function SWEP:GetViewModelPosition( pos, ang )
 	end
 	
 	
-	if !self.SModel then
+	if  not self.SModel then
 		self.SModel = ClientsideModel(self.SData.Model, RENDERGROUP_OPAQUE)
 		self.Owner.SModel = self.SModel
 	end
@@ -824,7 +824,7 @@ function SWEP:Recoil(Recoil)
 end
 
 function SWEP:StandardIronSight(Prime)
-	if !self.Owner.IronSightMode then
+	if  not self.Owner.IronSightMode then
 		self.Owner:SetFOV( 35, .5 )
 		umsg.Start("SBEPSetIronSights", self.Owner )
 		umsg.Bool(true)
@@ -854,7 +854,7 @@ end
 if SERVER then
 	function SBEPItemDrop(player,commandName,args)
 		local NWeap = ents.Create( "SBEPInventoryItem" )
-		if ( !NWeap:IsValid() ) then return end
+		if (  not NWeap:IsValid() ) then return end
 		local Vec = Vector(tonumber(args[2]),tonumber(args[3]),tonumber(args[4]))
 		print(args[1], Vec, player.Inventory[tonumber(args[1])])
 		NWeap.ItemType = player.Inventory[tonumber(args[1])].Type
@@ -914,7 +914,7 @@ if SERVER then
 		
 		if player.Inventory[ player.Slots.Primary[player.CSlot] ] then
 			Wep.PData = SWEPData[ player.Inventory[ player.Slots.Primary[player.CSlot] ].Type ]
-			if !Wep.PData then
+			if  not Wep.PData then
 				Wep.PData = SWEPData[ "Empty" ]
 			end
 		else
@@ -922,7 +922,7 @@ if SERVER then
 		end
 		if player.Inventory[ player.Slots.Secondary[player.CSlot] ] then
 			Wep.SData = SWEPData[ player.Inventory[ player.Slots.Secondary[player.CSlot] ].Type ]
-			if !Wep.SData then
+			if  not Wep.SData then
 				Wep.SData = SWEPData[ "Empty" ]
 			end
 		else
@@ -981,10 +981,10 @@ end
 
 
 
-/*
+--[[
 if self.Owner:KeyDown( IN_WALK ) then
 	if self.Owner:KeyDown( IN_RELOAD ) then
-		if !self.PTog then
+		if  not self.PTog then
 			self.PGun = self.PGun + 1
 			if self.PGun > 6 then
 				self.PGun = 1
@@ -1004,7 +1004,7 @@ if self.Owner:KeyDown( IN_WALK ) then
 end
 if self.Owner:KeyDown( IN_WALK ) then
 	if self.Owner:KeyDown( IN_USE ) then
-		if !self.STog then
+		if  not self.STog then
 			self.SGun = self.SGun + 1
 			if self.SGun > 6 then
 				self.SGun = 1
@@ -1022,7 +1022,7 @@ if self.Owner:KeyDown( IN_WALK ) then
 		self.STog = false
 	end
 end
-*/
+]]
 
 
 
@@ -1097,7 +1097,7 @@ if CLIENT then
 		ModelDisp:SetLookAt( Vector(0,1,0) )
 		ModelDisp.Inv = 0
 		function ModelDisp:Think()
-			if ModelDisp.Inv <= 0 or !LocalPlayer().Inventory[ModelDisp.Inv] then return end
+			if ModelDisp.Inv <= 0 or not LocalPlayer().Inventory[ModelDisp.Inv] then return end
 			local InfoData = SWEPData[ LocalPlayer().Inventory[ModelDisp.Inv].Type ]
 			if InfoData then
 				if ModelDisp.Entity and ModelDisp.Entity:IsValid() then
@@ -1359,7 +1359,7 @@ if CLIENT then
 					Column = 0
 					Row = Row + 1
 				end 
-				/*
+				--[[
 				surface.SetDrawColor( 110, 110, 110, 255 )
 				surface.DrawRect(  5,  250,  65,  65 )
 				
@@ -1368,7 +1368,7 @@ if CLIENT then
 				
 				surface.SetDrawColor( 150, 150, 150, 255 )
 				surface.DrawOutlinedRect( 5, 250, 65, 65)
-				*/
+				]]
 			end
 		end
 		
@@ -1422,7 +1422,7 @@ if CLIENT then
 									local PX,PY = HIcon:GetParent():GetPos()
 									HIcon:SetPos( (gui.MouseX() - 32) - PX, (gui.MouseY() - 32) - PY )
 								else
-									if !MouseCC(Frame:GetBounds()) and !MouseCC(InfoPanel:GetBounds()) and !MouseCC(WSlot:GetBounds()) then
+									if not MouseCC(Frame:GetBounds()) and not MouseCC(InfoPanel:GetBounds()) and not MouseCC(WSlot:GetBounds()) then
 										--print("Dropping, Stage 1")
 										local Vec = gui.ScreenToVector( gui.MousePos() )
 										LocalPlayer():ConCommand("SBEPItemDrop "..i.." "..Vec.x.." "..Vec.y.." "..Vec.z)
@@ -1578,7 +1578,7 @@ if CLIENT then
 	
 	
 	
-	function SBEPEmergencyWeaponScrap( um )
+	local function SBEPEmergencyWeaponScrap( um )
 		if LocalPlayer().PModel then
 			if LocalPlayer().PModel:IsValid() then
 				LocalPlayer().PModel:Remove()
@@ -1596,8 +1596,8 @@ if CLIENT then
 	
 	
 	
-	function SBEPInventoryOpen( um )
-		if !LocalPlayer().InventoryDisplay then
+	local function SBEPInventoryOpen( um )
+		if not LocalPlayer().InventoryDisplay then
 			local Wep = player:GetWeapon("SBEPWepBase")
 			Wep:CreateInventory()
 			gui.EnableScreenClicker(true)
@@ -1608,7 +1608,7 @@ if CLIENT then
 	
 	
 	
-	function SBEPInventoryClose( um )
+	local function SBEPInventoryClose( um )
 		if LocalPlayer().InventoryDisplay then
 			LocalPlayer().InventoryDisplay:Remove()
 			LocalPlayer().InventoryDisplay = nil
@@ -1625,10 +1625,10 @@ if CLIENT then
 	
 	
 	function SWEP:DrawHUD()
-		if !self.Owner.Slots or !self.PData then return end --This just gets rid of that rather annoying error when first spawned
+		if not self.Owner.Slots or not self.PData then return end --This just gets rid of that rather annoying error when first spawned
 		--print("Drawing")
 		
-		if !self.Owner.IronSightMode then
+		if not self.Owner.IronSightMode then
 			local CrouchMod = 1
 			if self.Owner:Crouching() then
 				CrouchMod = 0.5

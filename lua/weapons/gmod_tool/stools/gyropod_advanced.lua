@@ -43,14 +43,14 @@ end
 
 --Spawn the gyropod
 function TOOL:LeftClick( trace )
-	if (!trace.HitPos) then return false end
+	if (not trace.HitPos) then return false end
 	if (trace.Entity:IsPlayer()) then return false end
 	if ( CLIENT ) then return true end
 	local ply = self:GetOwner()
 	if ( trace.Entity:IsValid() and trace.Entity:GetClass() == "gyropod_advanced" and trace.Entity:GetTable().pl == ply ) then
 		return true
 	end
-	if ( !self:GetSWEP():CheckLimit( "gyropod_advanceds" ) ) then return false end
+	if ( not self:GetSWEP():CheckLimit( "gyropod_advanceds" ) ) then return false end
 	local Ang = trace.HitNormal:Angle()
 	Ang.pitch = Ang.pitch + 90
 	local Model = self:GetClientInfo( "model" )
@@ -84,8 +84,8 @@ end
 if (SERVER) then
 	
 	--stuff needed for setting up ghost and model selection
-	function MakeDataGPod( pl, Model, Pos, Ang )
-		if ( !pl:CheckLimit( "gyropod_advanceds" ) ) then return false end
+	local function MakeDataGPod( pl, Model, Pos, Ang )
+		if ( not pl:CheckLimit( "gyropod_advanceds" ) ) then return false end
 		local datagpod = ents.Create( "gyropod_advanced" )
 		if not(IsValid(datagpod)) then return nil end
 		datagpod:SetAngles(Ang)

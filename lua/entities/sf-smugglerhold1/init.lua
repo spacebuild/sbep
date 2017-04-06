@@ -58,7 +58,7 @@ end
 
 function ENT:SpawnFunction( ply, tr )
 
-	if ( !tr.Hit ) then return end
+	if ( not tr.Hit ) then return end
 	
 	local SpawnPos = tr.HitPos + tr.HitNormal * 16 + Vector(0,0,150)
 	
@@ -103,7 +103,7 @@ function ENT:Use( activator, caller )
 
 end
 
-/*
+--[[
 function ENT:Touch( ent )
 	if ent.HasHardpoints then
 		if ent.Cont and ent.Cont:IsValid() then HPLink( ent.Cont, ent.Entity, self.Entity ) end
@@ -117,7 +117,7 @@ function ENT:HPFire()
 		self.HP[1]["Ent"]:HPFire()
 	end
 end
-*/
+]]
 
 function ENT:PreEntityCopy()
 	local DI = {}

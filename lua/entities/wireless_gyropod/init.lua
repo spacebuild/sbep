@@ -78,20 +78,20 @@ function ENT:Think()
 	self:updateGyroPitchYaw(driver)
 	self:updateGyroVelocity(localvel)
 	--enable/disable gravity
-	if self.SystemOn and !self.weighted then self.weighted = !self:EnableGyroWeight(true) end
-	if !self.SystemOn and self.weighted then self.weighted = !self:EnableGyroWeight(false) end
+	if self.SystemOn and not self.weighted then self.weighted = not self:EnableGyroWeight(true) end
+	if not self.SystemOn and self.weighted then self.weighted = not self:EnableGyroWeight(false) end
 	--enable/disable freezing
-	if self.FreezeOn and !self.frozen then
+	if self.FreezeOn and not self.frozen then
 		soundsrc:EmitSound( "buttons/lever7.wav" )
-		self.frozen = !self:EnableMot(false)
+		self.frozen = not self:EnableMot(false)
 	end
-	if !self.FreezeOn and self.frozen then
+	if not self.FreezeOn and self.frozen then
 		soundsrc:EmitSound( "buttons/lever6.wav" )
-		self.frozen = !self:EnableMot(true)
+		self.frozen = not self:EnableMot(true)
 	end
 	--enable/disable engine sounds
 	if self.SystemOn then
-		if !self.playing then
+		if not self.playing then
 			soundsrc:EmitSound( "buttons/button1.wav" )
 			self.playing = self:EnableEngineSounds(soundsrc, true)
 		end
@@ -101,7 +101,7 @@ function ENT:Think()
 		self.HighEngineSound:ChangePitch(normSpeed * 255, 0)
 		self.LowDroneSound:ChangePitch(normSpeed * 255, 0)
 	end
-	if !self.SystemOn and self.playing then
+	if not self.SystemOn and self.playing then
 		soundsrc:EmitSound( "buttons/button18.wav" )
 		self.playing = self:EnableEngineSounds(soundsrc, false)
 	end
@@ -202,7 +202,7 @@ function ENT:EnableGyroWeight(on)
 	table.Empty(self.MoveTable)
 	self.GyroMass = 0
 	--gravity is turned on if gyropod is off
-	if (!on) then
+	if (not on) then
 		return self:EnableGrav(true)
 	end
 	--else calculate the new gyro mass and update the table of movable objects
@@ -312,7 +312,7 @@ end
 
 --updates the movement, rotation and forces applied to the gyropod and its linked entities
 function ENT:updateForces(gyropos, speed)
-	if !self.SystemOn then
+	if not self.SystemOn then
 		return
 	end
 	--increase pitch yaw during high speeds
@@ -329,7 +329,7 @@ end
 
 --applies the angular and directional velocity to target, also applies torque
 function ENT:applyForce(target, NTC, pos)
-	if(!IsValid(target)) then return end
+	if(not IsValid(target)) then return end
 	--calculate rotational forces
 	local mass = self.GyroMass * 0.5 * NTC
 	local pF = self.rotation.x * self.PMult * mass
@@ -369,7 +369,7 @@ end
 
 --hook into keypressed events
 hook.Add( "KeyPress", entity_name .. "_keypressed", function( ply, key )
-	if (!keys[key]) then return end
+	if (not keys[key]) then return end
 	for _,v in pairs(ents.FindByClass(entity_name)) do
 		local pod = v:GetPod()
 		if (pod and pod:GetDriver() == ply and pod:IsVehicle()) then
@@ -380,7 +380,7 @@ end)
 
 --hook into keyreleased events
 hook.Add( "KeyRelease", entity_name .. "_keyreleased", function( ply, key )
-	if (!keys[key]) then return end
+	if (not keys[key]) then return end
 	for _,v in pairs(ents.FindByClass(entity_name)) do
 		local pod = v:GetPod()
 		if (pod and pod:GetDriver() == ply and pod:IsVehicle()) then
@@ -396,8 +396,8 @@ end
 
 --triggers the behavior associated with the keys
 function ENT:TriggerInput(iname, value)
-	if (iname == "Activate") then self.SystemOn   = self:ZeroCheck(value, !self.SystemOn, self.SystemOn) return end
-	if (iname == "Freeze") 	 then self.FreezeOn   = self:ZeroCheck(value, !self.FreezeOn, self.FreezeOn) return end
+	if (iname == "Activate") then self.SystemOn   = self:ZeroCheck(value, not self.SystemOn, self.SystemOn) return end
+	if (iname == "Freeze") 	 then self.FreezeOn   = self:ZeroCheck(value, not self.FreezeOn, self.FreezeOn) return end
 	if (iname == "Level") 	 then self.LevelOn    = self:ZeroCheck(value, true, false) return end
 	if (iname == "RollLock") then self.RollLockOn = self:ZeroCheck(value, true, false) return end
 	if (iname == "Forward")  then self.axialinput.x = self.axialinput.x + self:ZeroCheck(value, 1, -1) return end
@@ -419,7 +419,7 @@ end
 
 --link the gyro to a pod
 function ENT:Link(pod)
-	if !pod then return false end
+	if not pod then return false end
 	self.Pod = pod
 	return true
 end

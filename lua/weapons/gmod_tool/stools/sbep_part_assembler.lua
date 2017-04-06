@@ -250,7 +250,7 @@ if CLIENT then
 			if( IsLookingAtSprite( xSprite ) ) then
 				local vPos = GetSpriteWorldPos( xSprite )
 				local fTempDist = LocalPlayer():GetPos():Distance( vPos )
-				if( fTempDist < fDist || fDist == 0 ) then
+				if( fTempDist < fDist or fDist == 0 ) then
 					fDist = fTempDist
 					xClosest = xSprite
 				end
@@ -265,7 +265,7 @@ if CLIENT then
 		
 		local xSprite = GetClosestLookingAtSprite()
 		if( xSprite ) then
-			if( !xFirstSelection ) then
+			if( not xFirstSelection ) then
 				nToolStage = 1
 				xSprite.bSelected = true
 				xFirstSelection = xSprite
@@ -275,7 +275,7 @@ if CLIENT then
 				
 				LocalPlayer():EmitSound( "buttons/button14.wav", 100, 100 )
 			else
-				if( xSprite.sType == xFirstSelection.sType && xSprite.xEntity != xFirstSelection.xEntity ) then
+				if( xSprite.sType == xFirstSelection.sType and xSprite.xEntity ~= xFirstSelection.xEntity ) then
 					net.Start("SBEP_ClMerge")
 						net.WriteEntity( xSprite.xEntity )
 						net.WriteVector( xSprite.vLocalPos )
@@ -306,10 +306,10 @@ if CLIENT then
 
 		nToolStage = net.ReadInt(2)
 		local xEntity = LocalPlayer():GetEyeTrace().Entity
-		if( !IsValid( xEntity ) ) then return end
+		if( not IsValid( xEntity ) ) then return end
 		
 		local xPADData = PAD[ string.lower( xEntity:GetModel() ) ]
-		if !xPADData then return end
+		if not xPADData then return end
 		
 		local bSelected = false
 		local bUnSelect = false
@@ -322,7 +322,7 @@ if CLIENT then
 			end
 		end
 		
-		if( !bSelected ) then
+		if( not bSelected ) then
 			if( bUnSelect ) then
 				for i in ipairs( aSelectedEntities ) do
 					if( aSelectedEntities[i].xEntity == xEntity ) then
@@ -357,10 +357,10 @@ if CLIENT then
 	
 	local function ClReload( len )
 		nToolStage = net.ReadInt(2)
-		if( nToolStage == 0 && next( aSelectedEntities ) != nil ) then
+		if( nToolStage == 0 and next( aSelectedEntities ) ~= nil ) then
 			aSelectedEntities = {}
 			LocalPlayer():EmitSound( "buttons/lightswitch2.wav", 100, 100 )
-		elseif( nToolStage == 1 && xFirstSelection ) then
+		elseif( nToolStage == 1 and xFirstSelection ) then
 			xFirstSelection = nil
 			for i, xSprite in ipairs( aSelectedEntities ) do
 				xSprite.bSelected = false
@@ -392,7 +392,7 @@ if CLIENT then
 		local xClosestLookingAtSprite = GetClosestLookingAtSprite()
 		for i, xSprite in ipairs( aSelectedEntities ) do
 			local xSpriteInfo = nil
-			if( !xSprite.bSelected ) then
+			if( not xSprite.bSelected ) then
 				if( xClosestLookingAtSprite == xSprite ) then
 					xSpriteInfo = xMaterialsInfo[xSprite.sType .. "_MO"]
 				else

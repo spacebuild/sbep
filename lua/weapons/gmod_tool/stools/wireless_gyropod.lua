@@ -31,7 +31,7 @@ if ( SERVER ) then
 
 	--stuff needed for setting up ghost and model selection
 	function ConstructGyropod( owner, model, pos, ang )
-		if ( !owner:CheckLimit( RegisterName ) ) then return false end
+		if ( not owner:CheckLimit( RegisterName ) ) then return false end
 		local gyropod = ents.Create( ClassName )
 		if not(IsValid(gyropod)) then return nil end
 		gyropod:SetAngles(ang)
@@ -53,10 +53,10 @@ end
 --spawn a gyropod
 function TOOL:LeftClick( trace )
 	local owner = self:GetOwner()
-	if ( !trace.HitPos )							  then return false end
+	if ( not trace.HitPos )							  then return false end
 	if ( trace.Entity:IsPlayer() )					  then return false end
 	if ( CLIENT )									  then return true  end
-	if ( !self:GetSWEP():CheckLimit( RegisterName ) ) then return false end
+	if ( not self:GetSWEP():CheckLimit( RegisterName ) ) then return false end
 	if ( trace.Entity:IsValid() and trace.Entity:GetClass() == ClassName and trace.Entity:GetTable().pl == owner ) then	return true	end
 	local angle = trace.HitNormal:Angle()
 	angle.pitch = angle.pitch + 90

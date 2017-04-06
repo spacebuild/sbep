@@ -32,7 +32,7 @@ end
 
 function ENT:SpawnFunction( ply, tr )
 
-	if ( !tr.Hit ) then return end
+	if ( not tr.Hit ) then return end
 	
 	local SpawnPos = tr.HitPos + tr.HitNormal * 16 + Vector(0,0,50)
 	
@@ -66,7 +66,7 @@ function ENT:Think()
 	if (self.Active == true or self.FTime > CurTime() ) then
 		self:SetActive(true)
 		if CurTime() >= self.NFTime then
-			/*
+			--[[
 			NewShell = ents.Create( "FlameGout" )
 			if ( !NewShell:IsValid() ) then return end
 			NewShell:SetPos( self.Entity:GetPos() + (self:GetForward() * 30) )
@@ -77,7 +77,7 @@ function ENT:Think()
 			NewShell:Activate()
 			local SSpeed = 10
 			NewShell:GetPhysicsObject():SetVelocity((self.Entity:GetPhysicsObject():GetVelocity() * 0.25) + (self.Entity:GetRight() * math.random(-SSpeed,SSpeed)) + (self.Entity:GetUp() * math.random(-SSpeed,SSpeed))  + (self.Entity:GetForward() * 500)  )
-			*/
+			]]
 			for i = 1,6 do
 				local Dist = i * math.Rand(65,85)
 				util.BlastDamage(self.SPL, self.SPL, self:GetPos() + (self:GetForward() * Dist), (Dist * 0.3) + 40, math.Clamp((320 - Dist) * 0.1,1,100))

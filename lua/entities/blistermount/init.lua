@@ -107,7 +107,7 @@ end
 
 function ENT:SpawnFunction( ply, tr )
 
-	if ( !tr.Hit ) then return end
+	if ( not tr.Hit ) then return end
 	
 	local SpawnPos = tr.HitPos + tr.HitNormal * 16 + Vector(0,0,50)
 	
@@ -130,7 +130,7 @@ function ENT:Think()
 		local Weap = self.HP[1]["Ent"]
 		Weap:GetPhysicsObject():SetMass(1)
 		if self.Active then
-			if !self.Angular then
+			if not self.Angular then
 				local Dir = (Vector(self.XCo,self.YCo,self.ZCo) - (self.Entity:GetPos() + self.Entity:GetUp() * 5)):GetNormal()
 				local Ang = Dir:Angle()
 				local RAng = self.Entity:WorldToLocalAngles(Ang)

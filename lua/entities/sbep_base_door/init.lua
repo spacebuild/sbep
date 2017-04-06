@@ -170,7 +170,7 @@ function ENT:PhysicsInitialize()
 end
 
 function ENT:SetDoorType( strType , nClass )
-	if !strType or (strType == self.type and nClass == self.DClass) then
+	if not strType or (strType == self.type and nClass == self.DClass) then
 		print( "Invalid Door Type: "..tostring(strType) )
 		return false 
 	end
@@ -182,7 +182,7 @@ function ENT:SetDoorType( strType , nClass )
 end
 
 function ENT:SetDoorVars( strType , nClass )
-	if !strType or ( nClass and !DTT[strType][nClass] ) then return end
+	if not strType or ( nClass and not DTT[strType][nClass] ) then return end
 	self.type  = strType
 	self.DClass = nClass or 1
 	self.D = DTT[ strType ][ self.DClass ]
@@ -204,7 +204,7 @@ function ENT:GetDoorClass()
 end
 
 function ENT:Attach( ent , V , A )
-	self.D = self.D || {}
+	self.D = self.D or {}
 	
 	local Voff = Vector(0,0,0)
 	if V then Voff = Vector( V.x , V.y , V.z ) end
@@ -313,28 +313,28 @@ function ENT:Close()
 end
 
 function ENT:Think()
-	if !(self.OpenTrigger == nil) then
-		if self.OpenTrigger and !self:IsOpen() and !self.OpenStatus then
+	if not (self.OpenTrigger == nil) then
+		if self.OpenTrigger and not self:IsOpen() and not self.OpenStatus then
 			self:Open()
-		elseif !self.OpenTrigger and self:IsOpen() and self.OpenStatus then
+		elseif not self.OpenTrigger and self:IsOpen() and self.OpenStatus then
 			self:Close()
 		end
 	end
-	if (self.ATEnt and self.ATEnt:IsValid() ) and (!self.ATWeld or !self.ATWeld:IsValid()) then
+	if (self.ATEnt and self.ATEnt:IsValid() ) and (not self.ATWeld or not self.ATWeld:IsValid()) then
 		local wt = constraint.FindConstraints( self , "Weld" )
 		for n,C in ipairs( wt ) do
 			if C.Ent2 == self.ATEnt or C.Ent1 == self.ATEnt then
 				self.ATWeld = C.Constraint
 			end
 		end
-		if !self.Duped and (!self.ATWeld or !self.ATWeld:IsValid()) then
+		if not self.Duped and (not self.ATWeld or not self.ATWeld:IsValid()) then
  			self:Attach( self.ATEnt , self.VecOff , self.AngOff )
 		else
 			if self.ATWeld then self.Duped=nil end
 		end
 	end
 	if self.Cont then
-		if self:GetSkin() ~= self.Cont.Skin && self.Cont.Skin then
+		if self:GetSkin() ~= self.Cont.Skin and self.Cont.Skin then
 			self:SetSkin( self.Cont.Skin )
 		end
 	end

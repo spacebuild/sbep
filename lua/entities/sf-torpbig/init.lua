@@ -56,7 +56,7 @@ end
 
 function ENT:SpawnFunction( ply, tr )
 
-	if ( !tr.Hit ) then return end
+	if ( not tr.Hit ) then return end
 	
 	local SpawnPos = tr.HitPos + tr.HitNormal * 16 + Vector(0,0,50)
 	
@@ -96,13 +96,13 @@ function ENT:Think()
 end
 
 function ENT:PhysicsCollide( data, physobj )
-	if (!self.Exploded and self.Armed) then
+	if (not self.Exploded and self.Armed) then
 		self:Splode()
 	end
 end
 
 function ENT:OnTakeDamage( dmginfo )
-	if (!self.Exploded and self.Armed) then
+	if (not self.Exploded and self.Armed) then
 		--self:Explode()
 		if dmginfo:GetInflictor():GetClass() ~= self.Entity:GetClass() then
 			SB.util.damage.doDamage( self.Entity, dmginfo:GetDamage(), 50 )
@@ -122,7 +122,7 @@ function ENT:Arm()
 end
 
 function ENT:Splode()
-	if(!self.Exploded) then
+	if(not self.Exploded) then
 		self.Exploded = true
 		util.BlastDamage(self.Entity, self.Entity, self.Entity:GetPos(), 1500, 1500)
 		SBGCSplash( self.Entity:GetPos(), 1000, math.random(5000,9000), 8, { self.Entity:GetClass() } )
@@ -177,7 +177,7 @@ function ENT:HPFire()
 end
 
 function ENT:gcbt_breakactions( damage, pierce )
-	if !self.Exploded then
+	if not self.Exploded then
 		self.Entity:Splode()
 	end
 	self.Exploded = true

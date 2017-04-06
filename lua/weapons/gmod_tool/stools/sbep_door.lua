@@ -105,7 +105,7 @@ end
 function TOOL:RightClick( tr )
 
 	if CLIENT then return end
-	if !tr.Hit or !tr.Entity or !tr.Entity:IsValid() then return end
+	if not tr.Hit or not tr.Entity or not tr.Entity:IsValid() then return end
 	local door = tr.Entity
 	local entclass = door:GetClass()
 	

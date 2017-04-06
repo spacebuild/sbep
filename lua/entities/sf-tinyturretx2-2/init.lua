@@ -111,7 +111,7 @@ end
 
 function ENT:SpawnFunction( ply, tr )
 
-	if ( !tr.Hit ) then return end
+	if ( not tr.Hit ) then return end
 	
 	local SpawnPos = tr.HitPos + tr.HitNormal * 16 + Vector(0,0,50)
 	
@@ -155,7 +155,7 @@ end
 
 function ENT:Think()
 	if self.Active then
-		if !self.Angular then
+		if not self.Angular then
 			local Dir = (Vector(self.XCo,self.YCo,self.ZCo) - (self.Entity:GetPos() + self.Entity:GetUp() * 15)):GetNormal()
 			local Ang = Dir:Angle()
 			local RAng = self.Entity:WorldToLocalAngles(Ang)

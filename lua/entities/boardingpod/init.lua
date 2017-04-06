@@ -216,7 +216,7 @@ function ENT:Think()
 			self.Pitch = 0
 		end
 	
-		if (self.Active and !self.Impact) then
+		if (self.Active and not self.Impact) then
 					
 			local physi = self.Pod:GetPhysicsObject()
 			physi:SetVelocity( ( physi:GetVelocity() * 0.75 ) + ( self.Pod:GetRight() * 6000 ) )
@@ -272,7 +272,7 @@ function ENT:Think()
 			--physi:EnableGravity(true)
 		end
 		
-		if !self.Active and !self.Mounted then
+		if not self.Active and not self.Mounted then
 			local mn, mx = self.Pod:WorldSpaceAABB()
 			mn = mn - Vector(2, 2, 2)
 			mx = mx + Vector(2, 2, 2)
@@ -300,7 +300,7 @@ function ENT:Think()
 end
 
 function ENT:HPFire()
-	if !self.CPL or !self.CPL:IsValid() then
+	if not self.CPL or not self.CPL:IsValid() then
 		local ECPL = self.Pod.Pod:GetPassenger(1)
 		if ECPL and ECPL:IsValid() then
 			ECPL:ExitVehicle()
@@ -384,13 +384,13 @@ function ENT:PostEntityPaste(pl, Ent, CreatedEntities)
 
 	if (DI.Pod) then
 		self.Pod = CreatedEntities[ DI.Pod ]
-		/*if (!self.Pod) then
+		--[[if (!self.Pod) then
 			self.Pod = ents.GetByIndex(DI.Pod)
-		end*/
+		end]]
 		self.Pod.Pod = CreatedEntities[ DI.Pod2 ]
-		/*if (!self.Pod.Pod) then
+		--[[if (!self.Pod.Pod) then
 			self.Pod.Pod = ents.GetByIndex(DI.Pod2)
-		end*/
+		end]]
 		self.Pod.Pod.Pod = self.Pod
 		self.Pod.Cont = self.Entity
 		self.Pod.SPL = ply
@@ -407,10 +407,10 @@ function ENT:PostEntityPaste(pl, Ent, CreatedEntities)
 		for k,v in pairs(DI.guns) do
 			--local gun = CreatedEntities[ v ]
 			self.HP[k]["Ent"] = CreatedEntities[ v ]
-			/*if (!self.HP[k]["Ent"]) then
+			--[[if (!self.HP[k]["Ent"]) then
 				gun = ents.GetByIndex(v)
 				self.HP[k]["Ent"] = gun
-			end*/
+			end]]
 		end
 	end
 	

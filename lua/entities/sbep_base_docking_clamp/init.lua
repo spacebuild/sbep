@@ -57,7 +57,7 @@ end
 function ENT:AddDockDoor()
 
 	local Data = DD[ string.lower( self.Entity:GetModel() ) ]
-	if !Data then return end
+	if not Data then return end
 	
 	self.Doors = self.Doors or {}
 	for n,Door in ipairs( Data ) do
@@ -72,9 +72,9 @@ function ENT:AddDockDoor()
 end
 
 function ENT:SetDockType( strType )
-	if !strType then return false end
+	if not strType then return false end
 	local DT = DCDT[ string.lower( self.Entity:GetModel() ) ]
-	if !DT then return false end
+	if not DT then return false end
 
 	self.ALType  = strType
 	self.Entity:SetName( strType )
@@ -230,7 +230,7 @@ function ENT:Think()
 	end
 	
 	if self.DMode == 4 and self.LinkLock and self.LinkLock:IsValid() then
-		if !self.AWeld or !self.AWeld:IsValid() then
+		if not self.AWeld or not self.AWeld:IsValid() then
 			if self.LinkLock.AWeld and self.LinkLock.AWeld:IsValid() then
 				self.AWeld = self.LinkLock.AWeld
 			else
@@ -428,7 +428,7 @@ function ENT:PostEntityPaste(pl, Ent, CreatedEntities)
 
 	local DI = Ent.EntityMods.SBEPDCI
 	
-	if !DI then return end
+	if not DI then return end
 	
 	self:SetDockType( DI.Type )
 	self.Usable = DI.Usable

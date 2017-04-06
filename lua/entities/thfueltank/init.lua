@@ -49,7 +49,7 @@ end
 
 function ENT:SpawnFunction( ply, tr )
 
-	if ( !tr.Hit ) then return end
+	if ( not tr.Hit ) then return end
 	
 	local SpawnPos = tr.HitPos + tr.HitNormal * 16 + Vector(0,0,50)
 	
@@ -129,7 +129,7 @@ function ENT:PhysicsCollide( data, physobj )
 end
 
 function ENT:Splode()
-	if(!self.Exploded) then
+	if(not self.Exploded) then
 		self.Exploded = true
 		--util.BlastDamage(self.Entity, self.Entity, self.Entity:GetPos(), 400, 400)
 		--SB.util.damage.doBlastDamage( self.Entity:GetPos(), 400, math.random(400,600), 7)
@@ -141,7 +141,7 @@ function ENT:Splode()
 			local NewShell = nil
 			for i = 1, FCount do
 				NewShell = ents.Create( "TFuelSpray" )
-				if ( !NewShell:IsValid() ) then return end
+				if ( not NewShell:IsValid() ) then return end
 				NewShell:SetPos( self.Entity:GetPos() + Vector(math.random(-SPos,SPos),math.random(-SPos,SPos),math.random(-SPos,SPos)) )
 				NewShell.SPL = self.SPL
 				NewShell:Spawn()

@@ -214,7 +214,7 @@ function ENT:DrawTranslucent()
 					end
 				end
 				
-				/*for y,Row in pairs( self.Boxes ) do
+				--[[for y,Row in pairs( self.Boxes ) do
 					for label,x in pairs( Row ) do
 						if RX >= x-17.5 and RX <= x+17.5 and RY >= y-17.5 and RY <= y+17.5 then
 							draw.RoundedBox( 12, x-17.5, y-17.5, 35, 35, KColH )
@@ -233,7 +233,7 @@ function ENT:DrawTranslucent()
 							draw.RoundedBox( 6, x-17.5, y-17.5, 35, 35, KCol )
 							draw.DrawText( label , "TrebuchetH", x, y-13, Color( R, G, B, 255*Alpha), TEXT_ALIGN_CENTER )
 						end
-					end*/
+					end]]
 					
 					--else
 					--	draw.RoundedBox( 6, x-17.5, y-17.5, 35, 35, KCol )
@@ -281,12 +281,12 @@ function ENT:Think()
 		end
 		if self.IncZ >= 15 and self.Inc >= 10 and self.Alpha < 1 then
 			self.Alpha = math.Approach(self.Alpha, 1, .05)
-			if !self.Persist then
+			if not self.Persist then
 				self.CString = ""
 			end
 		end
 		
-		if LocalPlayer():KeyPressed( IN_USE ) or (input.IsMouseDown(MOUSE_FIRST) and !self.MTog) then
+		if LocalPlayer():KeyPressed( IN_USE ) or (input.IsMouseDown(MOUSE_FIRST) and not self.MTog) then
 			self.MTog = true
 			local val = self:GetHighlighted()
 			if val == 10 then
@@ -304,7 +304,7 @@ function ENT:Think()
 					end
 				end
 			end
-		elseif !input.IsMouseDown(MOUSE_FIRST) then
+		elseif not input.IsMouseDown(MOUSE_FIRST) then
 			self.MTog = false
 		end
 		

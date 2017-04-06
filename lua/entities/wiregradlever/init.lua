@@ -35,7 +35,7 @@ end
 
 function ENT:SpawnFunction( ply, tr )
 
-	if ( !tr.Hit ) then return end
+	if ( not tr.Hit ) then return end
 	
 	local SpawnPos = tr.HitPos + tr.HitNormal * 16 + Vector(0,0,70)
 	
@@ -83,7 +83,7 @@ function ENT:PhysicsUpdate()
 end
 
 function ENT:Think()
-	if !self.Base or !self.Base:IsValid() then
+	if not self.Base or not self.Base:IsValid() then
 		self.Entity:Remove()
 		return
 	end

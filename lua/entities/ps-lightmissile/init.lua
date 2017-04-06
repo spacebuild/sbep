@@ -73,7 +73,7 @@ end
 
 function ENT:SpawnFunction( ply, tr )
 
-	if ( !tr.Hit ) then return end
+	if ( not tr.Hit ) then return end
 	
 	local SpawnPos = tr.HitPos + tr.HitNormal * 16 + Vector(0,0,50)
 	
@@ -143,13 +143,13 @@ function ENT:Think()
 end
 
 function ENT:PhysicsCollide( data, physobj )
-	if (!self.Exploded and self.Armed) then
+	if (not self.Exploded and self.Armed) then
 		self:Splode()
 	end
 end
 
 function ENT:OnTakeDamage( dmginfo )
-	if (!self.Exploded and self.Armed) then
+	if (not self.Exploded and self.Armed) then
 		--self:Explode()
 	end
 	--self.Exploded=true
@@ -167,7 +167,7 @@ function ENT:Arm()
 end
 
 function ENT:Splode()
-	if (!self.Exploded) then
+	if (not self.Exploded) then
 		--self.Exploded = true
 		util.BlastDamage(self.Entity, self.Entity, self.Entity:GetPos(), 400, 100)
 		SB.util.damage.doBlastDamage( self.Entity:GetPos(), 400, math.random(300,600), 8)
@@ -213,7 +213,7 @@ function ENT:Touch( ent )
 end
 
 function ENT:HPFire()
-	/*
+	--[[
 	self.Entity:SetParent()
 	constraint.RemoveConstraints( self.Entity, "Weld" )
 	constraint.RemoveConstraints( self.Entity, "Ballsocket" )
@@ -226,7 +226,7 @@ function ENT:HPFire()
 		self.Entity:Arm()
 		end
 	 end)
-	 */
+	 ]]
 	 
 	 if CurTime() >= self.CCd then
 		local NTorp = ents.Create( "PS-LightMissile" )

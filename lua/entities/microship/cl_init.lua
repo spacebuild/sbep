@@ -25,7 +25,7 @@ end
 function MicroShipBuildSegment( um )
 	local Ent, Str, Vec, Ang, Scale = um:ReadEntity(), um:ReadString(), um:ReadVector(), um:ReadAngle(), um:ReadFloat()
 	
-	if !(Ent and Ent:IsValid()) then return end
+	if not (Ent and Ent:IsValid()) then return end
 	
 	local e = ClientsideModel( Str, RENDERGROUP_OPAQUE )
 	e:SetModelScale(Vector(Scale,Scale,Scale))

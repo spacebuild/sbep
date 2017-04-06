@@ -150,7 +150,7 @@ function ENT:TriggerInput(iname, value)
 		
 	end
 end
-/*
+--[[
 function ENT:PhysicsSimulate( phys, deltatime )
 
 	if self.Recip then
@@ -198,13 +198,13 @@ function ENT:PhysicsUpdate( phys )
 	end
 end
 
-*/
+]]
 
 function ENT:Think()
 	
 	if self.PasteDelay then return end
 	
-	if (!self.Plat or !self.Plat:IsValid()) and self.PlModel then
+	if (not self.Plat or not self.Plat:IsValid()) and self.PlModel then
 		self.Plat = ents.Create( "MobilePlatform" )
 		self.Plat:SetModel( self.PlModel )
 		self.Plat:SetPos( self.Entity:GetPos() )
@@ -224,7 +224,7 @@ function ENT:Think()
 	--self.Plat:SetLocalPos(Vector(self.XCo, self.YCo, self.ZCo))
 	--self.Plat:SetLocalAngles(Vector(self.Pitch, self.Yaw, self.Roll))
 	--print(self.PlModel)
-	/*
+	--[[
 	if !self.AbsAng then
 		local RAng = self.Entity:GetAngles()
 		
@@ -236,7 +236,7 @@ function ENT:Think()
 		self.Plat.Roll = RAng.r
 		self.Plat.Pitch = RAng.p
 	else
-	*/
+	]]
 		self.Plat.Yaw = self.Yaw
 		self.Plat.Roll = self.Roll
 		self.Plat.Pitch = self.Pitch
@@ -244,7 +244,7 @@ function ENT:Think()
 	
 	self.Plat.AbsAng = self.AbsAng
 	
-	if !self.AbsVec then
+	if not self.AbsVec then
 
 		--[[local YawX = 0
 		local YawY = 0
@@ -352,9 +352,9 @@ function ENT:PostEntityPaste(pl, Ent, CreatedEntities)
 
 	if (DI.Plat) then
 		self.Plat = CreatedEntities[ DI.Plat ]
-		/*if (!self.Plat) then
+		--[[if (!self.Plat) then
 			self.Plat = ents.GetByIndex(DI.Plat)
-		end*/
+		end]]
 	end
 	
 	if(Ent.EntityMods and Ent.EntityMods.SBEPMobPlatCont.WireData) then

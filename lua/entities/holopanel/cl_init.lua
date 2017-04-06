@@ -110,13 +110,13 @@ function ENT:LoadInterface()
 		--VSB:SetOutput( "TestValue2")
 	self:AddElement( VSB2 )
 
-	/*local HSB = holo.Create("HRotator", Base)
+	--[[local HSB = holo.Create("HRotator", Base)
 		HSB:SetRadius( 40 )
 		HSB:SetColor(Color(120,120,230,150))
 		HSB:SetPos(0,0)
 		HSB:SetAlphaFromParent( true )
 	self:AddElement( HSB )
-	*/
+	]]
 	local HSB = holo.Create("HDSBar", Base)
 		HSB:SetSize(100,100)
 		HSB:SetColor(Color(120,120,230,150))
@@ -262,12 +262,12 @@ function ENT:DrawTranslucent()
 				--draw.DrawText( "^" , "TrebuchetH", 0, -185, Color(255,255,255, self.Alpha * 255), TEXT_ALIGN_RIGHT )
 				
 				holo.Render( self.Elements[1] )
-				/*for k,e in pairs( self.Elements ) do
+				--[[for k,e in pairs( self.Elements ) do
 					e:Draw()
-				end*/
+				end]]
 				
 				
-				/*
+				--[[
 				if RX >= -85 and RX <= 85 and RY >= -85 and RY <= -50 then
 					draw.RoundedBox( 6, -85, -85, 170, 35, KColH )
 					draw.DrawText( Value , "TrebuchetH", 80, -81, Color(R,G,B, 255), TEXT_ALIGN_RIGHT )
@@ -316,14 +316,14 @@ function ENT:DrawTranslucent()
 						self:SetHighlighted( Highlight )
 					end
 				end
-				*/
+				]]
 			cam.End3D2D()
 		end
 	end
 end
 
 function ENT:Think()
-	if !self.PermaA then
+	if not self.PermaA then
 		local SDir = (self:GetPos() - LocalPlayer():GetShootPos()):Angle()
 		local PDir = LocalPlayer():GetAimVector():Angle() -- Best to get rid of the roll on both angles, just to make sure they're compared fairly.
 		--print(SDir,PDir)
@@ -355,7 +355,7 @@ function ENT:Think()
 		
 		
 		
-		if LocalPlayer():KeyPressed( IN_USE ) or (input.IsMouseDown(MOUSE_FIRST) and !self.MTog) then
+		if LocalPlayer():KeyPressed( IN_USE ) or (input.IsMouseDown(MOUSE_FIRST) and not self.MTog) then
 			self.MTog = true
 			local val = 0-- self:GetHighlighted()
 			if val == 10 then
@@ -368,7 +368,7 @@ function ENT:Think()
 				--timer.Simple( 1, function()
 				--					self:ClearValue()
 				--					end)
-				if !self.SecureMode then self.CVal = self.CString end
+				if not self.SecureMode then self.CVal = self.CString end
 				if self.SecureMode then self.CString = "" end
 				self.Adding = false
 				self.PulseTime = CurTime()
@@ -385,7 +385,7 @@ function ENT:Think()
 					end
 				end
 			end
-		elseif !input.IsMouseDown(MOUSE_FIRST) then
+		elseif not input.IsMouseDown(MOUSE_FIRST) then
 			self.MTog = false
 		end
 	elseif self.IncZ > 0 then

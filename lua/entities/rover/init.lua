@@ -81,7 +81,7 @@ end
 
 function ENT:SpawnFunction( ply, tr )
 
-	if ( !tr.Hit ) then return end
+	if ( not tr.Hit ) then return end
 	
 
 	local SpawnPos = tr.HitPos + tr.HitNormal * 16 + Vector(0,0,50)
@@ -218,7 +218,7 @@ function ENT:Think()
 			self.Pod.Trace = nil
 		end
 		
-		if !self.Mounted then
+		if not self.Mounted then
 			local mn, mx = self.Pod:WorldSpaceAABB()
 			mn = mn - Vector(2, 2, 2)
 			mx = mx + Vector(2, 2, 2)
@@ -263,7 +263,7 @@ function ENT:OnRemove()
 end
 
 function ENT:HPFire()
-	if !self.CPL or !self.CPL:IsValid() then
+	if not self.CPL or not self.CPL:IsValid() then
 		local ECPL = self.Pod.Pod:GetPassenger(1)
 		if ECPL and ECPL:IsValid() then
 			ECPL:ExitVehicle()

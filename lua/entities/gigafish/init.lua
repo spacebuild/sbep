@@ -52,7 +52,7 @@ end
 
 function ENT:SpawnFunction( ply, tr )
 
-	if ( !tr.Hit ) then return end
+	if ( not tr.Hit ) then return end
 	
 	local SpawnPos = tr.HitPos + tr.HitNormal * 16 + Vector(0,0,50)
 	
@@ -80,7 +80,7 @@ function ENT:Touch( ent )
 end
 
 function ENT:Splode()
-	if(!self.Exploded) then
+	if(not self.Exploded) then
 		local Splode = ents.Create("Gigasplosion")
 		Splode:SetPos(self:GetPos())
 		Splode:Spawn()
@@ -99,7 +99,7 @@ function ENT:Arm()
 end
 
 function ENT:PhysicsCollide( data, physobj )
-	if (!self.Exploded and self.Armed) then
+	if (not self.Exploded and self.Armed) then
 		self:Splode()
 	end
 end

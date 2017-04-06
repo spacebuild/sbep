@@ -26,7 +26,7 @@ end
 
 function ENT:SpawnFunction( ply, tr )
 
-	if ( !tr.Hit ) then return end
+	if ( not tr.Hit ) then return end
 	
 	local SpawnPos = tr.HitPos + tr.HitNormal * 16 + Vector(0,0,10)
 	
@@ -74,7 +74,7 @@ function ENT:Touch( ent )
 		local distance = 100000
 		for k,v in pairs(ent.Bay) do
 			local tdis = self.Entity:GetPos():Distance(ent:LocalToWorld(v.pos))
-			if (!v.EP or tdis < distance) then
+			if (not v.EP or tdis < distance) then
 				distance = tdis
 				closest = v
 			end

@@ -61,7 +61,7 @@ function ENT:Draw()
 			end
 		end
 	else
-		if !self.EfError then
+		if not self.EfError then
 			print("No effect data")
 			self.EfError = true
 		end

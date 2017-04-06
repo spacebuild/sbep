@@ -37,7 +37,7 @@ end
 
 function ENT:SpawnFunction( ply, tr )
 
-	if ( !tr.Hit ) then return end
+	if ( not tr.Hit ) then return end
 	
 	local SpawnPos = tr.HitPos + tr.HitNormal * 16 + Vector(0,0,100)
 	
@@ -94,7 +94,7 @@ end
 function ENT:HPFire()
 	if (CurTime() >= self.MCDown) then
 		local NewShell = ents.Create( "SF-FlakShell" )
-		if ( !NewShell:IsValid() ) then return end
+		if ( not NewShell:IsValid() ) then return end
 		NewShell:SetPos( self.Entity:GetPos() + (self.Entity:GetUp() * (14 * self.BMul)) )
 		NewShell:SetAngles( self.Entity:GetAngles() )
 		NewShell.SPL = self.SPL

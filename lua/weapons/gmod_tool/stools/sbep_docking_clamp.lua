@@ -87,7 +87,7 @@ end
 function TOOL:RightClick( tr )
 
 	if CLIENT then return end
-	if !tr.Hit or !tr.Entity or !tr.Entity:IsValid() then return end
+	if not tr.Hit or not tr.Entity or not tr.Entity:IsValid() then return end
 	local dock = tr.Entity
 	local class = dock:GetClass()
 	local ply = self:GetOwner()

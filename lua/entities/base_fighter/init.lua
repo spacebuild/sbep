@@ -57,7 +57,7 @@ end
 function ENT:Think()
 	if self.Pod and self.Pod:IsValid() then
 		self.CPL = self.Pod:GetPassenger(1)
-		if (self.CPL && self.CPL:IsValid()) then
+		if (self.CPL and self.CPL:IsValid()) then
 			---------------------------------------- Pilot tracing ----------------------------------------
 			-- this stuff is used when you attach any weapons that use the pilot's view coordinates, like the missile pods
 			local trace = {}
@@ -95,7 +95,7 @@ function ENT:Think()
 					self.Pitch = self.CPSpeed
 				end
 			else
-				if self.CPSpeed > -self.TSADec && self.CPSpeed < self.TSADec then
+				if self.CPSpeed > -self.TSADec and self.CPSpeed < self.TSADec then
 					self.CPSpeed = 0
 				elseif self.CPSpeed < 0 then
 					self.CPSpeed = self.CPSpeed + self.TSADec
@@ -111,7 +111,7 @@ function ENT:Think()
 			-- Technically, there's currently no way to yaw with the keys, mostly because I haven't found any 
 			-- bindings that are appropriate. However, this section still needs to exist to prevent uncontrolled 
 			-- yawing that sometimes happens when switching from mouse to keyboard control.
-			if self.CYSpeed > -self.TSADec && self.CYSpeed < self.TSADec then
+			if self.CYSpeed > -self.TSADec and self.CYSpeed < self.TSADec then
 				self.CYSpeed = 0
 			elseif self.CYSpeed < 0 then
 				self.CYSpeed = self.CYSpeed + self.TSADec
@@ -142,7 +142,7 @@ function ENT:Think()
 					self.Roll = self.CRSpeed
 				end
 			else
-				if self.CRSpeed > -self.TSADec && self.CRSpeed < self.TSADec then
+				if self.CRSpeed > -self.TSADec and self.CRSpeed < self.TSADec then
 					self.CRSpeed = 0
 				elseif self.CRSpeed < 0 then
 					self.CRSpeed = self.CRSpeed + self.TSADec
@@ -166,7 +166,7 @@ function ENT:Think()
 			
 			---------------------------------------- Mouse Toggle ----------------------------------------
 			if (self.CPL:KeyDown( IN_RELOAD )) then
-				if !self.MTog then
+				if not self.MTog then
 					if self.MCC then
 						self.MCC = false
 						self.CPL:PrintMessage( HUD_PRINTCENTER, "Mouse Control Disabled" )
@@ -182,8 +182,8 @@ function ENT:Think()
 			
 			
 			---------------------------------------- Activation ----------------------------------------
-			if (self.CPL:KeyDown( IN_JUMP ) || GetJBool(self,"launch")) then
-				if !self.LTog then
+			if (self.CPL:KeyDown( IN_JUMP ) or GetJBool(self,"launch")) then
+				if not self.LTog then
 					if self.Launchy then
 						self.Launchy = false
 						self.Pod:StopSound( "k_lab.ambient_powergenerators" )
@@ -250,14 +250,14 @@ function ENT:Think()
 			
 			
 			---------------------------------------- Primary Attack ----------------------------------------
-			if ( self.CPL:KeyDown( IN_ATTACK ) || GetJBool(self,"fire1") ) then
-				if self.HPC && self.HPC > 0 then
+			if ( self.CPL:KeyDown( IN_ATTACK ) or GetJBool(self,"fire1") ) then
+				if self.HPC and self.HPC > 0 then
 					for i = 1, self.HPC do
 						local HPC = self.CPL:GetInfo( "SBHP_"..i )
 						--print(HPC)
 						--print(string.byte(HPC))
-						if self.HP[i]["Ent"] && self.HP[i]["Ent"]:IsValid() && (string.byte(HPC) == 49) then
-							if self.HP[i]["Ent"].Cont && self.HP[i]["Ent"].Cont:IsValid() then
+						if self.HP[i]["Ent"] and self.HP[i]["Ent"]:IsValid() and (string.byte(HPC) == 49) then
+							if self.HP[i]["Ent"].Cont and self.HP[i]["Ent"].Cont:IsValid() then
 								self.HP[i]["Ent"].Cont:HPFire()
 							else
 								self.HP[i]["Ent"].Entity:HPFire()
@@ -269,12 +269,12 @@ function ENT:Think()
 			
 			
 			---------------------------------------- Secondary Attack ----------------------------------------
-			if (self.CPL:KeyDown( IN_ATTACK2 ) || GetJBool(self,"fire2")	) then
-				if self.HPC && self.HPC > 0 then
+			if (self.CPL:KeyDown( IN_ATTACK2 ) or GetJBool(self,"fire2")	) then
+				if self.HPC and self.HPC > 0 then
 					for i = 1, self.HPC do
 						local HPC = self.CPL:GetInfo( "SBHP_"..i.."a" )
-						if self.HP[i]["Ent"] && self.HP[i]["Ent"]:IsValid() && (string.byte(HPC) == 49) then
-							if self.HP[i]["Ent"].Cont && self.HP[i]["Ent"].Cont:IsValid() then
+						if self.HP[i]["Ent"] and self.HP[i]["Ent"]:IsValid() and (string.byte(HPC) == 49) then
+							if self.HP[i]["Ent"].Cont and self.HP[i]["Ent"].Cont:IsValid() then
 								self.HP[i]["Ent"].Cont:HPFire()
 							else
 								self.HP[i]["Ent"].Entity:HPFire()
@@ -362,13 +362,13 @@ function ENT:OnTakeDamage( dmginfo )
 end
 
 function ENT:Touch( ent )
-	if self.Linking && ent:IsValid()then
+	if self.Linking and ent:IsValid()then
 		self.CCObj = ent
 	end
 end
 
 function ENT:OnRemove()
-	if self.Pod && self.Pod:IsValid() then
+	if self.Pod and self.Pod:IsValid() then
 		self.Pod:StopSound( "k_lab.ambient_powergenerators" )
 		self.Pod:Remove()
 	end
@@ -411,7 +411,7 @@ function ENT:ApplyDupeInfo(ply, ent, info, GetEntByID)
 	self.BaseClass.BaseClass.ApplyDupeInfo(self, ply, ent, info, GetEntByID)
 	if (info.Pod) then
 		self.Pod = GetEntByID(info.Pod)
-		if (!self.Pod) then
+		if (not self.Pod) then
 			self.Pod = ents.GetByIndex(info.Pod)
 		end
 		local ent2 = self.Pod
@@ -440,7 +440,7 @@ function ENT:ApplyDupeInfo(ply, ent, info, GetEntByID)
 		for k,v in pairs(info.guns) do
 			local gun = GetEntByID(v)
 			self.HP[k]["Ent"] = gun
-			if (!self.HP[k]["Ent"]) then
+			if (not self.HP[k]["Ent"]) then
 				gun = ents.GetByIndex(v)
 				self.HP[k]["Ent"] = gun
 			end

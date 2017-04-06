@@ -159,7 +159,7 @@ end
 
 function ENT:SpawnFunction( ply, tr )
 
-	if ( !tr.Hit ) then return end
+	if ( not tr.Hit ) then return end
 	
 	local SpawnPos = tr.HitPos + tr.HitNormal * 16 + Vector(0,0,50)
 	
@@ -190,7 +190,7 @@ end
 
 function ENT:PhysicsSimulate( phys, deltatime )
 
-	if !self.Hovering then return SIM_NOTHING end
+	if not self.Hovering then return SIM_NOTHING end
 
 	if ( self.ZVelocity ~= 0 ) then
 	

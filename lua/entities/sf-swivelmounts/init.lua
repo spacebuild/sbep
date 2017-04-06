@@ -39,7 +39,7 @@ end
 
 function ENT:SpawnFunction( ply, tr )
 
-	if ( !tr.Hit ) then return end
+	if ( not tr.Hit ) then return end
 
 	local SpawnPos = tr.HitPos + tr.HitNormal * 16 + Vector(0,0,70)
 
@@ -113,9 +113,9 @@ end
 function ENT:Think()
 	local Weap = self.HP[1]["Ent"]
 
-	if Weap && Weap:IsValid() then
+	if Weap and Weap:IsValid() then
 
-		if !Weap.Swivved then
+		if not Weap.Swivved then
 			local LPos = Vector(0,0,0)
 			LPos = Weap:WorldToLocal(Weap:GetPos() + (Weap:GetForward() * -Weap.APPos.x) + (Weap:GetRight() * (-Weap.APPos.y + 10)) + (Weap:GetUp() * -Weap.APPos.z ) )
 			self.WSock1 = constraint.Ballsocket( self.Entity, Weap, 0, 0, LPos, 0, 0, 1)
@@ -128,14 +128,14 @@ function ENT:Think()
 		end
 
 		local TargPos = nil
-		if self.CPod && self.CPod:IsValid() then
+		if self.CPod and self.CPod:IsValid() then
 			self.CPL = self.CPod:GetPassenger(1)
-			if (self.CPL && self.CPL:IsValid()) then
+			if (self.CPL and self.CPL:IsValid()) then
 
 				if (self.CPL:KeyDown( IN_ATTACK )) then
 					--for i = 1, self.HPC do
 					--	local HPC = self.CPL:GetInfo( "SBHP_"..i )
-					--	if self.HP[i]["Ent"] && self.HP[i]["Ent"]:IsValid() && (HPC == "1.00" || HPC == "1" || HPC == 1) then
+					--	if self.HP[i]["Ent"] and self.HP[i]["Ent"]:IsValid() and (HPC == "1.00" or HPC == "1" or HPC == 1) then
 							self.HP[1]["Ent"].Entity:HPFire()
 					--	end
 					--end
@@ -188,7 +188,7 @@ function ENT:Use( activator, caller )
 end
 
 function ENT:Touch( ent )
-	if ent && ent:IsValid() && ent:IsVehicle() then
+	if ent and ent:IsValid() and ent:IsVehicle() then
 		self.CPod = ent
 		if not table.HasValue(self.TraceMask,ent) then
 			table.insert(self.TraceMask,ent)
@@ -197,7 +197,7 @@ function ENT:Touch( ent )
 end
 
 function ENT:HPFire()
-	if self.HP[1]["Ent"] && self.HP[1]["Ent"]:IsValid() then
+	if self.HP[1]["Ent"] and self.HP[1]["Ent"]:IsValid() then
 		self.HP[1]["Ent"]:HPFire()
 	end
 end

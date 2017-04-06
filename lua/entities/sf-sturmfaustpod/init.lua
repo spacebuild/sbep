@@ -26,7 +26,7 @@ function ENT:Initialize()
 	self.PhysObj = self.Entity:GetPhysicsObject()
 	
 	self.Faust = ents.Create( "SF-SturmFaust" )
-	if ( !self.Faust:IsValid() ) then return end
+	if ( not self.Faust:IsValid() ) then return end
 	self.Faust:SetPos( self.Entity:GetPos() + (self.Entity:GetUp() * -1) + (self.Entity:GetForward() * 30) )
 	self.Faust:SetAngles( self.Entity:GetAngles() )
 	self.Faust.SPL = self.SPL
@@ -42,7 +42,7 @@ end
 
 function ENT:SpawnFunction( ply, tr )
 
-	if ( !tr.Hit ) then return end
+	if ( not tr.Hit ) then return end
 	
 	local SpawnPos = tr.HitPos + tr.HitNormal * 16
 	
@@ -71,7 +71,7 @@ end
 
 function ENT:Think()
 
-	if !self.Faust then
+	if not self.Faust then
 		self.Entity:SetParent()
 		constraint.RemoveConstraints( self.Entity, "Weld" )
 		self.Entity:Fire("kill", "", 10)
@@ -87,7 +87,7 @@ function ENT:Touch( ent )
 end
 
 function ENT:HPFire()
-	if (!self.Fired and self.Faust and self.Faust:IsValid()) then
+	if (not self.Fired and self.Faust and self.Faust:IsValid()) then
 		self.Faust:SetParent()
 		self.Faust.PhysObj:SetAngles(self.Entity:GetAngles())
 		self.Faust.PhysObj:SetPos(self.Entity:GetPos() + (self.Entity:GetUp() * -1) + (self.Entity:GetForward() * 30))

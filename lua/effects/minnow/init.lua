@@ -50,10 +50,10 @@
  end 
    
    
- /*--------------------------------------------------------- 
+ --[[---------------------------------------------------------
     THINK 
     Returning false makes the entity die 
- ---------------------------------------------------------*/ 
+ ---------------------------------------------------------]]
 function EFFECT:Think()
 	local Time = ( (CurTime() - self.STime) / self.Time )
 	local MSize = 5000
@@ -80,9 +80,9 @@ end
    
    
    
- /*--------------------------------------------------------- 
+ --[[---------------------------------------------------------
     Draw the effect 
- ---------------------------------------------------------*/ 
+ ---------------------------------------------------------]]
 function EFFECT:Render()
 	local Time = ( (CurTime() - self.STime) / self.Time )
 	--print(Time)
@@ -93,12 +93,12 @@ function EFFECT:Render()
 	local Scale = math.Clamp(Alpha * (self.fScale * 0.4),0,5000)
 	--self.Sz = self.Sz + Alpha
 	
-	/*
+	--[[
 	MRef:SetMaterialFloat( "$refractamount", math.cos(math.rad(Time * 90)) * 0.05 )
  	render.SetMaterial( MRef ) 
  	render.UpdateRefractTexture()
  	render.DrawSprite( self.vOffset, Scale * 50, Scale * 50, Color(255,255,255,Alpha))
- 	*/
+ 	]]
  	
  	self:SetPos(self.vOffset)
 	self.Entity:SetModel(MOrb)

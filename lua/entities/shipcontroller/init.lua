@@ -62,7 +62,7 @@ end
 
 function ENT:SpawnFunction( ply, tr )
 
-	if ( !tr.Hit ) then return end
+	if ( not tr.Hit ) then return end
 	
 	local SpawnPos = tr.HitPos + tr.HitNormal * 16
 	
@@ -139,7 +139,7 @@ function ENT:Think()
 	self.Vert = 0
 
 	if self.Stance > 0 then --Dear god, this is a mess... I must remember to organize this function better.
-		if (self.Stance < 3) or (self.Stance == 3 and !self.TFound) then
+		if (self.Stance < 3) or (self.Stance == 3 and not self.TFound) then
 			if self.MVec ~= Vector(0,0,0) then
 				local MDist = self.Entity:GetPos():Distance(self.MVec)
 				if MDist < self.WPRad then
@@ -214,7 +214,7 @@ function ENT:OnTakeDamage( dmginfo )
 end
 
 function ENT:Use( activator, caller )
-	if !self.Fade then
+	if not self.Fade then
 		self.Fade = true
 	else
 		self.Fade = false
@@ -222,7 +222,7 @@ function ENT:Use( activator, caller )
 end
 
 function ENT:Touch( ent )
-	if ent:GetClass() == "gyropod_advanced" and (!self.Gyro or !self.Gyro:IsValid()) then
+	if ent:GetClass() == "gyropod_advanced" and (not self.Gyro or not self.Gyro:IsValid()) then
 		--Speed
 		Wire_Link_Start(self:EntIndex(), ent, ent:GetPos(), "SpeedAbs", "cable/cable2", Color(0,0,0,0), 0)
 		Wire_Link_End(self:EntIndex(), self.Entity, self.Entity:GetPos(), "Forward", self.SPL)
