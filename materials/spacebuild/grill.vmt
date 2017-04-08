@@ -1,8 +1,0 @@
-"VertexLitGeneric"
-{
-	"$basetexture" "spacebuild/grill"
-	"$surfaceprop" "metal"
-	"$vertexcolor" 		1 
-	"$alphatest"  		1
-
-}

@@ -1,6 +1,0 @@
-"VertexLitGeneric"
-{
-	"$basetexture" "spacebuild/nova/gunmount1.vtf"
-	"$surfaceprop" "metal"
-	"$model" 1
-}

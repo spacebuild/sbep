@@ -1,6 +1,0 @@
-"VertexLitGeneric"
-{
-	"$basetexture" "spacebuild/milgreenthump.vtf"
-	"$surfaceprop" "metal"
-	"$model" 1
-}

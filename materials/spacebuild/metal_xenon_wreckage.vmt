@@ -1,6 +1,0 @@
-"VertexLitGeneric"
-{
-	"$basetexture" "spacebuild/metal_xenon_wreckage"
-	"$surfaceprop" "metal"
-	"$model"     1
-}

@@ -1,7 +1,0 @@
-"VertexLitGeneric"
-{
-	"$basetexture" "spacebuild/hotsteel"
-	"$surfaceprop" "metal"
-	"$model"     1
-	$selfillum 1
-}

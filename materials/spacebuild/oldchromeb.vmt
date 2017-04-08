@@ -1,7 +1,0 @@
-"VertexLitGeneric"
-{
-	"$basetexture" "spacebuild/oldchromeb"
-	"$bumpmap" "spacebuild/oldchromeb"
-	"$surfaceprop" "metal"
-	"$model"     1
-}

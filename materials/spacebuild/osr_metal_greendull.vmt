@@ -1,7 +1,0 @@
-"VertexLitGeneric"
-{
-	"$basetexture" "spacebuild/osr_metal_greendull"
-	"$detail"      "spacebuild/osr_cypber_diff"
-	"$surfaceprop" "metal"
-	"$model"     1
-}
