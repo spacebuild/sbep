@@ -29,6 +29,7 @@ function ENT:Initialize()
 	self.SystemTable  = {}
 	self.FloorTable  = {}
 	self.HatchTable  = {}
+	self.LiftSpeed = 1
 	
 	if self.Usable == nil then
 		self.Usable = true
@@ -225,7 +226,8 @@ function ENT:Think()
 
 	if self.ATL then return true end
 	
-	self.Increment = self.Increment + math.Clamp( ( self.TargetOffset - self.Increment) , -0.6 , 0.6 )
+	-- self.Increment = self.Increment + math.Clamp( ( self.TargetOffset - self.Increment) , -0.6 , 0.6 )
+	self.Increment = self.Increment + math.Clamp( ( self.TargetOffset - self.Increment) , -0.6 * self.LiftSpeed , 0.6 * self.LiftSpeed )
 	
 	local D = 100000
 	local F = 0
@@ -565,7 +567,6 @@ function ENT:MakeWire( bAdjust ) --Adds the appropriate wire inputs.
 end
 
 function ENT:TriggerInput(k,v)
-
 	if k == "FloorNum" then
 		self:AddCallFloorNum( v )
 	end
@@ -615,6 +616,7 @@ function ENT:PreEntityCopy()
 		DI.SystemTable  = self.SystemTable
 		DI.FloorTable  = self.FloorTable
 		DI.Increment = self.Increment
+		DI.LiftSpeed = self.LiftSpeed
 		DI.PartTable = {}
 			for n,Part in pairs( self.PartTable ) do
 				DI.PartTable[n] = Part:EntIndex()
@@ -641,6 +643,7 @@ function ENT:PostEntityPaste(pl, Ent, CreatedEntities)
 	self.SystemTable			= DT.SystemTable
 	self.FloorTable			= DT.FloorTable
 	self.Increment		= DT.Increment
+	self.LiftSpeed  = DT.LiftSpeed
 
 	for n = 1, #DT.PartTable do
 		self.PartTable[n] 	= CreatedEntities[DT.PartTable[n]]
