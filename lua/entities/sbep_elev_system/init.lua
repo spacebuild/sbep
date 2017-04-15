@@ -557,6 +557,7 @@ function ENT:MakeWire( bAdjust ) --Adds the appropriate wire inputs.
 		table.insert( self.SBEP_WireInputsTable , ( "Floor "..tostring(k) ) )
 	end
 	table.insert( self.SBEP_WireInputsTable , ( "Hold" ) )
+	table.insert( self.SBEP_WireInputsTable , ( "Speed multiplier" ) )
 	if bAdjust then
 		self.Inputs = Wire_AdjustInputs(self.Entity, self.SBEP_WireInputsTable )
 	else
@@ -579,6 +580,13 @@ function ENT:TriggerInput(k,v)
 	
 	if k == "Hold" and v > 0 then
 		self:AddHoldDelay( 4 )
+	end	
+	if k == "Speed multiplier" then
+		if v > 0 then
+			self.LiftSpeed = v
+		else
+			self.LiftSpeed = 1 
+		end
 	end
 end
 
@@ -616,7 +624,7 @@ function ENT:PreEntityCopy()
 		DI.SystemTable  = self.SystemTable
 		DI.FloorTable  = self.FloorTable
 		DI.Increment = self.Increment
-		DI.LiftSpeed = self.LiftSpeed
+		-- DI.LiftSpeed = self.LiftSpeed
 		DI.PartTable = {}
 			for n,Part in pairs( self.PartTable ) do
 				DI.PartTable[n] = Part:EntIndex()
@@ -643,7 +651,8 @@ function ENT:PostEntityPaste(pl, Ent, CreatedEntities)
 	self.SystemTable			= DT.SystemTable
 	self.FloorTable			= DT.FloorTable
 	self.Increment		= DT.Increment
-	self.LiftSpeed  = DT.LiftSpeed
+	-- self.LiftSpeed  = DT.LiftSpeed
+	-- if self.LiftSpeed == nil then self.LiftSpeed = 1 end
 
 	for n = 1, #DT.PartTable do
 		self.PartTable[n] 	= CreatedEntities[DT.PartTable[n]]

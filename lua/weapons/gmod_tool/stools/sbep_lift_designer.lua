@@ -35,7 +35,7 @@ local ConVars = {
 		editing 		= 0,
 		skin			= 0,
 		enableuse		= 0,
-		liftspeed		= 1,
+		-- liftspeed		= 1,
 		doors			= 0,
 		size			= 1,
 		type			= "M"
@@ -733,7 +733,7 @@ function TOOL:LeftClick( trace )
 		
 		LiftSystem_SER[ply].PartTable[ 1 ]:SetRenderMode( RENDERMODE_TRANSCOLOR )
 		LiftSystem_SER[ply].PartTable[ 1 ]:SetColor( Color( 255 , 255 , 255 , 180 ))
-		LiftSystem_SER[ply].LiftSpeed = ply:GetInfoNum( "sbep_lift_designer_liftspeed", 1 )
+		-- LiftSystem_SER[ply].LiftSpeed = ply:GetInfoNum( "sbep_lift_designer_liftspeed", 1 )
 		
 		ply:ConCommand( "sbep_lift_designer_editing 1" )
 
@@ -847,15 +847,15 @@ function TOOL.BuildCPanel(panel)
 	--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	
-	local MainSpeed = vgui.Create( "DNumSlider" )
-		MainSpeed:SetText( "Lift speed" )
-		MainSpeed:SetMin( 1 )
-		MainSpeed:SetMax( 10 )
-		MainSpeed:SetDark( true )
-		MainSpeed:SetDecimals( 0 )
-		MainSpeed:SetConVar( "sbep_lift_designer_liftspeed" ) 
-	panel:AddItem( MainSpeed )
-	--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+	-- local MainSpeed = vgui.Create( "DNumSlider" )
+		-- MainSpeed:SetText( "Lift speed" )
+		-- MainSpeed:SetMin( 1 )
+		-- MainSpeed:SetMax( 10 )
+		-- MainSpeed:SetDark( true )
+		-- MainSpeed:SetDecimals( 0 )
+		-- MainSpeed:SetConVar( "sbep_lift_designer_liftspeed" ) 
+	-- panel:AddItem( MainSpeed )
+	------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	
 	local ResetLabel= vgui.Create("DLabel")
