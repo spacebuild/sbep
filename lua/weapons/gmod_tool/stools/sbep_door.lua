@@ -1,6 +1,5 @@
 TOOL.Category		= "SBEP"
-TOOL.Tab 			= "Spacebuild"
-TOOL.Tab 			= "Spacebuild"
+TOOL.Tab 			= "Custom Addon Framework"
 TOOL.Name			= "#Door"
 TOOL.Command		= nil
 TOOL.ConfigName 	= ""

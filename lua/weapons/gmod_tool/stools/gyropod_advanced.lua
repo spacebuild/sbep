@@ -1,5 +1,5 @@
 TOOL.Category		= "SBEP"
-TOOL.Tab 			= "CAF"
+TOOL.Tab 			= "Custom Addon Framework"
 TOOL.Name			= "#Gyro-Pod"
 TOOL.Command		= nil
 TOOL.ConfigName		= ""

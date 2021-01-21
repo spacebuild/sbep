@@ -1,7 +1,7 @@
 --gyropod_advanced coders: Paradukes, DataSchmuck
 --wireless_gyropod coder: LoRAWN
 TOOL.Category		= "SBEP"
-TOOL.Tab 			= "Spacebuild"
+TOOL.Tab 			= "Custom Addon Framework"
 TOOL.Name			= "#Wireless Gyropod"
 TOOL.Command		= nil
 TOOL.ConfigName		= ""
