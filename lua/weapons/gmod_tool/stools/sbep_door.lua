@@ -11,11 +11,11 @@ if CLIENT then
 	language.Add( "Tool.sbep_door.desc"	, "Create an SBEP door." 		)
 	language.Add( "Tool.sbep_door.0"	, "Left click to spawn a door. Right-click a door to cycle through any alternative models." )
 	language.Add( "undone_SBEP Door"	, "Undone SBEP Door"			)
-	
-	local function SBEPDoorToolError( um )
-		GAMEMODE:AddNotify( um:ReadString() , um:ReadFloat() , um:ReadFloat() )
+
+	local function SBEPDoorToolError()
+		GAMEMODE:AddNotify(net.ReadString(), net.ReadFloat(), net.ReadFloat())
 	end
-	usermessage.Hook( "SBEPDoorToolError_cl" , SBEPDoorToolError )
+	net.Receive( "SBEPDoorToolError_cl" , SBEPDoorToolError )
 end
 
 local CategoryTable = {}
@@ -51,21 +51,22 @@ if ( SERVER ) then
 	end
 
 	duplicator.RegisterEntityClass( "sbep_base_door_controller", MakeDoorController, "Data" )
-	
 end
+
+util.AddNetworkString("SBEPDoorToolError_cl")
 
 function TOOL:LeftClick( tr )
 
 	if CLIENT then return end
-	
+
 	local ply = self:GetOwner()
 
 	if ply:GetInfoNum( "sbep_door_wire", 1 ) == 0 and ply:GetInfoNum( "sbep_door_enableuse", 1 ) == 0 then
-		umsg.Start( "SBEPDoorToolError_cl" , RecipientFilter():AddPlayer( ply ) )
-			umsg.String( "Cannot be both unusable and unwireable." )
-			umsg.Float( 1 )
-			umsg.Float( 4 )
-		umsg.End()
+		net.Start("SBEPDoorToolError_cl")
+			net.WriteString( "Cannot be both unusable and unwireable." )
+			net.WriteFloat(1)
+			net.WriteFloat(4)
+		net.Send(ply)
 		return
 	end
 
@@ -80,12 +81,12 @@ function TOOL:LeftClick( tr )
 
 	DoorController:Spawn()
 	DoorController:Activate()
-	
+
 	DoorController:SetPos( pos - Vector(0,0, DoorController:OBBMins().z ) )
-	
+
 	if CPPI then DoorController:CPPISetOwner(ply) end
 	DoorController:AddDoors()
-	
+
 	DoorController:MakeWire( ply:GetInfoNum( "sbep_door_wire", 1 ) == 1 )
 
 	undo.Create("SBEP Door")
@@ -97,7 +98,7 @@ function TOOL:LeftClick( tr )
 		end
 		undo.SetPlayer( ply )
 	undo.Finish()
-	
+
 	return true
 end
 
@@ -107,11 +108,11 @@ function TOOL:RightClick( tr )
 	if !tr.Hit or !tr.Entity or !tr.Entity:IsValid() then return end
 	local door = tr.Entity
 	local entclass = door:GetClass()
-	
+
 	if entclass == "sbep_base_door" then
 		class = door:GetDoorClass()
 		door:SetDoorClass( class + 1 )
-		
+
 		return true
 	end
 end
@@ -130,14 +131,14 @@ function TOOL.BuildCPanel( panel )
 	WireCheckBox:SetTextColor(Color(0,0,0,255))
 	WireCheckBox:SetConVar( "sbep_door_wire" )
 	WireCheckBox:SetValue( GetConVar( "sbep_door_wire" ):GetBool() )
-		
+
 	local UseCheckBox = vgui.Create( "DCheckBoxLabel", panel )
 	UseCheckBox:Dock(TOP)
 	UseCheckBox:SetText( "Enable Use Key:" )
 	UseCheckBox:SetTextColor(Color(0,0,0,255))
 	UseCheckBox:SetConVar( "sbep_door_enableuse" )
 	UseCheckBox:SetValue( GetConVar( "sbep_door_enableuse" ):GetBool()  )
-	
+
 	for Tab,v in pairs( DoorToolModels ) do
 		for Category, models in pairs( v ) do
 			local catPanel = vgui.Create( "DCollapsibleCategory", panel )
@@ -145,25 +146,22 @@ function TOOL.BuildCPanel( panel )
 			catPanel:DockMargin(2,2,2,2)
 			catPanel:SetText(Category)
 			catPanel:SetLabel(Category)
-			
+
 			local grid = vgui.Create( "DGrid", catPanel )
 			grid:Dock( TOP )
-			
-			local width,_ = catPanel:GetSize()
+
 			grid:SetColWide( 64 )
 			grid:SetRowHeight( 64 )
-			
+
 			for key, modelpath in pairs( models ) do
 				local icon = vgui.Create( "SpawnIcon", panel )
-				--icon:Dock( TOP )
 				icon:SetModel( modelpath )
-				icon:SetToolTip( modelpath )
-				icon.DoClick = function( panel )
+				icon:SetTooltip( modelpath )
+				icon.DoClick = function()
 					RunConsoleCommand( "sbep_door_model", modelpath )
 				end
-				--icon:SetIconSize( width )
 				grid:AddItem( icon )
-				
+
 			end
 			catPanel:SetExpanded( 0 )
 		end
