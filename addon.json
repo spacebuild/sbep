@@ -1,6 +1,6 @@
 {
-	"title"	:	"Spacebuild 3 Enhancement Pack",
-	"type"	:	"tool",
+	"title"	:	"[SA] Spacebuild 3 Enhancement Pack",
+	"type"	:	"ServerContent",
 	"tags"	:	[ "fun", "build" ],
 	"ignore":
 	[
