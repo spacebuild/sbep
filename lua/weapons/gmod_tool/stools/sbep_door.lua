@@ -51,9 +51,9 @@ if ( SERVER ) then
 	end
 
 	duplicator.RegisterEntityClass( "sbep_base_door_controller", MakeDoorController, "Data" )
-end
 
-util.AddNetworkString("SBEPDoorToolError_cl")
+	util.AddNetworkString("SBEPDoorToolError_cl")
+end
 
 function TOOL:LeftClick( tr )
 
