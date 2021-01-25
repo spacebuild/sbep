@@ -11,11 +11,6 @@ if CLIENT then
 	language.Add( "Tool.sbep_door.desc"	, "Create an SBEP door." 		)
 	language.Add( "Tool.sbep_door.0"	, "Left click to spawn a door. Right-click a door to cycle through any alternative models." )
 	language.Add( "undone_SBEP Door"	, "Undone SBEP Door"			)
-
-	local function SBEPDoorToolError()
-		GAMEMODE:AddNotify(net.ReadString(), net.ReadFloat(), net.ReadFloat())
-	end
-	net.Receive( "SBEPDoorToolError_cl" , SBEPDoorToolError )
 end
 
 local CategoryTable = {}
@@ -51,8 +46,6 @@ if ( SERVER ) then
 	end
 
 	duplicator.RegisterEntityClass( "sbep_base_door_controller", MakeDoorController, "Data" )
-
-	util.AddNetworkString("SBEPDoorToolError_cl")
 end
 
 function TOOL:LeftClick( tr )
@@ -62,11 +55,7 @@ function TOOL:LeftClick( tr )
 	local ply = self:GetOwner()
 
 	if ply:GetInfoNum( "sbep_door_wire", 1 ) == 0 and ply:GetInfoNum( "sbep_door_enableuse", 1 ) == 0 then
-		net.Start("SBEPDoorToolError_cl")
-			net.WriteString( "Cannot be both unusable and unwireable." )
-			net.WriteFloat(1)
-			net.WriteFloat(4)
-		net.Send(ply)
+		ply:AddHint("Cannot be both unusable and unwireable.", NOTIFY_ERROR, 4)
 		return
 	end
 
