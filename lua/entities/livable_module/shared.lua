@@ -5,4 +5,4 @@ ENT.PrintName 	= "SBEP Habitable module"
 ENT.Spawnable = false
 ENT.AdminSpawnable = false
 
-list.Set( "LSEntOverlayText" , "livable_module", {HasOOO = true, resnames ={ "oxygen", "energy", "water", "nitrogen"}} )
+list.Set( "LSEntOverlayText" , "livable_module", {HasOOO = true, resnames = { "oxygen", "energy", "water", "liquid nitrogen"}} )
