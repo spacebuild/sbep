@@ -35,9 +35,10 @@ local ConVars = {
 		editing 		= 0,
 		skin			= 0,
 		enableuse		= 0,
-		doors			= 0,
+		equipment		= 0,
 		size			= 1,
-		type			= "M"
+		type			= "M",
+		set				= "Modbridge"
 				}
 for k,v in pairs(ConVars) do
 	TOOL.ClientConVar[k] = v
@@ -110,48 +111,56 @@ if CLIENT then
 
 		LDT.PButtons = {}
 		LDT.PButtons.Part = {}
-		
+		local Set = string.lower( CL:GetInfo( "sbep_lift_designer_set" ) )
+
 		for k,v in ipairs(BMT) do
-			LDT.PButtons.Part[k] = vgui.Create("DImageButton", LDT.Frame )
-				LDT.PButtons.Part[k]:SetImage( "sbep_icons/"..v.type..".vmt" )
-				LDT.PButtons.Part[k]:SetPos( 5 + 80 * ((k - 1)%4) , 28 + 80 * math.floor((k - 1)/ 4))
-				LDT.PButtons.Part[k]:SetSize( 75 , 75 )
-				LDT.PButtons.Part[k].DoClick = function()
-														RunConsoleCommand( "SBEP_LiftSys_SetLiftPartType_ser" , v.type )
-													end
+			if file.Exists( "materials/sbep_icons/"..Set.."/"..v.type..".vmt", "GAME" ) then
+				LDT.PButtons.Part[k] = vgui.Create("DImageButton", LDT.Frame )
+					LDT.PButtons.Part[k]:SetImage( "sbep_icons/"..Set.."/"..v.type..".vmt" )
+					LDT.PButtons.Part[k]:SetPos( 5 + 80 * ((k - 1)%4) , 28 + 80 * math.floor((k - 1)/ 4))
+					LDT.PButtons.Part[k]:SetSize( 75 , 75 )
+					LDT.PButtons.Part[k].DoClick = function()
+															RunConsoleCommand( "SBEP_LiftSys_SetLiftPartType_ser" , v.type )
+														end
+			end
 		end
 		
 		LDT.PButtons.Special = {}
 		LDT.PButtons.Special.Part = {}
 		
-		LDT.PButtons.Special.B = vgui.Create("DImageButton", LDT.Frame )
-			LDT.PButtons.Special.B:SetPos( 165 , 188 )   
-			LDT.PButtons.Special.B:SetSize( 155 , 35 )
-			LDT.PButtons.Special.B:SetImage( "sbep_icons/special.vmt" )
-			LDT.PButtons.Special.B.DoClick = function()
-													LDT.SFrame.visible = !LDT.SFrame.visible 
-													LDT.SFrame:SetVisible( LDT.SFrame.visible )
-												end
-		
-		LDT.PButtons.Special.Part[1] = vgui.Create("DImageButton", LDT.SFrame )
-			LDT.PButtons.Special.Part[1]:SetImage( "sbep_icons/mv.vmt" )
-			LDT.PButtons.Special.Part[1]:SetPos( 5 , 5 )
-			LDT.PButtons.Special.Part[1]:SetSize( 75 , 75 )
-			LDT.PButtons.Special.Part[1].DoClick = function()
-													LDT.SFrame.visible = false
-													LDT.SFrame:SetVisible( LDT.SFrame.visible )
-													RunConsoleCommand( "SBEP_LiftSys_SetLiftPartType_ser" , SMT[1].type )
-												end
+		if file.Exists( "materials/sbep_icons/"..Set.."/mv.vmt", "GAME" ) or file.Exists( "materials/sbep_icons/"..Set.."/h.vmt", "GAME" ) then
+			LDT.PButtons.Special.B = vgui.Create("DImageButton", LDT.Frame )
+				LDT.PButtons.Special.B:SetPos( 165 , 188 )   
+				LDT.PButtons.Special.B:SetSize( 155 , 35 )
+				LDT.PButtons.Special.B:SetImage( "sbep_icons/special.vmt" )
+				LDT.PButtons.Special.B.DoClick = function()
+														LDT.SFrame.visible = !LDT.SFrame.visible 
+														LDT.SFrame:SetVisible( LDT.SFrame.visible )
+													end
+		end
 
-		LDT.PButtons.Special.Part[2] = vgui.Create("DImageButton", LDT.SFrame )
-			LDT.PButtons.Special.Part[2]:SetImage( "sbep_icons/h.vmt" )
-			LDT.PButtons.Special.Part[2]:SetPos( 85 , 5 )
-			LDT.PButtons.Special.Part[2]:SetSize( 75 , 75 )
-			LDT.PButtons.Special.Part[2].DoClick = function()
-													LDT.SFrame.visible = false
-													LDT.SFrame:SetVisible( LDT.SFrame.visible )
-													RunConsoleCommand( "SBEP_LiftSys_SetLiftPartType_ser" , SMT[2].type )
-												end
+		if file.Exists( "materials/sbep_icons/"..Set.."/mv.vmt", "GAME" ) then
+			LDT.PButtons.Special.Part[1] = vgui.Create("DImageButton", LDT.SFrame )
+				LDT.PButtons.Special.Part[1]:SetImage( "sbep_icons/"..Set.."/mv.vmt" )
+				LDT.PButtons.Special.Part[1]:SetPos( 5 , 5 )
+				LDT.PButtons.Special.Part[1]:SetSize( 75 , 75 )
+				LDT.PButtons.Special.Part[1].DoClick = function()
+														LDT.SFrame.visible = false
+														LDT.SFrame:SetVisible( LDT.SFrame.visible )
+														RunConsoleCommand( "SBEP_LiftSys_SetLiftPartType_ser" , SMT[1].type )
+		end											end
+
+		if file.Exists( "materials/sbep_icons/"..Set.."/h.vmt", "GAME" ) then
+			LDT.PButtons.Special.Part[2] = vgui.Create("DImageButton", LDT.SFrame )
+				LDT.PButtons.Special.Part[2]:SetImage( "sbep_icons/"..Set.."/h.vmt" )
+				LDT.PButtons.Special.Part[2]:SetPos( 85 , 5 )
+				LDT.PButtons.Special.Part[2]:SetSize( 75 , 75 )
+				LDT.PButtons.Special.Part[2].DoClick = function()
+														LDT.SFrame.visible = false
+														LDT.SFrame:SetVisible( LDT.SFrame.visible )
+														RunConsoleCommand( "SBEP_LiftSys_SetLiftPartType_ser" , SMT[2].type )
+													end
+		end
 
 		---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 		--					CONSTRUCTION CONTROLS
@@ -395,23 +404,26 @@ if CLIENT then
 			local type2 = net.ReadString()
 			local typeC = net.ReadString()
 
-			CL.LiftDes.SBEPLDDM.PButtons.Part[4]:SetDisabled( size == 2 )
-			CL.LiftDes.SBEPLDDM.PButtons.Special.B:SetDisabled( size == 2 )
-			CL.LiftDes.SBEPLDDM.PButtons.Part[8]:SetDisabled( pos == 1 )
-			CL.LiftDes.SBEPLDDM.PButtons.Special.Part[2]:SetDisabled( pos == 1 )
+			if CL.LiftDes.SBEPLDDM.PButtons.Part[4] then CL.LiftDes.SBEPLDDM.PButtons.Part[4]:SetDisabled( size == 2 ) end
+			if CL.LiftDes.SBEPLDDM.PButtons.Special.B then CL.LiftDes.SBEPLDDM.PButtons.Special.B:SetDisabled( size == 2 ) end
+			if CL.LiftDes.SBEPLDDM.PButtons.Part[8] then CL.LiftDes.SBEPLDDM.PButtons.Part[8]:SetDisabled( pos == 1 ) end
+			if CL.LiftDes.SBEPLDDM.PButtons.Special.Part[2] then CL.LiftDes.SBEPLDDM.PButtons.Special.Part[2]:SetDisabled( pos == 1 ) end
 			CL.LiftDes.SBEPLDDM.BButtons.Delete:SetDisabled( CL.LiftDes.PC == 1 or (pos == 1 and BEM[type2]) )
 			CL.LiftDes.SBEPLDDM.BButtons.down:SetDisabled( pos == 1 )
 			CL.LiftDes.SBEPLDDM.BButtons.up:SetDisabled( pos == CL.LiftDes.PC )
 			CL.LiftDes.SBEPLDDM.BButtons.Construct:SetDisabled( pos ~= CL.LiftDes.PC )
 			CL.LiftDes.SBEPLDDM.SButtons.finish:SetDisabled( (CL.LiftDes.PC < 3) or BEM[type1] or BEM[typeC] )
+			CL.LiftDes.SBEPLDDM.BButtons.RotC:SetDisabled(pos == 1)
+			CL.LiftDes.SBEPLDDM.BButtons.RotAC:SetDisabled(pos == 1)
+			
 		end
 		net.Receive("SBEPDisableButtons_cl", LD.SBEPDisableButtons)
 
 		function LD.SBEPDisableButtonsFirstTime() --merge this into the other function somehow
 			local size	= GetConVarNumber( "sbep_lift_designer_size" )
-			CL.LiftDes.SBEPLDDM.PButtons.Part[4]:SetDisabled( size == 2 )
-			CL.LiftDes.SBEPLDDM.PButtons.Part[8]:SetDisabled( true )
-			CL.LiftDes.SBEPLDDM.PButtons.Special.B:SetDisabled( size == 2 )
+			if CL.LiftDes.SBEPLDDM.PButtons.Part[4] then CL.LiftDes.SBEPLDDM.PButtons.Part[4]:SetDisabled( size == 2 ) end
+			if CL.LiftDes.SBEPLDDM.PButtons.Part[8] then CL.LiftDes.SBEPLDDM.PButtons.Part[8]:SetDisabled( true ) end
+			if CL.LiftDes.SBEPLDDM.PButtons.Special.B then CL.LiftDes.SBEPLDDM.PButtons.Special.B:SetDisabled( size == 2 ) end
 			CL.LiftDes.SBEPLDDM.BButtons.Delete:SetDisabled( true )
 			CL.LiftDes.SBEPLDDM.BButtons.down:SetDisabled( true )
 			CL.LiftDes.SBEPLDDM.BButtons.up:SetDisabled( true )
@@ -703,12 +715,20 @@ function TOOL:LeftClick( trace )
 	
 	if Editing == 0 then
 	
+		local Set = string.upper( ply:GetInfo( "sbep_lift_designer_set" ) )
 		local startpos = trace.HitPos
 			LiftSystem_SER[ply] = ents.Create( "sbep_elev_system" )
-			LiftSystem_SER[ply]:SetPos( startpos + Vector(0,0,4.65))
-			LiftSystem_SER[ply]:SetAngles( Angle(0,-90,0) )
-			LiftSystem_SER[ply]:SetModel( "models/smallbridge/elevators_small/sbselevp3.mdl" )
+			if Set == "SMALLBRIDGE" then
+				LiftSystem_SER[ply]:SetPos( startpos + Vector(0,0,4.65))
+				LiftSystem_SER[ply]:SetAngles( Angle(0,-90,0) )
+				LiftSystem_SER[ply]:SetModel( "models/smallbridge/elevators_small/sbselevp3.mdl" )
+			elseif Set == "MODBRIDGE" then
+				LiftSystem_SER[ply]:SetPos( startpos )
+				LiftSystem_SER[ply]:SetAngles( Angle(0,-180,0) )
+				LiftSystem_SER[ply]:SetModel( "models/cerus/modbridge/misc/elevator/elev_111.mdl" )
+			end
 			LiftSystem_SER[ply].Skin = ply:GetInfoNum( "sbep_lift_designer_skin", 0 )
+			LiftSystem_SER[ply].Set = Set
 			LiftSystem_SER[ply]:SetNWBool( "Sendable" , true )
 			LiftSystem_SER[ply].PLY		= ply
 			LiftSystem_SER[ply]:SetOwner( ply )
@@ -720,7 +740,7 @@ function TOOL:LeftClick( trace )
 		
 		LiftSystem_SER[ply]:SetSystemSize( ply:GetInfoNum( "sbep_lift_designer_size", 1 ) )
 		
-		local hatchconvar = ply:GetInfoNum( "sbep_lift_designer_doors", 0 )
+		local hatchconvar = ply:GetInfoNum( "sbep_lift_designer_equipment", 0 )
 		LiftSystem_SER[ply].SystemTable.UseHatches = hatchconvar == 2
 		LiftSystem_SER[ply].SystemTable.UseDoors   = hatchconvar == 3
 		LiftSystem_SER[ply]:SetNWInt("ActivePart", 1 )
@@ -752,84 +772,158 @@ function TOOL.BuildCPanel(panel)
 	panel:SetSpacing( 10 )
 	panel:SetName( "SBEP Lift System Designer" )
 	
+	local SelectedSet
+	local SetListView
+	local SkinListView
+	local EquipmentListView
+	local SizeListView
 	--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	
-	local SkinTable = {
-			"Scrappers"  ,
-			"Advanced"   ,
-			"SlyBridge"  ,
-			"MedBridge2" ,
-			"Jaanus"
-				}
+	-- setup all lift types
+	SetTable = {
+		Modbridge = {
+		},
+		Smallbridge = {
+			Skins = {
+				"Scrappers",
+				"Advanced",
+				"SlyBridge",
+				"MedBridge2",
+				"Jaanus"
+			},
+			Equipment = {
+				"None",
+				"Shaft Hatches",
+				"Floor Doors"  			
+			},
+			HasDoors = true,
+			HasHatches = true,
+			Sizes = {
+				"Small",
+				"Large"
+			}
+		}
+	}
 	
-	local SLV = vgui.Create("DListView")
-		SLV:SetSize(100, 101)
-		SLV:SetMultiSelect(false)
-		SLV:AddColumn("Skin")
-		SLV.OnClickLine = function(parent, line, isselected)
+	--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+	--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------	
+	
+	-- setup defaults 
+	for k,v in pairs(SetTable) do
+		SetTable[k].Skins = SetTable[k].Skins or {k}
+		SetTable[k].Equipment = SetTable[k].Equipment or {"None"}
+		SetTable[k].HasDoors = SetTable[k].HasDoors or false
+		SetTable[k].HasHatches = SetTable[k].HasHatches or false
+		SetTable[k].Sizes = SetTable[k].Sizes or {"Small"}
+	end
+	
+	SetListView = vgui.Create("DListView")
+		SetListView:SetSize(100, 50)
+		SetListView:SetMultiSelect(false)
+		SetListView:AddColumn("Type")
+		SetListView.OnClickLine = function(parent, line, isselected)
+												SelectedSet = SetTable[line:GetColumnText(1)]												
+												parent:ClearSelection()
+												line:SetSelected( true )
+												RunConsoleCommand( "sbep_lift_designer_set", line:GetColumnText(1) )
+												
+												--Skin setup
+												SkinListView:Clear()
+												for k,v in ipairs( SelectedSet.Skins ) do
+													SkinListView:AddLine(v)
+												end
+												SkinListView:GetLine( 1 ):SetSelected( true )
+												RunConsoleCommand( "sbep_lift_designer_skin", 0 )
+												
+												--Equipment setup
+												EquipmentListView:Clear()
+												for k,v in ipairs( SelectedSet.Equipment ) do
+													EquipmentListView:AddLine(v)
+												end
+												EquipmentListView:GetLine( 1 ):SetSelected( true )
+												RunConsoleCommand( "sbep_lift_designer_equipment", 0 )
+												
+												--Size setup
+												SizeListView:Clear()
+												for k,v in ipairs( SelectedSet.Sizes ) do
+													SizeListView:AddLine(v)
+												end
+												SizeListView:GetLine( 1 ):SetSelected( true )
+												RunConsoleCommand( "sbep_lift_designer_size", 0 )
+										end
+		 
+		for k,v in pairs( SetTable ) do
+			SetListView:AddLine(k)
+		end
+		SetListView:GetLine( 1 ):SetSelected( true )
+		
+		local Set = SetListView:GetLine(SetListView:GetSelectedLine()):GetColumnText(1)
+		SelectedSet = SetTable[Set]
+		
+		RunConsoleCommand( "sbep_lift_designer_set", Set )
+		
+	panel:AddItem( SetListView )	
+	
+	--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+	--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+	
+	SkinListView = vgui.Create("DListView")
+		SkinListView:SetSize(100, 101)
+		SkinListView:SetMultiSelect(false)
+		SkinListView:AddColumn("Skin")
+		SkinListView.OnClickLine = function(parent, line, isselected)
 												parent:ClearSelection()
 												line:SetSelected( true )
 												RunConsoleCommand( "sbep_lift_designer_skin", line:GetID() - 1 )
 										end
 		 
-		for k,v in ipairs( SkinTable ) do
-			SLV:AddLine(v)
+		for k,v in ipairs( SetTable[SetListView:GetLine(SetListView:GetSelectedLine()):GetColumnText(1)].Skins ) do
+			SkinListView:AddLine(v)
 		end
-		SLV:GetLine( 1 ):SetSelected( true )
+		SkinListView:GetLine( 1 ):SetSelected( true )
 		RunConsoleCommand( "sbep_lift_designer_skin", 0 )
-	panel:AddItem( SLV )
+	panel:AddItem( SkinListView )
 	
 	--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-	local DoorTable = {
-			"None"  			,
-			"Shaft Hatches"   	,
-			"Floor Doors"  		
-				}
-
-	local DLV = vgui.Create("DListView")
-		DLV:SetSize(100, 67)
-		DLV:SetMultiSelect(false)
-		DLV:AddColumn("Doors and Hatches")
-		DLV.OnClickLine = function(parent, line, isselected)
+	EquipmentListView = vgui.Create("DListView")
+		EquipmentListView:SetSize(100, 67)
+		EquipmentListView:SetMultiSelect(false)
+		EquipmentListView:AddColumn("Equipment")
+		EquipmentListView.OnClickLine = function(parent, line, isselected)
 												parent:ClearSelection()
 												line:SetSelected( true )
-												RunConsoleCommand( "sbep_lift_designer_doors", line:GetID() )
+												RunConsoleCommand( "sbep_lift_designer_equipment", line:GetID() )
 										end
 		 
-		for k,v in ipairs( DoorTable ) do
-			DLV:AddLine(v)
+		for k,v in ipairs( SelectedSet.Equipment ) do
+			EquipmentListView:AddLine(v)
 		end
-		DLV:GetLine( 1 ):SetSelected( true )
-		RunConsoleCommand( "sbep_lift_designer_doors", 1 )
-	panel:AddItem( DLV )
+		EquipmentListView:GetLine( 1 ):SetSelected( true )
+		RunConsoleCommand( "sbep_lift_designer_equipment", 1 )
+	panel:AddItem( EquipmentListView )
 	
 	--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-	local SizeTable = {
-				"Small"  	,
-				"Large"   		
-				}
-
-	local SiLV = vgui.Create("DListView")
-		SiLV:SetSize(100, 50)
-		SiLV:SetMultiSelect(false)
-		SiLV:AddColumn("Size")
-		SiLV.OnClickLine = function(parent, line, isselected)
+	SizeListView = vgui.Create("DListView")
+		SizeListView:SetSize(100, 50)
+		SizeListView:SetMultiSelect(false)
+		SizeListView:AddColumn("Size")
+		SizeListView.OnClickLine = function(parent, line, isselected)
 												parent:ClearSelection()
 												line:SetSelected( true )
 												RunConsoleCommand( "sbep_lift_designer_size", line:GetID() )
 										end
 		 
-		for k,v in ipairs( SizeTable ) do
-			SiLV:AddLine(v)
+		for k,v in ipairs( SelectedSet.Sizes ) do
+			SizeListView:AddLine(v)
 		end
-		SiLV:GetLine( 1 ):SetSelected( true )
+		SizeListView:GetLine( 1 ):SetSelected( true )
 		RunConsoleCommand( "sbep_lift_designer_size", 1 )
-	panel:AddItem( SiLV )
+	panel:AddItem( SizeListView )
 	
 	--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------

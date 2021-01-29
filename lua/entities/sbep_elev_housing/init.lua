@@ -2,8 +2,8 @@ AddCSLuaFile( "cl_init.lua" )
 AddCSLuaFile( "shared.lua" )
 include( "shared.lua" ) 
 
-local LMT = {}
-LMT.S = {
+local LMT = {SMALLBRIDGE={}, MODBRIDGE={}}
+LMT.SMALLBRIDGE.S = {
 		[ "B" 	 ] = { model = "models/smallbridge/elevators_small/sbselevb.mdl" 	, ZUD =  65.1 	, ZDD =  65.1 	, AT = {0,1,0,0} } ,
 		[ "BE" 	 ] = { model = "models/smallbridge/elevators_small/sbselevbe.mdl" 	, ZUD =  65.1 	, ZDD =  65.1 	, AT = {0,1,0,1} } ,
 		[ "BEdh" ] = { model = "models/smallbridge/elevators_small/sbselevbedh.mdl" , ZUD = 195.3 	, ZDD =  65.1 	, AT = {0,1,0,1} , SD = { IsDH = true } },
@@ -38,7 +38,7 @@ LMT.S = {
 		[ "H" 	 ] = { model = "models/smallbridge/station parts/sbhuble.mdl" 		, ZUD = 195.3 	, ZDD = 195.3 	, AT = {0,0,0,0} , SD = { IsHub = true , IsSpecial = true , MultiFloorTable = { 0 , 130.2 , 260.4 } } }
 			}
 
-LMT.L = {
+LMT.SMALLBRIDGE.L = {
 		[ "B" 	 ] = { model = "models/smallbridge/elevators_large/sblelevb.mdl" 	, ZUD =  65.1 	, ZDD =  65.1 	, AT = {0,0,0,1} } ,
 		[ "BE" 	 ] = { model = "models/smallbridge/elevators_large/sblelevbe.mdl" 	, ZUD =  65.1 	, ZDD =  65.1 	, AT = {0,1,0,1} } ,
 		[ "BEdh" ] = { model = "models/smallbridge/elevators_large/sblelevbedh.mdl" , ZUD = 195.3 	, ZDD =  65.1 	, AT = {0,1,0,1} , SD = { IsDH = true } },
@@ -64,11 +64,31 @@ LMT.L = {
 		[ "S2" 	 ] = { model = "models/smallbridge/elevators_large/sblelevs2.mdl" 	, ZUD =  65.1 	, ZDD =  65.1 	, AT = {0,0,0,0} , SD = { IsShaft = true } }
 			}
 
-ENT.WireDebugName = "SBEP Elevator Housing"
+LMT.MODBRIDGE.S = {
+		[ "B" 	 ] = { model = "models/cerus/modbridge/misc/elevator/ecb111.mdl" 	, ZUD =  75 	, ZDD =  75 	, AT = {0,1,0,0} } ,
+		[ "BE" 	 ] = { model = "models/cerus/modbridge/misc/elevator/eb111.mdl" 	, ZUD =  75 	, ZDD =  75 	, AT = {0,1,0,1} } ,
 
-for s,M in pairs( LMT ) do
-	for t,D in pairs( M ) do
-		list.Set( "SBEP_LiftHousingModels" , string.lower( D.model ) , { t , s } )
+		[ "M" 	 ] = { model = "models/cerus/modbridge/misc/elevator/ecm111.mdl" 	, ZUD =  75 	, ZDD =  75 	, AT = {0,1,0,0} } ,
+		[ "ME" 	 ] = { model = "models/cerus/modbridge/misc/elevator/em111.mdl" 	, ZUD =  75 	, ZDD =  75 	, AT = {0,1,0,1} } ,
+
+		[ "T" 	 ] = { model = "models/cerus/modbridge/misc/elevator/ect111.mdl" 	, ZUD =  75 	, ZDD =  75 	, AT = {0,1,0,0} } ,
+		[ "TE" 	 ] = { model = "models/cerus/modbridge/misc/elevator/et111.mdl" 	, ZUD =  75 	, ZDD =  75 	, AT = {0,1,0,1} } ,
+
+		[ "S" 	 ] = { model = "models/cerus/modbridge/misc/elevator/etm111.mdl" 	, ZUD =  75 	, ZDD =  75 	, AT = {0,0,0,0} , SD = { IsShaft = true } },
+		[ "S2" 	 ] = { model = "models/cerus/modbridge/misc/elevator/etm112.mdl" 	, ZUD =  75 	, ZDD =  75 	, AT = {0,0,0,0} , SD = { IsShaft = true } },
+
+		[ "BV" 	 ] = { model = "models/cerus/modbridge/core/s-331eb.mdl", ZUD =  75 	, ZDD =  75 	, AT = {0,0,0,0} , SD = { IsVisor = true , IsSpecial = true } },
+		[ "MV" 	 ] = { model = "models/cerus/modbridge/core/s-331em.mdl", ZUD =  75 	, ZDD =  75 	, AT = {0,0,0,0} , SD = { IsVisor = true , IsSpecial = true } },
+		[ "TV" 	 ] = { model = "models/cerus/modbridge/core/s-331et.mdl", ZUD =  75 	, ZDD =  75 	, AT = {0,0,0,0} , SD = { IsVisor = true , IsSpecial = true } },
+
+			}
+
+ENT.WireDebugName = "SBEP Elevator Housing"
+for S,T in pairs( LMT ) do
+	for s,M in pairs( T ) do
+		for t,D in pairs( M ) do
+			list.Set( "SBEP_LiftHousingModels" , string.lower( D.model ) , { S, t , s } )
+		end
 	end
 end
 
@@ -141,7 +161,7 @@ end
 function ENT:SetPartType( type )
 	if self.PartData.T == type then return end
 
-	local data = LMT[ self.Cont.Size[1] ][ type ]
+	local data = LMT[ self.Cont.Set ][ self.Cont.Size[1] ][ type ]
 	if !data then return end
 	self.PartData.SD 	= {}
 	self.PartData 	= table.Merge( self.PartData , data )
@@ -160,7 +180,7 @@ end
 
 function ENT:SetPartClass( class )
 	local t = class..string.sub( self.Entity:GetPartType() , 2 )
-	if LMT[ self.Cont.Size[1] ][ t ] then
+	if LMT[ self.Cont.Set ][ self.Cont.Size[1] ][ t ] then
 		self.Entity:SetPartType( t )
 	end
 end
@@ -171,7 +191,7 @@ end
 
 function ENT:SetPartForm( form )
 	local t = string.Left( self:GetPartType() , 1 )..form
-	if LMT[ self.Cont.Size[1] ][ t ] then
+	if LMT[ self.Cont.Set ][ self.Cont.Size[1] ][ t ] then
 		self.Entity:SetPartType( t )
 	end
 end
@@ -199,7 +219,13 @@ function ENT:UpdateHeightOffsets()
 end
 
 function ENT:RefreshPos()
-	self.Entity:SetPos( self.Cont:LocalToWorld( Vector(0,0, self.PartData.HO + 60.45 ) ) )
+	local offset = 0
+	if self.Cont.Set == "SMALLBRIDGE" then
+		offset = 60.45
+	elseif self.Cont.Set == "MODBRIDGE" and self.PartData.TF == "V" then
+		offset = 75
+	end
+	self.Entity:SetPos( self.Cont:LocalToWorld( Vector(0,0, self.PartData.HO + offset) ) )
 end
 
 function ENT:RefreshAng()

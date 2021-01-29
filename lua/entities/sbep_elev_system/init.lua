@@ -4,29 +4,48 @@ include( "shared.lua" )
 
 ENT.WireDebugName = "SBEP Elevator System"
 
-local PMT = {}
-PMT.S = {
-		"models/smallbridge/elevators_small/sbselevp0.mdl"	,
-		"models/smallbridge/elevators_small/sbselevp1.mdl"	,
-		"models/smallbridge/elevators_small/sbselevp2e.mdl"	,
-		"models/smallbridge/elevators_small/sbselevp2r.mdl"	,
-		"models/smallbridge/elevators_small/sbselevp3.mdl"
-			}
+local PT = {SMALLBRIDGE = {}, MODBRIDGE = {} }
+PT.SMALLBRIDGE.S = {
+		Defaults = { LiftOffset = 4.65, Increment = -60.45, TargetOffset = -60.45, MoveSound = "plats/skylift_move.wav", StopSound = "plats/skylift_stop.wav" }, --each panel model uses these defaults
+		Panels = {
+			--order of models matters, it depends on ModelAccessTable and defines which model is being used for the different exits
+			{ Model = "models/smallbridge/elevators_small/sbselevp0.mdl" },
+			{ Model = "models/smallbridge/elevators_small/sbselevp1.mdl", LiftOffset = 4.65, Increment = -60.45, TargetOffset = -60.45 }, --defaults can be overridden based on panel model like this example shows
+			{ Model = "models/smallbridge/elevators_small/sbselevp2e.mdl" },
+			{ Model = "models/smallbridge/elevators_small/sbselevp2r.mdl" },
+			{ Model = "models/smallbridge/elevators_small/sbselevp3.mdl" }
+		}
+}
 
-PMT.L = {
-		"models/smallbridge/elevators_Large/sblelevp0.mdl"	,
-		"models/smallbridge/elevators_Large/sblelevp1.mdl"	,
-		"models/smallbridge/elevators_Large/sblelevp2e.mdl"	,
-		"models/smallbridge/elevators_Large/sblelevp2r.mdl"	,
-		"models/smallbridge/elevators_Large/sblelevp3.mdl"
-			}
-			
+PT.SMALLBRIDGE.L = {
+	Defaults = { LiftOffset = 4.65, Increment = -60.45, TargetOffset = -60.45, MoveSound = "plats/skylift_move.wav", StopSound = "plats/skylift_stop.wav" },
+	Panels = {
+		{ Model = "models/smallbridge/elevators_Large/sblelevp0.mdl" },
+		{ Model = "models/smallbridge/elevators_Large/sblelevp1.mdl" },
+		{ Model = "models/smallbridge/elevators_Large/sblelevp2e.mdl" },
+		{ Model = "models/smallbridge/elevators_Large/sblelevp2r.mdl" },
+		{ Model = "models/smallbridge/elevators_Large/sblelevp3.mdl" }
+	}
+}
+
+PT.MODBRIDGE.S = {
+	Defaults = { LiftOffset = 81.65, Increment = 100, TargetOffset = 100, MoveSound = "plats/skylift_move.wav", StopSound = "plats/skylift_stop.wav" },
+	Panels = {
+		{ Model = "models/cerus/modbridge/misc/elevator/elev_111.mdl" },
+		{ Model = "models/cerus/modbridge/misc/elevator/elev_111.mdl" },
+		{ Model = "models/cerus/modbridge/misc/elevator/elev_111.mdl" },
+		{ Model = "models/cerus/modbridge/misc/elevator/elev_111.mdl" },
+		{ Model = "models/cerus/modbridge/misc/elevator/elev_111.mdl" }
+	}
+}
+
 local DD = list.Get( "SBEP_DoorControllerModels" )
 
 function ENT:Initialize()
 	
 	self.PartTable  = {}
 	self.SystemTable  = {}
+	self.SystemTable.Panel = {}
 	self.FloorTable  = {}
 	self.HatchTable  = {}
 	
@@ -41,7 +60,7 @@ function ENT:Initialize()
 	
 	self.Entity:SetNetworkedInt( "ActivePart" , 1 )
 	self.Entity:SetNetworkedInt( "SBEP_LiftPartCount" , 0 )
-	--self:SetModel( PMT[self.Size[1]][5] ) 
+	--self:SetModel( PT[self.Entity.Set][self.Size[1]][5] ) 
 	
 	self.LiftActive = false
 	
@@ -56,12 +75,7 @@ function ENT:Initialize()
 	self.TimerHoldDelay = 0
 	self.TimerHoldStartTime = CurTime()
 	
-	
-	
 	self.Index = tostring( self:EntIndex() )
-	
-	self.Increment = -60.45
-	self.TargetOffset = -60.45
 	
 	self.SystemTable.AngleYawOffset = 90
 	
@@ -194,6 +208,12 @@ function ENT:Think()
 			self:CheckDoorStatus()
 		end
 		if self.ATL then
+			if self.SystemTable.MoveSound then self.SystemTable.MoveSound:Stop() end
+			if self.SystemTable.StopSound then
+				self.SystemTable.StopSound:Stop()
+				self.SystemTable.StopSound:Play()
+				util.ScreenShake( self:GetPos(), 5, 5, 2, 300 )
+			end
 			self:AddArriveDelay( 4 )
 		elseif self.SystemTable.UseDoors then	
 			self:AddHoldDelay( 2 )
@@ -242,7 +262,7 @@ function ENT:Think()
 		if WireAddon then WireLib.TriggerOutput( self , "Floor" , self.SystemTable.CurrentFloor ) end
 	end
 	self.OldCF = self.SystemTable.CurrentFloor
-	
+	if self.SystemTable.MoveSound then self.SystemTable.MoveSound:Play() end
 	if self.TargetOffset > self.Increment then
 		self.Direction = 1
 	else
@@ -361,6 +381,14 @@ function ENT:FinishSystem()
 	
 	self.Entity:GetPhysicsObject():EnableMotion( true )
 	
+	self.Increment = self.SystemTable.Panel.Increment or PT[self.Entity.Set][self.Size[1]].Defaults.Increment or 0
+
+	self.TargetOffset = self.SystemTable.Panel.TargetOffset or PT[self.Entity.Set][self.Size[1]].Defaults.TargetOffset or 0
+	
+	self.LiftOffset = self.SystemTable.Panel.LiftOffset or PT[self.Entity.Set][self.Size[1]].Defaults.LiftOffset or 0
+
+	self:CreateSounds()
+
 	for n,Part in ipairs( self.PartTable ) do --Setting up the floors 
 		if !Part.PartData.SD.IsShaft then
 			Part:MakeWire()
@@ -370,12 +398,12 @@ function ENT:FinishSystem()
 				Part.PartData.FloorOffset = {}
 				Part.PartData.FN = {}
 				for m,n in ipairs( Part.PartData.SD.MultiFloorTable ) do
-					Part.PartData.FloorOffset[m] = Part.PartData.HO - C3*Part.PartData.ZUD - C4*Part.PartData.ZDD + 4.65 + n
+					Part.PartData.FloorOffset[m] = Part.PartData.HO - C3*Part.PartData.ZUD - C4*Part.PartData.ZDD + self.LiftOffset + n
 					table.insert( self.FloorTable , Part.PartData.FloorOffset[m] )
 					Part.PartData.FN[m] = self:GetFloorCount()
 				end
 			else
-				Part.PartData.FloorOffset = Part.PartData.HO - C3*Part.PartData.ZUD - C4*Part.PartData.ZDD + 4.65 --Calculates floor offset, depending on part roll offset
+				Part.PartData.FloorOffset = Part.PartData.HO - C3*Part.PartData.ZUD - C4*Part.PartData.ZDD + self.LiftOffset --Calculates floor offset, depending on part roll offset
 				table.insert( self.FloorTable , Part.PartData.FloorOffset )
 				Part.PartData.FN = self:GetFloorCount()
 			end
@@ -510,10 +538,10 @@ function ENT:CalcPanelModel( PartNum )
 	end
 	
 	self.SystemTable.MATSum = self.SystemTable.ModelAccessTable[1] + self.SystemTable.ModelAccessTable[2] + self.SystemTable.ModelAccessTable[3] + self.SystemTable.ModelAccessTable[4]
-	
-	DMT = PMT[self.Size[1]]
+	DMT = PT[self.Entity.Set][self.Size[1]].Panels
 	local function SetLiftModel( n )
-		self:SetModel( DMT[ n ] )
+		self.SystemTable.Panel = DMT[ n ]
+		self:SetModel( self.SystemTable.Panel.Model )
 	end
 	local S = self.SystemTable.MATSum
 	local T = self.SystemTable.ModelAccessTable
@@ -577,6 +605,12 @@ function ENT:TriggerInput(k,v)
 	end
 	
 	if k == "Hold" and v > 0 then
+		if self.SystemTable.MoveSound then self.SystemTable.MoveSound:Stop() end
+		if self.SystemTable.StopSound then
+			self.SystemTable.StopSound:Stop()
+			self.SystemTable.StopSound:Play()
+		end
+		util.ScreenShake( self:GetPos(), 5, 5, 2, 300 )	
 		self:AddHoldDelay( 4 )
 	end
 end
@@ -610,8 +644,16 @@ function ENT:GetFloorNum()
 	return self.CallFloorTable[1]
 end
 
+function ENT:CreateSounds()
+	local MoveSound = self.SystemTable.Panel.MoveSound or PT[self.Entity.Set][self.Size[1]].Defaults.MoveSound or nil
+	local StopSound = self.SystemTable.Panel.StopSound or PT[self.Entity.Set][self.Size[1]].Defaults.StopSound or nil
+	if MoveSound and file.Exists("sound/"..MoveSound, "GAME") then self.SystemTable.MoveSound = CreateSound(self, MoveSound) else self.SystemTable.MoveSound = nil end
+	if StopSound and file.Exists("sound/"..StopSound, "GAME") then self.SystemTable.StopSound = CreateSound(self, StopSound) else self.SystemTable.StopSound = nil end
+end
+
 function ENT:PreEntityCopy()
 	local DI = {}
+		DI.Set = self.Entity.Set
 		DI.SystemTable  = self.SystemTable
 		DI.FloorTable  = self.FloorTable
 		DI.Increment = self.Increment
@@ -638,6 +680,7 @@ function ENT:PostEntityPaste(pl, Ent, CreatedEntities)
 
 	local DT = Ent.EntityMods.SBEPLS
 
+	self.Entity.Set = DT.Set
 	self.SystemTable			= DT.SystemTable
 	self.FloorTable			= DT.FloorTable
 	self.Increment		= DT.Increment
@@ -664,5 +707,14 @@ function ENT:PostEntityPaste(pl, Ent, CreatedEntities)
 	self.Entity:GetPhysicsObject():EnableMotion( true )
 	self.LiftActive = 1
 	self:AddCallFloorNum( 1 )
-
+	self:CreateSounds()
 end
+
+function LiftSystemRemoved(ent)
+		if ent:GetClass() == "sbep_elev_system" then
+			if ent.SystemTable.MoveSound then ent.SystemTable.MoveSound:Stop() end
+			if ent.SystemTable.StopSound then ent.SystemTable.StopSound:Stop() end
+		end
+end
+ 
+hook.Add("EntityRemoved", "LiftSystemRemoved", LiftSystemRemoved)
