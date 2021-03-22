@@ -1,7 +1,7 @@
 --gyropod_advanced coders: Paradukes, DataSchmuck
 --wireless_gyropod coder: LoRAWN
 TOOL.Category		= "SBEP"
-TOOL.Tab 			= "Spacebuild"
+TOOL.Tab 			= "Custom Addon Framework"
 TOOL.Name			= "#Wireless Gyropod"
 TOOL.Command		= nil
 TOOL.ConfigName		= ""
@@ -24,16 +24,17 @@ end
 
 if ( SERVER ) then
 	CreateConVar( "sbox_max" .. RegisterName, 20 )
-end	
+end
+
 cleanup.Register( RegisterName )
 
 if ( SERVER ) then
 
 	--stuff needed for setting up ghost and model selection
 	function ConstructGyropod( owner, model, pos, ang )
-		if ( !owner:CheckLimit( RegisterName ) ) then return false end
+		if not owner:CheckLimit( RegisterName ) then return false end
 		local gyropod = ents.Create( ClassName )
-		if not(IsValid(gyropod)) then return nil end
+		if not IsValid(gyropod) then return nil end
 		gyropod:SetAngles(ang)
 		gyropod:SetPos(pos)
 		gyropod:SetModel(model)
@@ -47,17 +48,16 @@ if ( SERVER ) then
 		return gyropod
 	end
 	duplicator.RegisterEntityClass(ClassName, ConstructGyropod, "Model", "Pos", "Angle")
-	
 end
 
 --spawn a gyropod
 function TOOL:LeftClick( trace )
 	local owner = self:GetOwner()
-	if ( !trace.HitPos )							  then return false end
-	if ( trace.Entity:IsPlayer() )					  then return false end
-	if ( CLIENT )									  then return true  end
-	if ( !self:GetSWEP():CheckLimit( RegisterName ) ) then return false end
-	if ( trace.Entity:IsValid() and trace.Entity:GetClass() == ClassName and trace.Entity:GetTable().pl == owner ) then	return true	end
+	if not trace.HitPos then return false end
+	if trace.Entity:IsPlayer() then return false end
+	if CLIENT then return true  end
+	if not self:GetSWEP():CheckLimit( RegisterName ) then return false end
+	if trace.Entity:IsValid() and trace.Entity:GetClass() == ClassName and trace.Entity:GetTable().pl == owner then	return true	end
 	local angle = trace.HitNormal:Angle()
 	angle.pitch = angle.pitch + 90
 	local model = self:GetClientInfo( "model" )
@@ -75,8 +75,8 @@ end
 --link a vehicle to a gyropod
 function TOOL:RightClick( trace )
 	local owner = self:GetOwner()
-	if ( self:GetStage() == 0 ) then
-		if( trace.Entity:GetClass() == ClassName ) then
+	if self:GetStage() == 0 then
+		if trace.Entity:GetClass() == ClassName then
 			self.gyro = trace.Entity
 			self:SetStage( 1 )
 			return true
@@ -84,11 +84,13 @@ function TOOL:RightClick( trace )
 		owner:PrintMessage( HUD_PRINTTALK, "Entity is not a gyropod!" )
 		return false
 	end
-	if( trace.Entity:IsVehicle() ) then
-		if ( self.gyro:Link( trace.Entity ) ) then
-			owner:PrintMessage( HUD_PRINTTALK, "Link successful!" )
-		else
-			owner:PrintMessage( HUD_PRINTTALK, "Link failed!" )
+	if trace.Entity:IsVehicle() then
+		if SERVER then
+			if ( self.gyro:Link( trace.Entity ) ) then
+				owner:PrintMessage( HUD_PRINTTALK, "Link successful!" )
+			else
+				owner:PrintMessage( HUD_PRINTTALK, "Link failed!" )
+			end
 		end
 		self.gyro = nil
 		self:SetStage( 0 )
@@ -100,12 +102,12 @@ end
 
 --Set the gyropods model, also clear the selected ent
 function TOOL:Reload( trace )
-	if ( self:GetStage()== 0 ) and trace.Entity:GetClass() == ClassName then self.gyro = nil end	
-	if ( self:GetStage()== 0 ) then
+	if ( self:GetStage() == 0 ) and trace.Entity:GetClass() == ClassName then self.gyro = nil end
+	if ( self:GetStage() == 0 ) then
 		if CLIENT and trace.Entity:IsValid() then return true  end
 		if not trace.Entity:IsValid() 		 then return false end
 		local model = trace.Entity:GetModel()
-		self:GetOwner():ConCommand(ClassName .. "_model " .. model);
+		self:GetOwner():ConCommand(ClassName .. "_model " .. model)
 		self.Model = model
 	end
 	self:SetStage(0)
@@ -159,13 +161,12 @@ Duck     = Accelerate Downward
  *  DataSchmuck for improving the code.
  *  LoRAWN for improving the code even more.
  
- ]]	
+ ]]
 	BindLabel0.Description = "Basic Instructions1"
 	panel:AddControl("Label", BindLabel0 )
 	BindLabel1.Description = "Basic Instructions2"
 	panel:AddControl("Label", BindLabel1 )
 	BindLabel2.Description = "Basic Instructions3"
 	panel:AddControl("Label", BindLabel2 )
-	
 
 end

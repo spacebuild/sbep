@@ -1,5 +1,5 @@
 TOOL.Category		= "SBEP"
-TOOL.Tab 			= "Spacebuild"
+TOOL.Tab 			= "Custom Addon Framework"
 TOOL.Name = "#Part Spawner"
 TOOL.Command = nil
 TOOL.ConfigName = ""
