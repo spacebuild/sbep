@@ -11,6 +11,7 @@
 		"*.bat",
 		"LICENSE",
 		"NOTICE",
-		"README.md"
+		"README.md",
+		"*.jpg"
 	]
 }
