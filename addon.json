@@ -1,5 +1,5 @@
 {
-	"title"	:	"Spacebuild 3 Enhancement Pack",
+	"title"	:	"Spacebuild Enhancement Pack Unofficial V5",
 	"type"	:	"tool",
 	"tags"	:	[ "fun", "build" ],
 	"ignore":
@@ -11,6 +11,7 @@
 		"*.bat",
 		"LICENSE",
 		"NOTICE",
-		"README.md"
+		"README.md",
+		"*.jpg"
 	]
 }

@@ -1,8 +1,8 @@
 -- By Tingle
 TOOL.Category		= "SBEP"
-TOOL.Tab 			= "Spacebuild"
-TOOL.Name			= "#Part Assembler" 
-TOOL.Command 		= nil 
+TOOL.Tab 			= "Custom Addon Framework"
+TOOL.Name			= "#Part Assembler"
+TOOL.Command 		= nil
 TOOL.ConfigName 	= ""
 
 TOOL.ClientConVar["skin"] = 0

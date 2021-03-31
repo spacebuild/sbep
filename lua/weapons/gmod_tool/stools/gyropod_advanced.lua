@@ -1,5 +1,5 @@
 TOOL.Category		= "SBEP"
-TOOL.Tab 			= "Spacebuild"
+TOOL.Tab 			= "Custom Addon Framework"
 TOOL.Name			= "#Gyro-Pod"
 TOOL.Command		= nil
 TOOL.ConfigName		= ""
@@ -27,10 +27,12 @@ function TOOL:RightClick(trace)
 		return true
 	elseif self:GetStage() == 1 and trace.Entity.GetPassenger then
 		local owner = self:GetOwner()
-		if self.AdvGyro:Link(trace.Entity) then
-			owner:PrintMessage(HUD_PRINTTALK,"Vehicle linked to Gyro-Pod!")
-		else
-			owner:PrintMessage(HUD_PRINTTALK,"Link failed!")
+		if SERVER then
+			if self.AdvGyro:Link(trace.Entity) then
+				owner:PrintMessage(HUD_PRINTTALK,"Vehicle linked to Gyro-Pod!")
+			else
+				owner:PrintMessage(HUD_PRINTTALK,"Link failed!")
+			end
 		end
 		self:SetStage(0)
 		self.AdvGyro = nil

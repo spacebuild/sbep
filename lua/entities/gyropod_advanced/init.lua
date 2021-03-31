@@ -12,6 +12,8 @@ util.PrecacheSound( "buttons/combine_button3.wav" )
 util.PrecacheSound( "buttons/combine_button2.wav" )
 util.PrecacheSound( "buttons/lever7.wav" )
 
+local GyroPitchComp = 0
+
 function ENT:Initialize()
 	self:SetName("advanced_gyropod")
 	self:PhysicsInit( SOLID_VPHYSICS )
@@ -39,6 +41,9 @@ function ENT:Initialize()
 	self.SystemOn = false
 	self.FreezeOn = false
 	self.AimModeOn = false
+	self.GyroSpeed = 0
+	self.VSpeed = 0
+	self.HSpeed = 0
 	self.PMult = 1
 	self.RMult = 1
 	self.YaMult = 1
@@ -64,10 +69,8 @@ function ENT:Initialize()
 	self.GyroMass = 0
 	self.GyroLevelerOut = 0
 	self.GyroParentIndex = 0
-	lastshipangle = Angle(0, 0, 0)
 	self.OnPlanet = true
 	self.GravTrigger = true
-	GyroPitchComp = 0
 	self.Debug = 0
 	self.GyroPitch = 0
 	self.GyroYaw = 0
@@ -490,14 +493,13 @@ function ENT:Think()
 			self.entorpod:EmitSound( "buttons/button18.wav" )
 			self.gyroenginesound = false
 		end
-		
+
 		if self.weighttrigger then
 			self:GyroWeight()
-		end	
+		end
 
 		self.OnOut, self.GyroSpeed, self.VSpeed, self.HSpeed = 0, localentorparvel.x, localentorparvel.z, -localentorparvel.y
-		lastshipangle = self:GetAngles()
-		
+
 		if self.HighEngineSound or self.LowDroneSound then  --Wind down engine sound when turned off
 			self.HighEnginePitch = clamp(self.HighEnginePitch - 0.7, 0, 300)
 			self.LowDronePitch = clamp(self.LowDronePitch - 0.3, 0, 300)

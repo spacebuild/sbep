@@ -651,10 +651,10 @@ are all one -orientation - only.Then open cl_init .lua and make a new entry in t
         },
         ["models/smallbridge/panels/sbpaneldockin.mdl"] = {
             { type = "SWSH", pos = Vector(0, 0, 0), dir = Angle(0, 0, 0) },
-            { type = "SWSH", pos = Vector(0, 0, 0), dir = Angle(0, 180, 0) }
+        --    { type = "SWSH", pos = Vector(0, 0, 0), dir = Angle(0, 180, 0) }
         },
         ["models/smallbridge/panels/sbpaneldockout.mdl"] = {
-            { type = "SWSH", pos = Vector(0, 0, 0), dir = Angle(0, 0, 0) },
+        --    { type = "SWSH", pos = Vector(0, 0, 0), dir = Angle(0, 0, 0) },
             { type = "SWSH", pos = Vector(0, 0, 0), dir = Angle(0, 180, 0) }
         },
         ["models/smallbridge/panels/sbpaneldoor.mdl"] = {
