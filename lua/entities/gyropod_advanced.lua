@@ -10,6 +10,8 @@ ENT.AdminSpawnable = false
 if CLIENT then return end
 
 local math_abs, math_round, math_clamp = math.abs, math.Round, math.Clamp
+local math_NormalizeAngle = math.NormalizeAngle
+
 ENT.Owner = nil
 ENT.SPL = nil
 ENT.Firing = false
@@ -38,9 +40,22 @@ function ENT:Initialize()
     self:SetSolid(SOLID_VPHYSICS)
     self:SetMaterial("spacebuild/SBLight5")
 
-    self.Inputs = WireLib.CreateSpecialInputs(self, {"Activate", "Forward", "Back", "SpeedAbs", "MoveLeft", "MoveRight", "Lateral", "MoveUp", "MoveDown", "Vertical", "RollLeft", "RollRight", "RollAbs", "PitchUp", "PitchDown", "PitchAbs", "YawLeft", "YawRight", "YawAbs", "PitchMult", "YawMult", "RollMult", "ThrustMult", "MPH Limit", "Damper", "Level", "Roll Lock", "Freeze", "AimMode", "AimX", "AimY", "AimZ", "AimVec [VECTOR]"})
+    self.Inputs = WireLib.CreateSpecialInputs(self, {
+        "Activate", "Forward", "Back", "SpeedAbs",
+        "MoveLeft", "MoveRight", "Lateral",
+        "MoveUp", "MoveDown", "Vertical",
+        "RollLeft", "RollRight", "RollAbs",
+        "PitchUp", "PitchDown", "PitchAbs",
+        "YawLeft", "YawRight", "YawAbs",
+        "PitchMult", "YawMult", "RollMult",
+        "ThrustMult",
+        "MPH Limit", "Damper", "Level", "Roll Lock", "Freeze",
+        "AimMode", "AimX", "AimY", "AimZ", "AimVec [VECTOR]"
+    })
 
-    self.Outputs = WireLib.CreateSpecialOutputs(self, {"On", "Frozen", "Targeting Mode", "MPH", "KmPH", "Leveler", "Total Mass", "Props Linked", "Angles [ANGLE]"})
+    self.Outputs = WireLib.CreateSpecialOutputs(self, {
+        "On", "Frozen", "Targeting Mode", "MPH", "KmPH", "Leveler", "Total Mass", "Props Linked", "Angles [ANGLE]"
+    })
 
     local phys = self:GetPhysicsObject()
 
@@ -50,12 +65,6 @@ function ENT:Initialize()
 
     self.LogicCases = ents.FindByClass("logic_case")
     self.AllGyroConstraints = {}
-    self.PhysTable = {}
-    self.FrontDist = {}
-    self.BackDist = {}
-    self.RightDist = {}
-    self.LeftDist = {}
-    self.MassTable = {}
     self.MoveTable = {}
     self.SystemOn = false
     self.FreezeOn = false
@@ -84,11 +93,8 @@ function ENT:Initialize()
     self.GyroLvl = false
     self.RollLock = false
     self.TarPos = Vector(0, 0, 0)
-    self.ModeOut = 0
     self.GyroMass = 0
-    self.GyroLevelerOut = 0
-    self.GyroParentIndex = 0
-    self.OnPlanet = true
+    self.EnableGravity = true
     self.GravTrigger = true
     self.Debug = 0
     self.GyroPitch = 0
@@ -103,23 +109,14 @@ end
 
 function ENT:TriggerInput(iname, value)
     if (iname == "Activate") then
-        if (value ~= 0) then
-            self.SystemOn = true
-        else
-            self.SystemOn = false
-        end
+        self.SystemOn = value ~= 0
+        self:UpdateSystemOn(self.SystemOn)
     elseif (iname == "Freeze") then
-        if (value ~= 0) then
-            self.FreezeOn = true
-        else
-            self.FreezeOn = false
-        end
+        self.FreezeOn = value ~= 0
+        self:UpdateFreeze(self.FreezeOn)
     elseif (iname == "AimMode") then
-        if (value ~= 0) then
-            self.AimModeOn = true
-        else
-            self.AimModeOn = false
-        end
+        self.AimModeOn = value ~= 0
+        self:UpdateAimMode(self.AimModeOn)
     elseif (iname == "Forward") then
         if (value ~= 0) then
             self.Forw = 1
@@ -250,10 +247,8 @@ function ENT:TriggerInput(iname, value)
         end
     elseif (iname == "Level") then
         if (value ~= 0) then
-            self.GyroLevelerOut = 1
             self.GyroLvl = true
         else
-            self.GyroLevelerOut = 0
             self.GyroLvl = false
         end
     elseif (iname == "Roll Lock") then
@@ -267,72 +262,296 @@ function ENT:TriggerInput(iname, value)
     end
 end
 
-function ENT:Think()
+function ENT:UpdateSystemOn(active)
+    if active then
+        self.AllGyroConstraints = table.GetKeys(
+            constraint.GetAllConstrainedEntities(self)
+        )
+
+        if self.HighEngineSound or self.LowDroneSound then
+            self.HighEngineSound:Stop()
+            self.LowDroneSound:Stop()
+        end
+
+        self.HighEngineSound = CreateSound(self.EntSoundSource, Sound("ambient/atmosphere/outdoor2.wav"))
+        self.LowDroneSound = CreateSound(self.EntSoundSource, Sound("ambient/atmosphere/indoor1.wav"))
+        self.HighEngineSound:Play()
+        self.LowDroneSound:Play()
+        self.EntSoundSource:EmitSound("buttons/button1.wav")
+    else
+        self.EntSoundSource:EmitSound("buttons/button18.wav")
+    end
+end
+
+function ENT:ThinkActive(entpos, entorparvel, localentorparvel, speedmph, rotation_extra_mul)
     local gyroshipangles = self:GetAngles()
 
+    self.EnableGravity = false
+    self.plantrigger = true
+
+    -- if self.GravTrigger then
+    -- self:UpdateGravity()
+    -- self.GravTrigger = false
+    -- end
+
+    if not self.weighttrigger then
+        self:GyroWeight()
+    end
+
+    --changing sounds based on speed
+    if speedmph > 80 then
+        self.HighEngineVolume = math_clamp(((speedmph * 0.035) - 2.6), 0, 1)
+    else
+        self.HighEngineVolume = speedmph * 0.0025
+    end
+
+    self.HighEnginePitch = (speedmph * 1.2) + 60
+    self.LowDronePitch = (speedmph * 0.2) + 35
+
+    self.HighEngineSound.ChangeVolume(self.HighEngineSound, self.HighEngineVolume, 0)
+
+    self.HighEngineSound.ChangePitch(self.HighEngineSound, math.Clamp(self.HighEnginePitch, 0, 255), 0)
+    self.LowDroneSound.ChangePitch(self.LowDroneSound, math.Clamp(self.LowDronePitch, 0, 255), 0)
+
+    local speedx, speedy, speedz =
+        math_abs(localentorparvel.x) / 17.6,
+        math_abs(localentorparvel.y) / 17.6,
+        math_abs(localentorparvel.z) / 17.6
+
+    local SMult, HMult, VMult, GyroRoll =
+        (self.Forw - self.Back) + self.SpAbs,
+        (self.SRight - self.SLeft) + self.LatAbs,
+        (self.HUp - self.HDown) + self.VertAbs,
+        (self.RollRight - self.RollLeft) + self.RollAbs
+
+    --Speed Limit modifiers
+    if math_abs(speedx) >= self.SpdL then
+        self.XMult = 0
+    else
+        self.XMult = 1
+    end
+
+    if math_abs(speedy) >= self.SpdL then
+        self.YMult = 0
+    else
+        self.YMult = 1
+    end
+
+    if math_abs(speedz) >= self.SpdL then
+        self.ZMult = 0
+    else
+        self.ZMult = 1
+    end
+
+    --pressing forward and moving forwards
+    if (SMult > 0) and (self.GyroSpeed >= 0) then
+        self.GyroSpeed = self.GyroSpeed + (self.TMult * self.XMult * (self.SpdL - math_abs(speedx)) * 0.05)
+    elseif (SMult < 0) and (self.GyroSpeed <= 0) then
+        --pressing reverse moving backwards
+        self.GyroSpeed = self.GyroSpeed - (self.TMult * self.XMult * (self.SpdL - math_abs(speedx)) * 0.05)
+    elseif (SMult > 0) and (self.GyroSpeed < 0) then
+        --pressing forward and moving backwards, increase speed faster until moving forwards again
+        self.GyroSpeed = self.GyroSpeed + ((math_abs(speedx)) + self.Damper)
+    elseif (SMult < 0) and (self.GyroSpeed > 0) then
+        --pressing reverse and moving forwards, reverse speed faster until moving backwards again
+        self.GyroSpeed = self.GyroSpeed - ((math_abs(speedx)) + self.Damper)
+    elseif (SMult == 0) and (self.GyroSpeed > 0) then
+        --not pressing for or back and moving forwards, slow movement faster until stopped
+        self.GyroSpeed = self.GyroSpeed - ((math_abs(speedx) * 0.2) + self.Damper)
+    elseif (SMult == 0) and (self.GyroSpeed < 0) then
+        --not pressing forw or back and moving backwards slow movement faster until stopped
+        self.GyroSpeed = self.GyroSpeed + ((math_abs(speedx) * 0.2) + self.Damper)
+    end
+
+    --Strafe movement
+    if (HMult > 0) and (self.HSpeed >= 0) then
+        self.HSpeed = self.HSpeed + (self.TMult * self.YMult * (self.SpdL - math_abs(speedy)) * 0.05)
+    elseif (HMult < 0) and (self.HSpeed <= 0) then
+        self.HSpeed = self.HSpeed - (self.TMult * self.YMult * (self.SpdL - math_abs(speedy)) * 0.05)
+    elseif (HMult > 0) and (self.HSpeed < 0) then
+        self.HSpeed = self.HSpeed + ((math_abs(speedy)) + self.Damper)
+    elseif (HMult < 0) and (self.HSpeed > 0) then
+        self.HSpeed = self.HSpeed - ((math_abs(speedy)) + self.Damper)
+    elseif (HMult == 0) and (self.HSpeed > 0) then
+        self.HSpeed = self.HSpeed - ((math_abs(speedy) * 0.2) + self.Damper)
+    elseif (HMult == 0) and (self.HSpeed < 0) then
+        self.HSpeed = self.HSpeed + ((math_abs(speedy) * 0.2) + self.Damper)
+    end
+
+    --Height Movement
+    if (VMult > 0) and (self.VSpeed >= 0) then
+        self.VSpeed = self.VSpeed + (self.TMult * self.ZMult * (self.SpdL - math_abs(speedz)) * 0.05)
+    elseif (VMult < 0) and (self.VSpeed <= 0) then
+        self.VSpeed = self.VSpeed - (self.TMult * self.ZMult * (self.SpdL - math_abs(speedz)) * 0.05)
+    elseif (VMult > 0) and (self.VSpeed < 0) then
+        self.VSpeed = self.VSpeed + ((math_abs(speedz)) + self.Damper)
+    elseif (VMult < 0) and (self.VSpeed > 0) then
+        self.VSpeed = self.VSpeed - ((math_abs(speedz)) + self.Damper)
+    elseif (VMult == 0) and (self.VSpeed > 0) then
+        self.VSpeed = self.VSpeed - ((math_abs(speedz) * 0.2) + self.Damper)
+    elseif (VMult == 0) and (self.VSpeed < 0) then
+        self.VSpeed = self.VSpeed + ((math_abs(speedz) * 0.2) + self.Damper)
+    end
+
+    --Force Application
+    local mass = self.GyroMass * 0.2
+
+    local entfor, entright, entup = self:GetForward(), self:GetRight(), self:GetUp()
+
+    local velocity = (entfor * self.GyroSpeed) + (entup * self.VSpeed) + (entright * self.HSpeed)
+
+    local pos_front = entpos + entfor * self.frontlength
+    local pos_rear = entpos + entfor * -self.rearlength
+    local pos_right = entpos + entright * self.rightwidth
+    local pos_left = entpos + entright * -self.leftwidth
+
+
+
+    local force_pitch
+    local force_yaw = entright * self.GyroYaw * self.YaMult * mass * rotation_extra_mul
+    local force_roll
+
+    if self.GyroLvl then
+        force_pitch = entup * math_NormalizeAngle(gyroshipangles.p * 0.05) * self.PMult * mass
+    else
+        force_pitch = entup * -self.GyroPitch * self.PMult * mass * rotation_extra_mul
+    end
+
+    if self.GyroLvl then
+        force_roll = entup * math_NormalizeAngle(gyroshipangles.r * 0.05 * self.RMult * mass)
+    elseif self.RollLock and GyroRoll == 0 then
+        local RMM = mass * 0.00005 * self.RMult
+        local gyrophys = self:GetPhysicsObject():GetAngleVelocity()
+        local wlrm
+
+        if math_abs(gyroshipangles.p) > 80 then
+            wlrm = gyrophys.r * (-0.0132 * RMM)
+        elseif math_abs(gyroshipangles.r) < 100 then
+            wlrm = gyroshipangles.r * (0.25 * RMM)
+        else
+            wlrm = math_NormalizeAngle(gyroshipangles.r + 180) * (0.25 * RMM)
+        end
+
+        force_roll = entup * math_abs(wlrm) * wlrm * mass
+    else
+        force_roll = entup * -GyroRoll * self.RMult * mass
+    end
+
+    for _, ent in ipairs(self.MoveTable) do
+        if not IsValid(ent) then continue end
+
+        local phy = ent:GetPhysicsObject()
+
+        phy:SetVelocity(velocity)
+        phy:AddAngleVelocity(-phy:GetAngleVelocity())
+
+        phy:ApplyForceOffset(force_pitch, pos_front)
+        phy:ApplyForceOffset(-force_pitch, pos_rear)
+
+        phy:ApplyForceOffset(-force_yaw, pos_front)
+        phy:ApplyForceOffset(force_yaw, pos_rear)
+
+        phy:ApplyForceOffset(force_roll, pos_right)
+        phy:ApplyForceOffset(-force_roll, pos_left)
+    end
+end
+
+function ENT:ThinkUnactive(entpos, entorparvel, localentorparvel, speedmph)
+    if self.plantrigger or speedmph > 10 then
+        self.EnableGravity = false
+
+        for _, logs in ipairs(self.LogicCases) do
+            if self.EnableGravity then break end
+            local logvalues = logs:GetKeyValues()
+
+            for key, logvalue1 in pairs(logvalues) do
+                if self.EnableGravity then break end
+
+                if key == "Case01" then
+                    if logvalue1 == "planet" or logvalue1 == "planet2" then
+                        local pradius
+
+                        for key2, logvalue2 in pairs(logvalues) do
+                            if (key2 == "Case02") then
+                                pradius = tonumber(logvalue2)
+                                local pdist = self:GetPos():Distance(logs:GetPos())
+
+                                if pdist < pradius then
+                                    self.EnableGravity = true
+                                    break
+                                else
+                                    self.EnableGravity = false
+                                end
+                            end
+                        end
+                    end
+                end
+            end
+        end
+
+        self:UpdateGravity()
+        self.plantrigger = false
+        self.GravTrigger = true
+    end
+
+    if self.weighttrigger then
+        self:GyroWeight()
+    end
+
+    self.GyroSpeed, self.VSpeed, self.HSpeed = localentorparvel.x, localentorparvel.z, -localentorparvel.y
+
+    --Wind down engine sound when turned off
+    if self.HighEngineSound or self.LowDroneSound then
+        self.HighEnginePitch = math_clamp(self.HighEnginePitch - 0.7, 0, 300)
+        self.LowDronePitch = math_clamp(self.LowDronePitch - 0.3, 0, 300)
+        self.HighEngineVolume = math_clamp(self.HighEngineVolume - 0.005, 0, 2)
+        self.HighEngineSound.ChangeVolume(self.HighEngineSound, self.HighEngineVolume, 0)
+        self.HighEngineSound.ChangePitch(self.HighEngineSound, self.HighEnginePitch, 0)
+        self.LowDroneSound.ChangePitch(self.LowDroneSound, self.LowDronePitch, 0)
+
+        if self.LowDronePitch < 1 then
+            self.LowDroneSound:Stop()
+            self.HighEngineSound:Stop()
+        end
+    end
+end
+
+function ENT:Think()
     --Determines whether stuff comes from vehicle or entity
-    if (self.Pod and IsValid(self.Pod)) then
-        self.GyroDriver, self.entorpod = self.Pod:GetDriver(), self.Pod
+    if IsValid(self.Pod) then
+        self.GyroDriver, self.EntSoundSource = self.Pod:GetDriver(), self.Pod
     else
-        self.entorpod = self
+        self.EntSoundSource = self
     end
 
-    --Determines whether to get local velocity from the Gyropod, or the entity it is parented to, if it exists
-    if IsValid(self:GetParent()) then
-        entorpar = self:GetParent()
-    else
-        entorpar = self
+    local ent_measure = self
+
+    while IsValid(ent_measure:GetParent()) do
+        ent_measure = ent_measure:GetParent()
     end
 
-    local entpos, entorparvel = self:GetPos(), entorpar:GetVelocity()
+    local entpos, entorparvel = self:GetPos(), ent_measure:GetVelocity()
     local localentorparvel = self:WorldToLocal(entorparvel + entpos) --most of the features rely on these numbers
     local speedmph = math_round(localentorparvel:Length() / 17.6)
 
-    --convert toggled to non-toggled for freezing
     if self.FreezeOn then
-        if not self.freezetrigger then
-            self.entorpod:EmitSound("buttons/lever7.wav")
-            self:FreezeMotion()
-        end
-
         self.GyroSpeed, self.VSpeed, self.HSpeed = 0, 0, 0
-        self.FreezeOut = 1
-    else
-        if self.freezetrigger then
-            self.entorpod:EmitSound("buttons/button6.wav")
-            self:FreezeMotion()
-        end
-
-        self.FreezeOut = 0
     end
 
-    if self.AimModeOn then
-        self.ModeOut = 1
+    
 
-        if not self.AimSound then
-            self.entorpod:EmitSound("buttons/combine_button3.wav")
-            self.AimSound = true
-        end
 
-        if self.SystemOn then
+    if self.SystemOn then
+        local rotation_extra_mul = 1
+
+        if self.AimModeOn then
             self:AimByTarPos()
-        end
-    else
-        --increase pitch yaw during high speeds
-        if speedmph > 75 then
-            NTC = speedmph / 75
         else
-            NTC = 1
-        end
+            --increase pitch yaw during high speeds
+            if speedmph > 75 then
+                rotation_extra_mul = speedmph / 75
+            end
 
-        self.ModeOut = 0
-
-        if self.AimSound then
-            self.entorpod:EmitSound("buttons/combine_button2.wav")
-            self.AimSound = false
-        end
-
-        if self.SystemOn then
             if (self.GyroDriver and IsValid(self.GyroDriver)) then
                 self:AimByMouse()
             else
@@ -341,246 +560,21 @@ function ENT:Think()
                 self.ViewDelay = true
             end
         end
-    end
 
-    if self.SystemOn then
-        self.OnOut = 1
-        self.OnPlanet = false
-        self.plantrigger = true
-
-        -- if self.GravTrigger then
-        -- self:Gravity()
-        -- self.GravTrigger = false
-        -- end
-        if not self.gyroenginesound then
-            self.AllGyroConstraints = constraint.GetAllConstrainedEntities(self)
-
-            if self.HighEngineSound or self.LowDroneSound then
-                self.HighEngineSound:Stop()
-                self.LowDroneSound:Stop()
-            end
-
-            self.HighEngineSound = CreateSound(self.entorpod, Sound("ambient/atmosphere/outdoor2.wav"))
-            self.LowDroneSound = CreateSound(self.entorpod, Sound("ambient/atmosphere/indoor1.wav"))
-            self.HighEngineSound:Play()
-            self.LowDroneSound:Play()
-            self.entorpod:EmitSound("buttons/button1.wav")
-            self.gyroenginesound = true
-        end
-
-        if not self.weighttrigger then
-            self:GyroWeight()
-        end
-
-        --changing sounds based on speed
-        if speedmph > 80 then
-            self.HighEngineVolume = math_clamp(((speedmph * 0.035) - 2.6), 0, 1)
-        else
-            self.HighEngineVolume = speedmph * 0.0025
-        end
-
-        self.HighEnginePitch = (speedmph * 1.2) + 60
-        self.LowDronePitch = 35 + (speedmph * 0.2)
-        self.HighEngineSound.ChangeVolume(self.HighEngineSound, self.HighEngineVolume, 0)
-        self.HighEngineSound.ChangePitch(self.HighEngineSound, math.Clamp(self.HighEnginePitch, 0, 255), 0)
-        self.LowDroneSound.ChangePitch(self.LowDroneSound, math.Clamp(self.LowDronePitch, 0, 255), 0)
-        local speedx, speedy, speedz = math_abs(localentorparvel.x) / 17.6, math_abs(localentorparvel.y) / 17.6, math_abs(localentorparvel.z) / 17.6
-        local SMult, HMult, VMult, GyroRoll = (self.Forw - self.Back) + self.SpAbs, (self.SRight - self.SLeft) + self.LatAbs, (self.HUp - self.HDown) + self.VertAbs, (self.RollRight - self.RollLeft) + self.RollAbs
-
-        --Speed Limit modifiers
-        if math_abs(speedx) >= self.SpdL then
-            self.XMult = 0
-        else
-            self.XMult = 1
-        end
-
-        if math_abs(speedy) >= self.SpdL then
-            self.YMult = 0
-        else
-            self.YMult = 1
-        end
-
-        if math_abs(speedz) >= self.SpdL then
-            self.ZMult = 0
-        else
-            self.ZMult = 1
-        end
-
-        --pressing forward and moving forwards
-        if (SMult > 0) and (self.GyroSpeed >= 0) then
-            self.GyroSpeed = self.GyroSpeed + (self.TMult * self.XMult * (self.SpdL - math_abs(speedx)) * 0.05)
-        elseif (SMult < 0) and (self.GyroSpeed <= 0) then
-            --pressing reverse moving backwards
-            self.GyroSpeed = self.GyroSpeed - (self.TMult * self.XMult * (self.SpdL - math_abs(speedx)) * 0.05)
-        elseif (SMult > 0) and (self.GyroSpeed < 0) then
-            --pressing forward and moving backwards, increase speed faster until moving forwards again
-            self.GyroSpeed = self.GyroSpeed + ((math_abs(speedx)) + self.Damper)
-        elseif (SMult < 0) and (self.GyroSpeed > 0) then
-            --pressing reverse and moving forwards, reverse speed faster until moving backwards again
-            self.GyroSpeed = self.GyroSpeed - ((math_abs(speedx)) + self.Damper)
-        elseif (SMult == 0) and (self.GyroSpeed > 0) then
-            --not pressing for or back and moving forwards, slow movement faster until stopped
-            self.GyroSpeed = self.GyroSpeed - ((math_abs(speedx) * 0.2) + self.Damper)
-        elseif (SMult == 0) and (self.GyroSpeed < 0) then
-            --not pressing forw or back and moving backwards slow movement faster until stopped
-            self.GyroSpeed = self.GyroSpeed + ((math_abs(speedx) * 0.2) + self.Damper)
-        end
-
-        --Strafe movement
-        if (HMult > 0) and (self.HSpeed >= 0) then
-            self.HSpeed = self.HSpeed + (self.TMult * self.YMult * (self.SpdL - math_abs(speedy)) * 0.05)
-        elseif (HMult < 0) and (self.HSpeed <= 0) then
-            self.HSpeed = self.HSpeed - (self.TMult * self.YMult * (self.SpdL - math_abs(speedy)) * 0.05)
-        elseif (HMult > 0) and (self.HSpeed < 0) then
-            self.HSpeed = self.HSpeed + ((math_abs(speedy)) + self.Damper)
-        elseif (HMult < 0) and (self.HSpeed > 0) then
-            self.HSpeed = self.HSpeed - ((math_abs(speedy)) + self.Damper)
-        elseif (HMult == 0) and (self.HSpeed > 0) then
-            self.HSpeed = self.HSpeed - ((math_abs(speedy) * 0.2) + self.Damper)
-        elseif (HMult == 0) and (self.HSpeed < 0) then
-            self.HSpeed = self.HSpeed + ((math_abs(speedy) * 0.2) + self.Damper)
-        end
-
-        --Height Movement
-        if (VMult > 0) and (self.VSpeed >= 0) then
-            self.VSpeed = self.VSpeed + (self.TMult * self.ZMult * (self.SpdL - math_abs(speedz)) * 0.05)
-        elseif (VMult < 0) and (self.VSpeed <= 0) then
-            self.VSpeed = self.VSpeed - (self.TMult * self.ZMult * (self.SpdL - math_abs(speedz)) * 0.05)
-        elseif (VMult > 0) and (self.VSpeed < 0) then
-            self.VSpeed = self.VSpeed + ((math_abs(speedz)) + self.Damper)
-        elseif (VMult < 0) and (self.VSpeed > 0) then
-            self.VSpeed = self.VSpeed - ((math_abs(speedz)) + self.Damper)
-        elseif (VMult == 0) and (self.VSpeed > 0) then
-            self.VSpeed = self.VSpeed - ((math_abs(speedz) * 0.2) + self.Damper)
-        elseif (VMult == 0) and (self.VSpeed < 0) then
-            self.VSpeed = self.VSpeed + ((math_abs(speedz) * 0.2) + self.Damper)
-        end
-
-        --Force Application
-        local mass, entfor, entright, entup = self.GyroMass * 0.2, self:GetForward(), self:GetRight(), self:GetUp()
-
-        for x, c in pairs(self.MoveTable) do
-            if (IsValid(c)) then
-                local physobj = c:GetPhysicsObject()
-                local physvel, physangvel = physobj:GetVelocity(), physobj:GetAngleVelocity()
-                physobj:SetVelocity((entfor * self.GyroSpeed) + (entup * self.VSpeed) + (entright * self.HSpeed))
-                physobj:AddAngleVelocity(physangvel * -1)
-
-                if self.GyroLvl then
-                    physobj:ApplyForceOffset(entup * math.NormalizeAngle(gyroshipangles.p * 0.05) * self.PMult * mass, entpos + entfor * self.frontlength)
-                    physobj:ApplyForceOffset(entup * math.NormalizeAngle(-gyroshipangles.p * 0.05) * self.PMult * mass, entpos + entfor * -self.rearlength)
-                    physobj:ApplyForceOffset(entup * math.NormalizeAngle(gyroshipangles.r * 0.05) * self.RMult * mass, entpos + entright * self.rightwidth)
-                    physobj:ApplyForceOffset(entup * math.NormalizeAngle(-gyroshipangles.r * 0.05) * self.RMult * mass, entpos + entright * -self.leftwidth)
-                elseif self.RollLock then
-                    physobj:ApplyForceOffset(entup * -self.GyroPitch * self.PMult * mass * NTC, entpos + entfor * self.frontlength)
-                    physobj:ApplyForceOffset(entup * self.GyroPitch * self.PMult * mass * NTC, entpos + entfor * -self.rearlength)
-
-                    if math_abs(GyroRoll) > 0 then
-                        physobj:ApplyForceOffset(entup * -GyroRoll * self.RMult * mass, entpos + entright * self.rightwidth)
-                        physobj:ApplyForceOffset(entup * GyroRoll * self.RMult * mass, entpos + entright * -self.leftwidth)
-                    else
-                        local RMM = mass * 0.00005 * self.RMult
-                        local gyrophys = self:GetPhysicsObject():GetAngleVelocity()
-
-                        if math_abs(gyroshipangles.p) > 80 then
-                            self.WLRM = gyrophys.r * (-0.0132 * RMM)
-                        else
-                            if math_abs(gyroshipangles.r) < 100 then
-                                self.WLRM = gyroshipangles.r * (0.25 * RMM)
-                            else
-                                self.WLRM = math.NormalizeAngle(gyroshipangles.r + 180) * (0.25 * RMM)
-                            end
-                        end
-
-                        local GyroRollLvl = -math_abs(self.WLRM)
-                        physobj:ApplyForceOffset(entup * -GyroRollLvl * self.WLRM * mass, entpos + entright * self.rightwidth)
-                        physobj:ApplyForceOffset(entup * GyroRollLvl * self.WLRM * mass, entpos + entright * -self.leftwidth)
-                    end
-                else
-                    physobj:ApplyForceOffset(entup * -self.GyroPitch * self.PMult * mass * NTC, entpos + entfor * self.frontlength)
-                    physobj:ApplyForceOffset(entup * self.GyroPitch  * self.PMult * mass * NTC, entpos + entfor * -self.rearlength)
-                    physobj:ApplyForceOffset(entup * -GyroRoll * self.RMult * mass, entpos + entright * self.rightwidth)
-                    physobj:ApplyForceOffset(entup * GyroRoll * self.RMult * mass, entpos + entright * -self.leftwidth)
-                end
-
-                physobj:ApplyForceOffset(entright * -self.GyroYaw * self.YaMult * mass * NTC, entpos + entfor * self.frontlength)
-                physobj:ApplyForceOffset(entright * self.GyroYaw * self.YaMult * mass * NTC, entpos + entfor * -self.rearlength)
-            end
-        end
+        self:ThinkActive(entpos, entorparvel, localentorparvel, speedmph, rotation_extra_mul)
     else
-        if self.plantrigger or speedmph > 10 then
-            self.OnPlanet = false
-
-            for _, logs in ipairs(self.LogicCases) do
-                if self.OnPlanet then break end
-                local logvalues = logs:GetKeyValues()
-
-                for key, logvalue1 in pairs(logvalues) do
-                    if self.OnPlanet then break end
-
-                    if key == "Case01" then
-                        if logvalue1 == "planet" or logvalue1 == "planet2" then
-                            local pradius
-
-                            for key2, logvalue2 in pairs(logvalues) do
-                                if (key2 == "Case02") then
-                                    pradius = tonumber(logvalue2)
-                                    local pdist = self:GetPos():Distance(logs:GetPos())
-
-                                    if pdist < pradius then
-                                        self.OnPlanet = true
-                                        break
-                                    else
-                                        self.OnPlanet = false
-                                    end
-                                end
-                            end
-                        end
-                    end
-                end
-            end
-
-            self:Gravity()
-            self.plantrigger = false
-            self.GravTrigger = true
-        end
-
-        if self.gyroenginesound then
-            self.entorpod:EmitSound("buttons/button18.wav")
-            self.gyroenginesound = false
-        end
-
-        if self.weighttrigger then
-            self:GyroWeight()
-        end
-
-        self.OnOut, self.GyroSpeed, self.VSpeed, self.HSpeed = 0, localentorparvel.x, localentorparvel.z, -localentorparvel.y
-
-        --Wind down engine sound when turned off
-        if self.HighEngineSound or self.LowDroneSound then
-            self.HighEnginePitch = math_clamp(self.HighEnginePitch - 0.7, 0, 300)
-            self.LowDronePitch = math_clamp(self.LowDronePitch - 0.3, 0, 300)
-            self.HighEngineVolume = math_clamp(self.HighEngineVolume - 0.005, 0, 2)
-            self.HighEngineSound.ChangeVolume(self.HighEngineSound, self.HighEngineVolume, 0)
-            self.HighEngineSound.ChangePitch(self.HighEngineSound, self.HighEnginePitch, 0)
-            self.LowDroneSound.ChangePitch(self.LowDroneSound, self.LowDronePitch, 0)
-
-            if self.LowDronePitch < 1 then
-                self.LowDroneSound:Stop()
-                self.HighEngineSound:Stop()
-            end
-        end
+        self:ThinkUnactive(entpos, entorparvel, localentorparvel, speedmph)
     end
 
-    Wire_TriggerOutput(self, "On", self.OnOut)
-    Wire_TriggerOutput(self, "Frozen", self.FreezeOut)
-    Wire_TriggerOutput(self, "Targeting Mode", self.ModeOut)
+    Wire_TriggerOutput(self, "On", tonumber(self.SystemOn))
+    Wire_TriggerOutput(self, "Frozen", tonumber(self.FreezeOn))
+    Wire_TriggerOutput(self, "Targeting Mode", tonumber(self.AimModeOn))
     Wire_TriggerOutput(self, "MPH", speedmph)
     Wire_TriggerOutput(self, "KmPH", math_round(localentorparvel:Length() / 10.93613297222))
-    Wire_TriggerOutput(self, "Leveler", self.GyroLevelerOut)
+    Wire_TriggerOutput(self, "Leveler", tonumber(self.GyroLvl))
     Wire_TriggerOutput(self, "Total Mass", self.GyroMass)
     Wire_TriggerOutput(self, "Props Linked", table.Count(self.MoveTable))
-    Wire_TriggerOutput(self, "Angles", gyroshipangles)
+    Wire_TriggerOutput(self, "Angles", self:GetAngles())
     self:NextThink(CurTime() + 0.01)
 
     return true
@@ -589,7 +583,7 @@ end
 --Aiming mode Calculations
 function ENT:AimByTarPos()
     self:PodModelFix()
-    local PodPos, PodUp = self.entorpod:GetPos(), self.entorpod:GetUp()
+    local PodPos, PodUp = self.EntSoundSource:GetPos(), self.EntSoundSource:GetUp()
     local TarPosVec = self.TarPos - PodPos
     TarPosVec:Normalize()
     local TarMod = PodPos + TarPosVec * 100
@@ -646,6 +640,14 @@ function ENT:AimByMouse()
     end
 end
 
+function ENT:UpdateAimMode(active)
+    if active then
+        self.EntSoundSource:EmitSound("buttons/combine_button3.wav")
+    else
+        self.EntSoundSource:EmitSound("buttons/combine_button2.wav")
+    end
+end
+
 --fixing the strange bug where some vehicles are rotated 90 degrees
 function ENT:PodModelFix()
     if (self.Pod and IsValid(self.Pod)) then
@@ -665,83 +667,83 @@ function ENT:PodModelFix()
 end
 
 function ENT:GyroWeight()
-    local rnd = math.Round
+    if not self.SystemOn then
+        self.MoveTable = {}
+        self.GyroMass = 0
+        self.weighttrigger = false
+
+        return
+    end
+
+    local mass_table, phys_ent_table = {}
+
     local GyroPos = self:GetPos()
     local gyrofor = GyroPos + (self:GetForward() * 5000)
     local gyroback = GyroPos + (self:GetForward() * -5000)
     local gyroright = GyroPos + (self:GetRight() * 5000)
     local gyroleft = GyroPos + (self:GetRight() * -5000)
 
-    if self.SystemOn then
-        for _, ents in pairs(self.AllGyroConstraints) do
-            if (not IsValid(ents)) then return end
-            local linkphys = ents:GetPhysicsObject()
-            local mass = linkphys:GetMass()
-            local entspos = ents:GetPos()
-            local frontdist = entspos:Distance(gyrofor)
-            local backdist = entspos:Distance(gyroback)
-            local rightdist = entspos:Distance(gyroright)
-            local leftdist = entspos:Distance(gyroleft)
-            self.GyroMass = (self.GyroMass + mass)
+    local mindist_front, mindist_back, mindist_right, mindist_left = math.huge, math.huge, math.huge, math.huge
+    local max_mass = 0
 
-            if (linkphys:GetMass() > 10) then
-                table.insert(self.MassTable, mass)
-                table.insert(self.FrontDist, frontdist)
-                table.insert(self.BackDist, backdist)
-                table.insert(self.RightDist, rightdist)
-                table.insert(self.LeftDist, leftdist)
-                table.SortDesc(self.MassTable)
-                table.sort(self.FrontDist)
-                table.sort(self.BackDist)
-                table.sort(self.RightDist)
-                table.sort(self.LeftDist)
-                table.insert(self.PhysTable, ents)
-            end
+    for _, ent in ipairs(self.AllGyroConstraints) do
+        if not IsValid(ent) then continue end
+
+        local linkphys = ent:GetPhysicsObject()
+        local mass = linkphys:GetMass()
+        local entspos = ent:GetPos()
+        local frontdist = entspos:Distance(gyrofor)
+        local backdist = entspos:Distance(gyroback)
+        local rightdist = entspos:Distance(gyroright)
+        local leftdist = entspos:Distance(gyroleft)
+        self.GyroMass = (self.GyroMass + mass)
+
+        if mass > 10 then
+            mindist_front = math.min(mindist_front, frontdist)
+            mindist_back =  math.min(mindist_back,  backdist)
+            mindist_right = math.min(mindist_right, rightdist)
+            mindist_left =  math.min(mindist_left, leftdist)
+            max_mass = math.max(max_mass, mass)
+
+            table.insert(phys_ent_table, ent)
         end
-
-        local frontent, rearent, rightent, leftent, heaviest = rnd(self.FrontDist[1]), rnd(self.BackDist[1]), rnd(self.RightDist[1]), rnd(self.LeftDist[1]), rnd(self.MassTable[1])
-        self.frontlength, self.rearlength, self.rightwidth, self.leftwidth = frontent, rearent, rightent, leftent
-
-        if IsValid(self:GetParent()) then
-            local par = self:GetParent()
-            self.GyroParentIndex = par:EntIndex()
-        end
-
-        for _, i in pairs(self.PhysTable) do
-            local ilinkphys = i:GetPhysicsObject()
-            local ipos = i:GetPos()
-            local idx = i:EntIndex()
-
-            if rnd(ipos:Distance(gyrofor)) == frontent or rnd(ipos:Distance(gyroback)) == rearent or rnd(ipos:Distance(gyroright)) == rightent or rnd(ipos:Distance(gyroleft)) == leftent or rnd(ilinkphys:GetMass()) == heaviest or idx == self.GyroParentIndex then
-                table.insert(self.MoveTable, i)
-            end
-        end
-
-        self:Gravity()
-        self.weighttrigger = true
-    else
-        table.Empty(self.MassTable)
-        table.Empty(self.PhysTable)
-        table.Empty(self.FrontDist)
-        table.Empty(self.BackDist)
-        table.Empty(self.RightDist)
-        table.Empty(self.LeftDist)
-        table.Empty(self.MoveTable)
-        self.GyroMass = 0
-        self.weighttrigger = false
     end
+
+    self.frontlength, self.rearlength, self.rightwidth, self.leftwidth =
+        math_round(mindist_front), math_round(mindist_back),
+        math_round(mindist_right), math_round(mindist_left)
+
+    max_mass = math_round(max_mass)
+
+    local parent = self:GetParent()
+
+    for _, ent in ipairs(phys_ent_table) do
+        local ilinkphys = ent:GetPhysicsObject()
+        local ipos = ent:GetPos()
+
+        if  math_round(ipos:Distance(gyrofor))      == self.frontlength or
+            math_round(ipos:Distance(gyroback))     == self.rearlength or
+            math_round(ipos:Distance(gyroright))    == self.rightwidth or
+            math_round(ipos:Distance(gyroleft))     == self.leftwidth or
+            math_round(ilinkphys:GetMass())         == max_mass or
+            ent == parent then
+
+            table.insert(self.MoveTable, ent)
+        end
+    end
+
+    self:UpdateGravity()
+    self.weighttrigger = true
 end
 
 --Turns on/off gravity for all constrained entities
-function ENT:Gravity()
-    local constrained = self.AllGyroConstraints
-
-    for _, ents in pairs(constrained) do
-        if (not IsValid(ents)) then return end
-        local linkphys = ents:GetPhysicsObject()
+function ENT:UpdateGravity()
+    for _, ent in ipairs(self.AllGyroConstraints) do
+        if (not IsValid(ent)) then return end
+        local linkphys = ent:GetPhysicsObject()
         linkphys:EnableDrag(false)
 
-        if self.SystemOn or not self.OnPlanet then
+        if self.SystemOn or not self.EnableGravity then
             linkphys:EnableGravity(false)
         else
             linkphys:EnableGravity(true)
@@ -750,23 +752,21 @@ function ENT:Gravity()
 end
 
 --Freezes all constrained entities
-function ENT:FreezeMotion()
+function ENT:UpdateFreeze(activate)
     local constrainedents = constraint.GetAllConstrainedEntities(self)
 
-    for _, ents in pairs(constrainedents) do
-        if (not IsValid(ents)) then return end
+    if activate then
+        self.EntSoundSource:EmitSound("buttons/lever7.wav")
+    else
+        self.EntSoundSource:EmitSound("buttons/button6.wav")
+    end
 
-        if self.FreezeOn then
-            local physobj = ents:GetPhysicsObject()
-            physobj:EnableMotion(false)
-            physobj:Wake()
-            self.freezetrigger = true
-        else
-            local physobj = ents:GetPhysicsObject()
-            physobj:EnableMotion(true)
-            physobj:Wake()
-            self.freezetrigger = false
-        end
+    for _, ent in pairs(constrainedents) do
+        if not IsValid(ent) then return end
+        local physobj = ent:GetPhysicsObject()
+
+        physobj:EnableMotion(not activate)
+        physobj:Wake()
     end
 end
 
@@ -783,11 +783,9 @@ function ENT:OnRemove()
         self.LowDroneSound:Stop()
     end
 
-    local constrained = self.AllGyroConstraints
-
-    for _, ents in pairs(constrained) do
-        if (not IsValid(ents)) then return end
-        local linkphys = ents:GetPhysicsObject()
+    for _, ent in ipairs(self.AllGyroConstraints) do
+        if (not IsValid(ent)) then return end
+        local linkphys = ent:GetPhysicsObject()
 
         if IsValid(linkphys) then
             linkphys:EnableDrag(true)
