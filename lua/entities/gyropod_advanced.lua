@@ -294,13 +294,13 @@ function ENT:ThinkActive(entpos, entorparvel, localentorparvel, speedmph, rotati
     local force_roll
 
     if self.GyroLvl then
-        force_pitch = entup * math_NormalizeAngle(gyroshipangles.p * 0.05) * self.PMult * mass
+        force_pitch = entup * math_NormalizeAngle(-gyroshipangles.p * 0.05) * self.PMult * mass
     else
-        force_pitch = entup * -self.GyroPitch * self.PMult * mass * rotation_extra_mul
+        force_pitch = entup * self.GyroPitch * self.PMult * mass * rotation_extra_mul
     end
 
     if self.GyroLvl then
-        force_roll = entup * math_NormalizeAngle(gyroshipangles.r * 0.05 * self.RMult * mass)
+        force_roll = entup * math_NormalizeAngle(-gyroshipangles.r * 0.05) * self.RMult * mass
     elseif self.RollLock and GyroRoll == 0 then
         local RMM = mass * 0.00005 * self.RMult
         local gyrophys = self:GetPhysicsObject():GetAngleVelocity()
@@ -327,8 +327,8 @@ function ENT:ThinkActive(entpos, entorparvel, localentorparvel, speedmph, rotati
         phy:SetVelocity(velocity)
         phy:AddAngleVelocity(-phy:GetAngleVelocity())
 
-        phy:ApplyForceOffset(force_pitch, pos_front)
-        phy:ApplyForceOffset(-force_pitch, pos_rear)
+        phy:ApplyForceOffset(-force_pitch, pos_front)
+        phy:ApplyForceOffset(force_pitch, pos_rear)
 
         phy:ApplyForceOffset(-force_yaw, pos_front)
         phy:ApplyForceOffset(force_yaw, pos_rear)
