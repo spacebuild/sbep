@@ -41,12 +41,12 @@ function ENT:Initialize()
     self:SetMaterial("spacebuild/SBLight5")
 
     self.Inputs = WireLib.CreateSpecialInputs(self, {
-        "Activate", "Forward", "Back", "SpeedAbs",
-        "MoveLeft", "MoveRight", "Lateral",
-        "MoveUp", "MoveDown", "Vertical",
-        "RollLeft", "RollRight", "RollAbs",
-        "PitchUp", "PitchDown", "PitchAbs",
-        "YawLeft", "YawRight", "YawAbs",
+        "Activate", "Forward", "Back",
+        "MoveLeft", "MoveRight",
+        "MoveUp", "MoveDown",
+        "RollLeft", "RollRight",
+        "PitchUp", "PitchDown",
+        "YawLeft", "YawRight",
         "PitchMult", "YawMult", "RollMult",
         "ThrustMult",
         "MPH Limit", "Damper", "Level", "Roll Lock", "Freeze", "Antigravity",
@@ -97,12 +97,6 @@ function ENT:Initialize()
     self.Debug = 0
     self.GyroPitch = 0
     self.GyroYaw = 0
-    self.PitchAbs = 0
-    self.RollAbs = 0
-    self.YawAbs = 0
-    self.SpAbs = 0
-    self.LatAbs = 0
-    self.VertAbs = 0
 
     self.EnableAntigravity = false
 end
@@ -118,89 +112,29 @@ function ENT:TriggerInput(iname, value)
         self.AimModeOn = value ~= 0
         self:UpdateAimMode(self.AimModeOn)
     elseif (iname == "Forward") then
-        if (value ~= 0) then
-            self.Forw = 1
-        else
-            self.Forw = 0
-        end
+        self.Forw = value
     elseif (iname == "Back") then
-        if (value ~= 0) then
-            self.Back = 1
-        else
-            self.Back = 0
-        end
-    elseif (iname == "SpeedAbs") then
-        self.SpAbs = value
+        self.Back = value
     elseif (iname == "MoveLeft") then
-        if (value ~= 0) then
-            self.SLeft = 1
-        else
-            self.SLeft = 0
-        end
+        self.SLeft = value
     elseif (iname == "MoveRight") then
-        if (value ~= 0) then
-            self.SRight = 1
-        else
-            self.SRight = 0
-        end
-    elseif (iname == "Lateral") then
-        self.LatAbs = value
+        self.SRight = value
     elseif (iname == "MoveUp") then
-        if (value ~= 0) then
-            self.HUp = 1
-        else
-            self.HUp = 0
-        end
+        self.HUp = value
     elseif (iname == "MoveDown") then
-        if (value ~= 0) then
-            self.HDown = 1
-        else
-            self.HDown = 0
-        end
-    elseif (iname == "Vertical") then
-        self.VertAbs = value
+        self.HDown = value
     elseif (iname == "RollLeft") then
-        if (value ~= 0) then
-            self.RollLeft = 1
-        else
-            self.RollLeft = 0
-        end
+        self.RollLeft = value
     elseif (iname == "RollRight") then
-        if (value ~= 0) then
-            self.RollRight = 1
-        else
-            self.RollRight = 0
-        end
-    elseif (iname == "RollAbs") then
-        self.RollAbs = value
+        self.RollRight = value
     elseif (iname == "PitchUp") then
-        if (value ~= 0) then
-            self.GyroPitchUp = 1
-        else
-            self.GyroPitchUp = 0
-        end
+        self.GyroPitchUp = value
     elseif (iname == "PitchDown") then
-        if (value ~= 0) then
-            self.GyroPitchDown = 1
-        else
-            self.GyroPitchDown = 0
-        end
-    elseif (iname == "PitchAbs") then
-        self.PitchAbs = value
+        self.GyroPitchDown = value
     elseif (iname == "YawLeft") then
-        if (value ~= 0) then
-            self.GyroYawLeft = 1
-        else
-            self.GyroYawLeft = 0
-        end
+        self.GyroYawLeft = value
     elseif (iname == "YawRight") then
-        if (value ~= 0) then
-            self.GyroYawRight = 1
-        else
-            self.GyroYawRight = 0
-        end
-    elseif (iname == "YawAbs") then
-        self.YawAbs = value
+        self.GyroYawRight = value
     elseif (iname == "PitchMult") then
         if value ~= 0 then
             self.PMult = value
@@ -246,7 +180,7 @@ function ENT:TriggerInput(iname, value)
             self.Damper = 5
         end
     elseif (iname == "Level") then
-        self.GyroLvl = (value ~= 0)
+        self.GyroLvl = value ~= 0
     elseif (iname == "Roll Lock") then
         self.RollLock = value ~= 0
     elseif (iname == "Antigravity") then
@@ -331,40 +265,17 @@ function ENT:ThinkActive(entpos, entorparvel, localentorparvel, speedmph, rotati
     self.HighEngineSound.ChangePitch(self.HighEngineSound, math.Clamp(self.HighEnginePitch, 0, 255), 0)
     self.LowDroneSound.ChangePitch(self.LowDroneSound, math.Clamp(self.LowDronePitch, 0, 255), 0)
 
-    local speedx, speedy, speedz =
-        math_abs(localentorparvel.x) / 17.6,
-        math_abs(localentorparvel.y) / 17.6,
-        math_abs(localentorparvel.z) / 17.6
-
     local MulForward, MulRight, MulUp =
-        (self.Forw - self.Back) + self.SpAbs,
-        (self.SRight - self.SLeft) + self.LatAbs,
-        (self.HUp - self.HDown) + self.VertAbs
+        self.Forw - self.Back,
+        self.SRight - self.SLeft,
+        self.HUp - self.HDown
 
     local GyroRoll = (self.RollRight - self.RollLeft) + self.RollAbs
 
-    --Speed Limit modifiers
-    if math_abs(speedx) >= self.SpdL then
-        self.XMult = 0
-    else
-        self.XMult = 1
-    end
 
-    if math_abs(speedy) >= self.SpdL then
-        self.YMult = 0
-    else
-        self.YMult = 1
-    end
-
-    if math_abs(speedz) >= self.SpdL then
-        self.ZMult = 0
-    else
-        self.ZMult = 1
-    end
-
-    self.GyroSpeed =    GetSpeed(self.GyroSpeed,    MulForward, self.TMult * self.XMult, self.SpdL, self.Damper)
-    self.HSpeed =       GetSpeed(self.HSpeed,       MulRight,   self.TMult * self.YMult, self.SpdL, self.Damper)
-    self.VSpeed =       GetSpeed(self.VSpeed,       MulUp,      self.TMult * self.ZMult, self.SpdL, self.Damper)
+    self.GyroSpeed =    GetSpeed(self.GyroSpeed,    MulForward, self.TMult, self.SpdL, self.Damper)
+    self.HSpeed =       GetSpeed(self.HSpeed,       MulRight,   self.TMult, self.SpdL, self.Damper)
+    self.VSpeed =       GetSpeed(self.VSpeed,       MulUp,      self.TMult, self.SpdL, self.Damper)
 
     --Force Application
     local mass = self.GyroMass * 0.2
@@ -490,8 +401,8 @@ function ENT:Think()
             if (self.GyroDriver and IsValid(self.GyroDriver)) then
                 self:AimByMouse()
             else
-                self.GyroPitch = ((self.GyroPitchDown - self.GyroPitchUp) + self.PitchAbs) * 2
-                self.GyroYaw = (self.GyroYawLeft - self.GyroYawRight) + self.YawAbs
+                self.GyroPitch = (self.GyroPitchDown - self.GyroPitchUp) * 2
+                self.GyroYaw = self.GyroYawLeft - self.GyroYawRight
                 self.ViewDelay = true
             end
         end
