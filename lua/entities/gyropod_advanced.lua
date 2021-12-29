@@ -12,6 +12,10 @@ if CLIENT then return end
 local math_abs, math_round, math_clamp = math.abs, math.Round, math.Clamp
 local math_NormalizeAngle = math.NormalizeAngle
 
+local function bool_to_number(bool)
+    return Either(bool, 1, 0)
+end
+
 ENT.Owner = nil
 ENT.SPL = nil
 ENT.Firing = false
@@ -97,6 +101,7 @@ function ENT:Initialize()
     self.Debug = 0
     self.GyroPitch = 0
     self.GyroYaw = 0
+    self.EntSoundSource = self
 
     self.EnableAntigravity = false
 end
@@ -216,6 +221,8 @@ local function Sign(n)
 end
 
 local function GetSpeed(speed, movement_dir, movement_value, speed_limit, damper)
+    print(">", speed, movement_dir, movement_value, speed_limit, damper)
+
     local speed_sign = Sign(speed)
     local movement_sign = Sign(movement_dir)
 
@@ -223,24 +230,40 @@ local function GetSpeed(speed, movement_dir, movement_value, speed_limit, damper
 
     local speed_abs = math_abs(speed)
 
+    if movement_sign == 0 then -- No movement input
+        local value = speed_abs / 17.6 * 0.2 + damper
+
+        if speed == 0 then
+            return 0
+        elseif speed > 0 then
+            return speed - value
+        else
+            return speed + value
+        end
+    end
+
     local result_delta
 
-    if movement_sign == 0 then -- No movement input
-        if speed_abs == 0 then return 0 end -- No own speed, no input... Nothing...
-
-        result_delta = -speed_abs / 17.6 * 0.2 - damper
-    elseif speed_sign ~= -movement_sign then -- Forward movement (not-backward)
+    if speed_sign ~= -movement_sign then -- Forward movement
         if speed_abs / 17.6 >= speed_limit then
+            print("< fwd, limit")
             return speed
         end
 
-        result_delta = (speed_limit - speed_abs / 17.6 * 0.05) * movement_value
+        print("< fwd ")
+        result_delta = (speed_limit - speed_abs / 17.6) * movement_value * 0.05
     else -- Backward movement
-        result_delta = speed_abs / 17.6 * 0.2 + damper
+        print("< bck")
+        result_delta = -speed_abs / 17.6 - damper
     end
 
-    return speed + result_delta *
-        (speed_sign or movement_sign) -- If no speed, movement direction will be used
+    print("< delta", result_delta)
+
+    if speed > 0 then
+        return speed + result_delta
+    else
+        return speed - result_delta
+    end
 end
 
 function ENT:ThinkActive(entpos, entorparvel, localentorparvel, speedmph, rotation_extra_mul)
@@ -270,12 +293,18 @@ function ENT:ThinkActive(entpos, entorparvel, localentorparvel, speedmph, rotati
         self.SRight - self.SLeft,
         self.HUp - self.HDown
 
-    local GyroRoll = (self.RollRight - self.RollLeft) + self.RollAbs
+    local GyroRoll = self.RollRight - self.RollLeft
 
 
     self.GyroSpeed =    GetSpeed(self.GyroSpeed,    MulForward, self.TMult, self.SpdL, self.Damper)
     self.HSpeed =       GetSpeed(self.HSpeed,       MulRight,   self.TMult, self.SpdL, self.Damper)
     self.VSpeed =       GetSpeed(self.VSpeed,       MulUp,      self.TMult, self.SpdL, self.Damper)
+
+    debugoverlay.Line(entpos, self:LocalToWorld(Vector(self.GyroSpeed,0,0)*8), 1, Color(255,0,0), true)
+    debugoverlay.Line(entpos, self:LocalToWorld(Vector(0,  -self.HSpeed,0)*8), 1, Color(0,255,0), true)
+    debugoverlay.Line(entpos, self:LocalToWorld(Vector(0,0,   self.VSpeed)*8), 1, Color(0,0,255), true)
+
+    print("Speed", self.GyroSpeed, self.HSpeed, self.VSpeed)
 
     --Force Application
     local mass = self.GyroMass * 0.2
@@ -412,12 +441,12 @@ function ENT:Think()
         self:ThinkUnactive(localentorparvel, speedmph)
     end
 
-    Wire_TriggerOutput(self, "On", tonumber(self.SystemOn))
-    Wire_TriggerOutput(self, "Frozen", tonumber(self.FreezeOn))
-    Wire_TriggerOutput(self, "Targeting Mode", tonumber(self.AimModeOn))
+    Wire_TriggerOutput(self, "On", bool_to_number(self.SystemOn))
+    Wire_TriggerOutput(self, "Frozen", bool_to_number(self.FreezeOn))
+    Wire_TriggerOutput(self, "Targeting Mode", bool_to_number(self.AimModeOn))
     Wire_TriggerOutput(self, "MPH", speedmph)
     Wire_TriggerOutput(self, "KmPH", math_round(localentorparvel:Length() / 10.93613297222))
-    Wire_TriggerOutput(self, "Leveler", tonumber(self.GyroLvl))
+    Wire_TriggerOutput(self, "Leveler", bool_to_number(self.GyroLvl))
     Wire_TriggerOutput(self, "Total Mass", self.GyroMass)
     Wire_TriggerOutput(self, "Props Linked", table.Count(self.MoveTable))
     Wire_TriggerOutput(self, "Angles", self:GetAngles())
@@ -443,8 +472,6 @@ end
 
 --Mouselook Calculations (whoever figured this out is my personal hero)
 function ENT:AimByMouse()
-    local math_clamp = math.Clamp
-
     --small delay beofre mouse look is enabled
     if self.ViewDelay then
         self.ViewDelayOut = 0
