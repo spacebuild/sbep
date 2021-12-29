@@ -31,7 +31,7 @@ function TOOL:LeftClick(trace)
 
     local SMBProp = nil
 
-    if hab == 1 then
+    if hab == 1 and CAF ~= nil then
         SMBProp = ents.Create("livable_module")
     else
         SMBProp = ents.Create("prop_physics")
