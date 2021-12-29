@@ -221,8 +221,6 @@ local function Sign(n)
 end
 
 local function GetSpeed(speed, movement_dir, movement_value, speed_limit, damper)
-    print(">", speed, movement_dir, movement_value, speed_limit, damper)
-
     local speed_sign = Sign(speed)
     local movement_sign = Sign(movement_dir)
 
@@ -246,18 +244,13 @@ local function GetSpeed(speed, movement_dir, movement_value, speed_limit, damper
 
     if speed_sign ~= -movement_sign then -- Forward movement
         if speed_abs / 17.6 >= speed_limit then
-            print("< fwd, limit")
             return speed
         end
 
-        print("< fwd ")
         result_delta = (speed_limit - speed_abs / 17.6) * movement_value * 0.05
     else -- Backward movement
-        print("< bck")
         result_delta = -speed_abs / 17.6 - damper
     end
-
-    print("< delta", result_delta)
 
     if speed > 0 then
         return speed + result_delta
@@ -299,13 +292,6 @@ function ENT:ThinkActive(entpos, entorparvel, localentorparvel, speedmph, rotati
     self.GyroSpeed =    GetSpeed(self.GyroSpeed,    MulForward, self.TMult, self.SpdL, self.Damper)
     self.HSpeed =       GetSpeed(self.HSpeed,       MulRight,   self.TMult, self.SpdL, self.Damper)
     self.VSpeed =       GetSpeed(self.VSpeed,       MulUp,      self.TMult, self.SpdL, self.Damper)
-
-    debugoverlay.Line(entpos, self:LocalToWorld(Vector(self.GyroSpeed,0,0)*8), 1, Color(255,0,0), true)
-    debugoverlay.Line(entpos, self:LocalToWorld(Vector(0,  -self.HSpeed,0)*8), 1, Color(0,255,0), true)
-    debugoverlay.Line(entpos, self:LocalToWorld(Vector(0,0,   self.VSpeed)*8), 1, Color(0,0,255), true)
-
-    print("Speed", self.GyroSpeed, self.HSpeed, self.VSpeed)
-
     --Force Application
     local mass = self.GyroMass * 0.2
 
@@ -329,24 +315,36 @@ function ENT:ThinkActive(entpos, entorparvel, localentorparvel, speedmph, rotati
     end
 
     if self.GyroLvl then
-        force_roll = entup * math_NormalizeAngle(-gyroshipangles.r * 0.05) * self.RMult * mass
+        force_roll = entup * math_NormalizeAngle(gyroshipangles.r * 0.05) * self.RMult * mass
     elseif self.RollLock and GyroRoll == 0 then
-        local RMM = mass * 0.00005 * self.RMult
+        local RMM = mass * self.RMult * 0.0005--0.00005
         local gyrophys = self:GetPhysicsObject():GetAngleVelocity()
         local wlrm
 
         if math_abs(gyroshipangles.p) > 80 then
             wlrm = gyrophys.r * (-0.0132 * RMM)
+            --print(">1", wlrm)
         elseif math_abs(gyroshipangles.r) < 100 then
             wlrm = gyroshipangles.r * (0.25 * RMM)
+            --print(">2", wlrm)
         else
             wlrm = math_NormalizeAngle(gyroshipangles.r + 180) * (0.25 * RMM)
+            --print(">3", wlrm)
         end
 
         force_roll = entup * math_abs(wlrm) * wlrm * mass
     else
         force_roll = entup * -GyroRoll * self.RMult * mass
     end
+
+    --[[debugoverlay.Line(entpos + entfor * 16, entpos + entfor * 16 + force_pitch, 1, Color(255,0,0), true)
+    debugoverlay.Line(entpos - entfor * 16, entpos - entfor * 16 - force_pitch, 1, Color(0,255,255), true)
+
+    debugoverlay.Line(entpos + entfor * 16, entpos + entfor * 16 + force_yaw, 1, Color(0,255,0), true)
+    debugoverlay.Line(entpos - entfor * 16, entpos - entfor * 16 - force_yaw, 1, Color(255,0,255), true)
+
+    debugoverlay.Line(entpos + entright * 16, entpos + entright * 16 + force_roll, 1, Color(0,0,255), true)
+    debugoverlay.Line(entpos - entright * 16, entpos - entright * 16 - force_roll, 1, Color(255,255,0), true)]]
 
     for _, ent in ipairs(self.MoveTable) do
         if not IsValid(ent) then continue end
@@ -588,8 +586,10 @@ function ENT:GyroWeight()
 
     max_mass = math_round(max_mass)
 
+
     local parent = self:GetParent()
 
+    --[[
     for _, ent in ipairs(entities) do
         local ilinkphys = ent:GetPhysicsObject()
         local ipos = ent:GetPos()
@@ -603,7 +603,13 @@ function ENT:GyroWeight()
 
             table.insert(self.MoveTable, ent)
         end
+    end]]
+
+    if IsValid(parent) then
+        table.insert(entities, parent)
     end
+
+    self.MoveTable = entities
 
     self:UpdateGravity()
     self.weighttrigger = true
