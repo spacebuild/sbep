@@ -1,0 +1,16 @@
+{
+	"title"	:	"Spacebuild 3 Enhancement Pack",
+	"type"	:	"tool",
+	"tags"	:	[ "fun", "build" ],
+	"ignore":
+	[
+		".git*",
+		"addon.txt",
+		"data*",
+		"*.txt",
+		"*.bat",
+		"LICENSE",
+		"NOTICE",
+		"README.md"
+	]
+}

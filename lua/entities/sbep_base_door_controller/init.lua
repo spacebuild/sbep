@@ -55,7 +55,6 @@ end
 function ENT:AddDoors()
 	local doors = MST[ string.lower(self:GetModel()) ]
 	if !doors then return false end
-	local ply = self:GetOwner()
 	self.DT = {}
 	for n,Data in ipairs( doors ) do
 		local D = ents.Create( "sbep_base_door" )
@@ -64,7 +63,7 @@ function ENT:AddDoors()
 			D:SetDoorType( Data.type )
 			D:Attach( self , Data.V , Data.A )
 			D:SetController( self , n )
-			D:SetPlayer(ply)
+			if CPPI and self.CPPISetOwner then D:CPPISetOwner( self:CPPIGetOwner() ) end
 		table.insert( self.DT , D )
 	end
 end

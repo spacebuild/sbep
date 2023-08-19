@@ -1,4 +1,6 @@
 TOOL.Category		= "SBEP"
+TOOL.Tab 			= "Spacebuild"
+TOOL.Tab 			= "Spacebuild"
 TOOL.Name			= "#Door"
 TOOL.Command		= nil
 TOOL.ConfigName 	= ""
@@ -27,11 +29,11 @@ CategoryTable[1] = {
 					}
 
 CategoryTable[2] = {
-	{ name = "ModBridge Doors"	, cat = "Modbridge" , model = "models/Cerus/Modbridge/Misc/Doors/door11a.mdl" 	 }
+	{ name = "ModBridge Doors"	, cat = "Modbridge" , model = "models/cerus/modbridge/misc/doors/door11a.mdl" 	 }
 					}
 
 TOOL.ClientConVar[ "skin"  		] = 0
-TOOL.ClientConVar[ "model"  	] = "models/SmallBridge/Panels/sbpaneldoor.mdl"
+TOOL.ClientConVar[ "model"  	] = "models/smallbridge/panels/sbpaneldoor.mdl"
 TOOL.ClientConVar[ "wire"  		] = 1
 TOOL.ClientConVar[ "enableuse"	] = 1
 
@@ -81,6 +83,8 @@ function TOOL:LeftClick( tr )
 	DoorController:Activate()
 	
 	DoorController:SetPos( pos - Vector(0,0, DoorController:OBBMins().z ) )
+	
+	if CPPI then DoorController:CPPISetOwner(ply) end
 	DoorController:AddDoors()
 	
 	DoorController:MakeWire( ply:GetInfoNum( "sbep_door_wire", 1 ) == 1 )
@@ -124,12 +128,14 @@ function TOOL.BuildCPanel( panel )
 	local WireCheckBox = vgui.Create( "DCheckBoxLabel", panel )
 	WireCheckBox:Dock(TOP)
 	WireCheckBox:SetText( "Create Wire Inputs:" )
+	WireCheckBox:SetTextColor(Color(0,0,0,255))
 	WireCheckBox:SetConVar( "sbep_door_wire" )
 	WireCheckBox:SetValue( GetConVar( "sbep_door_wire" ):GetBool() )
 		
 	local UseCheckBox = vgui.Create( "DCheckBoxLabel", panel )
 	UseCheckBox:Dock(TOP)
 	UseCheckBox:SetText( "Enable Use Key:" )
+	UseCheckBox:SetTextColor(Color(0,0,0,255))
 	UseCheckBox:SetConVar( "sbep_door_enableuse" )
 	UseCheckBox:SetValue( GetConVar( "sbep_door_enableuse" ):GetBool()  )
 	

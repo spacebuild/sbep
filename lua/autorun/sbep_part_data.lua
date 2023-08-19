@@ -1405,7 +1405,69 @@ are all one -orientation - only.Then open cl_init .lua and make a new entry in t
         ["models/slyfo/gallant_class_engine1.mdl"] = {
             { type = "MBSH", pos = Vector(419.0, 0, 128.0), dir = Angle(0, 0, 0) },
             { type = "MBSH", pos = Vector(419.0, 0, -128.0), dir = Angle(0, 0, 180) }
-        }
+        },
+      -------------------------------------------------
+	--	Copper's Additions (Medbridge)     --
+	-------------------------------------------------
+	["models/punisher239/punisher239_bridge_zeppeline_end_noramp.mdl"] = {
+		{ type = "MBSH", pos = Vector(256,0,128), dir = Angle(0,0,0) },
+		{ type = "MBSH", pos = Vector(-256,0,128), dir = Angle(0,180,0) }
+	},
+	["models/punisher239/punisher239_bridge_zeppeline_end_ramp.mdl"] = {
+		{ type = "MBSH", pos = Vector(256,0,128), dir = Angle(0,0,0) },
+		{ type = "MBSH", pos = Vector(-256,0,128), dir = Angle(0,180,0) }
+	},
+	["models/punisher239/punisher239_bridge_zeppeline_mid_noramp.mdl"] = {
+		{ type = "MBSH", pos = Vector(256,0,128), dir = Angle(0,0,0) },
+		{ type = "MBSH", pos = Vector(-256,0,128), dir = Angle(0,180,0) }
+	},
+	["models/punisher239/punisher239_bridge_zeppeline_mid_ramp.mdl"] = {
+		{ type = "MBSH", pos = Vector(256,0,128), dir = Angle(0,0,0) },
+		{ type = "MBSH", pos = Vector(-256,0,128), dir = Angle(0,180,0) }
+	},
+	["models/punisher239/punisher239_engine_lms.mdl"] = { { type = "MBSH", pos = Vector(-256,0,128), dir = Angle(0,180,0) }, },
+	["models/punisher239/punisher239_mbshramp1.mdl"] = { { type = "MBSH", pos = Vector(256,0,0), dir = Angle(180,180,0) }, },
+	["models/sbep_community/d12mbbridge.mdl"] = { { type = "MBSH", pos = Vector(0,0,128), dir = Angle(0,0,0) } },
+	["models/sbep_community/d12mbcubconsingle.mdl"] = {
+		{ type = "MBSH", pos = Vector(256,0,128), dir = Angle(0,0,0) },
+		{ type = "MBSH", pos = Vector(-256,0,128), dir = Angle(0,180,0) }
+	},
+	["models/sbep_community/d12mbdome.mdl"] = {
+		{ type = "MBSH", pos = Vector(256,0,128), dir = Angle(0,0,0) },
+		{ type = "MBSH", pos = Vector(-256,0,128), dir = Angle(0,180,0) }
+	},
+	["models/sbep_community/d12mbsframe.mdl"] = {
+		{ type = "MBSH", pos = Vector(256,0,128), dir = Angle(0,0,0) },
+		{ type = "MBSH", pos = Vector(-256,0,128), dir = Angle(0,180,0) }
+	},
+	["models/sbep_community/d12singengine.mdl"] = { { type = "MBSH", pos = Vector(120,0,128), dir = Angle(0,0,0) }, },
+	["models/slyfo/airlock.mdl"] = {
+		{ type = "MBSH", pos = Vector(129,0,0), dir = Angle(0,0,0) },
+		{ type = "MBSH", pos = Vector(-129,0,0), dir = Angle(0,180,0) }
+	},
+	["models/slyfo/airlock_docksys.mdl"] = { { type = "MBSH", pos = Vector(30,0,0), dir = Angle(0,0,0) }, },
+	["models/slyfo/backhatch_engine.mdl"] = { { type = "MBSH", pos = Vector(215,0,0), dir = Angle(0,0,0) }, },
+	["models/slyfo/backhatch_ramp.mdl"] = { { type = "MBSH", pos = Vector(215,0,0), dir = Angle(0,0,0) }, },
+	["models/slyfo/biodome.mdl"] = { { type = "MBSH", pos = Vector(-550,0,121), dir = Angle(0,180,0) }, },
+		
+	["models/slyfo/bottomless.mdl"] = {
+        	{ type = "MBSH", pos = Vector(0, -256.0, 0), dir = Angle(0, 270, 0) },
+        	{ type = "MBSH", pos = Vector(0, 256.0, 0), dir = Angle(0, 90, 0) }
+        },
+	["models/slyfo/capturehull1.mdl"] = { { type = "MBSH", pos = Vector(-595,0,-25), dir = Angle(0,180,0) }, },
+	["models/slyfo/cockpit_lground.mdl"] = {
+		{ type = "MBSH", pos = Vector(-209,0,128), dir = Angle(0,180,0) },
+		{ type = "MBSH", pos = Vector(-209,0,-128), dir = Angle(0,180,0) }
+	},
+	["models/slyfo/cockpit_sideround.mdl"] = {
+		{ type = "MBSH", pos = Vector(-209,128,0), dir = Angle(0,180,90) },
+		{ type = "MBSH", pos = Vector(-209,-128,0), dir = Angle(0,180,90) }
+	},
+	["models/slyfo/doubleclamp.mdl"] = { { type = "MBSH", pos = Vector(235,0,35), dir = Angle(0,0,0) }, },
+	["models/slyfo/doubleclamp_x.mdl"] = {
+		{ type = "MBSH", pos = Vector(235,0,35), dir = Angle(0,0,0) },
+		{ type = "MBSH", pos = Vector(-235,0,35), dir = Angle(0,180,0) }
+	},
         ----------------------------------------------------------------------------------------------------------------------------------------
         ----------------------------------------------------------------------------------------------------------------------------------------
     }
@@ -1784,7 +1846,20 @@ are all one -orientation - only.Then open cl_init .lua and make a new entry in t
             { type = "MOD1x1", pos = Vector(-225, -150, -150), dir = Angle(0, 180, 0) },
             { type = "MOD1x1", pos = Vector(-225, 150, -150), dir = Angle(0, 180, 0) }
         },
-
+	--------------------------------------------------
+	--	Copper's Additions (Modbridge)		--
+	--------------------------------------------------
+	["models/cerus/modbridge/core/s-332ep.mdl"] = {
+            { type = "MOD3x1", pos = Vector(-224, 0, 74.25), dir = Angle(0, 180, 0) },
+            { type = "MOD3x1", pos = Vector(224, 0, 74.25), dir = Angle(0, 0, 0) },
+            { type = "MOD3x1", pos = Vector(-224, 0, -74.25), dir = Angle(0, 180, 0) },
+            { type = "MOD3x1", pos = Vector(224, 0, -74.25), dir = Angle(0, 0, 0) }
+        },
+	["models/cerus/modbridge/misc/engines/eng_sq11b.mdl"] = { { type = "MOD1x1", pos = Vector(0,0,0), dir = Angle(90, 0, 180) }, },
+	["models/cerus/modbridge/misc/engines/eng_p31.mdl"] = { { type = "MOD3x1", pos = Vector(0,0,-48), dir = Angle(90,0,90) }, },
+	["models/cerus/modbridge/misc/weapons/wep_ion1.mdl"] = { { type = "MOD1x1", pos = Vector(-150,0,0), dir = Angle(180,0,0) }, },
+	["models/cerus/modbridge/plate/bp111wd.mdl"] = { { type = "MOD1x1", pos = Vector(0,0,0), dir = Angle(0,90,0) }, },
+		
         ----------------------------------------------------------------------------------------------------------------------------------------
         ----------------------------------------------------------------------------------------------------------------------------------------
     }

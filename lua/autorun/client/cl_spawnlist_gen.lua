@@ -13,208 +13,1117 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 ]]--
--- Created by IntelliJ IDEA.
--- User: Sam
--- Date: 16/12/12
--- Time: 8:28 AM
--- To change this template use File | Settings | File Templates.
---
-SBEP.FolderName = "SBEP"
+
+med_bridges = {
+  [1] = "models/spacebuild/medbridge.mdl",
+  [2] = "models/spacebuild/medbridge2.mdl",
+  [3] = "models/slyfo/cruisercockpit.mdl",
+  [4] = "models/slyfo/combat_cockpit_small.mdl",
+  [5] = "models/slyfo/cockpit_smround.mdl",
+  [6] = "models/slyfo/sidecockpit.mdl",
+  [7] = "models/slyfo/sccleft.mdl",
+  [8] = "models/slyfo/sccright.mdl",
+  [9] = "models/slyfo/capturehull1.mdl",
+  [10] = "models/spacebuild/medbridge2_angularbridge.mdl",
+  [11] = "models/spacebuild/medbridge2_longbridge.mdl",
+  [12] = "models/spacebuild/medbridge2_twolevel.mdl",
+  [13] = "models/slyfo/cockpit_lground.mdl",
+  [14] = "models/slyfo/cockpit_sideround.mdl",
+  [15] = "models/spacebuild/medbridge2_360view_doublebridge.mdl",
+  [16] = "models/spacebuild/medbridge2_midsectionbridge.mdl",
+  [17] = "models/spacebuild/medbridge2_midsection_doublebridge.mdl",
+  [18] = "models/spacebuild/medbridge2_midsection_doublebridge2.mdl",
+  [19] = "models/spacebuild/nova/supercarrierbridge.mdl",
+  [20] = "models/slyfo/thcockpit.mdl",
+}
+
+med_carrier_deck = {
+  [1] = "models/slyfo/cdeck_bow.mdl",
+  [2] = "models/slyfo/cdeck_back.mdl",
+  [3] = "models/slyfo/cdeck_single.mdl",
+  [4] = "models/slyfo/cdeck_tjoint.mdl",
+  [5] = "models/slyfo/cdeck_double.mdl",
+  [6] = "models/slyfo/cdeck_doublewide.mdl",
+  [7] = "models/slyfo/cdeck_doublewideconv.mdl",
+}
+
+med_doubles = {
+  [1] = "models/spacebuild/medbridge2_enginehull2.mdl",
+  [2] = "models/spacebuild/medbridge2_enginehull.mdl",
+  [3] = "models/spacebuild/medbridge2_enginehull4.mdl",
+  [4] = "models/slyfo/matthewenginelong.mdl",
+  [5] = "models/slyfo/matthewengineshort.mdl",
+  [6] = "models/slyfo/gallant_class_engine3.mdl",
+  [7] = "models/slyfo/gallant_class_engine4.mdl",
+  [8] = "models/slyfo/gallant_class_engine6.mdl",
+  [9] = "models/spacebuild/medbridge2_enginedoublehull_flaps.mdl",
+  [10] = "models/spacebuild/medbridge2_enginedoublehull2_narrow.mdl",
+  [11] = "models/spacebuild/medbridge2_enginedoublehull2_wide.mdl",
+  [12] = "models/slyfo/fishfacemki.mdl",
+  [13] = "models/slyfo/gallant_class_engine1.mdl",
+  [14] = "models/slyfo/gallant_class_engine2.mdl",
+  [15] = "models/slyfo/gallant_class_engine5.mdl",
+  [16] = "models/spacebuild/nova/supercarrierbridge.mdl",
+  [17] = "models/spacebuild/medbridge2_engineaddon1.mdl",
+  [18] = "models/spacebuild/medbridge2_enginehull3.mdl",
+  [19] = "models/spacebuild/medbridge2_large_solar_sail.mdl",
+}
+
+med_engines = {
+  [1] = "models/spacebuild/medbridge2_enginehull2.mdl",
+  [2] = "models/spacebuild/medbridge2_enginehull.mdl",
+  [3] = "models/spacebuild/medbridge2_enginehull4.mdl",
+  [4] = "models/slyfo/matthewenginelong.mdl",
+  [5] = "models/slyfo/matthewengineshort.mdl",
+  [6] = "models/slyfo/gallant_class_engine3.mdl",
+  [7] = "models/slyfo/gallant_class_engine4.mdl",
+  [8] = "models/slyfo/gallant_class_engine6.mdl",
+  [9] = "models/spacebuild/medbridge2_enginedoublehull_flaps.mdl",
+  [10] = "models/spacebuild/medbridge2_enginedoublehull2_narrow.mdl",
+  [11] = "models/spacebuild/medbridge2_enginedoublehull2_wide.mdl",
+  [12] = "models/slyfo/fishfacemki.mdl",
+  [13] = "models/slyfo/gallant_class_engine1.mdl",
+  [14] = "models/slyfo/gallant_class_engine2.mdl",
+  [15] = "models/slyfo/gallant_class_engine5.mdl",
+  [16] = "models/spacebuild/nova/supercarrierbridge.mdl",
+  [17] = "models/spacebuild/medbridge2_engineaddon1.mdl",
+  [18] = "models/spacebuild/medbridge2_enginehull3.mdl",
+  [19] = "models/spacebuild/medbridge2_large_solar_sail.mdl",
+}
+
+med_entry = {
+  [1] = "models/slyfo/doublehatch.mdl",
+  [2] = "models/slyfo/doublehatch_hatch.mdl",
+  [3] = "models/slyfo/bottomless.mdl",
+  [4] = "models/slyfo/topless.mdl",
+  [5] = "models/slyfo/topless_top.mdl",
+  [6] = "models/slyfo/foldcargobaseplate.mdl",
+  [7] = "models/slyfo/foldcargohatch.mdl",
+  [8] = "models/slyfo/inversebay.mdl",
+  [9] = "models/slyfo/inversebayhatch.mdl",
+  [10] = "models/slyfo/mcpdropbay.mdl",
+  [11] = "models/slyfo/mcpdropbayhatch.mdl",
+  [12] = "models/slyfo/mcpdropglass.mdl",
+  [13] = "models/spacebuild/nova/hull_lift1.mdl",
+  [14] = "models/spacebuild/nova/hull_lift1lift.mdl",
+  [15] = "models/spacebuild/nova/hull_lift_double.mdl",
+  [16] = "models/spacebuild/nova/hull_lift_doublelift.mdl",
+}
+
+med_hangers = {
+  [1] = "models/slyfo/shangar.mdl",
+  [2] = "models/slyfo/doublesideopen.mdl",
+  [3] = "models/slyfo/minelayer.mdl",
+  [4] = "models/slyfo/longhangar.mdl",
+  [5] = "models/spacebuild/medbridge2_fighterbay.mdl",
+  [6] = "models/spacebuild/medbridge2_fighterbay_noglass.mdl",
+  [7] = "models/spacebuild/medbridge2_fighterbayshortcap.mdl",
+  [8] = "models/spacebuild/medbridge2_fighterbayshortcap2.mdl",
+  [9] = "models/slyfo/hangar1.mdl",
+  [10] = "models/spacebuild/medbridge2_fighterbay2.mdl",
+  [11] = "models/spacebuild/medbridge2_fighterbay2_noglass.mdl",
+  [12] = "models/spacebuild/medbridge2_fighterbay2longcap.mdl",
+  [13] = "models/slyfo/hangar2.mdl",
+  [14] = "models/slyfo/hangar3.mdl",
+  [15] = "models/spacebuild/medbridge2_fighterbay3a.mdl",
+  [16] = "models/spacebuild/medbridge2_fighterbay3.mdl",
+  [17] = "models/spacebuild/medbridge2_fighterbay3transcap.mdl",
+  [18] = "models/spacebuild/medbridge2_fighterbay3sidebaycap.mdl",
+  [19] = "models/slyfo/thhangar.mdl",
+  [20] = "models/spacebuild/medbridge2_doublehull_hanger_elevator.mdl",
+  [21] = "models/spacebuild/medbridge2_doublehull_hanger_guardrail.mdl",
+  [22] = "models/spacebuild/medbridge2_doublehull_hanger_crosswalk.mdl",
+  [23] = "models/spacebuild/medbridge2_doublehull_elevatorpad.mdl",
+  [24] = "models/spacebuild/medbridge2_doublehull_elevatorclamp.mdl",
+}
+
+med_misc = {
+  [1] = "models/spacebuild/medbridge2_topplate.mdl",
+  [2] = "models/spacebuild/medbridge2_topplatebendcap.mdl",
+  [3] = "models/slyfo/biodome.mdl",
+  [4] = "models/slyfo/biodome2.mdl",
+  [5] = "models/slyfo/evilsphere.mdl",
+  [6] = "models/slyfo/capturehull1.mdl",
+  [7] = "models/slyfo/cargocap.mdl",
+  [8] = "models/slyfo/cargocapglass.mdl",
+  [9] = "models/slyfo/cargocaplight.mdl",
+  [10] = "models/slyfo/cargoclosed.mdl",
+  [11] = "models/slyfo/cargoopen.mdl",
+  [12] = "models/slyfo/cargosideopen.mdl",
+  [13] = "models/slyfo/cargosideopenhatch.mdl",
+  [14] = "models/slyfo/cargostack.mdl",
+  [15] = "models/slyfo/cargohub.mdl",
+  [16] = "models/slyfo/consolescreenbig.mdl",
+  [17] = "models/slyfo/consolescreenmed.mdl",
+  [18] = "models/slyfo/consolescreensmall.mdl",
+  [19] = "models/slyfo/doublehatch.mdl",
+  [20] = "models/slyfo/doublehatch_hatch.mdl",
+  [21] = "models/slyfo/barricade.mdl",
+  [22] = "models/slyfo/finfunnel.mdl",
+  [23] = "models/slyfo/powercrystal.mdl",
+  [24] = "models/slyfo/t-eng.mdl",
+  [25] = "models/slyfo/boxpallet.mdl",
+  [26] = "models/slyfo/boxpallet2.mdl",
+  [27] = "models/slyfo/flatpallet.mdl",
+  [28] = "models/slyfo/forkbase.mdl",
+  [29] = "models/slyfo/forklift.mdl",
+  [30] = "models/slyfo/forkrobot.mdl",
+  [31] = "models/spacebuild/nova/drop_pod.mdl",
+  [32] = "models/slyfo/probe1.mdl",
+  [33] = "models/slyfo/probe2.mdl",
+}
+
+med_singles = {
+  [1] = "models/spacebuild/medbridge2_emptyhull.mdl",
+  [2] = "models/spacebuild/medbridge2_emptyhull_90.mdl",
+  [3] = "models/spacebuild/medbridge2_emptyhull_t.mdl",
+  [4] = "models/spacebuild/medbridge2_emptyhull_x.mdl",
+  [5] = "models/spacebuild/medbridge2_widey.mdl",
+  [6] = "models/spacebuild/medbridge2_compflathull.mdl",
+  [7] = "models/spacebuild/medbridge2_stacksinglehull_openbottom.mdl",
+  [8] = "models/spacebuild/medbridge2_stacksinglehull_ramp.mdl",
+  [9] = "models/spacebuild/medbridge2_stacksinglehull_roof.mdl",
+  [10] = "models/spacebuild/medbridge2_flatcap.mdl",
+  [11] = "models/spacebuild/medbridge2_s128cap.mdl",
+  [12] = "models/spacebuild/doorway_invert.mdl",
+  [13] = "models/slyfo/straighthull.mdl",
+  [14] = "models/slyfo/inverter.mdl",
+  [15] = "models/slyfo/doubletrilong.mdl",
+  [16] = "models/slyfo/doubletrishort.mdl",
+  [17] = "models/slyfo/largetri.mdl",
+  [18] = "models/slyfo/smalltri.mdl",
+  [19] = "models/slyfo/ljoint.mdl",
+  [20] = "models/slyfo/tjoint.mdl",
+  [21] = "models/slyfo/xjoint.mdl",
+  [22] = "models/slyfo/trit.mdl",
+  [23] = "models/slyfo/turnabout.mdl",
+  [24] = "models/slyfo/largerad.mdl",
+  [25] = "models/slyfo/triangularhub.mdl",
+  [26] = "models/slyfo/dwbent.mdl",
+  [27] = "models/slyfo/dwbump.mdl",
+  [28] = "models/slyfo/dwsmooth.mdl",
+  [29] = "models/slyfo/longlass.mdl",
+  [30] = "models/slyfo/longnoglass.mdl",
+  [31] = "models/slyfo/mednoglass.mdl",
+  [32] = "models/slyfo/medglass.mdl",
+  [33] = "models/slyfo/shortnoglass.mdl",
+  [34] = "models/slyfo/shortglass.mdl",
+  [35] = "models/slyfo/bottomless.mdl",
+  [36] = "models/slyfo/topless.mdl",
+  [37] = "models/slyfo/topless_top.mdl",
+  [38] = "models/slyfo/angledown.mdl",
+  [39] = "models/slyfo/angleup.mdl",
+  [40] = "models/slyfo/ramp.mdl",
+  [41] = "models/slyfo/rampleft.mdl",
+  [42] = "models/slyfo/rampright.mdl",
+  [43] = "models/slyfo/tramp.mdl",
+  [44] = "models/slyfo/xramp.mdl",
+  [45] = "models/slyfo/tramptriple.mdl",
+  [46] = "models/slyfo/tramptripleinv.mdl",
+  [47] = "models/slyfo/doublehatch.mdl",
+  [48] = "models/slyfo/doublehatch_hatch.mdl",
+}
+
+med_triples = {
+  [1] = "models/slyfo/thhull.mdl",
+  [2] = "models/slyfo/thlong.mdl",
+  [3] = "models/slyfo/thnoramp.mdl",
+  [4] = "models/slyfo/thramp.mdl",
+  [5] = "models/slyfo/thcockpit.mdl",
+  [6] = "models/slyfo/thhangar.mdl",
+}
 
 
---TODO: Create a way to check FolderName (SBEP or SBMP)
---TODO: Get Better icons...
---TODO: Maybe load names from line 1 of each file
---TODO: Either write a function to lower case the whole file or lower case them using Npp.
+mod_accessories = {
+  [1] = "models/cerus/modbridge/misc/accessories/acc_ant2_red.mdl",
+  [2] = "models/cerus/modbridge/misc/accessories/acc_ant_red.mdl",
+  [3] = "models/cerus/modbridge/misc/accessories/acc_furnace1.mdl",
+  [4] = "models/cerus/modbridge/misc/accessories/acc_radar1.mdl",
+  [5] = "models/cerus/modbridge/misc/engines/eng_sq11b.mdl",
+}
 
-function LoadContent( mode, pnl, ViewPanel,pnlContent  )
-	ViewPanel:Clear( true )
+mod_cockpits_bridges_and_glass_corridors = {
+  [1] = "models/cerus/modbridge/core/g-111wd.mdl",
+  [2] = "models/cerus/modbridge/core/g-211s.mdl",
+  [3] = "models/cerus/modbridge/core/g-221s.mdl",
+  [4] = "models/cerus/modbridge/core/g-231s.mdl",
+  [5] = "models/cerus/modbridge/core/bridgeg-211.mdl",
+  [6] = "models/cerus/modbridge/core/g-221.mdl",
+  [7] = "models/cerus/modbridge/core/g-231w.mdl",
+  [8] = "models/cerus/modbridge/core/g-231r.mdl",
+  [9] = "models/cerus/modbridge/core/sc-111g.mdl",
+  [10] = "models/cerus/modbridge/core/s-111g.mdl",
+  [11] = "models/cerus/modbridge/core/s-221g.mdl",
+  [12] = "models/cerus/modbridge/core/s-331g.mdl",
+  [13] = "models/cerus/modbridge/core/sc-131g2.mdl",
+  [14] = "models/cerus/modbridge/core/sc-131g3.mdl",
+  [15] = "models/cerus/modbridge/core/sc-131g.mdl",
+}
 
-	DebugMessage(mode)
-	local data = file.Read("addons\\"..SBEP.FolderName.. "\\data\\ModelLists\\"..mode,"GAME")
-		local models = util.KeyValuesToTable(data)
-		for i,j in ipairs(models) do
-			--Based off Vanilla GMod Code
-			local cp = spawnmenu.GetContentType( "model" )
-			if (cp) then
-				cp( ViewPanel, {model = j})
-			end
-		end
-	pnlContent:SwitchPanel( ViewPanel )
+mod_corridor_segments = {
+  [1] = "models/cerus/modbridge/core/s-111.mdl",
+  [2] = "models/cerus/modbridge/core/s-211.mdl",
+  [3] = "models/cerus/modbridge/core/s-311.mdl",
+  [4] = "models/cerus/modbridge/core/sc-111.mdl",
+  [5] = "models/cerus/modbridge/core/c-111.mdl",
+  [6] = "models/cerus/modbridge/core/t-111.mdl",
+  [7] = "models/cerus/modbridge/core/x-111.mdl",
+  [8] = "models/cerus/modbridge/core/s-121.mdl",
+  [9] = "models/cerus/modbridge/core/s-221.mdl",
+  [10] = "models/cerus/modbridge/core/s-321.mdl",
+  [11] = "models/cerus/modbridge/core/sc121.mdl",
+  [12] = "models/cerus/modbridge/core/c-21.mdl",
+  [13] = "models/cerus/modbridge/core/t-21.mdl",
+  [14] = "models/cerus/modbridge/core/x-21.mdl",
+  [15] = "models/cerus/modbridge/core/s-131.mdl",
+  [16] = "models/cerus/modbridge/core/s-231.mdl",
+  [17] = "models/cerus/modbridge/core/s-331.mdl",
+  [18] = "models/cerus/modbridge/core/sc-131.mdl",
+  [19] = "models/cerus/modbridge/core/c-331.mdl",
+  [20] = "models/cerus/modbridge/core/t-331.mdl",
+  [21] = "models/cerus/modbridge/core/x-331.mdl",
+  [22] = "models/cerus/modbridge/core/s-332.mdl",
+  [23] = "models/cerus/modbridge/core/sc-332.mdl",
+  [24] = "models/cerus/modbridge/core/c-332.mdl",
+  [25] = "models/cerus/modbridge/core/t-332.mdl",
+  [26] = "models/cerus/modbridge/core/x-332.mdl",
+}
+
+mod_corvette_fighters = {
+  [1] = "models/cerus/mcorvette/bridge1.mdl",
+  [2] = "models/cerus/mcorvette/body1.mdl",
+  [3] = "models/cerus/mcorvette/pod1-r.mdl",
+  [4] = "models/cerus/mcorvette/pod1-l.mdl",
+  [5] = "models/cerus/fighters/wraith.mdl",
+  [6] = "models/cerus/fighters/stingray.mdl",
+}
+
+mod_elevators = {
+  [1] = "models/cerus/modbridge/misc/elevator/eb111.mdl",
+  [2] = "models/cerus/modbridge/misc/elevator/eb332.mdl",
+  [3] = "models/cerus/modbridge/misc/elevator/ecb111.mdl",
+  [4] = "models/cerus/modbridge/misc/elevator/ecm111.mdl",
+  [5] = "models/cerus/modbridge/misc/elevator/ect111.mdl",
+  [6] = "models/cerus/modbridge/misc/elevator/elev_111.mdl",
+  [7] = "models/cerus/modbridge/misc/elevator/elev_332.mdl",
+  [8] = "models/cerus/modbridge/misc/elevator/elev_332b.mdl",
+  [9] = "models/cerus/modbridge/misc/elevator/em111.mdl",
+  [10] = "models/cerus/modbridge/misc/elevator/em332.mdl",
+  [11] = "models/cerus/modbridge/misc/elevator/et111.mdl",
+  [12] = "models/cerus/modbridge/misc/elevator/et332.mdl",
+  [13] = "models/cerus/modbridge/misc/elevator/etm111.mdl",
+  [14] = "models/cerus/modbridge/misc/elevator/etm111g.mdl",
+  [15] = "models/cerus/modbridge/misc/elevator/etm112.mdl",
+  [16] = "models/cerus/modbridge/misc/elevator/etm113.mdl",
+  [17] = "models/cerus/modbridge/misc/elevator/etm113g.mdl",
+  [18] = "models/cerus/modbridge/misc/elevator/se11f.mdl",
+  [19] = "models/cerus/modbridge/core/s-331eb.mdl",
+  [20] = "models/cerus/modbridge/core/s-331em.mdl",
+  [21] = "models/cerus/modbridge/core/s-331et.mdl",
+  [22] = "models/cerus/modbridge/core/s-332ep.mdl",
+}
+
+mod_engines_weapons_prefabs_and_dorrs = {
+  [1] = "models/cerus/modbridge/misc/engines/eng_sq11b.mdl",
+  [2] = "models/cerus/modbridge/misc/weapons/wep_ion1.mdl",
+  [3] = "models/cerus/modbridge/core/prefab/crew_331.mdl",
+  [4] = "models/cerus/modbridge/misc/doors/door11b.mdl",
+  [5] = "models/cerus/modbridge/misc/doors/door11a.mdl",
+  [6] = "models/cerus/modbridge/misc/doors/door12a.mdl",
+  [7] = "models/cerus/modbridge/misc/doors/door13a.mdl",
+  [8] = "models/cerus/modbridge/misc/doors/door23a.mdl",
+  [9] = "models/cerus/modbridge/misc/doors/door33a.mdl",
+}
+
+mod_external_decor = {
+  [1] = "models/cerus/modbridge/plate/bp111wd.mdl",
+  [2] = "models/cerus/modbridge/plate/bp111wd2.mdl",
+  [3] = "models/cerus/modbridge/plate/bp211.mdl",
+  [4] = "models/cerus/modbridge/plate/bp211s.mdl",
+  [5] = "models/cerus/modbridge/plate/bp221.mdl",
+  [6] = "models/cerus/modbridge/plate/bp221s.mdl",
+  [7] = "models/cerus/modbridge/plate/bp231g.mdl",
+  [8] = "models/cerus/modbridge/plate/bp231s.mdl",
+  [9] = "models/cerus/modbridge/plate/bp231w.mdl",
+  [10] = "models/cerus/modbridge/plate/flat/acc112.mdl",
+  [11] = "models/cerus/modbridge/plate/flat/ace312.mdl",
+  [12] = "models/cerus/modbridge/plate/flat/acw213-2.mdl",
+  [13] = "models/cerus/modbridge/plate/flat/acw213.mdl",
+  [14] = "models/cerus/modbridge/plate/flat/acw313.mdl",
+  [15] = "models/cerus/modbridge/plate/flat/b111.mdl",
+  [16] = "models/cerus/modbridge/plate/flat/b121.mdl",
+  [17] = "models/cerus/modbridge/plate/flat/b131.mdl",
+  [18] = "models/cerus/modbridge/plate/flat/b221.mdl",
+  [19] = "models/cerus/modbridge/plate/flat/b231.mdl",
+  [20] = "models/cerus/modbridge/plate/flat/b331.mdl",
+  [21] = "models/cerus/modbridge/plate/flat/cv-s11.mdl",
+  [22] = "models/cerus/modbridge/plate/flat/cv-sts11.mdl",
+  [23] = "models/cerus/modbridge/plate/flat/cv-wt11s.mdl",
+  [24] = "models/cerus/modbridge/plate/flat/pc111.mdl",
+  [25] = "models/cerus/modbridge/plate/flat/rp312.mdl",
+  [26] = "models/cerus/modbridge/plate/flat/rp322.mdl",
+  [27] = "models/cerus/modbridge/plate/flat/rp332.mdl",
+  [28] = "models/cerus/modbridge/plate/flat/rpf312.mdl",
+  [29] = "models/cerus/modbridge/plate/flat/rpf322.mdl",
+  [30] = "models/cerus/modbridge/plate/flat/rpf332.mdl",
+  [31] = "models/cerus/modbridge/plate/flat/rs21l.mdl",
+  [32] = "models/cerus/modbridge/plate/flat/rs21r.mdl",
+  [33] = "models/cerus/modbridge/plate/flat/rsc23.mdl",
+  [34] = "models/cerus/modbridge/plate/flat/rsc32l.mdl",
+  [35] = "models/cerus/modbridge/plate/flat/rsc32r.mdl",
+  [36] = "models/cerus/modbridge/plate/flat/rsc33.mdl",
+  [37] = "models/cerus/modbridge/plate/flat/rsr23.mdl",
+  [38] = "models/cerus/modbridge/plate/flat/s11.mdl",
+  [39] = "models/cerus/modbridge/plate/flat/s11g.mdl",
+  [40] = "models/cerus/modbridge/plate/flat/s11g2.mdl",
+  [41] = "models/cerus/modbridge/plate/flat/s21.mdl",
+  [42] = "models/cerus/modbridge/plate/flat/s22.mdl",
+  [43] = "models/cerus/modbridge/plate/flat/s31.mdl",
+  [44] = "models/cerus/modbridge/plate/flat/s31g.mdl",
+  [45] = "models/cerus/modbridge/plate/flat/s32.mdl",
+  [46] = "models/cerus/modbridge/plate/flat/s33.mdl",
+  [47] = "models/cerus/modbridge/plate/flat/st111.mdl",
+  [48] = "models/cerus/modbridge/plate/flat/st121.mdl",
+  [49] = "models/cerus/modbridge/plate/flat/st131.mdl",
+  [50] = "models/cerus/modbridge/plate/flat/stw111.mdl",
+  [51] = "models/cerus/modbridge/plate/flat/t32.mdl",
+  [52] = "models/cerus/modbridge/plate/flat/w111.mdl",
+  [53] = "models/cerus/modbridge/plate/flat/w121.mdl",
+  [54] = "models/cerus/modbridge/plate/flat/w131.mdl",
+  [55] = "models/cerus/modbridge/plate/flat/w311.mdl",
+  [56] = "models/cerus/modbridge/plate/flat/w321.mdl",
+  [57] = "models/cerus/modbridge/plate/flat/w331.mdl",
+  [58] = "models/cerus/modbridge/plate/flat/wc311.mdl",
+  [59] = "models/cerus/modbridge/plate/flat/wd11.mdl",
+  [60] = "models/cerus/modbridge/plate/flat/wd21.mdl",
+  [61] = "models/cerus/modbridge/plate/flat/wd31.mdl",
+  [62] = "models/cerus/modbridge/plate/flat/wdc11.mdl",
+  [63] = "models/cerus/modbridge/plate/flat/wdc11b.mdl",
+  [64] = "models/cerus/modbridge/plate/flat/wde11.mdl",
+  [65] = "models/cerus/modbridge/plate/flat/wde21.mdl",
+  [66] = "models/cerus/modbridge/plate/flat/wde31.mdl",
+  [67] = "models/cerus/modbridge/plate/flat/wr311.mdl",
+  [68] = "models/cerus/modbridge/plate/flat/wr321.mdl",
+  [69] = "models/cerus/modbridge/plate/flat/wr331.mdl",
+  [70] = "models/cerus/modbridge/plate/flat/ws311.mdl",
+  [71] = "models/cerus/modbridge/plate/flat/wsc311.mdl",
+  [72] = "models/cerus/modbridge/plate/flat/wsc311cl.mdl",
+  [73] = "models/cerus/modbridge/plate/flat/wsc311cr.mdl",
+  [74] = "models/cerus/modbridge/plate/flat/wsc441.mdl",
+  [75] = "models/cerus/modbridge/plate/flat/wsp311l.mdl",
+  [76] = "models/cerus/modbridge/plate/flat/wsp311r.mdl",
+  [77] = "models/cerus/modbridge/plate/flat/wt111.mdl",
+  [78] = "models/cerus/modbridge/plate/flat/wt121.mdl",
+  [79] = "models/cerus/modbridge/plate/flat/wt131.mdl",
+}
+
+mod_height_transfer = {
+  [1] = "models/cerus/modbridge/core/r-312.mdl",
+  [2] = "models/cerus/modbridge/core/rs-312.mdl",
+  [3] = "models/cerus/modbridge/core/rst-312.mdl",
+  [4] = "models/cerus/modbridge/core/rs-322.mdl",
+  [5] = "models/cerus/modbridge/core/rst-322l.mdl",
+  [6] = "models/cerus/modbridge/core/rst-322r.mdl",
+  [7] = "models/cerus/modbridge/core/rs-332.mdl",
+  [8] = "models/cerus/modbridge/core/rst-332.mdl",
+  [9] = "models/cerus/modbridge/core/rst-332c.mdl",
+  [10] = "models/cerus/modbridge/core/rso-332f.mdl",
+  [11] = "models/cerus/modbridge/core/rst-332cf.mdl",
+  [12] = "models/cerus/modbridge/core/rst-332f.mdl",
+}
+
+mod_spartan = {
+  [1] = "models/cerus/modbridge/core/spartan/s-111.mdl",
+  [2] = "models/cerus/modbridge/core/spartan/s-211.mdl",
+  [3] = "models/cerus/modbridge/core/spartan/s-311.mdl",
+  [4] = "models/cerus/modbridge/core/spartan/c-111.mdl",
+  [5] = "models/cerus/modbridge/core/spartan/s-121.mdl",
+  [6] = "models/cerus/modbridge/core/spartan/s-221.mdl",
+  [7] = "models/cerus/modbridge/core/spartan/s-321.mdl",
+  [8] = "models/cerus/modbridge/core/spartan/c-221.mdl",
+  [9] = "models/cerus/modbridge/core/spartan/s-131.mdl",
+  [10] = "models/cerus/modbridge/core/spartan/s-231.mdl",
+  [11] = "models/cerus/modbridge/core/spartan/s-331.mdl",
+  [12] = "models/cerus/modbridge/core/spartan/cv-11-31.mdl",
+}
+
+mod_splitter = {
+  [1] = "models/cerus/modbridge/core/tc-131.mdl",
+  [2] = "models/cerus/modbridge/core/t-131.mdl",
+  [3] = "models/cerus/modbridge/core/c-131r.mdl",
+  [4] = "models/cerus/modbridge/core/c-131l.mdl",
+  [5] = "models/cerus/modbridge/core/cv-11-21.mdl",
+  [6] = "models/cerus/modbridge/core/cv-11-31.mdl",
+  [7] = "models/cerus/modbridge/core/cv-21-31.mdl",
+  [8] = "models/cerus/modbridge/core/cvw-11-31.mdl",
+  [9] = "models/cerus/modbridge/core/cv-mb-smb.mdl",
+  [10] = "models/cerus/modbridge/core/rso-312.mdl",
+  [11] = "models/cerus/modbridge/core/rso-322.mdl",
+  [12] = "models/cerus/modbridge/core/rso-332.mdl",
+}
+
+
+other_sbep_community = {
+  [1] = "models/sbep_community/d12airscrubber.mdl",
+  [2] = "models/sbep_community/d12console.mdl",
+  [3] = "models/sbep_community/d12consolert.mdl",
+  [4] = "models/sbep_community/d12consolescreen.mdl",
+  [5] = "models/sbep_community/d12flakcannon.mdl",
+  [6] = "models/sbep_community/d12fusionbomb.mdl",
+  [7] = "models/sbep_community/d12guidedbomb.mdl",
+  [8] = "models/sbep_community/d12mbdstairs.mdl",
+  [9] = "models/sbep_community/d12medflak.mdl",
+  [10] = "models/sbep_community/d12proxmine.mdl",
+  [11] = "models/sbep_community/d12shieldemitter.mdl",
+  [12] = "models/sbep_community/d12siesmiccharge.mdl",
+  [13] = "models/sbep_community/d12singengine.mdl",
+  [14] = "models/sbep_community/xwingbl.mdl",
+  [15] = "models/sbep_community/xwingbody.mdl",
+  [16] = "models/sbep_community/xwingbr.mdl",
+  [17] = "models/sbep_community/xwinggunbl.mdl",
+  [18] = "models/sbep_community/xwinggunbr.mdl",
+  [19] = "models/sbep_community/xwingguntl.mdl",
+  [20] = "models/sbep_community/xwingguntr.mdl",
+  [21] = "models/sbep_community/xwingtl.mdl",
+  [22] = "models/sbep_community/xwingtr.mdl",
+  [23] = "models/sbep_community/ywing.mdl",
+}
+
+
+sbmp_fighters = {
+  [1] = "models/slyfo/sword.mdl",
+  [2] = "models/spacebuild/light_combat_corvette.mdl",
+  [3] = "models/slyfo/transportlarge.mdl",
+  [4] = "models/slyfo/transportsmall.mdl",
+  [5] = "models/slyfo/torpedoship1.mdl",
+  [6] = "models/slyfo/torpedoship2.mdl",
+  [7] = "models/slyfo/shuttle.mdl",
+  [8] = "models/slyfo/shuttlehatchclosed.mdl",
+  [9] = "models/slyfo/shuttlehatchopen.mdl",
+  [10] = "models/spacebuild/dronefighter_1.mdl",
+  [11] = "models/spacebuild/milcock.mdl",
+  [12] = "models/spacebuild/milcock2_redux.mdl",
+  [13] = "models/spacebuild/milcock3_redux.mdl",
+  [14] = "models/spacebuild/milcock4a.mdl",
+  [15] = "models/spacebuild/milcock4b.mdl",
+  [16] = "models/spacebuild/emount1_milcock4.mdl",
+  [17] = "models/spacebuild/emount4_fighter.mdl",
+  [18] = "models/spacebuild/milcock5a.mdl",
+  [19] = "models/spacebuild/emount3_milcock6.mdl",
+  [20] = "models/spacebuild/milcock6_redux.mdl",
+  [21] = "models/spacebuild/milcock6_emount1.mdl",
+  [22] = "models/spacebuild/milcock7_emount1.mdl",
+  [23] = "models/spacebuild/milcock7_emount2.mdl",
+  [24] = "models/spacebuild/mil_cock_7.mdl",
+  [25] = "models/spacebuild/milcock8.mdl",
+  [26] = "models/slyfo/jetenginelg.mdl",
+  [27] = "models/slyfo/jetenginelg_mounted.mdl",
+  [28] = "models/slyfo/jetenginemed.mdl",
+  [29] = "models/slyfo/jetenginemed_mounted.mdl",
+  [30] = "models/slyfo/jetenginesml.mdl",
+  [31] = "models/slyfo/jetenginesml_mounted.mdl",
+  [32] = "models/slyfo/nacshortsleft.mdl",
+  [33] = "models/slyfo/nacshortsright.mdl",
+  [34] = "models/slyfo/nacshuttleleft.mdl",
+  [35] = "models/slyfo/nacshuttleright.mdl",
+  [36] = "models/slyfo/nactngleft.mdl",
+  [37] = "models/slyfo/nactngright.mdl",
+  [38] = "models/slyfo/rex1peice.mdl",
+  [39] = "models/slyfo/rexbottom.mdl",
+  [40] = "models/slyfo/rextop.mdl",
+  [41] = "models/slyfo/spbarlg.mdl",
+  [42] = "models/slyfo/spbarmed.mdl",
+  [43] = "models/slyfo/spbarsml.mdl",
+  [44] = "models/slyfo/t-eng.mdl",
+  [45] = "models/slyfo/tenginelg.mdl",
+  [46] = "models/slyfo/tenginemed.mdl",
+  [47] = "models/slyfo/tenginesm.mdl",
+  [48] = "models/slyfo/winglg.mdl",
+  [49] = "models/slyfo/winglg_jetleft.mdl",
+  [50] = "models/slyfo/winglg_jetright.mdl",
+  [51] = "models/slyfo/wingmed.mdl",
+  [52] = "models/slyfo/wingmed_jetleft.mdl",
+  [53] = "models/slyfo/wingmed_jetright.mdl",
+  [54] = "models/slyfo/wingsml.mdl",
+  [55] = "models/slyfo/wingsml_jetleft.mdl",
+  [56] = "models/slyfo/wingsml_jetright.mdl",
+  [57] = "models/spacebuild/milcock4_multipod1.mdl",
+  [58] = "models/spacebuild/milcock4_wing1.mdl",
+  [59] = "models/spacebuild/milcock4_wing2.mdl",
+  [60] = "models/spacebuild/milcock4_wing3.mdl",
+  [61] = "models/spacebuild/milcock4_wing4.mdl",
+  [62] = "models/spacebuild/milcock4_wing5l.mdl",
+  [63] = "models/spacebuild/milcock4_wing5r.mdl",
+  [64] = "models/spacebuild/milcock4_wing6.mdl",
+  [65] = "models/spacebuild/milcock4_wing7.mdl",
+  [66] = "models/spacebuild/medbridge2_gatling_cannon.mdl",
+  [67] = "models/spacebuild/nova/flak1.mdl",
+  [68] = "models/slyfo/swordgatleft.mdl",
+  [69] = "models/slyfo/swordgatmid.mdl",
+  [70] = "models/slyfo/swordgatright.mdl",
+  [71] = "models/spacebuild/medbridge2_missile_launcher.mdl",
+  [72] = "models/slyfo/swordgrenade.mdl",
+  [73] = "models/slyfo/mcpcannon.mdl",
+  [74] = "models/slyfo/subrocket.mdl",
+  [75] = "models/spacebuild/cannon1_gen.mdl",
+  [76] = "models/slyfo/goldfish.mdl",
+  [77] = "models/slyfo/torpedo.mdl",
+  [78] = "models/slyfo/torpedo2.mdl",
+  [79] = "models/slyfo/warhead.mdl",
+}
+
+sbmp_freighters = {
+  [1] = "models/slyfo/cargoship.mdl",
+  [2] = "models/slyfo/cargoshiphatch.mdl",
+  [3] = "models/slyfo/frigate1.mdl",
+  [4] = "models/slyfo/frigate1ramp.mdl",
+  [5] = "models/spacebuild/medbridge.mdl",
+  [6] = "models/slyfo/ccockpit.mdl",
+  [7] = "models/slyfo/carrierbay.mdl",
+  [8] = "models/slyfo/doublecarrier.mdl",
+  [9] = "models/slyfo/carriersplit.mdl",
+  [10] = "models/slyfo/cengine.mdl",
+  [11] = "models/slyfo/fhatch.mdl",
+}
+
+sbmp_ship_modules = {
+    [1] = "models/spacebuild/chair.mdl",
+    [2] = "models/spacebuild/chair2.mdl",
+    [3] = "models/spacebuild/emount1_milcock4.mdl",
+    [4] = "models/spacebuild/emount2_milcock4.mdl",
+    [5] = "models/spacebuild/emount3_milcock6.mdl",
+    [6] = "models/spacebuild/emount4_fighter.mdl",
+    [7] = "models/spacebuild/medbridge.mdl",
+    [8] = "models/spacebuild/medbridge2.mdl",
+    [9] = "models/spacebuild/medbridge2_emptydoublehull.mdl",
+    [10] = "models/spacebuild/medbridge2_emptydoublehull_decktodeckramp.mdl",
+    [11] = "models/spacebuild/medbridge2_emptyhull.mdl",
+    [12] = "models/spacebuild/medbridge2_emptyhull_90.mdl",
+    [13] = "models/spacebuild/medbridge2_emptyhull_t.mdl",
+    [14] = "models/spacebuild/medbridge2_emptyhull_x.mdl",
+    [15] = "models/spacebuild/medbridge2_enginehull.mdl",
+    [16] = "models/spacebuild/medbridge2_enginehull2.mdl",
+    [17] = "models/spacebuild/medbridge2_enginehull3.mdl",
+    [18] = "models/spacebuild/medbridge2_fighterbay.mdl",
+    [19] = "models/spacebuild/medbridge2_fighterbay2.mdl",
+    [20] = "models/spacebuild/medbridge2_fighterbay2longcap.mdl",
+    [21] = "models/spacebuild/medbridge2_fighterbay2_noglass.mdl",
+    [22] = "models/spacebuild/medbridge2_fighterbay3.mdl",
+    [23] = "models/spacebuild/medbridge2_fighterbay3a.mdl",
+    [24] = "models/spacebuild/medbridge2_fighterbay3sidebaycap.mdl",
+    [25] = "models/spacebuild/medbridge2_fighterbay3transcap.mdl",
+    [26] = "models/spacebuild/medbridge2_fighterbayshortcap.mdl",
+    [27] = "models/spacebuild/medbridge2_fighterbayshortcap2.mdl",
+    [28] = "models/spacebuild/medbridge2_fighterbay_noglass.mdl",
+    [29] = "models/spacebuild/medbridge2_flatcap.mdl",
+    [30] = "models/spacebuild/medbridge2_s128cap.mdl",
+    [31] = "models/spacebuild/medbridge2_singletodoublehull.mdl",
+    [32] = "models/spacebuild/medbridge2_twolevel.mdl",
+    [33] = "models/spacebuild/medbridge2_widey.mdl",
+    [34] = "models/spacebuild/milcock.mdl",
+    [38] = "models/spacebuild/milcock4a.mdl",
+    [39] = "models/spacebuild/milcock4b.mdl",
+    [40] = "models/spacebuild/milcock4_multipod1.mdl",
+    [41] = "models/spacebuild/milcock4_wing1.mdl",
+    [42] = "models/spacebuild/milcock4_wing2.mdl",
+    [43] = "models/spacebuild/milcock4_wing3.mdl",
+    [44] = "models/spacebuild/milcock4_wing4.mdl",
+    [45] = "models/spacebuild/milcock4_wing5l.mdl",
+    [46] = "models/spacebuild/milcock4_wing5r.mdl",
+    [47] = "models/spacebuild/milcock4_wing6.mdl",
+    [48] = "models/spacebuild/milcock4_wing7.mdl",
+    [49] = "models/spacebuild/milcock5a.mdl",
+    [51] = "models/spacebuild/dronefighter_1.mdl",
+    [52] = "models/spacebuild/medbridge2_360view_doublebridge.mdl",
+    [53] = "models/spacebuild/medbridge2_doublehull_hanger_crosswalk.mdl",
+    [54] = "models/spacebuild/medbridge2_doublehull_hanger_elevator.mdl",
+    [55] = "models/spacebuild/medbridge2_doublehull_hanger_guardrail.mdl",
+    [56] = "models/spacebuild/medbridge2_enginedoublehull2_narrow.mdl",
+    [57] = "models/spacebuild/medbridge2_enginedoublehull2_wide.mdl",
+    [58] = "models/spacebuild/medbridge2_enginedoublehull_flaps.mdl",
+    [59] = "models/spacebuild/medbridge2_doublehull_centralcolumnelevatorpad.mdl",
+    [60] = "models/spacebuild/medbridge2_enginehull4.mdl",
+    [61] = "models/spacebuild/medbridge2_midsection_doublebridge2.mdl",
+    [62] = "models/spacebuild/medbridge2_stackdoublehull_ramp.mdl",
+    [63] = "models/spacebuild/medbridge2_stackdoublehull.mdl",
+    [64] = "models/spacebuild/medbridge2_stacksinglehull_openbottom.mdl",
+    [65] = "models/spacebuild/medbridge2_stacksinglehull_ramp.mdl",
+    [66] = "models/spacebuild/medbridge2_stacksinglehull_roof.mdl",
+ }
+
+sbmp_slyfo = {
+  [1] = "models/slyfo/carrierbay.mdl",
+  [2] = "models/slyfo/carriersplit.mdl",
+  [3] = "models/slyfo/ccockpit.mdl",
+  [4] = "models/slyfo/cengine.mdl",
+  [5] = "models/slyfo/doublecarrier.mdl",
+  [6] = "models/slyfo/hub2.mdl",
+  [7] = "models/slyfo/inverter.mdl",
+  [8] = "models/slyfo/turnabout.mdl",
+  [9] = "models/slyfo/subrocket.mdl",
+  [10] = "models/slyfo/angledown.mdl",
+  [11] = "models/slyfo/angleup.mdl",
+  [12] = "models/slyfo/doubletrilong.mdl",
+  [13] = "models/slyfo/doubletrishort.mdl",
+  [14] = "models/slyfo/largetri.mdl",
+  [15] = "models/slyfo/ramp.mdl",
+  [16] = "models/slyfo/shangar.mdl",
+  [17] = "models/slyfo/smalltri.mdl",
+  [18] = "models/slyfo/straighthull.mdl",
+  [19] = "models/slyfo/trit.mdl",
+  [20] = "models/slyfo/doublehull.mdl",
+  [21] = "models/slyfo/smallrad.mdl",
+  [22] = "models/slyfo/largerad.mdl",
+  [23] = "models/slyfo/triangularhub.mdl",
+  [24] = "models/slyfo/tjoint.mdl",
+  [25] = "models/slyfo/tjointdouble.mdl",
+  [26] = "models/slyfo/xjoint.mdl",
+  [27] = "models/slyfo/xjointdouble.mdl",
+  [28] = "models/slyfo/shuttle.mdl",
+  [29] = "models/slyfo/shuttlehatchclosed.mdl",
+  [30] = "models/slyfo/shuttlehatchopen.mdl",
+  [31] = "models/slyfo/rex1peice.mdl",
+  [32] = "models/slyfo/rexbottom.mdl",
+  [33] = "models/slyfo/rextop.mdl",
+  [34] = "models/slyfo/dwbent.mdl",
+  [35] = "models/slyfo/dwbump.mdl",
+  [36] = "models/slyfo/dwsmooth.mdl",
+  [37] = "models/slyfo/longhangar.mdl",
+  [38] = "models/slyfo/thcockpit.mdl",
+  [39] = "models/slyfo/thhangar.mdl",
+  [40] = "models/slyfo/thhull.mdl",
+  [41] = "models/slyfo/thlong.mdl",
+  [42] = "models/slyfo/thnoramp.mdl",
+  [43] = "models/slyfo/thramp.mdl",
+  [44] = "models/slyfo/sidecockpit.mdl",
+  [45] = "models/slyfo/tramp.mdl",
+  [46] = "models/slyfo/trampdouble.mdl",
+  [47] = "models/slyfo/tramptriple.mdl",
+  [48] = "models/slyfo/tramptripleinv.mdl",
+  [49] = "models/slyfo/xramp.mdl",
+  [50] = "models/slyfo/xrampdouble.mdl",
+  [51] = "models/slyfo/rampleft.mdl",
+  [52] = "models/slyfo/rampright.mdl",
+  [53] = "models/slyfo/cruisercockpit.mdl",
+  [54] = "models/slyfo/longlass.mdl",
+  [55] = "models/slyfo/longnoglass.mdl",
+  [56] = "models/slyfo/medglass.mdl",
+  [57] = "models/slyfo/mednoglass.mdl",
+  [58] = "models/slyfo/shortglass.mdl",
+  [59] = "models/slyfo/shortnoglass.mdl",
+  [60] = "models/slyfo/doublehullramp.mdl",
+  [61] = "models/slyfo/inversebay.mdl",
+  [62] = "models/slyfo/inversebayhatch.mdl",
+  [63] = "models/slyfo/mcp.mdl",
+  [64] = "models/slyfo/mcpcannon.mdl",
+  [65] = "models/slyfo/mcphatch.mdl",
+  [66] = "models/slyfo/mcphatchglass.mdl",
+  [67] = "models/slyfo/mcpskid.mdl",
+  [68] = "models/slyfo/sccleft.mdl",
+  [69] = "models/slyfo/sccright.mdl",
+  [70] = "models/slyfo/unbendable.mdl",
+  [71] = "models/slyfo/mcpdropbayhatch.mdl",
+  [72] = "models/slyfo/nacshortsleft.mdl",
+  [73] = "models/slyfo/nacshortsright.mdl",
+  [74] = "models/slyfo/nacshuttleleft.mdl",
+  [75] = "models/slyfo/nacshuttleright.mdl",
+  [76] = "models/slyfo/nactngleft.mdl",
+  [77] = "models/slyfo/nactngright.mdl",
+  [78] = "models/slyfo/t-eng.mdl",
+  [79] = "models/slyfo/mcpdropbay.mdl",
+  [80] = "models/slyfo/consolescreenbig.mdl",
+  [81] = "models/slyfo/consolescreenmed.mdl",
+  [82] = "models/slyfo/consolescreensmall.mdl",
+  [83] = "models/slyfo/matthewenginelong.mdl",
+  [84] = "models/slyfo/matthewengineshort.mdl",
+  [103] = "models/slyfo/walldoorleft.mdl",
+  [104] = "models/slyfo/walldoorright.mdl",
+  [105] = "models/slyfo/walllong.mdl",
+  [106] = "models/slyfo/walllonggate.mdl",
+  [107] = "models/slyfo/wallshort.mdl",
+  [108] = "models/slyfo/wallshortgate.mdl",
+  [109] = "models/slyfo/barricade.mdl",
+  [110] = "models/slyfo/capturehull1.mdl",
+  [111] = "models/slyfo/frigate1.mdl",
+  [112] = "models/slyfo/cargostack.mdl",
+  [113] = "models/slyfo/artycannon.mdl",
+  [114] = "models/slyfo/cargocap.mdl",
+  [115] = "models/slyfo/mcpcannon.mdl",
+  [116] = "models/slyfo/cargohub.mdl",
+  [117] = "models/slyfo/cargocapglass.mdl",
+  [118] = "models/slyfo/cargocaplight.mdl",
+  [119] = "models/slyfo/cargoclosed.mdl",
+  [120] = "models/slyfo/cargoopen.mdl",
+  [121] = "models/slyfo/cargosideopen.mdl",
+  [122] = "models/slyfo/cargoshiphatch.mdl",
+  [123] = "models/slyfo/cargoship.mdl",
+  [124] = "models/slyfo/fhatch.mdl",
+  [125] = "models/slyfo/unbendable.mdl",
+  [126] = "models/slyfo/smlmissilepod.mdl",
+  [127] = "models/slyfo/smlturretbase.mdl",
+  [128] = "models/slyfo/smlturrettop.mdl",
+  [129] = "models/slyfo/wheelcycle.mdl",
+  [130] = "models/slyfo/torpedo.mdl",
+  [131] = "models/slyfo/swordgatleft.mdl",
+  [132] = "models/slyfo/swordgatright.mdl",
+  [133] = "models/slyfo/swordgrenade.mdl",
+  [134] = "models/slyfo/boxpallet.mdl",
+  [135] = "models/slyfo/flatpallet.mdl",
+  [136] = "models/slyfo/torpedo2.mdl",
+  [137] = "models/slyfo/warhead.mdl",
+  [138] = "models/slyfo/goldfish.mdl",
+}
+
+sbmp_weapons = {
+  [1] = "models/spacebuild/nova/med-mac2.mdl",
+  [2] = "models/spacebuild/nova/med-mac2_1.mdl",
+  [3] = "models/spacebuild/nova/machuge.mdl",
+  [4] = "models/spacebuild/nova/macbig.mdl",
+  [5] = "models/slyfo/swordgatleft.mdl",
+  [6] = "models/slyfo/swordgatmid.mdl",
+  [7] = "models/slyfo/swordgatright.mdl",
+  [8] = "models/spacebuild/medbridge2_gatling_cannon.mdl",
+  [9] = "models/spacebuild/nova/flak1.mdl",
+  [10] = "models/slyfo/swordgrenade.mdl",
+  [11] = "models/spacebuild/medbridge2_missile_launcher.mdl",
+  [12] = "models/slyfo/artycannon.mdl",
+  [13] = "models/slyfo/mcpcannon.mdl",
+  [14] = "models/slyfo/subrocket.mdl",
+  [15] = "models/spacebuild/cannon1_gen.mdl",
+  [16] = "models/slyfo/powercrystal.mdl",
+  [17] = "models/slyfo/finfunnel.mdl",
+  [18] = "models/slyfo/smlmissilepod.mdl",
+  [19] = "models/slyfo/smlturrettop.mdl",
+  [20] = "models/slyfo/smlturretbase.mdl",
+  [21] = "models/slyfo/goldfish.mdl",
+  [22] = "models/slyfo/spacemine.mdl",
+  [23] = "models/slyfo/torpedo.mdl",
+  [24] = "models/slyfo/torpedo2.mdl",
+  [25] = "models/slyfo/warhead.mdl",
+}
+
+
+smb_elevators_large = {
+    [1] = "models/smallbridge/elevators_large/sblelevb.mdl",
+    [2] = "models/smallbridge/elevators_large/sblelevbe.mdl",
+    [3] = "models/smallbridge/elevators_large/sblelevbedh.mdl",
+    [4] = "models/smallbridge/elevators_large/sblelevbr.mdl",
+    [5] = "models/smallbridge/elevators_large/sblelevbt.mdl",
+    [6] = "models/smallbridge/elevators_large/sblelevbx.mdl",
+    [7] = "models/smallbridge/elevators_large/sblelevm.mdl",
+    [8] = "models/smallbridge/elevators_large/sblelevme.mdl",
+    [9] = "models/smallbridge/elevators_large/sblelevmedh.mdl",
+    [10] = "models/smallbridge/elevators_large/sblelevmr.mdl",
+    [11] = "models/smallbridge/elevators_large/sblelevmt.mdl",
+    [12] = "models/smallbridge/elevators_large/sblelevmx.mdl",
+    [13] = "models/smallbridge/elevators_large/sblelevp0.mdl",
+    [14] = "models/smallbridge/elevators_large/sblelevp1.mdl",
+    [15] = "models/smallbridge/elevators_large/sblelevp2e.mdl",
+    [16] = "models/smallbridge/elevators_large/sblelevp2r.mdl",
+    [17] = "models/smallbridge/elevators_large/sblelevp3.mdl",
+    [18] = "models/smallbridge/elevators_large/sblelevs.mdl",
+    [19] = "models/smallbridge/elevators_large/sblelevs2.mdl",
+    [20] = "models/smallbridge/elevators_large/sblelevt.mdl",
+    [21] = "models/smallbridge/elevators_large/sblelevte.mdl",
+    [22] = "models/smallbridge/elevators_large/sblelevtedh.mdl",
+    [23] = "models/smallbridge/elevators_large/sblelevtr.mdl",
+    [24] = "models/smallbridge/elevators_large/sblelevtt.mdl",
+    [25] = "models/smallbridge/elevators_large/sblelevtx.mdl",
+}
+
+smb_elevators_small = {
+    [1] = "models/smallbridge/elevators_small/sbselevb.mdl",
+    [2] = "models/smallbridge/elevators_small/sbselevbe.mdl",
+    [3] = "models/smallbridge/elevators_small/sbselevbedh.mdl",
+    [4] = "models/smallbridge/elevators_small/sbselevbedw.mdl",
+    [5] = "models/smallbridge/elevators_small/sbselevbr.mdl",
+    [6] = "models/smallbridge/elevators_small/sbselevbt.mdl",
+    [7] = "models/smallbridge/elevators_small/sbselevbx.mdl",
+    [8] = "models/smallbridge/elevators_small/sbselevm.mdl",
+    [9] = "models/smallbridge/elevators_small/sbselevme.mdl",
+    [10] = "models/smallbridge/elevators_small/sbselevmedh.mdl",
+    [11] = "models/smallbridge/elevators_small/sbselevmedw.mdl",
+    [12] = "models/smallbridge/elevators_small/sbselevmr.mdl",
+    [13] = "models/smallbridge/elevators_small/sbselevmt.mdl",
+    [14] = "models/smallbridge/elevators_small/sbselevmx.mdl",
+    [15] = "models/smallbridge/elevators_small/sbselevp0.mdl",
+    [16] = "models/smallbridge/elevators_small/sbselevp1.mdl",
+    [17] = "models/smallbridge/elevators_small/sbselevp2e.mdl",
+    [18] = "models/smallbridge/elevators_small/sbselevp2esl.mdl",
+    [19] = "models/smallbridge/elevators_small/sbselevp2r.mdl",
+    [20] = "models/smallbridge/elevators_small/sbselevp3.mdl",
+    [21] = "models/smallbridge/elevators_small/sbselevs.mdl",
+    [22] = "models/smallbridge/elevators_small/sbselevs2.mdl",
+    [23] = "models/smallbridge/elevators_small/sbselevslant.mdl",
+    [24] = "models/smallbridge/elevators_small/sbselevt.mdl",
+    [25] = "models/smallbridge/elevators_small/sbselevte.mdl",
+    [26] = "models/smallbridge/elevators_small/sbselevtedh.mdl",
+    [27] = "models/smallbridge/elevators_small/sbselevtedw.mdl",
+    [28] = "models/smallbridge/elevators_small/sbselevtr.mdl",
+    [29] = "models/smallbridge/elevators_small/sbselevtt.mdl",
+    [30] = "models/smallbridge/elevators_small/sbselevtx.mdl",
+}
+
+smb_height_transfer = {
+    [1] = "models/smallbridge/height transfer/sbhtcramp.mdl",
+    [2] = "models/smallbridge/height transfer/sbhtcramp2d.mdl",
+    [3] = "models/smallbridge/height transfer/sbhtcramp2u.mdl",
+    [4] = "models/smallbridge/height transfer/sbhtcrampdl.mdl",
+    [5] = "models/smallbridge/height transfer/sbhtramp.mdl",
+    [6] = "models/smallbridge/height transfer/sbhtramp05.mdl",
+    [7] = "models/smallbridge/height transfer/sbhtrampdw.mdl",
+    [8] = "models/smallbridge/height transfer/sbhtrampdw05.mdl",
+    [9] = "models/smallbridge/height transfer/sbhtsdwrampd.mdl",
+    [10] = "models/smallbridge/height transfer/sbhtsdwrampm.mdl",
+    [11] = "models/smallbridge/height transfer/sbhtsdwrampu.mdl",
+    [12] = "models/smallbridge/height transfer/sbhtsrampd.mdl",
+    [13] = "models/smallbridge/height transfer/sbhtsrampm.mdl",
+    [14] = "models/smallbridge/height transfer/sbhtsrampu.mdl",
+    [15] = "models/smallbridge/height transfer/sbhtsrampz.mdl",
+    [16] = "models/smallbridge/height transfer/sbhtsrampzdh.mdl",
+    [17] = "models/smallbridge/height transfer/sbhtsrampzdw.mdl",
+    [18] = "models/smallbridge/height transfer/sbhtsrampzdwdh.mdl",
+}
+
+smb_hulls_dw = {
+    [1] = "models/smallbridge/hulls_dw/sbhulldwe05.mdl",
+    [2] = "models/smallbridge/hulls_dw/sbhulldwe1.mdl",
+    [3] = "models/smallbridge/hulls_dw/sbhulldwe2.mdl",
+    [4] = "models/smallbridge/hulls_dw/sbhulldwe3.mdl",
+    [5] = "models/smallbridge/hulls_dw/sbhulldwe4.mdl",
+    [6] = "models/smallbridge/hulls_dw/sbhulldwedh.mdl",
+    [7] = "models/smallbridge/hulls_dw/sbhulldwedh05.mdl",
+    [8] = "models/smallbridge/hulls_dw/sbhulldwedh2.mdl",
+    [9] = "models/smallbridge/hulls_dw/sbhulldwedh3.mdl",
+    [10] = "models/smallbridge/hulls_dw/sbhulldwedh4.mdl",
+    [11] = "models/smallbridge/hulls_dw/sbhulldweflip.mdl",
+    [12] = "models/smallbridge/hulls_dw/sbhulldwend.mdl",
+    [13] = "models/smallbridge/hulls_dw/sbhulldwend2.mdl",
+    [14] = "models/smallbridge/hulls_dw/sbhulldwenddh.mdl",
+    [15] = "models/smallbridge/hulls_dw/sbhulldwenddh2.mdl",
+    [16] = "models/smallbridge/hulls_dw/sbhulldwr.mdl",
+    [17] = "models/smallbridge/hulls_dw/sbhulldwrdh.mdl",
+    [18] = "models/smallbridge/hulls_dw/sbhulldwt.mdl",
+    [19] = "models/smallbridge/hulls_dw/sbhulldwtdh.mdl",
+    [20] = "models/smallbridge/hulls_dw/sbhulldwtdl.mdl",
+    [21] = "models/smallbridge/hulls_dw/sbhulldwtsl.mdl",
+    [22] = "models/smallbridge/hulls_dw/sbhulldwx.mdl",
+    [23] = "models/smallbridge/hulls_dw/sbhulldwxdh.mdl",
+    [24] = "models/smallbridge/hulls_dw/sbhulldwxdl.mdl",
+}
+
+smb_hulls_sw = {
+    [1] = "models/smallbridge/hulls_sw/sbhullcurvel.mdl",
+    [2] = "models/smallbridge/hulls_sw/sbhullcurvem.mdl",
+    [3] = "models/smallbridge/hulls_sw/sbhullcurves.mdl",
+    [4] = "models/smallbridge/hulls_sw/sbhulle05.mdl",
+    [5] = "models/smallbridge/hulls_sw/sbhulle1.mdl",
+    [6] = "models/smallbridge/hulls_sw/sbhulle2.mdl",
+    [7] = "models/smallbridge/hulls_sw/sbhulle3.mdl",
+    [8] = "models/smallbridge/hulls_sw/sbhulle4.mdl",
+    [9] = "models/smallbridge/hulls_sw/sbhulledh.mdl",
+    [10] = "models/smallbridge/hulls_sw/sbhulledh05.mdl",
+    [11] = "models/smallbridge/hulls_sw/sbhulledh2.mdl",
+    [12] = "models/smallbridge/hulls_sw/sbhulledh3.mdl",
+    [13] = "models/smallbridge/hulls_sw/sbhulledh4.mdl",
+    [14] = "models/smallbridge/hulls_sw/sbhulleflip.mdl",
+    [15] = "models/smallbridge/hulls_sw/sbhullend.mdl",
+    [16] = "models/smallbridge/hulls_sw/sbhullenddh.mdl",
+    [17] = "models/smallbridge/hulls_sw/sbhullr.mdl",
+    [18] = "models/smallbridge/hulls_sw/sbhullrdh.mdl",
+    [19] = "models/smallbridge/hulls_sw/sbhullrtri.mdl",
+    [20] = "models/smallbridge/hulls_sw/sbhullslanthalfl.mdl",
+    [21] = "models/smallbridge/hulls_sw/sbhullslanthalfr.mdl",
+    [22] = "models/smallbridge/hulls_sw/sbhullslantl.mdl",
+    [23] = "models/smallbridge/hulls_sw/sbhullslantr.mdl",
+    [24] = "models/smallbridge/hulls_sw/sbhullt.mdl",
+    [25] = "models/smallbridge/hulls_sw/sbhulltdh.mdl",
+    [26] = "models/smallbridge/hulls_sw/sbhulltdl.mdl",
+    [27] = "models/smallbridge/hulls_sw/sbhulltdldw.mdl",
+    [28] = "models/smallbridge/hulls_sw/sbhulltri1.mdl",
+    [29] = "models/smallbridge/hulls_sw/sbhulltri2.mdl",
+    [30] = "models/smallbridge/hulls_sw/sbhulltri3.mdl",
+    [31] = "models/smallbridge/hulls_sw/sbhullx.mdl",
+    [32] = "models/smallbridge/hulls_sw/sbhullxdh.mdl",
+    [33] = "models/smallbridge/hulls_sw/sbhullxdl.mdl",
+    [34] = "models/smallbridge/hulls_sw/sbhullxdldw.mdl",
+}
+
+smb_panels = {
+    [1] = "models/smallbridge/panels/sbdoor.mdl",
+    [2] = "models/smallbridge/panels/sbdooriris.mdl",
+    [3] = "models/smallbridge/panels/sbdoorsquare.mdl",
+    [4] = "models/smallbridge/panels/sbdoorwide.mdl",
+    [5] = "models/smallbridge/panels/sbpaneldh.mdl",
+    [6] = "models/smallbridge/panels/sbpaneldhdw.mdl",
+    [7] = "models/smallbridge/panels/sbpaneldockin.mdl",
+    [8] = "models/smallbridge/panels/sbpaneldockout.mdl",
+    [9] = "models/smallbridge/panels/sbpaneldoor.mdl",
+    [10] = "models/smallbridge/panels/sbpaneldoordw.mdl",
+    [11] = "models/smallbridge/panels/sbpaneldoordw2.mdl",
+    [12] = "models/smallbridge/panels/sbpaneldooriris.mdl",
+    [13] = "models/smallbridge/panels/sbpaneldoorsquare.mdl",
+    [14] = "models/smallbridge/panels/sbpaneldoorsquaredw.mdl",
+    [15] = "models/smallbridge/panels/sbpaneldoorwide.mdl",
+    [16] = "models/smallbridge/panels/sbpanelsolid.mdl",
+    [17] = "models/smallbridge/panels/sbpanelsoliddw.mdl",
+}
+
+smb_ship_parts = {
+    [1] = "models/smallbridge/ship parts/sbcockpit1.mdl",
+    [2] = "models/smallbridge/ship parts/sbcockpit2.mdl",
+    [3] = "models/smallbridge/ship parts/sbcockpit2o.mdl",
+    [4] = "models/smallbridge/ship parts/sbcockpit2or.mdl",
+    [5] = "models/smallbridge/ship parts/sbcockpit3.mdl",
+    [6] = "models/smallbridge/ship parts/sbcockpit4.mdl",
+    [7] = "models/smallbridge/ship parts/sbcockpit5dw.mdl",
+    [8] = "models/smallbridge/ship parts/sbengine1.mdl",
+    [9] = "models/smallbridge/ship parts/sbengine2.mdl",
+    [10] = "models/smallbridge/ship parts/sbengine2o.mdl",
+    [11] = "models/smallbridge/ship parts/sbengine2or.mdl",
+    [12] = "models/smallbridge/ship parts/sbengine3.mdl",
+    [13] = "models/smallbridge/ship parts/sbengine4dw.mdl",
+    [14] = "models/smallbridge/ship parts/sbengine4l.mdl",
+    [15] = "models/smallbridge/ship parts/sbengine4m.mdl",
+    [16] = "models/smallbridge/ship parts/sbengine4r.mdl",
+    [17] = "models/smallbridge/ship parts/sbengine5.mdl",
+    [18] = "models/smallbridge/ship parts/sbengine5dwdh.mdl",
+    [19] = "models/smallbridge/ship parts/sbhulldsdwe.mdl",
+    [20] = "models/smallbridge/ship parts/sbhulldsdwe2.mdl",
+    [21] = "models/smallbridge/ship parts/sbhulldse.mdl",
+    [22] = "models/smallbridge/ship parts/sbhulldse2.mdl",
+    [23] = "models/smallbridge/ship parts/sbhulldseb.mdl",
+    [24] = "models/smallbridge/ship parts/sbhulldsp.mdl",
+    [25] = "models/smallbridge/ship parts/sbhulldsp2.mdl",
+    [26] = "models/smallbridge/ship parts/sbhulldst.mdl",
+    [27] = "models/smallbridge/ship parts/sblandramp.mdl",
+    [28] = "models/smallbridge/ship parts/sblandrampdw.mdl",
+    [29] = "models/smallbridge/ship parts/sblandrampdwdh.mdl",
+    [30] = "models/smallbridge/ship parts/sblandrampp.mdl",
+    [31] = "models/smallbridge/ship parts/sblandramppdw.mdl",
+    [32] = "models/smallbridge/ship parts/sblandramppdwdh.mdl",
+    [33] = "models/smallbridge/ship parts/sblanduramp.mdl",
+    [34] = "models/smallbridge/ship parts/sblandurampdw.mdl",
+    [35] = "models/smallbridge/ship parts/sblandurampdwdh.mdl",
+}
+
+smb_ships = {
+    [1] = "models/smallbridge/ships/sbshuttlec1e1.mdl",
+    [2] = "models/smallbridge/ships/sbshuttlec1e2.mdl",
+    [3] = "models/smallbridge/ships/sbshuttlec2e2.mdl",
+    [4] = "models/smallbridge/ships/sbfrigate1.mdl",
+    [5] = "models/smallbridge/ships/hysteria_galapagos.mdl",
+    [6] = "models/smallbridge/ships/wilkie1020.mdl",
+    [7] = "models/smallbridge/ships/steakknife.mdl",
+    [8] = "models/smallbridge/ships/matthew0623_hydra.mdl",
+}
+
+smb_splitters = {
+    [1] = "models/smallbridge/splitters/sbconvmb.mdl",
+    [2] = "models/smallbridge/splitters/sbconvmbdh.mdl",
+    [3] = "models/smallbridge/splitters/sbconvmbdw.mdl",
+    [4] = "models/smallbridge/splitters/sbconvmbdwdh.mdl",
+    [5] = "models/smallbridge/splitters/sbsplit2s-2sw.mdl",
+    [6] = "models/smallbridge/splitters/sbsplit2s-dw.mdl",
+    [7] = "models/smallbridge/splitters/sbsplitdws-dhd.mdl",
+    [8] = "models/smallbridge/splitters/sbsplitdws-dhm.mdl",
+    [9] = "models/smallbridge/splitters/sbsplitdws-dhu.mdl",
+    [10] = "models/smallbridge/splitters/sbsplits-dhd.mdl",
+    [11] = "models/smallbridge/splitters/sbsplits-dhm.mdl",
+    [12] = "models/smallbridge/splitters/sbsplits-dhu.mdl",
+    [13] = "models/smallbridge/splitters/sbsplits-dw.mdl",
+    [14] = "models/smallbridge/splitters/sbsplits-dwa.mdl",
+    [15] = "models/smallbridge/splitters/sbsplits-dwdh.mdl",
+    [16] = "models/smallbridge/splitters/sbsplitv.mdl",
+    [17] = "models/smallbridge/splitters/sbsplitvdh.mdl",
+    [18] = "models/smallbridge/splitters/sbsplitvw.mdl",
+}
+
+smb_station_parts = {
+    [1] = "models/smallbridge/station parts/sbbayaps.mdl",
+    [2] = "models/smallbridge/station parts/sbbaydps.mdl",
+    [3] = "models/smallbridge/station parts/sbbridgecomm.mdl",
+    [4] = "models/smallbridge/station parts/sbbridgecommdw.mdl",
+    [5] = "models/smallbridge/station parts/sbbridgecommelev.mdl",
+    [6] = "models/smallbridge/station parts/sbbridgesphere.mdl",
+    [7] = "models/smallbridge/station parts/sbbridgevisor.mdl",
+    [8] = "models/smallbridge/station parts/sbbridgevisorb.mdl",
+    [9] = "models/smallbridge/station parts/sbbridgevisorm.mdl",
+    [10] = "models/smallbridge/station parts/sbbridgevisort.mdl",
+    [11] = "models/smallbridge/station parts/sbdockcs.mdl",
+    [12] = "models/smallbridge/station parts/sbhangarld.mdl",
+    [13] = "models/smallbridge/station parts/sbhangarlu.mdl",
+    [14] = "models/smallbridge/station parts/sbhangarlud.mdl",
+    [15] = "models/smallbridge/station parts/sbhangarlud2.mdl",
+    [16] = "models/smallbridge/station parts/sbhubl.mdl",
+    [17] = "models/smallbridge/station parts/sbhuble.mdl",
+    [18] = "models/smallbridge/station parts/sbhubls.mdl",
+    [19] = "models/smallbridge/station parts/sbhubs.mdl",
+    [20] = "models/smallbridge/station parts/sbrooml1.mdl",
+    [21] = "models/smallbridge/station parts/sbroomsgc.mdl",
+}
+
+smb_wings_walkways_and_misc = {
+    [1] = "models/smallbridge/wings/sbwingc1l.mdl",
+    [2] = "models/smallbridge/wings/sbwingc1r.mdl",
+    [3] = "models/smallbridge/wings/sbwingls1l.mdl",
+    [4] = "models/smallbridge/wings/sbwingls1r.mdl",
+    [5] = "models/smallbridge/wings/sbwingm1l.mdl",
+    [6] = "models/smallbridge/wings/sbwingm1le.mdl",
+    [7] = "models/smallbridge/wings/sbwingm1r.mdl",
+    [8] = "models/smallbridge/wings/sbwingm1re.mdl",
+    [9] = "models/smallbridge/wings/sbwings1l.mdl",
+    [10] = "models/smallbridge/wings/sbwings1r.mdl",
+    [11] = "models/smallbridge/walkways/sbwalkwaye.mdl",
+    [12] = "models/smallbridge/walkways/sbwalkwaye2.mdl",
+    [13] = "models/smallbridge/walkways/sbwalkwayr.mdl",
+    [14] = "models/smallbridge/walkways/sbwalkwayt.mdl",
+    [15] = "models/smallbridge/walkways/sbwalkwayx.mdl",
+    [16] = "models/smallbridge/other/sbconsole.mdl",
+    [17] = "models/smallbridge/other/sbconsolelow.mdl",
+    [18] = "models/smallbridge/other/sbconsoletop.mdl",
+ }
+
+
+sbep_modellist = {
+    ["SmallBridge Parts"] = {smb_elevators_large, smb_elevators_small, smb_height_transfer, smb_hulls_dw, smb_hulls_sw, smb_panels, smb_ship_parts, smb_ships, smb_splitters, smb_station_parts, smb_wings_walkways_and_misc},
+    ["MedBridge Parts"] = {med_bridges, med_carrier_deck, med_doubles, med_engines, med_entry, med_hangers, med_misc, med_singles, med_triples},
+    ["ModBridge Parts"] = {mod_accessories, mod_cockpits_bridges_and_glass_corridors, mod_corridor_segments, mod_corvette_fighters, mod_elevators, mod_engines_weapons_prefabs_and_doors, mod_external_decor, mod_height_transfer, mod_spartan, mod_splitters},
+    ["SBMP Parts"] = {sbmp_fighters, sbmp_freighters, sbmp_ship_modules, sbmp_slyfo, sbmp_weapons},
+    ["Other"] = {other_sbep_community}
+}
+
+
+function populateContent (viewPanel, modelTable)
+  viewPanel:Clear(true)
+  
+  for i,j in pairs(modelTable) do
+    for k,v in ipairs(j) do
+  	  local cp = spawnmenu.GetContentType("model")
+  	  if (cp) then
+  	    cp(viewPanel, {model = v})
+  	  end
+    end
+  end
 end
 
-function LoadAllContent( mode, pnl )
-	local lists = file.Find("addons\\"..SBEP.FolderName.. "\\data\\ModelLists\\"..mode.."\\*","GAME")
-
-	for k,v in ipairs(lists) do
-		local data = file.Read("addons\\"..SBEP.FolderName.. "\\data\\ModelLists\\"..mode.."\\"..v,"GAME")
-		local models = util.KeyValuesToTable(data)
-		for i,j in ipairs(models) do
-			--Based off Vanilla GMod Code
-			local cp = spawnmenu.GetContentType( "model" )
-			if (cp) then
-				cp( pnl, {model = j})
-			end
-		end
-	end
-end
-
-function DoMedbridge( pnlContent, tree, node, MainNode, ViewPanel )
-
-
-
-	local MedNode = MainNode:AddNode( "MedBridge Parts", "icon16/folder_database.png")
-	MedNode.DoClick = function()
-	--TODO: Show all SmallBridge models.
-		ViewPanel:Clear( true )
-		LoadAllContent( "Med",ViewPanel )
-		pnlContent:SwitchPanel( ViewPanel )
-	end
-	--Then cycle through all folders under Data\ModelListt\SMB)
-	local path = "addons\\"..SBEP.FolderName.. "\\data\\ModelLists\\Med\\"
-	local lists = file.Find(path .. "*","GAME")
-
-	for k,v in ipairs(lists) do
-
-		local temp = string.Explode( ".txt", v )
-		local name = temp[1]
-		local MyNode = MedNode:AddNode( name, "icon16/folder_database.png") --TODO: Find better image.
-		MyNode.DoClick = function() LoadContent("Med\\"..v.."", MyNode, ViewPanel,pnlContent ) end
-
-
-	end
-
-end
-
-function DoSmallBridge( pnlContent, tree, node, ViewPanel  )
-
-	local MyNode = node:AddNode( "SBEP Models", "icon16/folder_database.png" )
-
-	local SmbNode = MyNode:AddNode( "SmallBridge Parts", "icon16/folder_database.png")
-	SmbNode.DoClick = function()
-	--TODO: Show all SmallBridge models.
-		ViewPanel:Clear( true )
-		LoadAllContent( "SMB",ViewPanel )
-		pnlContent:SwitchPanel( ViewPanel )
-	end
-	--Then cycle through all folders under Data\ModelListt\SMB)
-	local path = "addons\\"..SBEP.FolderName.. "\\data\\ModelLists\\SMB\\"
-	local lists = file.Find(path .. "*","GAME")
-
-
-
-	--[[if ( cp ) then
-		cp( ViewPanel, { model = [Read from file] )
-	end  ]]--
-	for k,v in ipairs(lists) do
-
-		local temp = string.Explode( ".txt", v )
-		local name = temp[1]
-		local MyNode = SmbNode:AddNode( name, "icon16/folder_database.png") --TODO: Find better image.
-		MyNode.DoClick = function() LoadContent("SMB\\"..v.."", MyNode, ViewPanel,pnlContent ) end
-	end
-
-	--Then setup what happens when you click on each node
-	return MyNode
-
-end
-
-function DoModBridge( pnlContent, tree, node, MainNode, ViewPanel )
-
-
-	local ModNode = MainNode:AddNode( "ModBridge Parts", "icon16/folder_database.png")
-	ModNode.DoClick = function()
-	--TODO: Show all SmallBridge models.
-		ViewPanel:Clear( true )
-		LoadAllContent( "Mod",ViewPanel )
-		pnlContent:SwitchPanel( ViewPanel )
-	end
-	--Then cycle through all folders under Data\ModelListt\SMB)
-	local path = "addons\\"..SBEP.FolderName.. "\\data\\ModelLists\\Mod\\"
-	local lists = file.Find(path .. "*","GAME")
-
-	for k,v in ipairs(lists) do
-
-		local temp = string.Explode( ".txt", v )
-		local name = temp[1]
-		local MyNode = ModNode:AddNode( name, "icon16/folder_database.png") --TODO: Find better image.
-		MyNode.DoClick = function() LoadContent("Mod\\"..v.."", MyNode, ViewPanel,pnlContent ) end
-
-
-	end
-
-end
-
-function DoSBMP( pnlContent, tree, node, MainNode, ViewPanel )
-	local SBMPNode = MainNode:AddNode( "SBMP Parts", "icon16/folder_database.png")
-	SBMPNode.DoClick = function()
-	--TODO: Show all SmallBridge models.
-		ViewPanel:Clear( true )
-		LoadAllContent( "SBMP",ViewPanel )
-		pnlContent:SwitchPanel( ViewPanel )
-	end
-	--Then cycle through all folders under Data\ModelListt\SMB)
-	local path = "addons\\"..SBEP.FolderName.. "\\data\\ModelLists\\SBMP\\"
-	local lists = file.Find(path .. "*","GAME")
-
-	for k,v in ipairs(lists) do
-
-		local temp = string.Explode( ".txt", v )
-		local name = temp[1]
-		local MyNode = SBMPNode:AddNode( name, "icon16/folder_database.png") --TODO: Find better image.
-		MyNode.DoClick = function() LoadContent("SBMP\\"..v.."", MyNode, ViewPanel,pnlContent ) end
-
-
-	end
-
-end
-
-function DoOther( pnlContent, tree, node, MainNode, ViewPanel )
-	local OtherNode = MainNode:AddNode( "Other", "icon16/folder_database.png")
-	OtherNode.DoClick = function()
-	--TODO: Show all SmallBridge models.
-		ViewPanel:Clear( true )
-		LoadAllContent( "Other",ViewPanel )
-		pnlContent:SwitchPanel( ViewPanel )
-	end
-	--Then cycle through all folders under Data\ModelListt\SMB)
-	local path = "addons\\"..SBEP.FolderName.. "\\data\\ModelLists\\Other\\"
-	local lists = file.Find(path .. "*","GAME")
-
-	for k,v in ipairs(lists) do
-
-		local temp = string.Explode( ".txt", v )
-		local name = temp[1]
-		local MyNode = OtherNode:AddNode( name, "icon16/folder_database.png") --TODO: Find better image.
-		MyNode.DoClick = function() LoadContent("Other\\"..v.."", MyNode, ViewPanel,pnlContent ) end
-
-
-	end
-
+function populate (nodeName, modelTable, pnlContent, masterNode, viewPanel)
+  local node = masterNode:AddNode(nodeName, "icon16/folder_database.png")
+  
+  node.DoClick = function()
+	viewPanel:Clear(true)
+    populateContent(viewPanel, modelTable)
+    pnlContent:SwitchPanel(viewPanel)
+  end
 end
 
 
 hook.Add("PopulateContent", "SBEP Models", function( pnlContent, tree, node)
-	--Setup SmallBridge
-	local ViewPanel = vgui.Create( "ContentContainer", pnlContent )
-	ViewPanel:SetVisible(false)
-	local MasterNode = DoSmallBridge( pnlContent, tree, node, ViewPanel )
-
-	--Start of Medbridge Node
-	DebugMessage("Doing Medbridge")
-	DoMedbridge( pnlContent, tree, node, MasterNode, ViewPanel )
-
-
-	DebugMessage("Doing ModBridge")
-	DoModBridge( pnlContent, tree, node, MasterNode, ViewPanel )
-
-	DebugMessage("Doing SBMP")
-	DoSBMP( pnlContent, tree, node, MasterNode, ViewPanel )
-
-	DebugMessage("Doing Anything contained in the Other folder")
-	DoOther( pnlContent, tree, node, MasterNode, ViewPanel )
-
---local models = MyNode:AddNode( v:sub(1,1):upper()..v:sub(2), "icon16/bricks.png"
+  local viewPanel = vgui.Create("ContentContainer", pnlContent)
+  viewPanel:SetVisible(false)
+  local masterNode = node:AddNode("SBEP Models", "icon16/folder_database.png")
+  
+  for k,v in pairs(sbep_modellist) do
+    populate(k, v, pnlContent, masterNode, viewPanel)
+  end
 end)
-
-

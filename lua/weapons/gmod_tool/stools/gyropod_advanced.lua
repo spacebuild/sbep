@@ -1,9 +1,10 @@
 TOOL.Category		= "SBEP"
+TOOL.Tab 			= "Spacebuild"
 TOOL.Name			= "#Gyro-Pod"
 TOOL.Command		= nil
 TOOL.ConfigName		= ""
 TOOL.ent = {}
-TOOL.ClientConVar[ "model" ] = "models/Spacebuild/Nova/drone2.mdl"
+TOOL.ClientConVar[ "model" ] = "models/spacebuild/nova/drone2.mdl"
 
 if ( CLIENT ) then
 	language.Add( "Tool.gyropod_advanced.name", "DataSchmuck's Enhanced Gyro-Pod" )
@@ -27,7 +28,7 @@ function TOOL:RightClick(trace)
 	elseif self:GetStage() == 1 and trace.Entity.GetPassenger then
 		local owner = self:GetOwner()
 		if self.AdvGyro:Link(trace.Entity) then
-			owner:PrintMessage(HUD_PRINTTALK,"Vehicle Linked to Gyro-Pod!")
+			owner:PrintMessage(HUD_PRINTTALK,"Vehicle linked to Gyro-Pod!")
 		else
 			owner:PrintMessage(HUD_PRINTTALK,"Link failed!")
 		end
@@ -35,7 +36,7 @@ function TOOL:RightClick(trace)
 		self.AdvGyro = nil
 		return true
 	else
-		self:GetOwner():PrintMessage(HUD_PRINTTALK,"Left Click to Spawn.  To Link, Right Click the Gyro-Pod First, THEN the Vehicle!")
+		self:GetOwner():PrintMessage(HUD_PRINTTALK,"Left click to spawn.  To link, right click the Gyro-Pod first, THEN the vehicle!")
 		return false
 	end
 end

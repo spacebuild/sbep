@@ -10,126 +10,126 @@ local DTT = {}
 		Opening Sounds => { [time 1(s)] = "Sound 1 Name" , [time 2(s)] = "Sound 2 Name" , etc } ,
 		Closing Soungs   => { [time 1(s)] = "Sound 1 Name" , [time 2(s)] = "Sound 2 Name" , etc } }]]
 
-DTT[ "Door_AnimS1"	]	= { { model = "models/SmallBridge/SEnts/SBADoorS1a.mdl" ,	UD = 3 , OD = 2   , CD = 1 	,
+DTT[ "Door_AnimS1"	]	= { { model = "models/smallbridge/sents/sbadoors1a.mdl" ,	UD = 3 , OD = 2   , CD = 1 	,
 		OS = { [0] = "Doors.Move14" , [1.45] = "Doors.FullOpen8" , [2.75] = "Doors.FullOpen9" } ,
 		CS = { [0] = "Doors.Move14" , [1.45] = "Doors.FullOpen8" , [2.75] = "Doors.FullOpen9" } } ,
-							{ model = "models/SmallBridge/SEnts/SBADoorS1.mdl" 	,	UD = 3 , OD = 2   , CD = 1 	,
+							{ model = "models/smallbridge/sents/sbadoors1.mdl" 	,	UD = 3 , OD = 2   , CD = 1 	,
 		OS = { [0] = "Doors.Move14" , [1.45] = "Doors.FullOpen8" , [2.75] = "Doors.FullOpen9" } ,
 		CS = { [0] = "Doors.Move14" , [1.45] = "Doors.FullOpen8" , [2.75] = "Doors.FullOpen9" } } ,
-			{ model = "models/SmallBridge/SEnts/forcedoor.mdl" 	,	UD = 1.4 , OD = 0.52 , CD = 0.88 	,
+			{ model = "models/smallbridge/sents/forcedoor.mdl" 	,	UD = 1.4 , OD = 0.52 , CD = 0.88 	,
 		OS = { [0] = "TriggerSuperArmor.DoneCharging" , [0.40] = "Doors.FullOpen8" , [0.95] = "Doors.FullOpen9" } ,
 		CS = { [0] = "Doors.Move14" , [0.40] = "Doors.FullOpen8" , [0.95] = "TriggerSuperArmor.DoneCharging" } } }
 
-DTT[ "Door_AnimS2"	]	= { { model = "models/SmallBridge/SEnts/SBADoorS2a.mdl" 	,	UD = 2 , OD = 1   , CD = 1 	,
+DTT[ "Door_AnimS2"	]	= { { model = "models/smallbridge/sents/sbadoors2a.mdl" 	,	UD = 2 , OD = 1   , CD = 1 	,
 		OS = { [0] = "Doors.Move14" , [1.95] = "Doors.FullOpen9" } ,
 		CS = { [0] = "Doors.Move14" , [1.95] = "Doors.FullOpen9" } } ,
-							{ model = "models/SmallBridge/SEnts/SBADoorS2.mdl" 	,	UD = 2 , OD = 1   , CD = 1 	,
+							{ model = "models/smallbridge/sents/sbadoors2.mdl" 	,	UD = 2 , OD = 1   , CD = 1 	,
 		OS = { [0] = "Doors.Move14" , [1.95] = "Doors.FullOpen9" } ,
 		CS = { [0] = "Doors.Move14" , [1.95] = "Doors.FullOpen9" } } ,
-					{ model = "models/SmallBridge/SEnts/SBADoorS3.mdl" 	,	UD = 2 , OD = 1.5   , CD = 0.5 	,
+					{ model = "models/smallbridge/sents/sbadoors3.mdl" 	,	UD = 2 , OD = 1.5   , CD = 0.5 	,
 		OS = { [0] = "Doors.Move14" , [1.95] = "Doors.FullOpen9" } ,
 		CS = { [0] = "Doors.Move14" , [1.95] = "Doors.FullOpen9" } } ,
-			{ model = "models/SmallBridge/SEnts/forcesquare.mdl" 	,	UD = 1.4 , OD = 0.52 , CD = 0.88 	,
+			{ model = "models/smallbridge/sents/forcesquare.mdl" 	,	UD = 1.4 , OD = 0.52 , CD = 0.88 	,
 		OS = { [0] = "TriggerSuperArmor.DoneCharging" , [0.40] = "Doors.FullOpen8" , [0.95] = "Doors.FullOpen9" } ,
 		CS = { [0] = "Doors.Move14" , [0.40] = "Doors.FullOpen8" , [0.95] = "TriggerSuperArmor.DoneCharging" } } }
 
-DTT[ "Door_AnimT"	]	= { { model = "models/SmallBridge/SEnts/SBADoorT.mdl" 	,	UD = 2 , OD = 1   , CD = 1 	,
+DTT[ "Door_AnimT"	]	= { { model = "models/smallbridge/sents/sbadoort.mdl" 	,	UD = 2 , OD = 1   , CD = 1 	,
 		OS = { [0] = "Doors.Move14" , [1.95] = "Doors.FullOpen9" } ,
 		CS = { [0] = "Doors.Move14" , [1.95] = "Doors.FullOpen9" } } ,
-				{ model = "models/SmallBridge/SEnts/SBADoorT2.mdl" 	,	UD = 2 , OD = 1.5   , CD = 0.5 	,
+				{ model = "models/smallbridge/sents/sbadoort2.mdl" 	,	UD = 2 , OD = 1.5   , CD = 0.5 	,
 		OS = { [0] = "Doors.Move14" , [1.95] = "Doors.FullOpen9" } ,
 		CS = { [0] = "Doors.Move14" , [1.95] = "Doors.FullOpen9" } } ,
-			{ model = "models/SmallBridge/SEnts/forcetall.mdl" 	,	UD = 1.4 , OD = 0.52 , CD = 0.88 	,
+			{ model = "models/smallbridge/sents/forcetall.mdl" 	,	UD = 1.4 , OD = 0.52 , CD = 0.88 	,
 		OS = { [0] = "TriggerSuperArmor.DoneCharging" , [0.40] = "Doors.FullOpen8" , [0.95] = "Doors.FullOpen9" } ,
 		CS = { [0] = "Doors.Move14" , [0.40] = "Doors.FullOpen8" , [0.95] = "TriggerSuperArmor.DoneCharging" } } }
 
-DTT[ "Door_SIris"	]	= { { model = "models/SmallBridge/SEnts/SBADoorSIrisa.mdl",	UD = 3 , OD = 2   , CD = 1 	,
+DTT[ "Door_SIris"	]	= { { model = "models/smallbridge/sents/sbadoorsirisa.mdl",	UD = 3 , OD = 2   , CD = 1 	,
 		OS = { [0] = "Doors.Move14" , [0.90] = "Doors.FullOpen8" , [2.65] = "Doors.FullOpen9" } ,
 		CS = { [0] = "Doors.Move14" , [1.95] = "Doors.FullOpen8" , [2.75] = "Doors.FullOpen9" } } ,
-							{ model = "models/SmallBridge/SEnts/SBADoorSIris.mdl",	UD = 3 , OD = 2   , CD = 1 	,
+							{ model = "models/smallbridge/sents/sbadoorsiris.mdl",	UD = 3 , OD = 2   , CD = 1 	,
 		OS = { [0] = "Doors.Move14" , [0.90] = "Doors.FullOpen8" , [2.65] = "Doors.FullOpen9" } ,
 		CS = { [0] = "Doors.Move14" , [1.95] = "Doors.FullOpen8" , [2.75] = "Doors.FullOpen9" } } }
 
-DTT[ "Door_AnimW"	]	= { { model = "models/SmallBridge/SEnts/SBADoorWb.mdl" ,	UD = 3 , OD = 1.5 , CD = 1.5 	,
+DTT[ "Door_AnimW"	]	= { { model = "models/smallbridge/sents/sbadoorwb.mdl" ,	UD = 3 , OD = 1.5 , CD = 1.5 	,
 		OS = { [0] = "Doors.Move14" , [0.95] = "Doors.FullOpen8" , [1.95] = "Doors.FullOpen8" , [2.95] = "Doors.FullOpen9" } ,
 		CS = { [0] = "Doors.Move14" , [0.95] = "Doors.FullOpen8" , [1.95] = "Doors.FullOpen8" , [2.95] = "Doors.FullOpen9" } } ,
-							{ model = "models/SmallBridge/SEnts/SBADoorWa.mdl" ,	UD = 3 , OD = 1.5 , CD = 1.5 	,
+							{ model = "models/smallbridge/sents/sbadoorwa.mdl" ,	UD = 3 , OD = 1.5 , CD = 1.5 	,
 		OS = { [0] = "Doors.Move14" , [0.95] = "Doors.FullOpen8" , [1.95] = "Doors.FullOpen8" , [2.95] = "Doors.FullOpen9" } ,
 		CS = { [0] = "Doors.Move14" , [0.95] = "Doors.FullOpen8" , [1.95] = "Doors.FullOpen8" , [2.95] = "Doors.FullOpen9" } } ,
-			{ model = "models/SmallBridge/SEnts/forcewide.mdl" 	,	UD = 1.4 , OD = 0.52 , CD = 0.88 	,
+			{ model = "models/smallbridge/sents/forcewide.mdl" 	,	UD = 1.4 , OD = 0.52 , CD = 0.88 	,
 		OS = { [0] = "TriggerSuperArmor.DoneCharging" , [0.40] = "Doors.FullOpen8" , [0.95] = "Doors.FullOpen9" } ,
 		CS = { [0] = "Doors.Move14" , [0.40] = "Doors.FullOpen8" , [0.95] = "TriggerSuperArmor.DoneCharging" } } }
 
-DTT[ "Door_AnimL"	]	= { { model = "models/SmallBridge/SEnts/SBADoorLa.mdl" ,	UD = 3 , OD = 1.5 , CD = 1.5 	,
+DTT[ "Door_AnimL"	]	= { { model = "models/smallbridge/sents/sbadoorla.mdl" ,	UD = 3 , OD = 1.5 , CD = 1.5 	,
 		OS = { [0] = "Doors.Move14" , [0.80] = "Doors.FullOpen8" , [1.60] = "Doors.FullOpen8" , [2.40] = "Doors.FullOpen8" , [2.90] = "Doors.FullOpen9" } ,
 		CS = { [0] = "Doors.Move14" , [1.35] = "Doors.FullOpen8" , [2.15] = "Doors.FullOpen8" , [2.90] = "Doors.FullOpen9" } } ,
-							{ model = "models/SmallBridge/SEnts/SBADoorL.mdl" ,	UD = 3 , OD = 1.5 , CD = 1.5 	,
+							{ model = "models/smallbridge/sents/sbadoorl.mdl" ,	UD = 3 , OD = 1.5 , CD = 1.5 	,
 		OS = { [0] = "Doors.Move14" , [0.80] = "Doors.FullOpen8" , [1.60] = "Doors.FullOpen8" , [2.40] = "Doors.FullOpen8" , [2.90] = "Doors.FullOpen9" } ,
 		CS = { [0] = "Doors.Move14" , [1.35] = "Doors.FullOpen8" , [2.15] = "Doors.FullOpen8" , [2.90] = "Doors.FullOpen9" } } }
 
-DTT[ "Door_Insert"	]	= { { model = "models/SmallBridge/SEnts/insertdoor.mdl" ,	UD = 2 , OD = 1   , CD = 1 	,
+DTT[ "Door_Insert"	]	= { { model = "models/smallbridge/sents/insertdoor.mdl" ,	UD = 2 , OD = 1   , CD = 1 	,
 		OS = { [0] = "Doors.Move14" , [1.95] = "Doors.FullOpen9" } ,
 		CS = { [0] = "Doors.Move14" , [1.95] = "Doors.FullOpen9" } } }
 
-DTT[ "Door_Sly1"	]	= { { model = "models/Slyfo/SLYAdoor1.mdl" ,	UD = 2 , OD = 0.5 , CD = 1.5 	,
+DTT[ "Door_Sly1"	]	= { { model = "models/slyfo/slyadoor1.mdl" ,	UD = 2 , OD = 0.5 , CD = 1.5 	,
 		OS = { [0] = "Doors.Move14" , [1.80] = "Doors.FullOpen9" } ,
 		CS = { [0] = "Doors.Move14" , [1.80] = "Doors.FullOpen9" } } }
 
-DTT[ "Door_SlyDHatch"	]	= { { model = "models/Slyfo/DoublehatchDoor.mdl" 	,	UD = 2 , OD = 1   , CD = 1 	, 
+DTT[ "Door_SlyDHatch"	]	= { { model = "models/slyfo/doublehatchdoor.mdl" 	,	UD = 2 , OD = 1   , CD = 1 	, 
 		OS = { [0] = "Doors.Move14" , [1.95] = "Doors.FullOpen9" } ,
 		CS = { [0] = "Doors.Move14" , [1.95] = "Doors.FullOpen9" } } ,
-				{ model = "models/Slyfo/DoublehatchDoor2.mdl" 	,	UD = 2 , OD = 1   , CD = 1 	, 
+				{ model = "models/slyfo/doublehatchdoor2.mdl" 	,	UD = 2 , OD = 1   , CD = 1 	, 
 		OS = { [0] = "Doors.Move14" , [1.95] = "Doors.FullOpen9" } ,
 		CS = { [0] = "Doors.Move14" , [1.95] = "Doors.FullOpen9" } } ,
-				{ model = "models/Slyfo/DoublehatchDoor3.mdl" 	,	UD = 2 , OD = 2   , CD = 1 	, 
+				{ model = "models/slyfo/doublehatchdoor3.mdl" 	,	UD = 2 , OD = 2   , CD = 1 	, 
 		OS = { [0] = "Doors.Move14" , [1.95] = "Doors.FullOpen9" } ,
 		CS = { [0] = "Doors.Move14" , [1.95] = "Doors.FullOpen9" } } }
 
-DTT[ "Door_d12MBSFrame"	]	= { { model = "models/Slyfo/d12MBDoorN.mdl" ,	UD = 5 , OD = 2 , CD = 3 	,
+DTT[ "Door_d12MBSFrame"	]	= { { model = "models/slyfo/d12mbdoorn.mdl" ,	UD = 5 , OD = 2 , CD = 3 	,
 		OS = { [0] = "Doors.Move14" , [1.80] = "Doors.FullOpen9" } ,
 		CS = { [0] = "Doors.Move14" , [1.80] = "Doors.FullOpen9" } } }
 		
-DTT[ "Door_DBS"		]	= { { model = "models/SmallBridge/SEnts/SBADoorDBs.mdl" ,	UD = 5 , OD = 4   , CD = 1.5	,
+DTT[ "Door_DBS"		]	= { { model = "models/smallbridge/sents/sbadoordbs.mdl" ,	UD = 5 , OD = 4   , CD = 1.5	,
 		OS = { [0] = "Doors.Move14" , [1.30] = "Doors.FullOpen8" , [2.60] = "Doors.FullOpen8" , [3.90] = "Doors.FullOpen9" , [4.90] = "Doors.FullOpen8" } ,
 		CS = { [0] = "Doors.Move14" , [2.60] = "Doors.FullOpen8" , [3.95] = "Doors.FullOpen8" , [4.90] = "Doors.FullOpen9" } } }
 
-DTT[ "Door_Hull"	]	= { { model = "models/SmallBridge/SEnts/SBAhullDsE.mdl" ,	UD = 3 , OD = 1.5 , CD = 1.5 ,
+DTT[ "Door_Hull"	]	= { { model = "models/smallbridge/sents/sbahulldse.mdl" ,	UD = 3 , OD = 1.5 , CD = 1.5 ,
 		OS = { [0] = "Doors.Move14" , [0.95] = "Doors.FullOpen8" , [1.95] = "Doors.FullOpen8" , [2.85] = "Doors.FullOpen9" } ,
 		CS = { [0] = "Doors.Move14" , [0.95] = "Doors.FullOpen8" , [1.95] = "Doors.FullOpen8" , [2.90] = "Doors.FullOpen9" } } }
 
-DTT[ "Door_ElevHatch_S"]	= { { model = "models/SmallBridge/SEnts/sbahatchelevs.mdl" 	,	UD = 1 , OD = 0.6 , CD = 0.4 	,
+DTT[ "Door_ElevHatch_S"]	= { { model = "models/smallbridge/sents/sbahatchelevs.mdl" 	,	UD = 1 , OD = 0.6 , CD = 0.4 	,
 		OS = { [0] = "Doors.Move14" , [0.40] = "Doors.FullOpen8" , [0.95] = "Doors.FullOpen9" } ,
 		CS = { [0] = "Doors.Move14" , [0.40] = "Doors.FullOpen8" , [0.95] = "Doors.FullOpen9" } } }
 
-DTT[ "Door_ElevHatch_L"]	= { { model = "models/SmallBridge/SEnts/sbahatchelevl.mdl" 	,	UD = 2 , OD = 0.6 , CD = 1 	,
+DTT[ "Door_ElevHatch_L"]	= { { model = "models/smallbridge/sents/sbahatchelevl.mdl" 	,	UD = 2 , OD = 0.6 , CD = 1 	,
 		OS = { [0] = "Doors.Move14" , [1.00] = "Doors.FullOpen8" , [1.90] = "Doors.FullOpen9" } ,
 		CS = { [0] = "Doors.Move14" , [1.00] = "Doors.FullOpen8" , [1.90] = "Doors.FullOpen9" } } }
 		
-DTT[ "Door_ModBridge_11a"]	= { { model = "models/Cerus/Modbridge/Misc/Doors/door11a_anim.mdl" 	,	UD = 3.8 , OD = 1.5 , CD = 2 	,
+DTT[ "Door_ModBridge_11a"]	= { { model = "models/cerus/modbridge/misc/doors/door11a_anim.mdl" 	,	UD = 3.8 , OD = 1.5 , CD = 2 	,
 		OS = { [0] = "Doors.FullOpen8" , [0.50] = "Doors.Move14"    , [1.50] = "Doors.FullOpen8" , [3.40] = "Doors.FullOpen9" } ,
 		CS = { [0] = "Doors.Move14" 	  , [1.50] = "Doors.FullOpen8" , [2.30] = "Doors.FullOpen9" , [3.00] = "Doors.Move14" , [3.60] = "Doors.FullOpen8" } } }
 		
-DTT[ "Door_ModBridge_11b"]	= { { model = "models/Cerus/Modbridge/Misc/Doors/door11b_anim.mdl" 	,	UD = 1.4 , OD = 0.52 , CD = 0.88 	,
+DTT[ "Door_ModBridge_11b"]	= { { model = "models/cerus/modbridge/misc/doors/door11b_anim.mdl" 	,	UD = 1.4 , OD = 0.52 , CD = 0.88 	,
 		OS = { [0] = "TriggerSuperArmor.DoneCharging" , [0.40] = "Doors.FullOpen8" , [0.95] = "Doors.FullOpen9" } ,
 		CS = { [0] = "Doors.Move14" , [0.40] = "Doors.FullOpen8" , [0.95] = "TriggerSuperArmor.DoneCharging" } } }
 		
-DTT[ "Door_ModBridge_12b"]	= { { model = "models/Cerus/Modbridge/Misc/Doors/door12b_anim.mdl" 	,	UD = 1.4 , OD = 0.52 , CD = 0.88 	,
+DTT[ "Door_ModBridge_12b"]	= { { model = "models/cerus/modbridge/misc/doors/door12b_anim.mdl" 	,	UD = 1.4 , OD = 0.52 , CD = 0.88 	,
 		OS = { [0] = "TriggerSuperArmor.DoneCharging" , [0.40] = "Doors.FullOpen8" , [0.95] = "Doors.FullOpen9" } ,
 		CS = { [0] = "Doors.Move14" , [0.40] = "Doors.FullOpen8" , [0.95] = "TriggerSuperArmor.DoneCharging" } } }
 		
-DTT[ "Door_ModBridge_12a"]	= { { model = "models/Cerus/Modbridge/Misc/Doors/door12a_anim.mdl" 	,	UD = 3.0 , OD = 1.5 , CD = 1.5 	,
+DTT[ "Door_ModBridge_12a"]	= { { model = "models/cerus/modbridge/misc/doors/door12a_anim.mdl" 	,	UD = 3.0 , OD = 1.5 , CD = 1.5 	,
 		OS = { [0] = "Doors.Move14" , [0.90] = "Doors.FullOpen8" , [1.90] = "Doors.FullOpen8" , [2.70] = "Doors.FullOpen9" } ,
 		CS = { [0] = "Doors.Move14" , [0.90] = "Doors.FullOpen8" , [1.90] = "Doors.FullOpen8" , [2.70] = "Doors.FullOpen9" } } }
 		
-DTT[ "Door_ModBridge_13a"]	= { { model = "models/Cerus/Modbridge/Misc/Doors/door13a_anim.mdl" 	,	UD = 4.8 , OD = 2 , CD = 3.5 	,
+DTT[ "Door_ModBridge_13a"]	= { { model = "models/cerus/modbridge/misc/doors/door13a_anim.mdl" 	,	UD = 4.8 , OD = 2 , CD = 3.5 	,
 		OS = { [0] = "Doors.Move14" , [1.00] = "Doors.FullOpen8" , [1.90] = "Doors.FullOpen9" } ,
 		CS = { [0] = "Doors.Move14" , [1.00] = "Doors.FullOpen8" , [1.90] = "Doors.FullOpen9" } } }
 		
-DTT[ "Door_ModBridge_23a"]	= { { model = "models/Cerus/Modbridge/Misc/Doors/door23a_anim.mdl" 	,	UD = 5.2 , OD = 4 , CD = 1.5 	,
+DTT[ "Door_ModBridge_23a"]	= { { model = "models/cerus/modbridge/misc/doors/door23a_anim.mdl" 	,	UD = 5.2 , OD = 4 , CD = 1.5 	,
 		OS = { [0] = "Doors.Move14" 	, [0.90] = "Doors.Move14"    , [2.80] = "Doors.FullOpen8" 	, [5.00] = "Doors.FullOpen9" } , 
 		CS = { [0] = "Doors.Fullopen8" 	, [2.40] = "Doors.FullOpen8" , [3.40] = "Doors.Move14" 		, [4.40] = "Doors.FullOpen8" , [5.20] = "Doors.FullOpen9" } } }
 		
-DTT[ "Door_ModBridge_33a"]	= { { model = "models/Cerus/Modbridge/Misc/Doors/door33a_anim.mdl" 	,	UD = 2.8 , OD = 1.6 , CD = 1.2 	,
+DTT[ "Door_ModBridge_33a"]	= { { model = "models/cerus/modbridge/misc/doors/door33a_anim.mdl" 	,	UD = 2.8 , OD = 1.6 , CD = 1.2 	,
 		OS = { [0] = "Doors.Move14" , [1.00] = "Doors.FullOpen8" , [1.90] = "Doors.FullOpen9" } ,
 		CS = { [0] = "Doors.Move14" , [1.00] = "Doors.FullOpen8" , [1.90] = "Doors.FullOpen9" } } }
 		
@@ -139,7 +139,7 @@ DTT[ "Door_ModBridge_33a"]	= { { model = "models/Cerus/Modbridge/Misc/Doors/door
 		
 		
 		
-DTT[ "ACC_Furnace1"]	= { { model = "models/Cerus/Modbridge/Misc/Accessories/acc_furnace1_anim.mdl" 	,	UD = 1 , OD = 0.2 , CD = 0.8 	,
+DTT[ "ACC_Furnace1"]	= { { model = "models/cerus/modbridge/misc/accessories/acc_furnace1_anim.mdl" 	,	UD = 1 , OD = 0.2 , CD = 0.8 	,
 		OS = { [0] = "Doors.Move14" , [1.00] = "Doors.FullOpen9" } , 
 		CS = { [0] = "Doors.Fullopen8" 	, [1.00] = "Doors.Move14" } } }
 
@@ -373,6 +373,7 @@ end
 function ENT:PreEntityCopy()
 	local DI = {}
 	DI.type 	= self.type
+	DI.DClass = self.DClass
 	if self.Cont then
 		DI.Cont 	= self.Cont:EntIndex()
 	end
@@ -388,6 +389,7 @@ function ENT:PostEntityPaste(pl, Ent, CreatedEntities)
 	local DI = Ent.EntityMods.SBEPD
 
 	self.type 	= DI.type
+	self.DClass = DI.DClass or 1
 	self.D 		= DI.D
 	self.ATEnt	= CreatedEntities[ DI.ATEnt ]
 	self.VecOff	= DI.VecOff
@@ -400,3 +402,16 @@ function ENT:PostEntityPaste(pl, Ent, CreatedEntities)
 	self:GetSequenceData()
 	self:Close()
 end
+
+function MakeDoor( Player, Data )
+
+	local ent = ents.Create( Data.Class )
+	duplicator.DoGeneric( ent, Data )
+	ent:Spawn()
+
+	duplicator.DoGenericPhysics( ent, Player, Data )
+
+	return ent
+
+end
+duplicator.RegisterEntityClass( "sbep_base_door", MakeDoor, "Data" )

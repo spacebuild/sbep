@@ -1,0 +1,21 @@
+VertexLitGeneric
+{
+	$basetexture "cmats/glow_blue_ani"
+	$model 1
+	$translucent 1
+	$additive 1
+	$nocull 1
+	$selfillum 1
+	$surfaceprop "glass"
+	"Proxies"
+  {
+      "AnimatedTexture"
+      {
+         "animatedtexturevar" "$basetexture"
+         "animatedtextureframenumvar" "$frame"
+         "animatedtextureframerate" 25
+      }
+   }
+
+
+}

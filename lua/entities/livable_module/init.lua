@@ -18,7 +18,7 @@ function ENT:Initialize()
 	if not (WireAddon == nil) then
 		self.WireDebugName = self.PrintName
 		self.Inputs = Wire_CreateInputs(self, { "On", "Gravity", "Max O2 level" })
-		self.Outputs = Wire_CreateOutputs(self, { "On", "Oxygen-Level", "Temperature", "Gravity" })
+		self.Outputs = Wire_CreateOutputs(self, { "On", "Oxygen-Level", "Temperature", "Gravity", "Damaged" })
 	else
         self.Inputs = { { Name = "On" }, { Name = "Radius" }, { Name = "Gravity" }, { Name = "Max O2 level" } }
     end
@@ -109,6 +109,40 @@ function ENT:OnRemove()
     self.BaseClass.OnRemove(self)
     self:StopSound("apc_engine_start")
 end
+
+function ENT:PreEntityCopy()
+	local LivableModule = {}
+	LivableModule.Active  = self.Active
+	LivableModule.damaged = self.damaged
+	if WireAddon then
+		duplicator.StoreEntityModifier(self,"WireDupeInfo",WireLib.BuildDupeInfo(self.Entity))
+	end
+	duplicator.StoreEntityModifier(self, "livable_module", LivableModule)
+end
+
+function ENT:PostEntityPaste(ply, ent, createdEnts)
+	if WireAddon then
+		local emods = ent.EntityMods
+		if emods and emods.WireDupeInfo then
+			WireLib.ApplyDupeInfo(ply, ent, emods.WireDupeInfo, function(id) return createdEnts[id] end)
+		end
+	end
+end
+
+function MakeLivableModule( Player, Data )
+	local ent = ents.Create( Data.Class )
+	duplicator.DoGeneric( ent, Data )
+	ent:Spawn()
+	duplicator.DoGenericPhysics( ent, Player, Data )
+	ent:SetPlayer(Player)
+	ent.damaged = Data.EntityMods.livable_module.damaged
+	if CPPI then ent:CPPISetOwner(Player) end
+	if Data.EntityMods.livable_module.Active == 1 then
+		ent:TurnOn()
+	end
+	return ent
+end
+duplicator.RegisterEntityClass( "livable_module", MakeLivableModule, "Data" )
 
 --[[
 function ENT:CreateEnvironment(gravity, atmosphere, pressure, temperature, o2, co2, n, h)
@@ -479,6 +513,7 @@ function ENT:Climate_Control()
 		Wire_TriggerOutput(self, "Oxygen-Level", tonumber(self:GetO2Percentage()))
 		Wire_TriggerOutput(self, "Temperature", tonumber(self.sbenvironment.temperature))
 		Wire_TriggerOutput(self, "Gravity", tonumber(self.sbenvironment.gravity))
+		Wire_TriggerOutput(self, "Damaged", tonumber(self.damaged))
 	end
 end
 

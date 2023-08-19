@@ -1,0 +1,12 @@
+"VertexLitGeneric"
+{
+	"$basetexture" "spacebuild/sblight2_d"
+	"$surfaceprop" "metal"
+	"$model" 1
+	"$bumpmap" "spacebuild/sblight2bump_d"
+	 "$phong"     "1"
+	"$halflambert"	1
+ 	"$phongexponent"   "60"
+ 	"$phongboost"   "1"
+ 	"$phongfresnelranges"   "[.5 .8 1]"
+}

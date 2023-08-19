@@ -1,4 +1,5 @@
-TOOL.Category = "SBEP"
+TOOL.Category		= "SBEP"
+TOOL.Tab 			= "Spacebuild"
 TOOL.Name = "#SmallBridge Skin Selector"
 TOOL.Command = nil
 TOOL.ConfigName = ""
@@ -53,7 +54,7 @@ function TOOL.BuildCPanel(panel)
 
     local ModelDisp = vgui.Create("DModelPanel")
     ModelDisp:SetSize(100, 200)
-    ModelDisp:SetModel("models/SmallBridge/Hulls_SW/sbhulle1.mdl")
+    ModelDisp:SetModel("models/smallbridge/hulls_sw/sbhulle1.mdl")
     ModelDisp:SetCamPos(Vector(246, 235, 143))
     ModelDisp:SetLookAt(Vector(-246, -235, -143))
     panel:AddItem(ModelDisp)
