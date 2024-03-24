@@ -1,5 +1,5 @@
 TOOL.Category		= "SBEP"
-TOOL.Tab 			= "Spacebuild"
+TOOL.Tab 			= "Custom Addon Framework"
 TOOL.Name			= "#Gyro-Pod"
 TOOL.Command		= nil
 TOOL.ConfigName		= ""
@@ -27,10 +27,12 @@ function TOOL:RightClick(trace)
 		return true
 	elseif self:GetStage() == 1 and trace.Entity.GetPassenger then
 		local owner = self:GetOwner()
-		if self.AdvGyro:Link(trace.Entity) then
-			owner:PrintMessage(HUD_PRINTTALK,"Vehicle linked to Gyro-Pod!")
-		else
-			owner:PrintMessage(HUD_PRINTTALK,"Link failed!")
+		if SERVER then
+			if self.AdvGyro:Link(trace.Entity) then
+				owner:PrintMessage(HUD_PRINTTALK,"Vehicle linked to Gyro-Pod!")
+			else
+				owner:PrintMessage(HUD_PRINTTALK,"Link failed!")
+			end
 		end
 		self:SetStage(0)
 		self.AdvGyro = nil
@@ -109,11 +111,8 @@ function TOOL.BuildCPanel(panel)
 	panel:SetSpacing( 10 )
 	panel:SetName( "SBEP Gyro-Pod (Advanced)" )
 
-	local BindLabel0 = {}
-	local BindLabel1 = {}
-	local BindLabel2 = {}
 
-	BindLabel0.Text =
+	panel:Help(
 [[BASIC INSTRUCTIONS
 
 1:   Left Click to create a Gyro-Pod.
@@ -133,9 +132,9 @@ function TOOL.BuildCPanel(panel)
 9:  Use the keys you wired to the movement controls to move the ship through space.
 
 ADVANCED CONTROLS (OPTIONAL)
-]]
+]])
 
-	BindLabel1.Text =
+	panel:Help(
 [[MULTIPLIERS
 Controls axis sensitivity.
 Values from 0.0 to 0.99 reduce sensitivity.
@@ -145,7 +144,7 @@ Defaults for all are 1
 
 SPEED LIMIT
 Limits the speed in MPH.
-Default is 112.  Max is 112
+Default is 112. Max is 112
 
 AIMING MODE
 Points ship towards GPS coords.
@@ -156,32 +155,22 @@ FREEZE SHIP
 All CONSTRAINED entities will be frozen
 Wire the FREEZE Input to a TOGGLED output.
 You CAN still use your physgun's reload function to unfreeze the ship.
-]]
+]])
 
-	BindLabel2.Text =
+panel:Help(
 [[AUTOLEVEL
 Keeps ship's roll and pitch at 0.
 Wire LEVEL to a TOGGLED	output.
 
 TIPS
  *  Press Reload on any prop to set the model of the Gyro-Pod to that prop.
- *  You do not need to gyro-link anything anymore.  Any props whos mass is over 20 will be automatically linked.  Wire components are never linked.
+ *  You do not need to gyro-link anything anymore. Any props whos mass is over 20 will be automatically linked. Wire components are never linked.
  *  If you need to cancel a link, press Reload on the Gyro-Pod.
- *  If you PARENT the Gyro-Pod, you will lose the ability to modify the wiring, so save parenting for last.
+ *  [Probably not an issue more] If you PARENT the Gyro-Pod, you will lose the ability to modify the wiring, so save parenting for last.
  *  Try wiring a 'Not' gate to the 'Active' Output of your pod controller, then wiring the 'Freeze' Input of the Gyro-Pod to the 'Not' gate.
  *  Joystick is supported, but not tested
  
 
- Credit goes to Paradukes and the SBEP Team for creating the original Gyro-Pod.  I (DataSchmuck) just modified the code a bit.]]
-	
-	BindLabel0.Description = "Basic Instructions1"
-	panel:AddControl("Label", BindLabel0 )
-	
-	BindLabel1.Description = "Basic Instructions2"
-	panel:AddControl("Label", BindLabel1 )
-	
-	BindLabel2.Description = "Basic Instructions3"
-	panel:AddControl("Label", BindLabel2 )
-	
+Credit goes to Paradukes and the SBEP Team for creating the original Gyro-Pod. I (DataSchmuck) just modified the code a bit. Additional improvements by stpM64.]])
 
 end

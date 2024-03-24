@@ -8,7 +8,9 @@
         general syntax are correct, and generally making the whole thing slightly less horrendous to read.
 		It has also just occurred to me that it would be beneficial to only do this when the tool is first equipped in any given game , 
 		at least clientside - preventing the vast amount of memory -hogging that is performed on load at the moment .]]--
---[[ TYPE CODES:Smallbridge:SWSH - Single width, single height
+--[[ TYPE CODES:
+Smallbridge:
+SWSH - Single width, single height
 DWSH - Double width, single height
 SWDH - Single width, double height
 DWDH - Double width, double height
@@ -17,9 +19,11 @@ ESML - Elevator, small
 ELRG - Elevator, large
 INSR - Insert Component
 
-Medbridge :MBSH - Medium Bridge, Single Height
+Medbridge:
+MBSH - Medium Bridge, Single Height
 
-Modbridge:MOD1x1 - Modbridge, square peice
+Modbridge:
+MOD1x1 - Modbridge, square peice
 MOD2x1 -Modbridge, double width, single height
 MOD3x1 - Modbridge, triple width, single height
 MOD3x2 - Modbridge, triple width, double height
@@ -651,10 +655,10 @@ are all one -orientation - only.Then open cl_init .lua and make a new entry in t
         },
         ["models/smallbridge/panels/sbpaneldockin.mdl"] = {
             { type = "SWSH", pos = Vector(0, 0, 0), dir = Angle(0, 0, 0) },
-            { type = "SWSH", pos = Vector(0, 0, 0), dir = Angle(0, 180, 0) }
+        --    { type = "SWSH", pos = Vector(0, 0, 0), dir = Angle(0, 180, 0) }
         },
         ["models/smallbridge/panels/sbpaneldockout.mdl"] = {
-            { type = "SWSH", pos = Vector(0, 0, 0), dir = Angle(0, 0, 0) },
+        --    { type = "SWSH", pos = Vector(0, 0, 0), dir = Angle(0, 0, 0) },
             { type = "SWSH", pos = Vector(0, 0, 0), dir = Angle(0, 180, 0) }
         },
         ["models/smallbridge/panels/sbpaneldoor.mdl"] = {

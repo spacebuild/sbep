@@ -1,9 +1,9 @@
 "AddonInfo"
 {
-	"name"		"SpaceBuild Enhancement Project"
-	"version"	"6.0"
+	"name"		"SpaceBuild Enhancement Project Unofficial V5"
+	"version"	"7.0"
 	"up_date"	"16/10/2012"
-	"author_name"	"Sam Elmer, Firgof Umbra, Hysteria, Slyfo, Paradukes, Fishface, Cerus, DataSchmuck, SnakeSVx, Radon, RevoluPowered"
+	"author_name"	"Sam Elmer, Firgof Umbra, Hysteria, Slyfo, Paradukes, Fishface, Cerus, DataSchmuck, SnakeSVx, Radon, RevoluPowered, stpM64"
 	"author_email"	""
 	"author_url"	""
 	"info"		"SBEP"
